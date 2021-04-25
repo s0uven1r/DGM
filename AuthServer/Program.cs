@@ -1,15 +1,12 @@
-using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
+using Auth.Infrastructure.Persistence.Seed;
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AuthServer
@@ -25,13 +22,14 @@ namespace AuthServer
 
                 try
                 {
-                    var context = services.GetRequiredService<AppIdentityDbContext>();
-                    context.Database.Migrate();
+                    services.GetRequiredService<AppIdentityDbContext>().Database.Migrate();
 
-                    //var userManager = services.GetRequiredService<UserManager<AppUser>>();
-                    //var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    services.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
-                    //await AppIdentityDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
+                    var configcontext = services.GetRequiredService<ConfigurationDbContext>();
+                    configcontext.Database.Migrate();
+
+                    ConfigurationDbContextSeed.SeedDefaultConfiguration(configcontext);
                 }
                 catch (Exception ex)
                 {

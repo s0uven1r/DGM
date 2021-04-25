@@ -33,7 +33,7 @@ namespace Auth.Infrastructure.Identity
 
             var claims = principal.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
-            claims.Add(new Claim(JwtClaimTypes.GivenName, user.UserName));
+            claims.Add(new Claim(JwtClaimTypes.GivenName, user.Name));
             claims.Add(new Claim(IdentityServerConstants.StandardScopes.Email, user.Email));
             // note: to dynamically add roles (ie. for users other than consumers - simply look them up by sub id
             claims.Add(new Claim(ClaimTypes.Role, Roles.Consumer)); // need this for role-based authorization - https://stackoverflow.com/questions/40844310/role-based-authorization-with-identityserver4

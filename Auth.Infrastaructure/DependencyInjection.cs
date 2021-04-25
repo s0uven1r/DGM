@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,31 +17,51 @@ namespace Auth.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly(typeof(AppIdentityDbContext).Assembly.FullName)));
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
-
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>(config =>
+            {
+                config.Password.RequiredLength = 4;
+                config.Password.RequireDigit = false;
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireUppercase = true;
+            })
                  .AddEntityFrameworkStores<AppIdentityDbContext>()
                  .AddDefaultTokenProviders();
 
             services.AddIdentityServer()
-                //to be removed
-                .AddDeveloperSigningCredential()
+                .AddAspNetIdentity<AppUser>()
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = builder => builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = builder => builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
-                    options.TokenCleanupInterval = 30; // interval in seconds
+                    options.TokenCleanupInterval = 60; // interval in seconds
                 })
-                .AddInMemoryApiScopes(Configuration.GetApiScopes())
-                .AddInMemoryApiResources(Configuration.GetApiResources())
-                .AddInMemoryClients(Configuration.GetClients());
+                //to be removed
+                .AddDeveloperSigningCredential();
+
+            //.AddInMemoryIdentityResources(Configuration.GetIdentityResources())
+            //.AddInMemoryApiScopes(Configuration.GetApiScopes())
+            //.AddInMemoryApiResources(Configuration.GetApiResources())
+            //.AddInMemoryClients(Configuration.GetClients());
+
+            /* We'll play with this down the road... 
+                  services.AddAuthentication()
+                  .AddGoogle("Google", options =>
+                  {
+                      options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                      options.ClientId = "<insert here>";
+                      options.ClientSecret = "<insert here>";
+                  });*/
+
+            services.AddTransient<IProfileService, IdentityClaimsProfileService>();
 
             return services;
         }
