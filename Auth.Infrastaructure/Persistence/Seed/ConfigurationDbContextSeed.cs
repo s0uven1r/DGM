@@ -21,6 +21,15 @@ namespace Auth.Infrastructure.Persistence.Seed
                 context.SaveChanges();
             }
 
+            if (!context.ApiScopes.Any())
+            {
+                foreach (var apiscope in Configuration.GetApiScopes())
+                {
+                    context.ApiScopes.Add(apiscope.ToEntity());
+                }
+                context.SaveChanges();
+            }
+
             if (!context.IdentityResources.Any())
             {
                 foreach (var resource in Configuration.GetIdentityResources())

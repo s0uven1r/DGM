@@ -28,7 +28,7 @@ namespace Auth.Infrastructure
             })
                  .AddEntityFrameworkStores<AppIdentityDbContext>()
                  .AddDefaultTokenProviders();
-
+            
             services.AddIdentityServer()
                 .AddAspNetIdentity<AppUser>()
                 .AddConfigurationStore(options =>
@@ -43,8 +43,8 @@ namespace Auth.Infrastructure
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 60; // interval in seconds
                 })
-                //to be removed
-                .AddDeveloperSigningCredential();
+                .AddDeveloperSigningCredential()
+                .AddProfileService<IdentityClaimsProfileService>();
 
             //.AddInMemoryIdentityResources(Configuration.GetIdentityResources())
             //.AddInMemoryApiScopes(Configuration.GetApiScopes())
