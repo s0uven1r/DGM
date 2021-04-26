@@ -1,12 +1,15 @@
+using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
 using Auth.Infrastructure.Persistence.Seed;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AuthServer
@@ -22,14 +25,25 @@ namespace AuthServer
 
                 try
                 {
-                    services.GetRequiredService<AppIdentityDbContext>().Database.Migrate();
+                    await services.GetRequiredService<AppIdentityDbContext>().Database.MigrateAsync();
 
-                    services.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                    await services.GetRequiredService<PersistedGrantDbContext>().Database.MigrateAsync();
 
                     var configcontext = services.GetRequiredService<ConfigurationDbContext>();
-                    configcontext.Database.Migrate();
+                    await configcontext.Database.MigrateAsync();
 
-                    ConfigurationDbContextSeed.SeedDefaultConfiguration(configcontext);
+                    var userManager = scope.ServiceProvider
+                  .GetRequiredService<UserManager<AppUser>>();
+
+                    var user = new AppUser
+                    {
+                        Name = "admin",
+                        Email = "admin@dgm.com",
+                        UserName = "admin@dgm.com"
+                    };
+                    userManager.CreateAsync(user, "Password").GetAwaiter().GetResult();
+
+                    await ConfigurationDbContextSeed.SeedDefaultConfiguration(configcontext);
                 }
                 catch (Exception ex)
                 {
