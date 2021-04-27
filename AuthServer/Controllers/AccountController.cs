@@ -139,7 +139,7 @@ namespace AuthServer.Controllers
                     }
                     else if (string.IsNullOrEmpty(model.ReturnUrl))
                     {
-                        return Redirect("~/");
+                        return Redirect("https://localhost:44337/swagger/index.html");
                     }
                     else
                     {
