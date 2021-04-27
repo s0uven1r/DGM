@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ResourceAPI.Controllers
 {
@@ -17,7 +16,7 @@ namespace ResourceAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new JsonResult(User.Claims.Select(c => new { c.Subject }));
+            return Ok("success!");
         }
     }
 }

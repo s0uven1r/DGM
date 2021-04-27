@@ -29,7 +29,7 @@ namespace ResourceAPI.Helper.Swagger
                                 Type = ReferenceType.SecurityScheme,
                                 Id = "oauth2"}
                             }
-                        ] = new[] {"api1"}
+                        ] = new[] {"api.read"}
                     }
                 };
 

@@ -22,23 +22,17 @@ namespace ResourceAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(o =>
-            //{
-            //    o.Authority = "https://localhost:44316";
-            //    o.Audience = "resourceapi";
-            //    o.RequireHttpsMetadata = false; //research
-            //});
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.Authority = "https://localhost:44316";
+                o.Audience = "resourceapi";
+                o.RequireHttpsMetadata = false; //research
+            });
 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = "https://localhost:44316";
-                    options.Audience = "resourceapi";
-                });
             //research
             //services.AddAuthorization(options =>
             //{
@@ -61,9 +55,7 @@ namespace ResourceAPI
                             TokenUrl = new Uri("https://localhost:44316/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"resourceapi", "Resource API"},
-                                {"openid", "openid"},
-                                {"profile", "profile"},
+                                {"api.read", "api.read"},
                             },
                         }
                     }
@@ -81,8 +73,8 @@ namespace ResourceAPI
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "ResourceAPI v1");
-                    c.OAuthClientId("api_swagger");
-                    c.OAuthAppName("Swagger UI");
+                    c.OAuthClientId("demo_api_swagger");
+                    c.OAuthAppName("Demo API - Swagger");
                     c.OAuthUsePkce();
                 });
             }

@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Auth.Infrastructure.Persistence.Seed
 {
