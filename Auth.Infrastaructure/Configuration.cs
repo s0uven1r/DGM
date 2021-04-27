@@ -52,6 +52,20 @@ namespace Auth.Infrastructure
                     AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600
+                },
+
+                new Client {
+                    ClientId = "demo_api_swagger",
+                    ClientName = "Swagger UI for demo_api",
+                    ClientSecrets = {new Secret("secret".Sha256())}, // change me!
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 3600,
+                    RedirectUris = {"https://localhost:44337/swagger/oauth2-redirect.html"},
+                    AllowedCorsOrigins = {"https://localhost:44337"},
+                    AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.Email, "api.read" },
                 }
             };
         }

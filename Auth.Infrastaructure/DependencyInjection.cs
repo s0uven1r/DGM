@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Auth.Infrastructure.Identity;
+﻿using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
@@ -28,7 +23,14 @@ namespace Auth.Infrastructure
             })
                  .AddEntityFrameworkStores<AppIdentityDbContext>()
                  .AddDefaultTokenProviders();
-            
+
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = "IdentityServer.Cookie";
+                config.LoginPath = "/Account/Login";
+            });
+
             services.AddIdentityServer()
                 .AddAspNetIdentity<AppUser>()
                 .AddConfigurationStore(options =>
