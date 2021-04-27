@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AuthServer
@@ -24,25 +25,25 @@ namespace AuthServer
 
                 try
                 {
-                    services.GetRequiredService<AppIdentityDbContext>().Database.Migrate();
+                    await services.GetRequiredService<AppIdentityDbContext>().Database.MigrateAsync();
 
-                    services.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                    await services.GetRequiredService<PersistedGrantDbContext>().Database.MigrateAsync();
 
                     var configcontext = services.GetRequiredService<ConfigurationDbContext>();
-                    configcontext.Database.Migrate();
-
-                    ConfigurationDbContextSeed.SeedDefaultConfiguration(configcontext);
+                    await configcontext.Database.MigrateAsync();
 
                     var userManager = scope.ServiceProvider
-                                           .GetRequiredService<UserManager<AppUser>>();
+                  .GetRequiredService<UserManager<AppUser>>();
 
-                                                var user = new AppUser
-                                                {
-                                                    Name = "admin",
-                                                    Email = "admin@dgm.com",
-                                                    UserName = "admin@dgm.com"
-                                                };
+                    var user = new AppUser
+                    {
+                        Name = "admin",
+                        Email = "admin@dgm.com",
+                        UserName = "admin@dgm.com"
+                    };
                     userManager.CreateAsync(user, "Password").GetAwaiter().GetResult();
+
+                    await ConfigurationDbContextSeed.SeedDefaultConfiguration(configcontext);
                 }
                 catch (Exception ex)
                 {

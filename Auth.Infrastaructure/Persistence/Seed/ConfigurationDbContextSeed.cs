@@ -6,43 +6,46 @@ namespace Auth.Infrastructure.Persistence.Seed
 {
     public static class ConfigurationDbContextSeed
     {
-        public static void SeedDefaultConfiguration(ConfigurationDbContext context)
+        public async static Task SeedDefaultConfiguration(ConfigurationDbContext context)
         {
-            if (!context.Clients.Any())
+            await Task.Run(() =>
             {
-                foreach (var client in Configuration.GetClients())
+                if (!context.Clients.Any())
                 {
-                    context.Clients.Add(client.ToEntity());
+                    foreach (var client in Configuration.GetClients())
+                    {
+                        context.Clients.Add(client.ToEntity());
+                    }
+                    context.SaveChanges();
                 }
-                context.SaveChanges();
-            }
 
-            if (!context.ApiScopes.Any())
-            {
-                foreach (var apiscope in Configuration.GetApiScopes())
+                if (!context.ApiScopes.Any())
                 {
-                    context.ApiScopes.Add(apiscope.ToEntity());
+                    foreach (var apiscope in Configuration.GetApiScopes())
+                    {
+                        context.ApiScopes.Add(apiscope.ToEntity());
+                    }
+                    context.SaveChanges();
                 }
-                context.SaveChanges();
-            }
 
-            if (!context.IdentityResources.Any())
-            {
-                foreach (var resource in Configuration.GetIdentityResources())
+                if (!context.IdentityResources.Any())
                 {
-                    context.IdentityResources.Add(resource.ToEntity());
+                    foreach (var resource in Configuration.GetIdentityResources())
+                    {
+                        context.IdentityResources.Add(resource.ToEntity());
+                    }
+                    context.SaveChanges();
                 }
-                context.SaveChanges();
-            }
 
-            if (!context.ApiResources.Any())
-            {
-                foreach (var resource in Configuration.GetApiResources())
+                if (!context.ApiResources.Any())
                 {
-                    context.ApiResources.Add(resource.ToEntity());
+                    foreach (var resource in Configuration.GetApiResources())
+                    {
+                        context.ApiResources.Add(resource.ToEntity());
+                    }
+                    context.SaveChanges();
                 }
-                context.SaveChanges();
-            }
+            });
         }
     }
 }
