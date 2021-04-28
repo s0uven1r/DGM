@@ -29,6 +29,7 @@ namespace Auth.Infrastructure
             {
                 config.Cookie.Name = "IdentityServer.Cookie";
                 config.LoginPath = "/Account/Login";
+                config.LogoutPath = "/Account/Logout";
             });
 
             services.AddIdentityServer()

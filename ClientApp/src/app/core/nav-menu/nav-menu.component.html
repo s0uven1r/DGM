@@ -37,12 +37,16 @@
               >Register</a
             >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/login']"
+          <li *ngIf="!isLogedIn" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" href="#" (click)="Login()"
               >Login</a
             >
           </li>
-         
+          <li *ngIf="isLogedIn" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" href="#" (click)="logOut()"
+              >Logout</a
+            >
+          </li>
         </ul>
       </div>
     </div>

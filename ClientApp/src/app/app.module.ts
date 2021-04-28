@@ -6,6 +6,8 @@ import { AppRoutingModule, RoutingComponent } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpErrorInterceptor } from './core/interceptor/http-error.interceptor';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { AuthGuard } from './core/authorize/auth-guard';
+import { TokenInterceptor } from './core/interceptor/http-token-interceptor';
 
 @NgModule({
   declarations: RoutingComponent,
@@ -23,6 +25,20 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     useClass: HttpErrorInterceptor,
 
     multi: true
+
+  },{
+
+    provide: TokenInterceptor,
+
+    useClass: TokenInterceptor,
+
+    multi: true
+
+  },{
+
+    provide: AuthGuard,
+
+    useClass: AuthGuard
 
   }],
   bootstrap: [AppComponent]

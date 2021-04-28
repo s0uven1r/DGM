@@ -1,7 +1,8 @@
+import { AuthGuard } from 'src/app/core/authorize/auth-guard';
 import { HomeComponent } from 'src/app/core/home/home.component';
 import { UndefinedPageComponent } from 'src/app/core/undefined-page/undefined-page.component';
+import { AuthCallbackComponent } from 'src/app/featured/auth-callback/auth-callback.component';
 import { CounterComponent } from 'src/app/featured/counter/counter.component';
-import { LoginComponent } from 'src/app/featured/login/login.component';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -9,12 +10,12 @@ export const RoutePath = {
       (m) => m.CounterModule
     )
     },
-    {path:'', loadChildren: () =>import('src/app/featured/login/login.module').then(
-        (m) => m.LoginModule
-      )
+      {path:'', loadChildren: () =>import('src/app/featured/auth-callback/auth-callback.module').then(
+        (m) => m.AuthCallbackModule
+      ), canActivate: [AuthGuard]
       },
       { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
     ],
   CounterRoutePath:[{path: 'counter', component: CounterComponent}],
-  LoginRoutePath:[{path: 'login', component: LoginComponent}]
+  AuthCallbackRoutePath:[{path: 'auth-callback', component: AuthCallbackComponent}],
 };
