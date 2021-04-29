@@ -20,6 +20,6 @@ export const oidcAuthConfig: AuthConfig = {
   // // Login Url of the Identity Provider
   logoutUrl: 'https://localhost:44316/connect/endsession',
   
-  postLogoutRedirectUri: 'http://localhost:4200',
+  // postLogoutRedirectUri: 'http://localhost:4200',
   useSilentRefresh: true,
 }

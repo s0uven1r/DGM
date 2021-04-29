@@ -27,7 +27,7 @@ export class NavMenuComponent {
      this.oauthService.initImplicitFlow();
    }
    public logOut(){
-    this.oauthService.logOut();   
+    this.oauthService.revokeTokenAndLogout();   
    }
    public get GetClaim(){
      let claims = this.oauthService.getIdentityClaims();

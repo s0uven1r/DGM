@@ -187,7 +187,7 @@ namespace AuthServer.Controllers
         {
             await _signInManager.SignOutAsync();
             var context = await _interaction.GetLogoutContextAsync(logoutId);
-            return Redirect(context.PostLogoutRedirectUri);
+            return Redirect(context.PostLogoutRedirectUri?? "http://localhost:4200/auth-callback");
         }
 
         /*****************************************/

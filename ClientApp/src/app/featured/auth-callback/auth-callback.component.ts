@@ -10,12 +10,16 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class AuthCallbackComponent implements OnInit {
 
-  constructor(private oauthService: OAuthService, private router: Router) {}
+  constructor(private oauthService: OAuthService, private router: Router) {
+    
+  }
 
   ngOnInit() {
       this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
           if (!this.oauthService.hasValidIdToken() || !this.oauthService.hasValidAccessToken()) {
               this.oauthService.initImplicitFlow();
+          }else{
+            this.router.navigateByUrl('/');
           }
       });
   }
