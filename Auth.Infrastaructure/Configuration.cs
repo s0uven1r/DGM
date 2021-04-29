@@ -51,7 +51,14 @@ namespace Auth.Infrastructure
                     PostLogoutRedirectUris = {"http://localhost:4200/signout-callback-oidc"},
                     AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowAccessTokensViaBrowser = true,
-                    AccessTokenLifetime = 3600
+                    AccessTokenLifetime = 3600,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AccessTokenType = AccessTokenType.Reference,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    AllowOfflineAccess = true
                 },
 
                 new Client {
