@@ -48,7 +48,7 @@ namespace Auth.Infrastructure
                     AllowedGrantTypes = GrantTypes.Implicit, //flow of access_token request
                     AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.Email, "api.read" },
                     RedirectUris = {"http://localhost:4200/auth-callback"},
-                    PostLogoutRedirectUris = {"http://localhost:4200"},
+                    PostLogoutRedirectUris = {"http://localhost:4200/signout-callback-oidc"},
                     AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600
