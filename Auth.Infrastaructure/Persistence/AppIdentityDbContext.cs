@@ -5,7 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Infrastructure.Persistence
 {
-    public class AppIdentityDbContext : IdentityDbContext<AppUser>
+    public class AppIdentityDbContext : IdentityDbContext<AppUser, IdentityRole, string, UserClaim,
+            IdentityUserRole<string>,
+            IdentityUserLogin<string>,
+            RoleClaim,
+            IdentityUserToken<string>>
     {
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options)
         {
@@ -17,6 +21,26 @@ namespace Auth.Infrastructure.Persistence
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            modelBuilder.Entity<UserClaim>().HasOne(x => x.Claim)
+             .WithMany(y => y.UserClaim)
+             .HasForeignKey(a => a.ClaimId);
+
+            modelBuilder.Entity<RoleClaim>().HasOne(x => x.Claim)
+            .WithMany(y => y.RoleClaim)
+            .HasForeignKey(a => a.ClaimId);
+
+            modelBuilder.Entity<MenuControl>()
+            .HasOne(c => c.Claim)
+            .WithOne(m => m.MenuControl)
+            .HasForeignKey<MenuControl>(c => c.ClaimId);
+
+
+            modelBuilder.Entity<UserClaim>().Ignore(x =>  x.ClaimType);
+            modelBuilder.Entity<UserClaim>().Ignore(x =>  x.ClaimValue);
+
+            modelBuilder.Entity<RoleClaim>().Ignore(x => x.ClaimType);
+            modelBuilder.Entity<RoleClaim>().Ignore(x => x.ClaimValue);
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = Constants.Roles.Consumer, NormalizedName = Constants.Roles.Consumer.ToUpper() });
         }
