@@ -3,23 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceAPI", "ResourceAPI\ResourceAPI.csproj", "{BC09740D-B4C4-463F-BFF9-DCFA5A0D84FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceAPI", "ResourceAPI\ResourceAPI.csproj", "{BC09740D-B4C4-463F-BFF9-DCFA5A0D84FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resource", "Resource", "{5BB80256-B016-41BB-88C7-51C11BF71B67}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthServer", "AuthServer", "{EC87447B-8B17-43DE-A98D-DE6F6524D0F8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClientApp", "ClientApp", "{2F96F54C-AA92-4C6C-9379-36DD129F63C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer", "AuthServer\AuthServer.csproj", "{B310556C-939C-450F-A082-E6043425125F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServer", "AuthServer\AuthServer.csproj", "{B310556C-939C-450F-A082-E6043425125F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Infrastructure", "Auth.Infrastaructure\Auth.Infrastructure.csproj", "{9A82EC78-F060-45B9-B63B-F159CCE42C72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Infrastructure", "Auth.Infrastaructure\Auth.Infrastructure.csproj", "{9A82EC78-F060-45B9-B63B-F159CCE42C72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resource.Infrastructure", "Resource.Infrastructure\Resource.Infrastructure.csproj", "{78629263-8E77-411E-985C-5F74971B441A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resource.Infrastructure", "Resource.Infrastructure\Resource.Infrastructure.csproj", "{78629263-8E77-411E-985C-5F74971B441A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resource.Domain", "Resource.Domain\Resource.Domain.csproj", "{88E053CC-BF58-409C-A4A0-0876F74F927F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resource.Domain", "Resource.Domain\Resource.Domain.csproj", "{88E053CC-BF58-409C-A4A0-0876F74F927F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resource.Application", "Resource.Application\Resource.Application.csproj", "{947C6D7E-81B4-4E42-A257-6A0B5412C687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resource.Application", "Resource.Application\Resource.Application.csproj", "{947C6D7E-81B4-4E42-A257-6A0B5412C687}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
