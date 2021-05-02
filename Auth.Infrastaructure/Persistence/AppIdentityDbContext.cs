@@ -35,6 +35,9 @@ namespace Auth.Infrastructure.Persistence
             .WithOne(m => m.MenuControl)
             .HasForeignKey<MenuControl>(c => c.ClaimId);
 
+            modelBuilder.Entity<MenuControl>().HasOne(x => x.Parent)
+              .WithMany(y => y.Children)
+              .HasForeignKey(a => a.ParentId);
 
             modelBuilder.Entity<UserClaim>().Ignore(x =>  x.ClaimType);
             modelBuilder.Entity<UserClaim>().Ignore(x =>  x.ClaimValue);
@@ -44,5 +47,8 @@ namespace Auth.Infrastructure.Persistence
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = Constants.Roles.Consumer, NormalizedName = Constants.Roles.Consumer.ToUpper() });
         }
+
+        public DbSet<ControllerClaim> ControllerClaim { get; set; }
+        public DbSet<MenuControl> MenuControl { get; set; }
     }
 }

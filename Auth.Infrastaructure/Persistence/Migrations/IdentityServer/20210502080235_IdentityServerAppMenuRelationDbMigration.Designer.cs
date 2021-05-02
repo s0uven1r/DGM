@@ -4,14 +4,16 @@ using Auth.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Auth.Infrastructure.Persistence.Migrations.IdentityServer
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210502080235_IdentityServerAppMenuRelationDbMigration")]
+    partial class IdentityServerAppMenuRelationDbMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,8 +226,8 @@ namespace Auth.Infrastructure.Persistence.Migrations.IdentityServer
                     b.HasData(
                         new
                         {
-                            Id = "c1298372-701d-46df-aa3b-427e5b6d0081",
-                            ConcurrencyStamp = "62f0c393-47f8-450c-aab9-7ee3702c8440",
+                            Id = "a269675e-1d38-4dc1-99ca-e8f02b0e3562",
+                            ConcurrencyStamp = "7b292aba-b2a3-4909-a79d-a9aba6db9ac3",
                             Name = "consumer",
                             NormalizedName = "CONSUMER"
                         });

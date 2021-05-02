@@ -25,12 +25,13 @@ namespace AuthServer
 
                 try
                 {
-                    await services.GetRequiredService<AppIdentityDbContext>().Database.MigrateAsync();
+                    var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+                    await identityContext.Database.MigrateAsync();
 
                     await services.GetRequiredService<PersistedGrantDbContext>().Database.MigrateAsync();
 
-                    var configcontext = services.GetRequiredService<ConfigurationDbContext>();
-                    await configcontext.Database.MigrateAsync();
+                    var configContext = services.GetRequiredService<ConfigurationDbContext>();
+                    await configContext.Database.MigrateAsync();
 
                     var userManager = scope.ServiceProvider
                   .GetRequiredService<UserManager<AppUser>>();
@@ -43,7 +44,8 @@ namespace AuthServer
                     };
                     userManager.CreateAsync(user, "Password").GetAwaiter().GetResult();
 
-                    await ConfigurationDbContextSeed.SeedDefaultConfiguration(configcontext);
+                    await ConfigurationDbContextSeed.SeedDefaultConfiguration(configContext);
+                    await AppIdentityDbContextSeed.SeedDefaultConfiguration(identityContext);
                 }
                 catch (Exception ex)
                 {
