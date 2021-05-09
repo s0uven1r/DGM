@@ -1,11 +1,8 @@
 ﻿using Auth.Infrastructure.Identity;
 using Dgm.Common.Authorization.Claim;
-using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Auth.Infrastructure.Persistence.Seed

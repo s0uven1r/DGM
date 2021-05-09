@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Infrastructure.Persistence
 {
-    public class AppIdentityDbContext : IdentityDbContext<AppUser, IdentityRole, string, UserClaim,
+    public class AppIdentityDbContext : IdentityDbContext<AppUser, AppRole, string, UserClaim,
             IdentityUserRole<string>,
             IdentityUserLogin<string>,
             RoleClaim,
@@ -45,7 +45,6 @@ namespace Auth.Infrastructure.Persistence
             modelBuilder.Entity<RoleClaim>().Ignore(x => x.ClaimType);
             modelBuilder.Entity<RoleClaim>().Ignore(x => x.ClaimValue);
 
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = Constants.Roles.Consumer, NormalizedName = Constants.Roles.Consumer.ToUpper() });
         }
 
         public DbSet<ControllerClaim> ControllerClaim { get; set; }

@@ -14,7 +14,7 @@ namespace Auth.Infrastructure
         {
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<AppUser, IdentityRole>(config =>
+            services.AddIdentity<AppUser, AppRole>(config =>
             {
                 config.Password.RequiredLength = 4;
                 config.Password.RequireDigit = false;
