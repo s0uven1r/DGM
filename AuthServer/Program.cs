@@ -44,7 +44,8 @@ namespace AuthServer
 
                     var user = new AppUser
                     {
-                        Name = "admin",
+                        FirstName = "admin",
+                        LastName = "admin",
                         Email = "admin@dgm.com",
                         UserName = "admin@dgm.com"
                     };

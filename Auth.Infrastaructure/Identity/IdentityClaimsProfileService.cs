@@ -44,18 +44,19 @@ namespace Auth.Infrastructure.Identity
             var userClaims = new List<Claim>();
             userClaims.AddRange(new List<Claim>
             {
-                new Claim("FullName", user.Name),
+                //new Claim("FirstName", user.FirstName),
+                //new Claim("MiddleName", user.MiddleName),
+                //new Claim("LastName", user.LastName),
                 new Claim("UserId", user.Id),
                 new Claim("UserName", user.UserName),
                 new Claim("Email", user.Email),
-                new Claim("Designation",  roleDetail.Name),
-                new Claim("DesignationId",  roleDetail.Id),
+                new Claim("Role",  roleDetail.Name),
+                new Claim("RoleId",  roleDetail.Id),
                 new Claim("permission", JsonConvert.SerializeObject(roleClaims))
             });
 
             context.IssuedClaims.Clear();
             context.IssuedClaims.AddRange(userClaims);
-
         }
 
         public async Task IsActiveAsync(IsActiveContext context)

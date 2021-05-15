@@ -14,6 +14,8 @@ using Auth.Infrastructure.Identity;
 using AuthServer.Extensions;
 using IdentityServer4;
 using Auth.Infrastructure.Constants;
+using AuthServer.Models.Users.Employee.Response;
+using AuthServer.Models.Users.Employee.Request;
 
 namespace AuthServer.Controllers
 {
@@ -21,14 +23,16 @@ namespace AuthServer.Controllers
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events)
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _interaction = interaction;
             _schemeProvider = schemeProvider;
             _clientStore = clientStore;
@@ -97,7 +101,7 @@ namespace AuthServer.Controllers
                 var user = await _userManager.FindByNameAsync(model.Username);
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.Name));
+                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.FirstName));
 
                     // only set explicit expiration here if user chooses "remember me". 
                     // otherwise we rely upon expiration configured in cookie middleware.
@@ -110,7 +114,7 @@ namespace AuthServer.Controllers
                             ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
                         };
                     };
-                   
+
                     var isuser = new IdentityServerUser(user.Id)
                     {
                         DisplayName = user.UserName
@@ -168,14 +172,16 @@ namespace AuthServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new AppUser { UserName = model.Email, Name = model.Name, Email = model.Email };
+            var user = new AppUser { UserName = model.Email, FirstName = model.FirstName, Email = model.Email };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors);
 
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("name", user.Name));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("username", user.UserName));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("firstname", user.FirstName));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("middlename", user.MiddleName));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("lastname", user.LastName));
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("email", user.Email));
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Consumer));
 
@@ -187,8 +193,84 @@ namespace AuthServer.Controllers
         {
             await _signInManager.SignOutAsync();
             var context = await _interaction.GetLogoutContextAsync(logoutId);
-            return Redirect(context.PostLogoutRedirectUri?? "http://localhost:4200/auth-callback");
+            return Redirect(context.PostLogoutRedirectUri ?? "http://localhost:4200/auth-callback");
         }
+
+
+        [HttpGet]
+        [Route("GetEmployees")]
+        public IActionResult GetEmployees()
+        {
+            var users = _userManager.Users.Select(x => new CreateEmployeeResponse
+            {
+                Id = x.Id,
+                Email = x.Email,
+                FirstName = x.FirstName,
+                MiddleName = x.MiddleName,
+                LastName =x.LastName,
+            });
+            if (users == null) return NotFound();
+            return Ok(users);
+        }
+
+        [HttpPost("CreateEmployee")]
+        public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest createEmployeeRequest)
+        {
+            bool usernameExists = await _userManager.FindByNameAsync(createEmployeeRequest.UserName) != null;
+            if (usernameExists)
+            {
+                return BadRequest("Username is taken.");
+            }
+            bool idExists = await _userManager.FindByIdAsync(createEmployeeRequest.Id) != null;
+            if (idExists)
+            {
+                return BadRequest("ID must be unique.");
+            }
+
+            bool emailExists = await _userManager.FindByEmailAsync(createEmployeeRequest.Email) != null;
+            if (emailExists)
+            {
+                return BadRequest("Email is in use.");
+            }
+
+            var applicationUser = new AppUser
+            {
+                UserName = createEmployeeRequest.UserName,
+                Email = createEmployeeRequest.Email,
+                FirstName = createEmployeeRequest.FirstName,
+                MiddleName = createEmployeeRequest.MiddleName,
+                LastName = createEmployeeRequest.LastName
+            };
+
+            var identityResult = await _userManager.CreateAsync(applicationUser, createEmployeeRequest.Password);
+
+            if (!identityResult.Succeeded)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
+
+            if (string.IsNullOrEmpty(roleName))
+            {
+                await _userManager.DeleteAsync(applicationUser);
+                return BadRequest("Role not found.");
+            }
+
+            var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
+
+            if (roleResult.Succeeded)
+            {
+                return NoContent();
+            }
+            else
+            {
+                await _userManager.DeleteAsync(applicationUser);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
 
         /*****************************************/
         /* helper APIs for the AccountController */
