@@ -1,3 +1,4 @@
+using Auth.Infrastructure.Constants;
 using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
 using Auth.Infrastructure.Persistence.Seed;
@@ -52,7 +53,7 @@ namespace AuthServer
                     var result = userManager.CreateAsync(user, "Password").GetAwaiter().GetResult();
                     if (result.Succeeded)
                     {
-                        await userManager.AddToRoleAsync(user, RoleConstants.SuperAdmin);
+                        await userManager.AddToRoleAsync(user, SystemRoles.SuperAdmin);
                     }
                 }
                 catch (Exception ex)

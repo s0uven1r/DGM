@@ -1,4 +1,5 @@
-﻿using Dgm.Common.Models.Authorization;
+﻿using Auth.Infrastructure.Constants;
+using Dgm.Common.Models.Authorization;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,14 +7,13 @@ namespace Dgm.Common.Constants.Authorization
 {
     public static class RoleConstants
     {
-        public const string SuperAdmin = "Super Admin";
         private static List<RoleSeedViewModel> _role;
 
         static RoleConstants()
         {
             _role = new List<RoleSeedViewModel>()
             {
-                new RoleSeedViewModel{Id = "d0e2d200-79e8-4c5e-b624-bfe2f5104fcd", Title = SuperAdmin},
+                new RoleSeedViewModel{Id = "d0e2d200-79e8-4c5e-b624-bfe2f5104fcd", Title = SystemRoles.SuperAdmin},
             };
 
             if (_role.GroupBy(dr => dr.Id).Any(drg => drg.Count() > 1))

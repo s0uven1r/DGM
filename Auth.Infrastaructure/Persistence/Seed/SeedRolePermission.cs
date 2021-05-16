@@ -1,4 +1,5 @@
-﻿using Auth.Infrastructure.Identity;
+﻿using Auth.Infrastructure.Constants;
+using Auth.Infrastructure.Identity;
 using Dgm.Common.Constants.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Auth.Infrastructure.Persistence.Seed
 
         private static async Task SuperAdminPermission(RoleManager<AppRole> roleManager, AppIdentityDbContext dbContext)
         {
-            var roleId = (await roleManager.FindByNameAsync(RoleConstants.SuperAdmin)).Id;
+            var roleId = (await roleManager.FindByNameAsync(SystemRoles.SuperAdmin)).Id;
             var roleClaims = dbContext.RoleClaims.Where(q => q.RoleId == roleId).Select(q => q.ClaimId);
 
             var claims = new List<RoleClaim>
