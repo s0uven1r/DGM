@@ -6,9 +6,20 @@
     <AssemblyName>AuthServer</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
+  </ItemGroup>
+
  
   <ItemGroup>
     <ProjectReference Include="..\Auth.Infrastaructure\Auth.Infrastructure.csproj" />
+  </ItemGroup>
+
+ 
+  <ItemGroup>
+    <Folder Include="Contracts\Request\" />
+    <Folder Include="Models\Users\Consumer\Response\" />
+    <Folder Include="Models\Users\Consumer\Request\" />
   </ItemGroup>
 
 </Project>

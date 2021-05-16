@@ -1,5 +1,7 @@
 using Auth.Infrastructure;
 using AuthServer.Extensions;
+using AuthServer.Filters;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +29,13 @@ namespace AuthServer
                .AllowAnyMethod()
                .AllowAnyHeader()));
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+                options.Filters.Add<ValidationFilter>())
+                .AddFluentValidation(s =>
+                {
+                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                    //s.RunDefaultMvcValidationAfterFluentValidationExecutes = false; //only support Fluent Validation
+                }); ;
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -60,6 +68,8 @@ namespace AuthServer
             app.UseCors("AllowAll");
 
             app.UseIdentityServer();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

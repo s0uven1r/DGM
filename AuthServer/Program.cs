@@ -1,6 +1,8 @@
+using Auth.Infrastructure.Constants;
 using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
 using Auth.Infrastructure.Persistence.Seed;
+using Dgm.Common.Constants.Authorization;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AuthServer
@@ -33,19 +34,27 @@ namespace AuthServer
                     var configContext = services.GetRequiredService<ConfigurationDbContext>();
                     await configContext.Database.MigrateAsync();
 
-                    var userManager = scope.ServiceProvider
-                  .GetRequiredService<UserManager<AppUser>>();
+                    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+                    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+                    await RoleData.SeedDefaultRolesAsync(roleManager);
+                    await ConfigurationDbContextSeed.SeedDefaultConfiguration(configContext);
+
+                    await AppIdentityDbContextSeed.SeedDefaultConfiguration(identityContext);
+                    await SeedRolePermission.SeedRolewisePermission(roleManager, identityContext);
 
                     var user = new AppUser
                     {
-                        Name = "admin",
+                        FirstName = "admin",
+                        LastName = "admin",
                         Email = "admin@dgm.com",
                         UserName = "admin@dgm.com"
                     };
-                    userManager.CreateAsync(user, "Password").GetAwaiter().GetResult();
-
-                    await ConfigurationDbContextSeed.SeedDefaultConfiguration(configContext);
-                    await AppIdentityDbContextSeed.SeedDefaultConfiguration(identityContext);
+                    var result = userManager.CreateAsync(user, "Password").GetAwaiter().GetResult();
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(user, SystemRoles.SuperAdmin);
+                    }
                 }
                 catch (Exception ex)
                 {

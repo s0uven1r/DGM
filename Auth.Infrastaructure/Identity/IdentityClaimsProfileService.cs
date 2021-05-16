@@ -1,44 +1,62 @@
-﻿using Auth.Infrastructure.Constants;
-using IdentityModel;
-using IdentityServer4;
+﻿using Auth.Infrastructure.Persistence;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
-using System;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Auth.Infrastructure.Identity
 {
     public class IdentityClaimsProfileService : IProfileService
     {
-        private readonly IUserClaimsPrincipalFactory<AppUser> _claimsFactory;
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
+        private readonly AppIdentityDbContext _dbContext;
 
-        public IdentityClaimsProfileService(UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsFactory)
+        public IdentityClaimsProfileService(UserManager<AppUser> userManager,
+                                            RoleManager<AppRole> roleManager,
+                                            AppIdentityDbContext dbContext)
         {
             _userManager = userManager;
-            _claimsFactory = claimsFactory;
+            _roleManager = roleManager;
+            _dbContext = dbContext;
         }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            var sub = context.Subject.GetSubjectId();
-            var user = await _userManager.FindByIdAsync(sub);
-            var principal = await _claimsFactory.CreateAsync(user);
+            var user = await _userManager.GetUserAsync(context.Subject);
+            var userRoles = _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).FirstOrDefault();
 
-            var claims = principal.Claims.ToList();
-            claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
-            claims.Add(new Claim(JwtClaimTypes.GivenName, user.Name));
-            claims.Add(new Claim(IdentityServerConstants.StandardScopes.Email, user.Email));
-            // note: to dynamically add roles (ie. for users other than consumers - simply look them up by sub id
-            claims.Add(new Claim(ClaimTypes.Role, Roles.Consumer)); // need this for role-based authorization - https://stackoverflow.com/questions/40844310/role-based-authorization-with-identityserver4
 
-            context.IssuedClaims = claims;
+            var roleClaims = await (from role in _dbContext.RoleClaims
+                                    join claims in _dbContext.ControllerClaim
+                                    on role.ClaimId equals claims.Id
+                                    where role.RoleId == userRoles.RoleId
+                                    select claims.ClaimValue).ToListAsync();
+
+            var roleDetail = await _roleManager.FindByIdAsync(userRoles.RoleId);
+
+            var userClaims = new List<Claim>();
+            userClaims.AddRange(new List<Claim>
+            {
+                //new Claim("FirstName", user.FirstName),
+                //new Claim("MiddleName", user.MiddleName),
+                //new Claim("LastName", user.LastName),
+                new Claim("UserId", user.Id),
+                new Claim("UserName", user.UserName),
+                new Claim("Email", user.Email),
+                new Claim("Role",  roleDetail.Name),
+                new Claim("RoleId",  roleDetail.Id),
+                new Claim("permission", JsonConvert.SerializeObject(roleClaims))
+            });
+
+            context.IssuedClaims.Clear();
+            context.IssuedClaims.AddRange(userClaims);
         }
 
         public async Task IsActiveAsync(IsActiveContext context)

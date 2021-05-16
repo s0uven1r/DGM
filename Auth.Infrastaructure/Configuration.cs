@@ -56,7 +56,7 @@ namespace Auth.Infrastructure
                     {
                         new Secret("secret".Sha256())
                     },
-                    AccessTokenType = AccessTokenType.Reference,
+                    AccessTokenType = AccessTokenType.Jwt,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     AllowOfflineAccess = true
                 },
