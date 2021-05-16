@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -11,6 +11,7 @@ import { TokenInterceptor } from './core/interceptor/http-token-interceptor';
 
 @NgModule({
   declarations: RoutingComponent,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserModule,

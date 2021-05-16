@@ -1,0 +1,68 @@
+<span class="sb-nav-fixed">
+
+    <!------Top Nav-->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand" routerLink="/dashboard">Start Bootstrap</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" data-cy="topNavToggleSideNav" (click)="toggleSideNav()"><i class="fa fa-bars text-light"></i></button
+        ><!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ml-auto ml-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="userDropdown">
+                    <h6 class="dropdown-header">
+                        <div class="dropdown-user-details">
+                            <div class="dropdown-user-details-name">Fullname</div>
+                            <div class="dropdown-user-details-email">dmg@email</div>
+                        </div>
+                    </h6>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="/dashboard">Settings</a><a class="dropdown-item" routerLink="/dashboard">Activity Log</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="/dashboard">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <!---end -->
+    <div id="layoutSidenav"  >
+        <div id="layoutSidenav_nav" [ngClass]="expandNavStyle">
+            <nav class="sb-sidenav accordion" id="sidenavAccordion" [ngClass]="sidenavStyle">
+                <div class="sb-sidenav-menu" >
+                    <div class="nav">
+                        <ng-container *ngFor="let section of sideNavSections"
+                            ><div class="sb-sidenav-menu-heading" *ngIf="section.text">{{ section.text }}</div>
+                            <ng-container *ngFor="let item of section.items">
+                            </ng-container
+                        ></ng-container>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    <span>FullName</span>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content" >
+            <main>
+                <div class="container-fluid"><ng-content></ng-content></div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2020</div>
+                        <div><a href="#">Privacy Policy &middot;</a><a href="#">Terms &amp; Conditions</a></div>
+                    </div>
+                </div>
+            </footer>
+            
+        </div>
+        </div>
+    </span>

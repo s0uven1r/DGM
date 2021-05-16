@@ -19,7 +19,7 @@ export class AuthCallbackComponent implements OnInit {
           if (!this.oauthService.hasValidIdToken() || !this.oauthService.hasValidAccessToken()) {
               this.oauthService.initImplicitFlow();
           }else{
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/dashboard');
           }
       });
   }

@@ -6,7 +6,7 @@ import { RoutePath } from './infrastructure/datum/route-path';
 const routes: Routes = RoutePath.AppRoutePath;
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
