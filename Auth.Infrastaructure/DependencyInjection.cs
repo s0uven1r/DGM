@@ -1,5 +1,6 @@
 ﻿using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
+using IdentityServer4;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,14 +25,6 @@ namespace Auth.Infrastructure
                  .AddEntityFrameworkStores<AppIdentityDbContext>()
                  .AddDefaultTokenProviders();
 
-
-            services.ConfigureApplicationCookie(config =>
-            {
-                config.Cookie.Name = "IdentityServer.Cookie";
-                config.LoginPath = "/Account/Login";
-                config.LogoutPath = "/Account/Logout";
-            });
-
             services.AddIdentityServer()
                 .AddAspNetIdentity<AppUser>()
                 .AddConfigurationStore(options =>
@@ -49,22 +42,17 @@ namespace Auth.Infrastructure
                 .AddDeveloperSigningCredential()
                 .AddProfileService<IdentityClaimsProfileService>();
 
-            //.AddInMemoryIdentityResources(Configuration.GetIdentityResources())
-            //.AddInMemoryApiScopes(Configuration.GetApiScopes())
-            //.AddInMemoryApiResources(Configuration.GetApiResources())
-            //.AddInMemoryClients(Configuration.GetClients());
+            services.AddAuthentication().AddLocalApi();
 
-            /* We'll play with this down the road... 
-                  services.AddAuthentication()
-                  .AddGoogle("Google", options =>
-                  {
-                      options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-                      options.ClientId = "<insert here>";
-                      options.ClientSecret = "<insert here>";
-                  });*/
-
-            services.AddTransient<IProfileService, IdentityClaimsProfileService>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(IdentityServerConstants.LocalApi.PolicyName, policy =>
+                {
+                    policy.AddAuthenticationSchemes(IdentityServerConstants.LocalApi.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                    // custom requirements
+                });
+            });
 
             return services;
         }
