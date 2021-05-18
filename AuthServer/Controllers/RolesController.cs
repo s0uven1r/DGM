@@ -1,17 +1,20 @@
 ﻿using Auth.Infrastructure.Identity;
+using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Models.Roles.Request;
 using AuthServer.Models.Roles.Response;
+using Dgm.Common.Authorization.Claim.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace AuthServer.Controllers
 {
 
     [Route("Authorization/[controller]")]
-    [Authorize]
+    [Authorize(LocalApi.PolicyName)]
     public class RolesController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;
@@ -24,8 +27,10 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("GetRoles")]
+        [ApiAuthorize(IdentityClaimConstant.CreateIdentity)]
         public IActionResult GetRoles()
         {
+            var abc = User.Claims.ToList();
             var users = _roleManager.Roles.Select(x => new CreateRoleResponse
             {
                 Id = x.Id,
@@ -37,6 +42,7 @@ namespace AuthServer.Controllers
 
         [HttpPost]
         [Route("AddRole")]
+        [ApiAuthorize(IdentityClaimConstant.CreateIdentity)]
         public async Task<IActionResult> AddRole(CreateRoleRequest createRoleRequest)
         {
             bool exists = await _roleManager.RoleExistsAsync(createRoleRequest.Name);

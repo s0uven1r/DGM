@@ -23,19 +23,19 @@ namespace AuthServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews(options =>
+              options.Filters.Add<ValidationFilter>())
+              .AddFluentValidation(s =>
+              {
+                  s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                    //s.RunDefaultMvcValidationAfterFluentValidationExecutes = false; //only support Fluent Validation
+                });
+
             services.AddInfrastructure(Config);
 
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader()));
-
-            services.AddControllersWithViews(options =>
-                options.Filters.Add<ValidationFilter>())
-                .AddFluentValidation(s =>
-                {
-                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
-                    //s.RunDefaultMvcValidationAfterFluentValidationExecutes = false; //only support Fluent Validation
-                }); ;
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
