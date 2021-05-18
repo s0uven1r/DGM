@@ -40,13 +40,13 @@ namespace Auth.Infrastructure.Identity
                                     select claims.ClaimValue).ToListAsync();
 
             var roleDetail = await _roleManager.FindByIdAsync(userRoles.RoleId);
-
+            var fullName = string.Join(" ", user.FirstName, user.MiddleName, user.LastName);
             var userClaims = new List<Claim>();
             userClaims.AddRange(new List<Claim>
             {
-                //new Claim("FirstName", user.FirstName),
-                //new Claim("MiddleName", user.MiddleName),
-                //new Claim("LastName", user.LastName),
+
+                new Claim("FullName", fullName),
+                new Claim("PhoneNo", user.PhoneNumber??"-"),
                 new Claim("UserId", user.Id),
                 new Claim("UserName", user.UserName),
                 new Claim("Email", user.Email),

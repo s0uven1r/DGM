@@ -1,5 +1,4 @@
 <span class="sb-nav-fixed">
-
     <!------Top Nav-->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" routerLink="/dashboard">Start Bootstrap</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" data-cy="topNavToggleSideNav" (click)="toggleSideNav()"><i class="fa fa-bars text-light"></i></button
@@ -19,14 +18,14 @@
                 <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="userDropdown">
                     <h6 class="dropdown-header">
                         <div class="dropdown-user-details">
-                            <div class="dropdown-user-details-name">Fullname</div>
-                            <div class="dropdown-user-details-email">dmg@email</div>
+                            <div class="dropdown-user-details-name"><strong>{{user.FullName}}</strong></div>
+                            <div><small>{{user.Email}} <br> {{user.PhoneNo}} <br> {{user.Role}}</small></div>
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" routerLink="/dashboard">Settings</a><a class="dropdown-item" routerLink="/dashboard">Activity Log</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" routerLink="/dashboard">Logout</a>
+                    <a class="dropdown-item" (click)="getLogout()" routerLink="/dashboard">Logout</a>
                 </div>
             </li>
         </ul>
@@ -40,8 +39,8 @@
                         <ng-container *ngFor="let section of sideNavSections"
                             ><div class="sb-sidenav-menu-heading" *ngIf="section.text">{{ section.text }}</div>
                             <ng-container *ngFor="let item of section.items">
-                            </ng-container
-                        ></ng-container>
+                            </ng-container>
+                        </ng-container>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -52,7 +51,9 @@
         </div>
         <div id="layoutSidenav_content" >
             <main>
-                <div class="container-fluid"><ng-content></ng-content></div>
+                <div class="container-fluid">
+                    <router-outlet></router-outlet>
+                </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
@@ -64,5 +65,5 @@
             </footer>
             
         </div>
-        </div>
-    </span>
+    </div>
+</span>

@@ -10,7 +10,6 @@ export class TokenInterceptor implements HttpInterceptor {
     constructor(private injector: Injector) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
         if (this.getAuthService().hasValidAccessToken()) {
             request = request.clone({
                 setHeaders: {

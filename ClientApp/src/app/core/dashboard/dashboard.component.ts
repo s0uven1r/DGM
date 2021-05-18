@@ -20,17 +20,18 @@ export class DashboardComponent implements OnInit {
     sideNavSections = sideNavSections;
     sidenavStyle = 'sb-sidenav-dark';
     expandNavStyle = '';
-    
     routeDataSubscription!: Subscription;
     sideNavItem!: any;
     isActive!: boolean;
     expanded = false;
     routeData!: any;
 
-  constructor(public router: Router, private authService: OAuthService
-    , public navigationService: NavigationService,
+  constructor(public router: Router,
+     private authService: OAuthService,
+     public navigationService: NavigationService,
     private changeDetectorRef: ChangeDetectorRef) { 
     this.user = this.authService.getIdentityClaims();
+    console.log(sideNavSections)
     this.router.events
     .pipe(filter(event => event instanceof ChildActivationEnd))
     .subscribe(event => {
@@ -60,5 +61,9 @@ toggleSideNav() {
     this.expanded = false;
     this. expandNavStyle = '';
   }
+}
+getLogout(){
+  this.authService.revokeTokenAndLogout();
+
 }
 }
