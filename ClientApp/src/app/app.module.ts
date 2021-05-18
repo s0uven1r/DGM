@@ -29,7 +29,7 @@ import { TokenInterceptor } from './core/interceptor/http-token-interceptor';
 
   },{
 
-    provide: TokenInterceptor,
+    provide: HTTP_INTERCEPTORS,
 
     useClass: TokenInterceptor,
 

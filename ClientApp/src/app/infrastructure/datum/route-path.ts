@@ -4,6 +4,7 @@ import { HomeComponent } from 'src/app/core/home/home.component';
 import { UndefinedPageComponent } from 'src/app/core/undefined-page/undefined-page.component';
 import { AuthCallbackComponent } from 'src/app/featured/auth-callback/auth-callback.component';
 import { CounterComponent } from 'src/app/featured/counter/counter.component';
+import { RoleComponent } from 'src/app/featured/identity/role/role.component';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -15,10 +16,15 @@ export const RoutePath = {
       )},
       {path:'', loadChildren: () =>import('src/app/core/dashboard/dashboard.module').then(
         (m) => m.DashboardModule
-      )},
+      ),},
       { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
     ],
   CounterRoutePath:[{path: 'counter', component: CounterComponent}],
-  DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }],
+  DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent,
+    children: [{path:'', loadChildren: () =>import('src/app/featured/identity/role/role.module').then(
+      (m) => m.RoleModule
+    )}],
+  canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: 'auth-callback', component: AuthCallbackComponent, canActivate: [AuthGuard]}],
+  RoleRoutePath:[{path: 'role', component: RoleComponent, canActivate: [AuthGuard]}],
 };

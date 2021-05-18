@@ -2,7 +2,7 @@
 export const sideNavSections = [
     {
         text: 'CORE',
-        items: ['dashboard'],
+        items: ['dashboard','role'],
     },
     {
         text: 'INTERFACE',
@@ -19,6 +19,11 @@ export const sideNavItems = {
         icon: 'tachometer-alt',
         text: 'Dashboard',
         link: '/dashboard',
+    },
+    role: { 
+    icon: 'tachometer-alt',
+    text: 'Role',
+    link: '/role',
     },
     layouts: {
         icon: 'columns',

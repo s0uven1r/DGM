@@ -36,9 +36,10 @@
             <nav class="sb-sidenav accordion" id="sidenavAccordion" [ngClass]="sidenavStyle">
                 <div class="sb-sidenav-menu" >
                     <div class="nav">
-                        <ng-container *ngFor="let section of sideNavSections"
-                            ><div class="sb-sidenav-menu-heading" *ngIf="section.text">{{ section.text }}</div>
+                        <ng-container *ngFor="let section of sideNavSections">
+                            <div class="sb-sidenav-menu-heading" *ngIf="section.text">{{ section.text }}</div>
                             <ng-container *ngFor="let item of section.items">
+                                <ng-container *ngTemplateOutlet="recursiveMenu; context:{ sideNavItem: item }"></ng-container>
                             </ng-container>
                         </ng-container>
                     </div>
@@ -67,3 +68,14 @@
         </div>
     </div>
 </span>
+<ng-template #recursiveMenu let-sideNavItem="sideNavItem">
+     <a class="nav-link" routerLink="/dashboard/role" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}"
+        ><div class="sb-nav-link-icon" *ngIf="sideNavItem.icon"><fa-icon [icon]='["fas", sideNavItem.icon]'></fa-icon></div>
+        {{sideNavItem|titlecase}}
+        <div class="sb-sidenav-collapse-arrow"><fa-icon class="ml-auto" *ngIf="sideNavItem.submenu" [icon]="['fas', 'angle-down']"></fa-icon></div>
+    </a>
+    
+    <nav class="sb-sidenav-menu-nested nav" *ngIf="sideNavItem.submenu &amp;&amp; expanded">
+        <ng-container class="submenu" *ngTemplateOutlet="recursiveMenu; context:{ sideNavItem: sideNavItem.submenu }"></ng-container>
+    </nav>
+  </ng-template>

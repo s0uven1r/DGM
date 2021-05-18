@@ -31,7 +31,6 @@ export class DashboardComponent implements OnInit {
      public navigationService: NavigationService,
     private changeDetectorRef: ChangeDetectorRef) { 
     this.user = this.authService.getIdentityClaims();
-    console.log(sideNavSections)
     this.router.events
     .pipe(filter(event => event instanceof ChildActivationEnd))
     .subscribe(event => {
