@@ -10036,7 +10036,7 @@ body {
   flex-shrink: 0;
   transition: transform 0.15s ease-in-out;
   z-index: 1038;
-  transform: translateX(-225px);
+  /* transform: translateX(-225px); */
 }
 #layoutSidenav #layoutSidenav_content {
   position: relative;
@@ -10075,11 +10075,9 @@ body {
     transition: margin 0.15s ease-in-out;
   }
 
-  .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
-    transform: translateX(-225px);
-  }
-  .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
-    margin-left: -225px;
+  
+  .layoutMarginLeft {
+    margin-left: -225px !important;
   }
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
     display: none;

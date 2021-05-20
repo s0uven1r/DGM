@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
     subscription: Subscription = new Subscription();
     sidenavStyle = 'sb-sidenav-dark';
     expandNavStyle = '';
+    expandContentStyle = '';
     expanded = false;
     menuList: MenuResultViewModel[];
   constructor(public router: Router,
@@ -49,9 +50,11 @@ toggleSideNav() {
   if(this.expanded == false){
     this.expanded = true;
     this. expandNavStyle = 'collapse';
+    this.expandContentStyle = 'layoutMarginLeft';
   }else{
     this.expanded = false;
     this. expandNavStyle = '';
+    this.expandContentStyle = '';
   }
 }
 getLogout(){
