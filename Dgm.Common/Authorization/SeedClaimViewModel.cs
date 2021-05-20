@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dgm.Common.Authorization
+﻿namespace Dgm.Common.Authorization
 {
     public class SeedClaimViewModel
     {
@@ -18,5 +12,7 @@ namespace Dgm.Common.Authorization
         public string RouteUrl { get; set; }
         public string ParentId { get; set; }
         public int Rank { get; set; }
+        public string ClaimModule { get; set; }
+        public string ClaimTitle { get; set; }
     }
 }

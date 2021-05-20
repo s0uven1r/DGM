@@ -1,6 +1,5 @@
 ﻿using Auth.Infrastructure.Constants;
 using Auth.Infrastructure.Identity;
-using Dgm.Common.Constants.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;

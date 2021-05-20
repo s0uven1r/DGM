@@ -1,18 +1,16 @@
 ﻿using Dgm.Common.Authorization.Claim.Identity;
 using Dgm.Common.Authorization.MenuControl.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dgm.Common.Authorization.Claim
 {
     public static class ClaimConstant
     {
-        public static List<SeedClaimViewModel> ClaimList()
+        private static List<SeedClaimViewModel> _list;
+        static ClaimConstant()
         {
-            return new List<SeedClaimViewModel>()
+            _list = new List<SeedClaimViewModel>()
             {
                 #region identity
                  new SeedClaimViewModel { Id = "7f51ab29-844a-470e-9172-42cde237dad9",
@@ -24,9 +22,11 @@ namespace Dgm.Common.Authorization.Claim
                      FaClass= "fa-user",
                      ParentId = null,
                      Rank = 1,
-                     RouteUrl = "/identity"
+                     RouteUrl = "/identity",
+                     ClaimModule = PermissionModuleConstant.Authorization,
+                     ClaimTitle = "View Identity"
                  },
-                  new SeedClaimViewModel { Id = "7f51ab29-844a-470e-9172-42cde237dae7",
+                 new SeedClaimViewModel { Id = "7f51ab29-844a-470e-9172-42cde237dae7",
                      ClaimValue=IdentityClaimConstant.CreateIdentity,
                      MenuId = "7f51ab29-844a-470e-9172-42cde237dae0",
                      Alias = IdentityMenuConstant.IdentityCreate.Value,
@@ -35,10 +35,20 @@ namespace Dgm.Common.Authorization.Claim
                      FaClass= "fa-plus",
                      ParentId = "7f51ab29-844a-470e-9172-42cde237dad0",
                      Rank = 1,
-                     RouteUrl = "/registration"
+                     RouteUrl = "/registration",
+                     ClaimModule = PermissionModuleConstant.Authorization,
+                     ClaimTitle = "Create Identity"
                  },
                 #endregion
             };
+        }
+        public static List<SeedClaimViewModel> ClaimList()
+        {
+            return _list;
+        }
+        public static IQueryable<IGrouping<string, SeedClaimViewModel>> GetGroupedResult()
+        {
+            return _list.GroupBy(x => x.ClaimModule).AsQueryable();
         }
     }
 }

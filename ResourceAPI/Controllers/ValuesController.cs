@@ -3,7 +3,6 @@ using Dgm.Common.Authorization.Claim.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace ResourceAPI.Controllers
 {
@@ -14,10 +13,15 @@ namespace ResourceAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        public ValuesController()
+        {
+
+        }
+
         ///GET api/values
         [Permission(IdentityClaimConstant.ViewIdentity)]
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IActionResult Get()
         {
             return Ok("success!");
         }
