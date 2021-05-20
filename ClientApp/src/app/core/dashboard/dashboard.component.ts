@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, HostBinding, ChangeDetectorRef } from '@angular/core';
-import { ChildActivationEnd, Router } from '@angular/router';
+import {  ChildActivationEnd,  Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { sideNavItems, sideNavSections } from 'src/app/infrastructure/datum/data';
-import { NavigationService } from './services';
+import { MenuResultViewModel, NavigationService } from './services';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,19 +13,12 @@ import { NavigationService } from './services';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
-  user: any;
-  @HostBinding('class.sb-sidenav-toggled') sideNavHidden = false;
+    user: any;
     subscription: Subscription = new Subscription();
-    sideNavItems = sideNavItems;
-    sideNavSections = sideNavSections;
     sidenavStyle = 'sb-sidenav-dark';
     expandNavStyle = '';
-    routeDataSubscription!: Subscription;
-    sideNavItem!: any;
-    isActive!: boolean;
     expanded = false;
-    routeData!: any;
-
+    menuList: MenuResultViewModel[];
   constructor(public router: Router,
      private authService: OAuthService,
      public navigationService: NavigationService,
@@ -43,11 +36,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription.add(
-      this.navigationService.sideNavVisible$().subscribe(isVisible => {
-          this.sideNavHidden = !isVisible;
+      this.navigationService.getMenu().subscribe(x => {
+         this.menuList = x;
           this.changeDetectorRef.markForCheck();
-      })
-  );
+      }));
+ 
 }
 ngOnDestroy() {
   this.subscription.unsubscribe();
@@ -65,4 +58,5 @@ getLogout(){
   this.authService.revokeTokenAndLogout();
 
 }
+  
 }

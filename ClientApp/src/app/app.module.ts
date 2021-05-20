@@ -8,7 +8,7 @@ import { HttpErrorInterceptor } from './core/interceptor/http-error.interceptor'
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthGuard } from './core/authorize/auth-guard';
 import { TokenInterceptor } from './core/interceptor/http-token-interceptor';
-
+import { BreadcrumbModule } from 'angular-crumbs';
 @NgModule({
   declarations: RoutingComponent,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -17,6 +17,7 @@ import { TokenInterceptor } from './core/interceptor/http-token-interceptor';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    BreadcrumbModule,
     OAuthModule.forRoot()
   ],
   providers: [ {

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ChildActivationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -11,7 +12,7 @@ export class NavigationService {
     _routeData$ = new BehaviorSubject({} as SBRouteData);
     _currentURL$ = new BehaviorSubject('');
 
-    constructor(public route: ActivatedRoute, public router: Router) {
+    constructor(public route: ActivatedRoute, public router: Router, private http: HttpClient) {
         this.router.events
             .pipe(filter(event => event instanceof ChildActivationEnd))
             .subscribe(event => {
@@ -43,4 +44,14 @@ export class NavigationService {
     currentURL$(): Observable<string> {
         return this._currentURL$;
     }
+    getMenu() {
+        return  this.http.get<MenuResultViewModel[]>('assets/menu.json');
+      }
+}
+export interface MenuResultViewModel{
+    id: number;
+    title: string;
+    class: string;
+    url: string;
+    menu?: MenuResultViewModel[];
 }

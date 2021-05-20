@@ -16,15 +16,15 @@ export const RoutePath = {
       )},
       {path:'', loadChildren: () =>import('src/app/core/dashboard/dashboard.module').then(
         (m) => m.DashboardModule
-      ),},
+      ), data: { breadcrumb: 'Dashboard'}},
       { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
     ],
   CounterRoutePath:[{path: 'counter', component: CounterComponent}],
-  DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent,
+  DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent, 
     children: [{path:'', loadChildren: () =>import('src/app/featured/identity/role/role.module').then(
       (m) => m.RoleModule
     )}],
   canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: 'auth-callback', component: AuthCallbackComponent, canActivate: [AuthGuard]}],
-  RoleRoutePath:[{path: 'role', component: RoleComponent, canActivate: [AuthGuard]}],
+  RoleRoutePath:[{path: 'role', component: RoleComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Role'}}],
 };

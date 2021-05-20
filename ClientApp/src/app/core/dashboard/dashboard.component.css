@@ -10250,3 +10250,9 @@ body {
 .sb-sidenav-collapse-arrow {
   transform: rotate(-90deg);
 }
+#layoutSidenav_nav .nav-link[data-toggle].collapsed:after {
+    content: " ▾";
+}
+#layoutSidenav_nav .nav-link[data-toggle]:not(.collapsed):after {
+    content: " ▴";
+}

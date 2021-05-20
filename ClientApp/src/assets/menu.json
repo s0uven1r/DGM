@@ -1,0 +1,83 @@
+[{
+  "id": 1,
+  "title": "User Management",
+  "class": "fa fa-user",
+  "url": "#user",
+  "menu": [{
+    "id": 2,
+    "title": "Category",
+    "class": "",
+    "url": "/dashboard/category"
+    },
+    {
+      "id": 3,
+      "title": "Role",
+      "class": "",
+      "url": "/dashboard/role", 
+      "menu": [{
+        "id": 5,
+        "title": "Internal",
+        "class": "",
+        "url": "/dashboard/user/internal"
+        },
+        {
+          "id": 6,
+          "title": "External",
+          "class": "",
+          "url": "/dashboard/user/external"
+        },
+        {
+          "id": 7,
+          "title": "Pending",
+          "class": "",
+          "url": "/dashboard/user/pending"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "User",
+      "class": "",
+      "url": "#UserA",
+      "menu": [{
+        "id": 5,
+        "title": "Internal",
+        "class": "",
+        "url": "/dashboard/user/internal"
+        },
+        {
+          "id": 6,
+          "title": "External",
+          "class": "",
+          "url": "/dashboard/user/external"
+        },
+        {
+          "id": 7,
+          "title": "Pending",
+          "class": "",
+          "url": "/dashboard/user/pending"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Permission",
+      "class": "",
+      "url": "/dashboard/user/permission"
+    },
+    {
+      "id": 9,
+      "title": "Menu Config",
+      "class": "",
+      "url": "/dashboard/user/menu"
+    }
+  ]
+},
+{
+  "id": 2,
+  "title": "Resource Management",
+  "class": "fas fa-shuttle-van text-primary",
+  "url": "#user"
+}
+]
+ 
