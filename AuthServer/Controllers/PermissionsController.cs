@@ -1,14 +1,18 @@
 ﻿using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
+using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Models.Permission;
 using Dgm.Common.Authorization.Claim;
+using Dgm.Common.Authorization.Claim.Identity;
 using Dgm.Common.Error;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace AuthServer.Controllers
 {
@@ -26,7 +30,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("GetRolePermission/{roleId}")]
-        //[ApiAuthorize(IdentityClaimConstant.CreateIdentity)]
+        //[ApiAuthorize(IdentityClaimConstant.ViewPermission)]
         public async Task<IActionResult> Get(string roleId)
         {
             var existingRole = await _roleManager.FindByIdAsync(roleId);
@@ -58,7 +62,7 @@ namespace AuthServer.Controllers
 
         [HttpPost]
         [Route("ManageRolePermission")]
-        //[ApiAuthorize(IdentityClaimConstant.CreateIdentity)]
+        //[ApiAuthorize(IdentityClaimConstant.UpdatePermission)]
         public async Task<IActionResult> Manage([FromBody] RolePermissionViewModel model)
         {
             var transaction = await _dbContext.Database.BeginTransactionAsync();

@@ -27,7 +27,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("GetRoles")]
-        [ApiAuthorize(IdentityClaimConstant.CreateIdentity)]
+        [ApiAuthorize(IdentityClaimConstant.ViewRole)]
         public IActionResult GetRoles()
         {
             var abc = User.Claims.ToList();
@@ -42,7 +42,7 @@ namespace AuthServer.Controllers
 
         [HttpPost]
         [Route("AddRole")]
-        [ApiAuthorize(IdentityClaimConstant.CreateIdentity)]
+        [ApiAuthorize(IdentityClaimConstant.CreateRole)]
         public async Task<IActionResult> AddRole(CreateRoleRequest createRoleRequest)
         {
             bool exists = await _roleManager.RoleExistsAsync(createRoleRequest.Name);
