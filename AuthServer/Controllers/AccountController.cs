@@ -16,6 +16,7 @@ using IdentityServer4;
 using Auth.Infrastructure.Constants;
 using AuthServer.Models.Users.Employee.Response;
 using AuthServer.Models.Users.Employee.Request;
+using Microsoft.Extensions.Logging;
 
 namespace AuthServer.Controllers
 {
@@ -28,8 +29,9 @@ namespace AuthServer.Controllers
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events)
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -38,6 +40,7 @@ namespace AuthServer.Controllers
             _clientStore = clientStore;
             _events = events;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -147,8 +150,9 @@ namespace AuthServer.Controllers
                     }
                     else
                     {
+                        _logger.LogError("Inavlid Return Url. User:{1} ReturnUrl: {2} TimeStamp:{3}", model.Username, model.ReturnUrl, DateTime.UtcNow);
                         // user might have clicked on a malicious link - should be logged
-                        throw new Exception("invalid return URL");
+                        throw new Exception("Invalid return URL");
                     }
                 }
 
@@ -207,7 +211,7 @@ namespace AuthServer.Controllers
                 Email = x.Email,
                 FirstName = x.FirstName,
                 MiddleName = x.MiddleName,
-                LastName =x.LastName,
+                LastName = x.LastName,
             });
             if (users == null) return NotFound();
             return Ok(users);

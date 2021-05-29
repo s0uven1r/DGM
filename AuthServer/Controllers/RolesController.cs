@@ -27,7 +27,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("GetRoles")]
-        [ApiAuthorize(IdentityClaimConstant.CreateIdentity)]
+        [ApiAuthorize(IdentityClaimConstant.ViewRole)]
         public IActionResult GetRoles()
         {
             var abc = User.Claims.ToList();
@@ -42,7 +42,7 @@ namespace AuthServer.Controllers
 
         [HttpPost]
         [Route("AddRole")]
-        [ApiAuthorize(IdentityClaimConstant.CreateIdentity)]
+        [ApiAuthorize(IdentityClaimConstant.CreateRole)]
         public async Task<IActionResult> AddRole(CreateRoleRequest createRoleRequest)
         {
             bool exists = await _roleManager.RoleExistsAsync(createRoleRequest.Name);
@@ -51,8 +51,10 @@ namespace AuthServer.Controllers
                 return BadRequest($"Role \'{createRoleRequest.Name}\' is already taken.");
             }
 
-            var role = new AppRole();
-            role.Name = createRoleRequest.Name;
+            var role = new AppRole
+            {
+                Name = createRoleRequest.Name
+            };
 
             await _roleManager.CreateAsync(role);
             return Ok();

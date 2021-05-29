@@ -1,3 +1,4 @@
+using Dgm.Common.Error;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -66,6 +67,9 @@ namespace ResourceAPI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // global error handler
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -91,7 +95,7 @@ namespace ResourceAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

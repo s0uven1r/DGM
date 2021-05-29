@@ -10,7 +10,6 @@ namespace Auth.Infrastructure.Persistence.Seed
     {
         public static async Task SeedDefaultRolesAsync(RoleManager<AppRole> rm)
         {
-
             var existingRoles = rm.Roles.ToList();
 
             //Role Ids must be same as their Designation Ids
@@ -26,6 +25,5 @@ namespace Auth.Infrastructure.Persistence.Seed
                 await rm.CreateAsync(role);
             }
         }
-
     }
 }

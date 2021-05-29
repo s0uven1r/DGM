@@ -80,7 +80,12 @@ namespace Auth.Infrastructure
                     AccessTokenLifetime = 3600,
                     RedirectUris = {"https://localhost:44337/swagger/oauth2-redirect.html"},
                     AllowedCorsOrigins = {"https://localhost:44337"},
-                    AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.Email, "api.read" },
+                    AllowedScopes = {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "api.read"
+                    },
                 },
 
                  new Client

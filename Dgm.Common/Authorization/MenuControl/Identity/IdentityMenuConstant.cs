@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Dgm.Common.Authorization.MenuControl.Identity
 {
@@ -10,5 +6,13 @@ namespace Dgm.Common.Authorization.MenuControl.Identity
     {
         public static KeyValuePair<string, string> Identity = new("Identity", "identity");
         public static KeyValuePair<string, string> IdentityCreate = new("Registration", "identity-reg");
+
+        public static KeyValuePair<string, string> Role = new("Role", "role");
+        public static KeyValuePair<string, string> RoleCreate = new("Role", "create");
+        public static KeyValuePair<string, string> RoleUpdate = new("Role", "update");
+
+        public static KeyValuePair<string, string> Permission = new("Permission", "permission");
+        public static KeyValuePair<string, string> PermissionUpdate = new("Permission", "update");
+
     }
 }
