@@ -51,8 +51,10 @@ namespace AuthServer.Controllers
                 return BadRequest($"Role \'{createRoleRequest.Name}\' is already taken.");
             }
 
-            var role = new AppRole();
-            role.Name = createRoleRequest.Name;
+            var role = new AppRole
+            {
+                Name = createRoleRequest.Name
+            };
 
             await _roleManager.CreateAsync(role);
             return Ok();
