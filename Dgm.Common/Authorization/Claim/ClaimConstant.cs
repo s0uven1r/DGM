@@ -12,32 +12,37 @@ namespace Dgm.Common.Authorization.Claim
         {
             _list = new List<SeedClaimViewModel>()
             {
-                #region identity
+                #region User management
                  new SeedClaimViewModel { Id = "7f51ab29-844a-470e-9172-42cde237dad9",
                      ClaimValue=IdentityClaimConstant.ViewIdentity,
                      MenuId = "7f51ab29-844a-470e-9172-42cde237dad0",
-                     Alias = IdentityMenuConstant.Identity.Value,
-                     Title = IdentityMenuConstant.Identity.Key,
+                     Alias = IdentityMenuConstant.UserManagement.Value,
+                     Title = IdentityMenuConstant.UserManagement.Key,
                      Class= "text-primary",
                      FaClass= "fa-user",
                      ParentId = null,
                      Rank = 1,
-                     RouteUrl = "/identity",
+                     RouteUrl = "account",
                      ClaimModule = PermissionModuleConstant.Authorization,
-                     ClaimTitle = "View Identity"
+                     ClaimTitle = "View User Management"
                  },
                  new SeedClaimViewModel { Id = "7f51ab29-844a-470e-9172-42cde237dae7",
-                     ClaimValue=IdentityClaimConstant.CreateIdentity,
+                     ClaimValue=IdentityClaimConstant.ViewUser,
                      MenuId = "7f51ab29-844a-470e-9172-42cde237dae0",
-                     Alias = IdentityMenuConstant.IdentityCreate.Value,
-                     Title = IdentityMenuConstant.IdentityCreate.Key,
+                     Alias = IdentityMenuConstant.User.Value,
+                     Title = IdentityMenuConstant.User.Key,
                      Class= "text-primary",
-                     FaClass= "fa-plus",
+                     FaClass= "",
                      ParentId = "7f51ab29-844a-470e-9172-42cde237dad0",
                      Rank = 1,
-                     RouteUrl = "/registration",
+                     RouteUrl = "user",
                      ClaimModule = PermissionModuleConstant.Authorization,
-                     ClaimTitle = "Create Identity"
+                     ClaimTitle = "View User"
+                 },
+                  new SeedClaimViewModel { Id = "05c127b6-a88a-44fc-a319-4d3ef7354ac7",
+                     ClaimValue=IdentityClaimConstant.WriteUser,
+                     ClaimModule = PermissionModuleConstant.Authorization,
+                     ClaimTitle = "Write User"
                  },
                  new SeedClaimViewModel { Id = "3a8e8e1d-ab8b-40af-9b94-4523885966f0",
                      ClaimValue=IdentityClaimConstant.ViewRole,
@@ -46,63 +51,27 @@ namespace Dgm.Common.Authorization.Claim
                      Title = IdentityMenuConstant.Role.Key,
                      Class= "text-primary",
                      FaClass= "fa-plus",
-                     ParentId = null,
+                     ParentId = "7f51ab29-844a-470e-9172-42cde237dad0",
                      Rank = 1,
-                     RouteUrl = "/role",
+                     RouteUrl = "role",
                      ClaimModule = PermissionModuleConstant.Authorization,
-                     ClaimTitle = "View Role"
+                     ClaimTitle = "View role"
                  },
                  new SeedClaimViewModel { Id = "5465f04d-ea46-400e-bf68-84d9108a9344",
-                     ClaimValue=IdentityClaimConstant.CreateRole,
-                     MenuId = "88691d8e-9788-4105-861a-db3e942843b4",
-                     Alias = IdentityMenuConstant.RoleCreate.Value,
-                     Title = IdentityMenuConstant.RoleCreate.Key,
-                     Class= "text-primary",
-                     FaClass= "fa-plus",
-                     ParentId = "107df68e-f076-4edc-8c05-8188b955e960",
-                     Rank = 1,
-                     RouteUrl = "/role/create",
+                     ClaimValue=IdentityClaimConstant.WriteRole,
                      ClaimModule = PermissionModuleConstant.Authorization,
-                     ClaimTitle = "Create Role"
+                     ClaimTitle = "Write Role"
                  },
-                 new SeedClaimViewModel { Id = "05c127b6-a88a-44fc-a319-4d3ef7354ac7",
-                     ClaimValue=IdentityClaimConstant.UpdateRole,
-                     MenuId = "9f7b0fe0-4c5f-4689-938e-3952937a359c",
-                     Alias = IdentityMenuConstant.RoleUpdate.Value,
-                     Title = IdentityMenuConstant.RoleUpdate.Key,
-                     Class= "text-primary",
-                     FaClass= "fa-plus",
-                     ParentId = "107df68e-f076-4edc-8c05-8188b955e960",
-                     Rank = 2,
-                     RouteUrl = "/role/update",
-                     ClaimModule = PermissionModuleConstant.Authorization,
-                     ClaimTitle = "Update Role"
-                 },
+                
                  new SeedClaimViewModel { Id = "68cc24d2-36c3-4b80-97a7-14ece753a318",
-                     ClaimValue=IdentityClaimConstant.ViewPermission,
-                     MenuId = "0d5faddd-ddce-4a27-ae0e-d55a791c9f8f",
-                     Alias = IdentityMenuConstant.Permission.Value,
-                     Title = IdentityMenuConstant.Permission.Key,
-                     Class= "text-primary",
-                     FaClass= "fa-plus",
-                     ParentId = null,
-                     Rank = 1,
-                     RouteUrl = "/permission",
+                     ClaimValue=IdentityClaimConstant.WritePermission,
                      ClaimModule = PermissionModuleConstant.Authorization,
-                     ClaimTitle = "View Permission"
+                     ClaimTitle = "Write Permission"
                  },
                  new SeedClaimViewModel { Id = "0c626829-5d91-46f1-b3a8-c3fa6541d633",
-                     ClaimValue=IdentityClaimConstant.UpdatePermission,
-                     MenuId = "ed0fdcb8-a987-4730-bf85-2c4956bd00bd",
-                     Alias = IdentityMenuConstant.PermissionUpdate.Value,
-                     Title = IdentityMenuConstant.PermissionUpdate.Key,
-                     Class= "text-primary",
-                     FaClass= "fa-plus",
-                     ParentId = "0d5faddd-ddce-4a27-ae0e-d55a791c9f8f",
-                     Rank = 1,
-                     RouteUrl = "/permission/update",
+                     ClaimValue=IdentityClaimConstant.ViewPermission,
                      ClaimModule = PermissionModuleConstant.Authorization,
-                     ClaimTitle = "Update Permission"
+                     ClaimTitle = "View Permission"
                  },
                 #endregion
             };
