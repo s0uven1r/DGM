@@ -19,6 +19,7 @@ export const RoutePath = {
       ), data: { breadcrumb: 'Dashboard'}},
       { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
     ],
+
   CounterRoutePath:[{path: 'counter', component: CounterComponent}],
   DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent, 
     children: [{path:'', loadChildren: () =>import('src/app/featured/identity/role/role.module').then(

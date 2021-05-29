@@ -3,7 +3,6 @@ import {  ChildActivationEnd,  Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { sideNavItems, sideNavSections } from 'src/app/infrastructure/datum/data';
 import { MenuResultViewModel, NavigationService } from './services';
 
 @Component({

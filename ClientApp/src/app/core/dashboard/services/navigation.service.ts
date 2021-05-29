@@ -44,7 +44,7 @@ export class NavigationService {
     currentURL$(): Observable<string> {
         return this._currentURL$;
     }
-    getMenu() {
+    getMenu(): Observable<MenuResultViewModel[]> {
         return  this.http.get<MenuResultViewModel[]>('assets/menu.json');
       }
 }
