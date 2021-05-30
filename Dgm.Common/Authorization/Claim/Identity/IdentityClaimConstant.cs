@@ -3,13 +3,16 @@
     public class IdentityClaimConstant
     {
         public const string ViewIdentity = "Claim.Identity.Read";
-        public const string CreateIdentity = "Claim.Identity.Create";
+        // user
+        public const string ViewUser= "Claim.Identity.User.Read";
+        public const string WriteUser = "Claim.Identity.User.Write";
 
-        //Authorization
+        //role
         public const string ViewRole = "Claim.Role.Read";
-        public const string CreateRole = "Claim.Role.Create";
-        public const string UpdateRole = "Claim.Role.Update";
+        public const string WriteRole = "Claim.Role.Write";
+
+        //permission
         public const string ViewPermission = "Claim.Permission.Read";
-        public const string UpdatePermission = "Claim.Permission.Update";
+        public const string WritePermission = "Claim.Permission.Write";
     }
 }

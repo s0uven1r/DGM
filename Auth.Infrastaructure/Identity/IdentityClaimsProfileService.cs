@@ -37,7 +37,7 @@ namespace Auth.Infrastructure.Identity
                                     join claims in _dbContext.ControllerClaim
                                     on role.ClaimId equals claims.Id
                                     where role.RoleId == userRoles.RoleId
-                                    select claims.ClaimValue).ToListAsync();
+                                    select new { claims.ClaimValue, claims.Id}).ToListAsync();
 
             var roleDetail = await _roleManager.FindByIdAsync(userRoles.RoleId);
             var fullName = string.Join(" ", user.FirstName, user.MiddleName, user.LastName);
@@ -52,9 +52,9 @@ namespace Auth.Infrastructure.Identity
                 new Claim("Email", user.Email),
                 new Claim("Role",  roleDetail.Name),
                 new Claim("RoleId",  roleDetail.Id),
-                new Claim("permission", JsonConvert.SerializeObject(roleClaims))
             });
-
+            userClaims.AddRange(roleClaims.Select(a => new Claim("permission", a.ClaimValue)));
+            userClaims.AddRange(roleClaims.Select(a => new Claim("permissionIds", a.Id)));
             context.IssuedClaims.Clear();
             context.IssuedClaims.AddRange(userClaims);
         }
