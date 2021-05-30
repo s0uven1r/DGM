@@ -15,7 +15,7 @@ namespace AuthServer.Controllers
 
     [Route("Authorization/[controller]")]
     [Authorize(LocalApi.PolicyName)]
-    public class RolesController : Controller
+    public class RolesController : ControllerBase
     {
         private readonly RoleManager<AppRole> _roleManager;
 
@@ -31,7 +31,7 @@ namespace AuthServer.Controllers
         public IActionResult GetRoles()
         {
             var abc = User.Claims.ToList();
-            var users = _roleManager.Roles.Select(x => new CreateRoleResponse
+            var users = _roleManager.Roles.Select(x => new GetRoleResponse
             {
                 Id = x.Id,
                 Name = x.Name
@@ -40,6 +40,26 @@ namespace AuthServer.Controllers
             return Ok(users);
         }
 
+        [HttpPost]
+        [Route("AddRole")]
+        [ApiAuthorize(IdentityClaimConstant.CreateRole)]
+        public async Task<IActionResult> AddRole(CreateRoleRequest createRoleRequest)
+        {
+            bool exists = await _roleManager.RoleExistsAsync(createRoleRequest.Name);
+            if (exists)
+            {
+                return BadRequest($"Role \'{createRoleRequest.Name}\' is already taken.");
+            }
+
+            var role = new AppRole
+            {
+                Name = createRoleRequest.Name
+            };
+
+            await _roleManager.CreateAsync(role);
+            return Ok();
+        } 
+        
         [HttpPost]
         [Route("AddRole")]
         [ApiAuthorize(IdentityClaimConstant.CreateRole)]
