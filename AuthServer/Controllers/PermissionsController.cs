@@ -63,7 +63,7 @@ namespace AuthServer.Controllers
         [HttpPost]
         [Route("ManageRolePermission")]
         //[ApiAuthorize(IdentityClaimConstant.UpdatePermission)]
-        public async Task<IActionResult> Manage([FromBody] RolePermissionViewModel model)
+        public async Task<IActionResult> Manage([FromBody] PermissionManagementViewModel model)
         {
             var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
@@ -73,29 +73,7 @@ namespace AuthServer.Controllers
 
                 var claimsPermissionToAdd = new List<RoleClaim>();
                 var claimsPermissionToRemove = new List<RoleClaim>();
-                foreach (var claims in model.RolePermissionGroup)
-                {
-                    foreach (var item in claims.PermissionList)
-                    {
-                        if (item.HasClaim)
-                        {
-                            claimsPermissionToAdd.Add(new RoleClaim
-                            {
-                                ClaimId = item.ClaimId,
-                                RoleId = role.Id
-                            });
-                        }
-                    }
-                }
-
-                var existingClaims = await _dbContext.RoleClaims.Where(q => q.RoleId == model.RoleId).ToListAsync();
-                claimsPermissionToRemove = existingClaims.Where(x => !claimsPermissionToAdd.Any(r => r.ClaimId == x.ClaimId)).ToList();
-                if (claimsPermissionToRemove.Count > 0) _dbContext.RoleClaims.RemoveRange(claimsPermissionToRemove);
-
-                claimsPermissionToAdd.RemoveAll(x => existingClaims.Any(r => r.ClaimId == x.ClaimId));
-                if (claimsPermissionToAdd.Count > 0) _dbContext.RoleClaims.AddRange(claimsPermissionToAdd);
-                await _dbContext.SaveChangesAsync();
-                await transaction.CommitAsync();
+              
                 return Ok();
             }
             catch

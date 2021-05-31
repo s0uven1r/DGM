@@ -43,7 +43,7 @@ namespace AuthServer.Controllers
         [HttpPost]
         [Route("AddRole")]
         [ApiAuthorize(IdentityClaimConstant.WriteRole)]
-        public async Task<IActionResult> AddRole(CreateRoleRequest createRoleRequest)
+        public async Task<IActionResult> AddRole([FromBody] CreateRoleRequest createRoleRequest)
         {
             bool exists = await _roleManager.RoleExistsAsync(createRoleRequest.Name);
             if (exists)

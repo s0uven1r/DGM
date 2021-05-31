@@ -76,14 +76,14 @@
 </span>
 <ng-template #recursiveMenu let-menuListItem="menuListItem">
     <ng-container *ngFor="let sideNavItem of menuListItem">
-        <a class="nav-link text-truncate" *ngIf="!sideNavItem.menu" href="#" [routerLink]="sideNavItem.url">
+        <a class="nav-link text-truncate" *ngIf="!sideNavItem.children" href="#" [routerLink]="sideNavItem.routeUrl">
             <i [ngClass]="sideNavItem.class"></i>
             <span class="d-none d-sm-inline ml-2">{{sideNavItem.title}}</span></a>
-        <a class="nav-link collapsed text-truncate" *ngIf="sideNavItem.menu"  href="#submenu{{sideNavItem.id}}" data-toggle="collapse" data-target="#submenu{{sideNavItem.id}}">
+        <a class="nav-link collapsed text-truncate" *ngIf="sideNavItem.children"  href="#submenu{{sideNavItem.id}}" data-toggle="collapse" data-target="#submenu{{sideNavItem.id}}">
             <i [ngClass]="sideNavItem.class"></i> <span class="ml-2 d-none d-sm-inline">{{sideNavItem.title}}</span></a>
-        <div *ngIf="sideNavItem.menu" class="collapse" id="submenu{{sideNavItem.id}}" aria-expanded="false">
+        <div *ngIf="sideNavItem.children" class="collapse" id="submenu{{sideNavItem.id}}" aria-expanded="false">
             <nav class="sb-sidenav-menu-nested">
-                <ng-container *ngTemplateOutlet="recursiveMenu; context:{ menuListItem: sideNavItem.menu }"></ng-container>
+                <ng-container *ngTemplateOutlet="recursiveMenu; context:{ menuListItem: sideNavItem.children }"></ng-container>
             </nav>
         </div>
     </ng-container>
