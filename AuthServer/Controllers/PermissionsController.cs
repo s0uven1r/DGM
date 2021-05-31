@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,10 +71,27 @@ namespace AuthServer.Controllers
             {
                 var role = await _roleManager.FindByIdAsync(model.RoleId);
                 if (role == null) throw new AppException("Invalid! Role not found");
-
+                if (model.ClaimList.Count == 0) throw new AppException("Invalid! Claims not available");
                 var claimsPermissionToAdd = new List<RoleClaim>();
                 var claimsPermissionToRemove = new List<RoleClaim>();
-              
+                foreach (var claims in model.ClaimList)
+                {
+                    claimsPermissionToAdd.Add(new RoleClaim
+                    {
+                        ClaimId = claims.Id,
+                        RoleId = role.Id
+                    });
+                }
+
+                var existingClaims = await _dbContext.RoleClaims.Where(q => q.RoleId == model.RoleId).ToListAsync();
+                claimsPermissionToRemove = existingClaims.Where(x => !claimsPermissionToAdd.Any(r => r.ClaimId == x.ClaimId)).ToList();
+                if (claimsPermissionToRemove.Count > 0) _dbContext.RoleClaims.RemoveRange(claimsPermissionToRemove);
+
+                claimsPermissionToAdd.RemoveAll(x => existingClaims.Any(r => r.ClaimId == x.ClaimId));
+                if (claimsPermissionToAdd.Count > 0) _dbContext.RoleClaims.AddRange(claimsPermissionToAdd);
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
                 return Ok();
             }
             catch

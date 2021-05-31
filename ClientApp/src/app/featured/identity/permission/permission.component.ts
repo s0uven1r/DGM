@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { PermissionService } from './service/permission.service';
@@ -19,7 +20,7 @@ export class PermissionComponent implements OnInit {
   claims: FormArray;
   subscription: Subscription = new Subscription();
   constructor(private route: ActivatedRoute,
-     private permissionService: PermissionService,
+     private permissionService: PermissionService, private authService: OAuthService,
       private form: FormBuilder, private changeDetectorRef: ChangeDetectorRef) { 
     this.FormDesign();
   }
@@ -70,10 +71,10 @@ export class PermissionComponent implements OnInit {
             () => {
               Swal.fire(
                 'Added!',
-                'Role has added successfully.',
+                'Permission has assigned successfully.',
                 'success'
             );
-            this.getInitData();
+            this.authService.revokeTokenAndLogout();
           },(err) => {
                 Swal.fire(
                   'Error Added!',
