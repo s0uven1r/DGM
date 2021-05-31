@@ -15,6 +15,7 @@ export class PermissionService {
       return this.http.get<any>(`${this.baseUrl+ this.getPermissionUrl}/${id}`);
     }
     assignPermission(val: any):Observable<any>{
-      return this.http.post<any>(`${this.baseUrl+ this.postPermissionUrl}`, {roleId: val.roleId, claimList: val.claims});
+      var claimsData = val.claims.filter((x: { hasChecked: any; }) => x.hasChecked);
+      return this.http.post<any>(`${this.baseUrl+ this.postPermissionUrl}`, {roleId: val.roleId, claimList: claimsData});
     }
 }

@@ -84,6 +84,9 @@ export class PermissionComponent implements OnInit {
         }}})
   }
   getInitData(){
+    this.permissionData = [];
+    let frmArray = this.permissionForm.get('claims') as FormArray;
+    frmArray.clear();
     this.sub = this.route.params.subscribe(params => {
       this.id = params['roleId']; 
       this.permissionForm.patchValue({'roleId': this.id});
