@@ -6,7 +6,9 @@ using Dgm.Common.Authorization.Claim.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using static IdentityServer4.IdentityServerConstants;
 
@@ -43,8 +45,9 @@ namespace AuthServer.Controllers
         [HttpPost]
         [Route("AddRole")]
         [ApiAuthorize(IdentityClaimConstant.WriteRole)]
-        public async Task<IActionResult> AddRole(CreateRoleRequest createRoleRequest)
+        public async Task<IActionResult> AddRole([FromBody] CreateRoleRequest createRoleRequest)
         {
+            var requestedBy = User.FindFirst("UserId").ToString();
             bool exists = await _roleManager.RoleExistsAsync(createRoleRequest.Name);
             if (exists)
             {
@@ -58,23 +61,23 @@ namespace AuthServer.Controllers
 
             await _roleManager.CreateAsync(role);
             return Ok();
-        } 
-        
+        }
+
         [HttpPost]
-        [Route("AddRole")]
-        [ApiAuthorize(IdentityClaimConstant.CreateRole)]
-        public async Task<IActionResult> AddRole(CreateRoleRequest createRoleRequest)
+        [Route("UpdateRole")]
+        [ApiAuthorize(IdentityClaimConstant.WriteRole)]
+        public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleRequest createRoleRequest)
         {
-            bool exists = await _roleManager.RoleExistsAsync(createRoleRequest.Name);
-            if (exists)
+            var requestedBy = User.FindFirst("UserId").ToString();
+            var role = await _roleManager.FindByIdAsync(createRoleRequest.Id);
+            if (role == null)
             {
-                return BadRequest($"Role \'{createRoleRequest.Name}\' is already taken.");
+                return BadRequest($"Role \'{createRoleRequest.Name}\' not found.");
             }
 
-            var role = new AppRole
-            {
-                Name = createRoleRequest.Name
-            };
+            role.Name = createRoleRequest.Name;
+            role.LastUpdatedBy = requestedBy;
+            role.LastUpdatedDate = DateTime.UtcNow;
 
             await _roleManager.CreateAsync(role);
             return Ok();

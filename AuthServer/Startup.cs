@@ -25,12 +25,13 @@ namespace AuthServer
               .AddFluentValidation(s =>
               {
                   s.RegisterValidatorsFromAssemblyContaining<Startup>();
-                    //s.RunDefaultMvcValidationAfterFluentValidationExecutes = false; //only support Fluent Validation
-                });
+                  //s.RunDefaultMvcValidationAfterFluentValidationExecutes = false; //only support Fluent Validation
+              });
 
             services.AddInfrastructure(Config);
 
-            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+            services.AddCors(options => options.AddPolicy("AllowAll", p =>
+              p.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader()));
         }
@@ -73,7 +74,7 @@ namespace AuthServer
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllers();
             });
         }
     }
