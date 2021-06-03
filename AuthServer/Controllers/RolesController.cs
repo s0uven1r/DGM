@@ -79,7 +79,7 @@ namespace AuthServer.Controllers
             role.LastUpdatedBy = requestedBy;
             role.LastUpdatedDate = DateTime.UtcNow;
 
-            await _roleManager.CreateAsync(role);
+            await _roleManager.UpdateAsync(role);
             return Ok();
         }
     }
