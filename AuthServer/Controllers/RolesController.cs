@@ -33,7 +33,7 @@ namespace AuthServer.Controllers
         public IActionResult GetRoles()
         {
             var abc = User.Claims.ToList();
-            var users = _roleManager.Roles.Select(x => new GetRoleResponse
+            var users = _roleManager.Roles.Where(x => !x.IsDeleted).Select(x => new GetRoleResponse
             {
                 Id = x.Id,
                 Name = x.Name
@@ -63,7 +63,7 @@ namespace AuthServer.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateRole")]
         [ApiAuthorize(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleRequest createRoleRequest)
@@ -76,6 +76,30 @@ namespace AuthServer.Controllers
             }
 
             role.Name = createRoleRequest.Name;
+            role.LastUpdatedBy = requestedBy;
+            role.LastUpdatedDate = DateTime.UtcNow;
+
+            await _roleManager.UpdateAsync(role);
+            return Ok();
+        }
+
+
+        [HttpDelete]
+        [Route("DeleteRole/{id}")]
+        [ApiAuthorize(IdentityClaimConstant.WriteRole)]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var requestedBy = User.FindFirst("UserId").ToString();
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest("Id param cannot be empty.");
+            }
+            var role = await _roleManager.FindByIdAsync(id);
+
+            if (role.IsDefault) return BadRequest("Role cannot be deleted.");
+            if (role == null) return BadRequest("Role not found.");
+
+            role.IsDeleted = true;
             role.LastUpdatedBy = requestedBy;
             role.LastUpdatedDate = DateTime.UtcNow;
 
