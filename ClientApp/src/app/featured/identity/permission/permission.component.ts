@@ -14,6 +14,7 @@ import { PermissionService } from './service/permission.service';
 })
 export class PermissionComponent implements OnInit {
   id: string;
+  user: any;
   private sub: any;
   permissionData!: any [];
   permissionForm: FormGroup;
@@ -23,6 +24,7 @@ export class PermissionComponent implements OnInit {
      private permissionService: PermissionService, private authService: OAuthService,
       private form: FormBuilder, private changeDetectorRef: ChangeDetectorRef) { 
     this.FormDesign();
+    this.user = this.authService.getIdentityClaims();
   }
 
   ngOnInit() {
@@ -74,7 +76,9 @@ export class PermissionComponent implements OnInit {
                 'Permission has assigned successfully.',
                 'success'
             );
-            this.authService.revokeTokenAndLogout();
+            if(this.user.RoleId ===  this.permissionForm.get('roleId').value){
+              this.authService.revokeTokenAndLogout();
+            }
           },(err) => {
                 Swal.fire(
                   'Error Added!',

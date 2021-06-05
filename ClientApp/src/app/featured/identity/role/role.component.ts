@@ -28,12 +28,13 @@ export class RoleComponent implements OnInit {
   FormDesign() {
     return (this.roleForm = this.form.group({
       title: [null,  [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
-      id: [null]
+      id: [null],
+      hasPublic: [false]
     }));
   }
   onSubmit() {
     Swal.fire({
-        title: 'Add a role',
+        title: 'Are you sure?',
         text: '',
         icon: 'warning',
         showCancelButton: true,
@@ -41,20 +42,23 @@ export class RoleComponent implements OnInit {
         cancelButtonText: 'No'
     }).then((result) => {
         if (result.value) {
-            this.RegisterRole();
+            this.PerformCreateEditRole();
         }
     })
  
   }
-  RegisterRole(){
+ PerformCreateEditRole(){
     if (this.roleForm.valid) {
-      (this.roleService.registerRole(
-        this.roleForm.get('title').value
+      var msg = this.roleForm.get('id').value ?'Updated!':'Added!';
+      (this.roleService.performCreateEditRole(
+        this.roleForm.get('title').value,
+        this.roleForm.get('hasPublic').value,
+        this.roleForm.get('id').value
       )).subscribe(
         () => {
           Swal.fire(
-            'Added!',
-            'Role has added successfully.',
+            msg,
+            'Success.',
             'success'
         )
         this.subscription.add(this.roleService.getRole().subscribe(x => {this.roleData = x;
@@ -63,7 +67,7 @@ export class RoleComponent implements OnInit {
         },
         (err) => {
           Swal.fire(
-            'Error Added!',
+            `Error ${msg}`,
             err,
             'error'
         )
@@ -72,10 +76,11 @@ export class RoleComponent implements OnInit {
     }
   }
 
-  getData(id: string, title: string){
+  getData(id: string, title: string, isPublic: boolean){
     this.roleForm.patchValue({
       'id':id,
-      'title': title
+      'title': title,
+      'hasPublic': isPublic
     });
   }
   deleteData(id: string){
@@ -88,6 +93,23 @@ export class RoleComponent implements OnInit {
       cancelButtonText: 'No'
   }).then((result) => {
       if (result.value) {
+        this.roleService.deleteRole(id)
+        .subscribe(
+            () => {
+              Swal.fire(
+                'Deleted!',
+                'Role has deleted successfully.',
+                'success'
+            );
+            this.subscription.add(this.roleService.getRole().subscribe(x => {this.roleData = x;
+              this.changeDetectorRef.markForCheck();}));
+          },(err) => {
+                Swal.fire(
+                  'Error Deleted!',
+                  err,
+                  'error'
+              )
+            })
       }
   })
   }
@@ -95,4 +117,6 @@ export class RoleComponent implements OnInit {
 export interface RoleModel {
   id: string;
   name: string;
+  isPublic: boolean;
+  isDefault: boolean;
 }

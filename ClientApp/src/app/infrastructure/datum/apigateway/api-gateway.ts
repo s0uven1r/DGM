@@ -3,7 +3,9 @@ export const ApiGateway = {
         role: {
             base : 'Roles',
             getRole: '/GetRoles',
-            postRole: '/AddRole'
+            postRole: '/AddRole',
+            putRole: '/UpdateRole',
+            deleteRole: '/DeleteRole'
         },
         menu: {
             base: 'Menu',

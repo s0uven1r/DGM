@@ -23,8 +23,15 @@
               && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not greater than 50 character!</small>
             </span>
         </div>
+        
+        <div class="form-group publicDiv col-lg-2 col-md-3 col-sm-4">
+          <div class="custom-control form-control-lg pull-right custom-checkbox">
+            <input type="checkbox" formControlName="hasPublic" class="custom-control-input" id="idIsPublic">
+            <label class="custom-control-label" [for]="'idIsPublic'">Has Public</label>
+          </div>
+        </div>
       
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-4 pull-left">
           <button [disabled]="(!roleForm.valid)" type="submit" value="save" class="btn btn-primary">
               Save
           </button>
@@ -36,15 +43,18 @@
     <tr>
         <th>S.N</th>
         <th>Title</th>
+        <th>Public</th>
         <th>Action</th>
     </tr>
     <tr *ngFor="let item of roleData; let i=index">
         <td>{{i+1}}</td>
         <td>{{item.name}}</td>
-        <td> 
-            <button class="btn pt-0 pb-0 btn-xs btn-success" (click)="getData(item.id, item.name)"><em class="fa fa-edit"></em></button>
-            <button class="btn pt-0 pb-0 btn-xs btn-danger ml-1" (click)="deleteData(item.id)"><em class="fa fa-trash"></em></button>
+        <td>{{item.isPublic?'Yes':'No'}}</td>
+        <td *ngIf="!item.isDefault"> 
+            <button class="btn pt-0 pb-0 btn-xs btn-success" (click)="getData(item.id, item.name, item.isPublic)"><em class="fa fa-edit"></em></button>
+            <button  class="btn pt-0 pb-0 btn-xs btn-danger ml-1" (click)="deleteData(item.id)"><em class="fa fa-trash"></em></button>
             <a class="btn pt-0 pb-0 btn-xs btn-info ml-1"  [routerLink]="['/dashboard/permission', item.id]" ><em class="fa fa-eye"></em> Manage Permission</a>
         </td>
+        <td *ngIf="item.isDefault"></td>
     </tr>
 </table>
