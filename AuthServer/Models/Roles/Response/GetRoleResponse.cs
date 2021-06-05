@@ -9,5 +9,6 @@ namespace AuthServer.Models.Roles.Response
     {
         public object Id { get; set; }
         public object Name { get; set; }
+        public object IsPublic { get; set; }
     }
 }
