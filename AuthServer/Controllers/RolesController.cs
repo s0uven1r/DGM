@@ -36,7 +36,8 @@ namespace AuthServer.Controllers
             var users = _roleManager.Roles.Where(x => !x.IsDeleted).Select(x => new GetRoleResponse
             {
                 Id = x.Id,
-                Name = x.Name
+                Name = x.Name,
+                IsPublic = x.IsPublic
             });
             if (users == null) return NotFound();
             return Ok(users);
@@ -56,7 +57,10 @@ namespace AuthServer.Controllers
 
             var role = new AppRole
             {
-                Name = createRoleRequest.Name
+                Name = createRoleRequest.Name,
+                IsPublic = createRoleRequest.IsPublic,
+                CreatedBy = requestedBy,
+                CreatedDate = DateTime.UtcNow
             };
 
             await _roleManager.CreateAsync(role);
@@ -70,12 +74,12 @@ namespace AuthServer.Controllers
         {
             var requestedBy = User.FindFirst("UserId").ToString();
             var role = await _roleManager.FindByIdAsync(createRoleRequest.Id);
-            if (role == null)
-            {
-                return BadRequest($"Role \'{createRoleRequest.Name}\' not found.");
-            }
+
+            if (role.IsDefault) return BadRequest($"Role \'{createRoleRequest.Name}\' cannot be updated.");
+            if (role == null) return BadRequest($"Role \'{createRoleRequest.Name}\' not found.");
 
             role.Name = createRoleRequest.Name;
+            role.IsPublic = createRoleRequest.IsPublic;
             role.LastUpdatedBy = requestedBy;
             role.LastUpdatedDate = DateTime.UtcNow;
 
