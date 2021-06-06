@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 import { RoleService } from './service/role.service';
 
 @Component({
@@ -11,8 +13,10 @@ import { RoleService } from './service/role.service';
 export class RoleComponent implements OnInit {
   roleData!: RoleModel [];
   subscription: Subscription = new Subscription();
-  constructor(private roleService: RoleService, private changeDetectorRef: ChangeDetectorRef) { }
-
+  roleForm: FormGroup;
+  constructor(private form: FormBuilder, private roleService: RoleService, private changeDetectorRef: ChangeDetectorRef) { 
+    this.FormDesign();
+  }
   ngOnInit(): void {
     this.subscription.add(this.roleService.getRole().subscribe(x => {this.roleData = x;
       this.changeDetectorRef.markForCheck();}));
@@ -21,8 +25,98 @@ export class RoleComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
+  FormDesign() {
+    return (this.roleForm = this.form.group({
+      title: [null,  [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
+      id: [null],
+      hasPublic: [false]
+    }));
+  }
+  onSubmit() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: '',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ok',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.value) {
+            this.PerformCreateEditRole();
+        }
+    })
+ 
+  }
+ PerformCreateEditRole(){
+    if (this.roleForm.valid) {
+      var msg = this.roleForm.get('id').value ?'Updated!':'Added!';
+      (this.roleService.performCreateEditRole(
+        this.roleForm.get('title').value,
+        this.roleForm.get('hasPublic').value,
+        this.roleForm.get('id').value
+      )).subscribe(
+        () => {
+          Swal.fire(
+            msg,
+            'Success.',
+            'success'
+        )
+        this.subscription.add(this.roleService.getRole().subscribe(x => {this.roleData = x;
+          this.changeDetectorRef.markForCheck();}));
+        this.roleForm.reset();
+        },
+        (err) => {
+          Swal.fire(
+            `Error ${msg}`,
+            err,
+            'error'
+        )
+        }
+    );
+    }
+  }
+
+  getData(id: string, title: string, isPublic: boolean){
+    this.roleForm.patchValue({
+      'id':id,
+      'title': title,
+      'hasPublic': isPublic
+    });
+  }
+  deleteData(id: string){
+    Swal.fire({
+      title: 'Delete a role',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ok',
+      cancelButtonText: 'No'
+  }).then((result) => {
+      if (result.value) {
+        this.roleService.deleteRole(id)
+        .subscribe(
+            () => {
+              Swal.fire(
+                'Deleted!',
+                'Role has deleted successfully.',
+                'success'
+            );
+            this.subscription.add(this.roleService.getRole().subscribe(x => {this.roleData = x;
+              this.changeDetectorRef.markForCheck();}));
+          },(err) => {
+                Swal.fire(
+                  'Error Deleted!',
+                  err,
+                  'error'
+              )
+            })
+      }
+  })
+  }
 }
 export interface RoleModel {
   id: string;
   name: string;
+  isPublic: boolean;
+  isDefault: boolean;
 }

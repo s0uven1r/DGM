@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace AuthServer.Models.Roles.Request
 {
-    public class CreateRoleRequest
+    public class UpdateRoleRequest
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public bool IsPublic { get; set; }
     }

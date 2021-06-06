@@ -4,14 +4,16 @@ using Auth.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Auth.Infrastructure.Persistence.Migrations.IdentityServer
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210530130411_User_Roles_Column_Added")]
+    partial class User_Roles_Column_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,10 +42,7 @@ namespace Auth.Infrastructure.Persistence.Migrations.IdentityServer
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastUpdatedBy")
+                    b.Property<string>("LastUpdated")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastUpdatedDate")
@@ -101,7 +100,7 @@ namespace Auth.Infrastructure.Persistence.Migrations.IdentityServer
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastUpdatedBy")
+                    b.Property<string>("LastUpdated")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastUpdatedDate")

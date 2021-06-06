@@ -21,7 +21,9 @@ namespace AuthServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews(options =>
-              options.Filters.Add<ValidationFilter>())
+              options.Filters.Add<ValidationFilter>()).AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                )
               .AddFluentValidation(s =>
               {
                   s.RegisterValidatorsFromAssemblyContaining<Startup>();
@@ -31,7 +33,8 @@ namespace AuthServer
 
             services.AddInfrastructure(Config);
 
-            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+            services.AddCors(options => options.AddPolicy("AllowAll", p =>
+              p.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader()));
         }

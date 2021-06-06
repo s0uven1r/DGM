@@ -17,7 +17,8 @@ namespace Auth.Infrastructure.Persistence.Seed
                 d => new AppRole
                 {
                     Name = d.Title,
-                    Id = d.Id
+                    Id = d.Id,
+                    IsDefault = true
                 }).ToList();
 
             foreach (var role in roles.Where(r => !existingRoles.Any(er => er.Id == r.Id)))

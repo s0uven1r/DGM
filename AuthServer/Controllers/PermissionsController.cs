@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,29 +64,23 @@ namespace AuthServer.Controllers
         [HttpPost]
         [Route("ManageRolePermission")]
         //[ApiAuthorize(IdentityClaimConstant.UpdatePermission)]
-        public async Task<IActionResult> Manage([FromBody] RolePermissionViewModel model)
+        public async Task<IActionResult> Manage([FromBody] PermissionManagementViewModel model)
         {
             var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
                 var role = await _roleManager.FindByIdAsync(model.RoleId);
                 if (role == null) throw new AppException("Invalid! Role not found");
-
+                if (model.ClaimList.Count == 0) throw new AppException("Invalid! Claims not available");
                 var claimsPermissionToAdd = new List<RoleClaim>();
                 var claimsPermissionToRemove = new List<RoleClaim>();
-                foreach (var claims in model.RolePermissionGroup)
+                foreach (var claims in model.ClaimList)
                 {
-                    foreach (var item in claims.PermissionList)
+                    claimsPermissionToAdd.Add(new RoleClaim
                     {
-                        if (item.HasClaim)
-                        {
-                            claimsPermissionToAdd.Add(new RoleClaim
-                            {
-                                ClaimId = item.ClaimId,
-                                RoleId = role.Id
-                            });
-                        }
-                    }
+                        ClaimId = claims.Id,
+                        RoleId = role.Id
+                    });
                 }
 
                 var existingClaims = await _dbContext.RoleClaims.Where(q => q.RoleId == model.RoleId).ToListAsync();
@@ -96,6 +91,7 @@ namespace AuthServer.Controllers
                 if (claimsPermissionToAdd.Count > 0) _dbContext.RoleClaims.AddRange(claimsPermissionToAdd);
                 await _dbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
+
                 return Ok();
             }
             catch
