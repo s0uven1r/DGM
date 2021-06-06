@@ -26,7 +26,8 @@ namespace AuthServer
               {
                   s.RegisterValidatorsFromAssemblyContaining<Startup>();
                     //s.RunDefaultMvcValidationAfterFluentValidationExecutes = false; //only support Fluent Validation
-                });
+              })
+              .AddNewtonsoftJson(s => s.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddInfrastructure(Config);
 
