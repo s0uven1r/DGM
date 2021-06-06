@@ -21,15 +21,14 @@ namespace AuthServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews(options =>
-              options.Filters.Add<ValidationFilter>()).AddNewtonsoftJson(options =>
+              options.Filters.Add<ValidationFilter>()).AddNewtonsoftJson(options => 
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                )
+               )
               .AddFluentValidation(s =>
               {
                   s.RegisterValidatorsFromAssemblyContaining<Startup>();
-                    //s.RunDefaultMvcValidationAfterFluentValidationExecutes = false; //only support Fluent Validation
-              })
-              .AddNewtonsoftJson(s => s.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                  //s.RunDefaultMvcValidationAfterFluentValidationExecutes = false; //only support Fluent Validation
+              });
 
             services.AddInfrastructure(Config);
 
