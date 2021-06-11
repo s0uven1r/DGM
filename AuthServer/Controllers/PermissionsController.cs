@@ -1,15 +1,13 @@
-﻿using Auth.Infrastructure.Identity;
+﻿using Auth.Infrastructure.Constants;
+using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
-using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Models.Permission;
 using Dgm.Common.Authorization.Claim;
-using Dgm.Common.Authorization.Claim.Identity;
 using Dgm.Common.Error;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +16,7 @@ using static IdentityServer4.IdentityServerConstants;
 namespace AuthServer.Controllers
 {
     [Route("Authorization/[controller]")]
-    //[Authorize(LocalApi.PolicyName)]
+    [Authorize(LocalApi.PolicyName)]
     public class PermissionsController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;
@@ -27,6 +25,22 @@ namespace AuthServer.Controllers
         {
             _roleManager = roleManager;
             _dbContext = dbContext;
+        }
+
+        [HttpGet]
+        [Route("CheckPermission")]
+        public IActionResult CheckPermission([FromBody] List<string> permissionList)
+        {
+            bool hasPermission = false;
+            var userClaims = User.Claims
+                                .Where(x => x.Type == ClaimType.Permission)
+                                .Select(a => a.Value).ToList();
+            if (userClaims.Count > 0)
+            {
+                bool isAuth = userClaims.Any(x => permissionList.Contains(x));
+                if (isAuth) hasPermission = true;
+            }
+            return Ok(hasPermission);
         }
 
         [HttpGet]

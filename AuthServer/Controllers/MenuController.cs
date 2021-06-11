@@ -28,16 +28,15 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.ViewRole)]
         public async Task<IActionResult> GetMenu()
         {
-            var permissionList = User.Claims.Where(x => x.Type == "permissionIds").Select(a => a.Value).ToList();
-            string role = User.Claims.Where(x => x.Type == "Role").FirstOrDefault()?.Value.ToLower();
             IQueryable<MenuControl> menuControl;
-            if (role == SystemRoles.SuperAdmin)
+            if (User.IsInRole(SystemRoles.SuperAdmin))
             {
                 menuControl = _appIdentityDbContext.MenuControl.Include(x => x.Children)
                         .Where(x => x.ParentId == null).AsQueryable();
             }
             else
             {
+                var permissionList = User.Claims.Where(x => x.Type == "permissionIds").Select(a => a.Value).ToList();
                 menuControl = _appIdentityDbContext.MenuControl.Include(x => x.Children.Where(i => permissionList.Any(a => a == i.ClaimId)))
                        .Where(x => x.ParentId == null && permissionList.Any(a => a == x.ClaimId)).AsQueryable();
             }
