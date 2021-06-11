@@ -202,7 +202,6 @@ namespace AuthServer.Controllers
 
 
         [HttpGet]
-        [Route("GetEmployees")]
         public IActionResult GetEmployees()
         {
             var users = _userManager.Users.Select(x => new CreateEmployeeResponse

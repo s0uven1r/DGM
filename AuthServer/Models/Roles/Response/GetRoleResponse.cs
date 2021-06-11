@@ -7,8 +7,8 @@ namespace AuthServer.Models.Roles.Response
 {
     public class GetRoleResponse
     {
-        public object Id { get; set; }
-        public object Name { get; set; }
-        public object IsPublic { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public bool IsPublic { get; set; }
     }
 }
