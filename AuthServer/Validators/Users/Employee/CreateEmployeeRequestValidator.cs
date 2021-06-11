@@ -17,7 +17,7 @@ namespace AuthServer.Validators.Users.Employee
                 .Length(2, 20);
 
             RuleFor(x => x.MiddleName)
-                .Length(2, 20);
+                .MaximumLength(20);
 
             RuleFor(x => x.LastName)
                 .NotEmpty()
@@ -31,16 +31,12 @@ namespace AuthServer.Validators.Users.Employee
                .NotEmpty()
                .Length(4, 100);
 
-            RuleFor(x => x.UserName)
+            RuleFor(x => x.Email)
                            .NotEmpty()
                            .EmailAddress();
 
-            RuleFor(x => x.Phone1)
+            RuleFor(x => x.Phone)
                             .NotEmpty();
-
-            //RuleFor(x => x.Phone2)
-            //                .NotEmpty();
-
 
             RuleFor(x => x.RoleId)
                           .NotEmpty();

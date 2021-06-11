@@ -18,7 +18,7 @@ namespace Auth.Infrastructure.Persistence.Seed
                 {
                     Name = d.Title,
                     Id = d.Id,
-                    IsSuperAdmin = true
+                    IsDefault = true
                 }).ToList();
 
             foreach (var role in roles.Where(r => !existingRoles.Any(er => er.Id == r.Id)))

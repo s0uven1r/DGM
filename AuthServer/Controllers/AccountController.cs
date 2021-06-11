@@ -17,6 +17,8 @@ using Auth.Infrastructure.Constants;
 using AuthServer.Models.Users.Employee.Response;
 using AuthServer.Models.Users.Employee.Request;
 using Microsoft.Extensions.Logging;
+using Auth.Infrastructure.Persistence;
+using AuthServer.Models.Users;
 
 namespace AuthServer.Controllers
 {
@@ -29,9 +31,11 @@ namespace AuthServer.Controllers
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
+        private readonly AppIdentityDbContext _dbContext;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events, ILogger<AccountController> logger)
+
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events, ILogger<AccountController> logger, AppIdentityDbContext appIdentityDbContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -41,6 +45,7 @@ namespace AuthServer.Controllers
             _events = events;
             _signInManager = signInManager;
             _logger = logger;
+            _dbContext = _dbContext;
         }
 
         /// <summary>
@@ -102,7 +107,7 @@ namespace AuthServer.Controllers
             {
                 // validate username/password
                 var user = await _userManager.FindByNameAsync(model.Username);
-                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password) && !user.IsDisabled)
                 {
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.FirstName));
 
@@ -169,15 +174,12 @@ namespace AuthServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterRequestViewModel model)
         {
-            //var aVal = 0; var blowUp = 1 / aVal;
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             var user = new AppUser { UserName = model.Email, FirstName = model.FirstName, Email = model.Email };
-
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors);
@@ -200,34 +202,30 @@ namespace AuthServer.Controllers
             return Redirect(context.PostLogoutRedirectUri ?? "http://localhost:4200/auth-callback");
         }
 
-
         [HttpGet]
-        public IActionResult GetEmployees()
+        public IActionResult GetAllUsers()
         {
-            var users = _userManager.Users.Select(x => new CreateEmployeeResponse
+            var users = _userManager.Users.Select(x => new GetUserResponse
             {
                 Id = x.Id,
                 Email = x.Email,
                 FirstName = x.FirstName,
                 MiddleName = x.MiddleName,
                 LastName = x.LastName,
-            });
+                PhoneNumber = x.PhoneNumber
+            }).ToList();
             if (users == null) return NotFound();
             return Ok(users);
         }
 
-        [HttpPost("CreateEmployee")]
+        [HttpPost]
         public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest createEmployeeRequest)
         {
+            var requestedBy = User.FindFirst("UserId").ToString();
             bool usernameExists = await _userManager.FindByNameAsync(createEmployeeRequest.UserName) != null;
             if (usernameExists)
             {
                 return BadRequest("Username is taken.");
-            }
-            bool idExists = await _userManager.FindByIdAsync(createEmployeeRequest.Id) != null;
-            if (idExists)
-            {
-                return BadRequest("ID must be unique.");
             }
 
             bool emailExists = await _userManager.FindByEmailAsync(createEmployeeRequest.Email) != null;
@@ -242,7 +240,10 @@ namespace AuthServer.Controllers
                 Email = createEmployeeRequest.Email,
                 FirstName = createEmployeeRequest.FirstName,
                 MiddleName = createEmployeeRequest.MiddleName,
-                LastName = createEmployeeRequest.LastName
+                LastName = createEmployeeRequest.LastName,
+                PhoneNumber = createEmployeeRequest.Phone,
+                CreatedBy = requestedBy,
+                CreatedDate = DateTime.UtcNow,
             };
 
             var identityResult = await _userManager.CreateAsync(applicationUser, createEmployeeRequest.Password);
@@ -264,7 +265,48 @@ namespace AuthServer.Controllers
 
             if (roleResult.Succeeded)
             {
-                return NoContent();
+                return Ok();
+            }
+            else
+            {
+                await _userManager.DeleteAsync(applicationUser);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        } 
+        
+        [HttpPost]
+        public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeRequest createEmployeeRequest)
+        {
+            var requestedBy = User.FindFirst("UserId").ToString();
+            bool userExists = await _userManager.FindByIdAsync(createEmployeeRequest.Id) != null;
+            if (userExists)
+            {
+                return BadRequest("User not found.");
+            }
+
+            var applicationUser = new AppUser
+            {
+                FirstName = createEmployeeRequest.FirstName,
+                MiddleName = createEmployeeRequest.MiddleName,
+                LastName = createEmployeeRequest.LastName,
+                PhoneNumber = createEmployeeRequest.Phone,
+                LastUpdatedBy = requestedBy,
+                LastUpdatedDate = DateTime.UtcNow,
+            };
+
+            var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
+
+            if (string.IsNullOrEmpty(roleName))
+            {
+                return BadRequest("Role not found.");
+            }
+
+            var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
+
+            if (roleResult.Succeeded)
+            {
+                return Ok();
             }
             else
             {

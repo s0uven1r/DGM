@@ -78,7 +78,7 @@ namespace AuthServer.Controllers
             var role = await _roleManager.FindByIdAsync(createRoleRequest.Id);
 
             if (role == null) return BadRequest($"Role \'{createRoleRequest.Name}\' not found.");
-            if (role.IsSuperAdmin) return BadRequest($"Role \'{createRoleRequest.Name}\' cannot be updated.");
+            if (role.IsDefault) return BadRequest($"Role \'{createRoleRequest.Name}\' cannot be updated.");
 
             role.Name = createRoleRequest.Name;
             role.IsPublic = createRoleRequest.IsPublic;
@@ -103,7 +103,7 @@ namespace AuthServer.Controllers
             var role = await _roleManager.FindByIdAsync(id);
 
             if (role == null) return BadRequest("Role not found.");
-            if (role.IsSuperAdmin) return BadRequest("Role cannot be deleted.");
+            if (role.IsDefault) return BadRequest("Role cannot be deleted.");
 
             await _roleManager.DeleteAsync(role);
             _logger.LogWarning("Role {1} deleted by user:{2} on {3}", role.Name, requestedBy, DateTime.UtcNow);

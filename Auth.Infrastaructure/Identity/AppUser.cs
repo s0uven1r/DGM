@@ -16,6 +16,6 @@ namespace Auth.Infrastructure.Identity
         public string LastUpdatedBy { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public bool IsDisabled { get; set; }
     }
 }
