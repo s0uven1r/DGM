@@ -6,8 +6,11 @@ import { AuthCallbackComponent } from 'src/app/featured/auth-callback/auth-callb
 import { CounterComponent } from 'src/app/featured/counter/counter.component';
 import { PermissionComponent } from 'src/app/featured/identity/permission/permission.component';
 import { RoleComponent } from 'src/app/featured/identity/role/role.component';
+import { CreateComponent } from 'src/app/featured/identity/user/create/create.component';
+import { UserComponent } from 'src/app/featured/identity/user/user.component';
 import { PermissionRoutePath } from './route-path/permission';
 import { RoleRoutePath } from './route-path/role';
+import { UserRoutePath } from './route-path/user';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -25,9 +28,14 @@ export const RoutePath = {
 
   CounterRoutePath:[{path: 'counter', component: CounterComponent}],
   DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent, 
-                      children: [RoleRoutePath, PermissionRoutePath],
+                      children: [RoleRoutePath,
+                        PermissionRoutePath,
+                        UserRoutePath
+                      ],
                       canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: 'auth-callback', component: AuthCallbackComponent, canActivate: [AuthGuard]}],
   RoleRoutePath:[{path: '', component: RoleComponent}],
   PermissionRoutePath:[{path: '', component: PermissionComponent}],
+  UserRoutePath: [{path: '', component: UserComponent}],
+  UserCreateRoutePath: [{path: '', component: CreateComponent}],
 };
