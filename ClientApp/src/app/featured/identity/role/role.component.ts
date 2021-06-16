@@ -14,6 +14,7 @@ export class RoleComponent implements OnInit {
   roleData!: RoleModel [];
   subscription: Subscription = new Subscription();
   roleForm: FormGroup;
+  isEdit: boolean;
   constructor(private form: FormBuilder, private roleService: RoleService, private changeDetectorRef: ChangeDetectorRef) { 
     this.FormDesign();
   }
@@ -77,6 +78,7 @@ export class RoleComponent implements OnInit {
   }
 
   getData(id: string, title: string, isPublic: boolean){
+    this.isEdit = true;
     this.roleForm.patchValue({
       'id':id,
       'title': title,

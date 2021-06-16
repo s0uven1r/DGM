@@ -1,44 +1,51 @@
-<div class="container-fluid  h-100">
-    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
-      <div class="form-row">
-        <div class="form-group col-md-4">
-            <input type="hidden" formControlName="id" />
-            <input type="text"  [ngClass]="{'is-invalid': roleForm.get('title').errors
-            && (roleForm.get('title').touched
-            || roleForm.get('title').dirty)
-            }" formControlName="title" placeholder="Role Title" class="form-control">
-            <span class="text-danger" >
-                &nbsp;
-                <small *ngIf="roleForm.get('title').errors?.required
-                && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is Required!</small>
-            </span>
-            <span class="text-danger" >
-                &nbsp;
-              <small  *ngIf="roleForm.get('title').errors?.minlength
-              && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not less than 3 character!</small>
-            </span>
-            <span class="text-danger" >
-                &nbsp;
-              <small  *ngIf="roleForm.get('title').errors?.maxlength
-              && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not greater than 50 character!</small>
-            </span>
-        </div>
+
+<div class="card mb-2">
+  <div class="card-body">
+    <h5 class="card-title pl-3"><a class="btn disabled btn-outline-info btn-sm">{{isEdit?"Update":"Create"}}</a>
+    </h5>
+    <div class="container-fluid bordered  h-100">
+      <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+              <input type="hidden" formControlName="id" />
+              <input type="text"  [ngClass]="{'is-invalid': roleForm.get('title').errors
+              && (roleForm.get('title').touched
+              || roleForm.get('title').dirty)
+              }" formControlName="title" placeholder="Role Title" class="form-control">
+              <span class="text-danger" >
+                  &nbsp;
+                  <small *ngIf="roleForm.get('title').errors?.required
+                  && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is Required!</small>
+              </span>
+              <span class="text-danger" >
+                  &nbsp;
+                <small  *ngIf="roleForm.get('title').errors?.minlength
+                && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not less than 3 character!</small>
+              </span>
+              <span class="text-danger" >
+                  &nbsp;
+                <small  *ngIf="roleForm.get('title').errors?.maxlength
+                && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not greater than 50 character!</small>
+              </span>
+          </div>
+          
+          <div class="form-group publicDiv col-lg-2 col-md-3 col-sm-4">
+            <div class="custom-control form-control-lg pull-right custom-checkbox">
+              <input type="checkbox" formControlName="hasPublic" class="custom-control-input" id="idIsPublic">
+              <label class="custom-control-label" [for]="'idIsPublic'">Has Public</label>
+            </div>
+          </div>
         
-        <div class="form-group publicDiv col-lg-2 col-md-3 col-sm-4">
-          <div class="custom-control form-control-lg pull-right custom-checkbox">
-            <input type="checkbox" formControlName="hasPublic" class="custom-control-input" id="idIsPublic">
-            <label class="custom-control-label" [for]="'idIsPublic'">Has Public</label>
+          <div class="form-group col-md-4 pull-left">
+            <button [disabled]="(!roleForm.valid)" type="submit" value="save" class="btn btn-primary">
+                Save
+            </button>
           </div>
         </div>
-      
-        <div class="form-group col-md-4 pull-left">
-          <button [disabled]="(!roleForm.valid)" type="submit" value="save" class="btn btn-primary">
-              Save
-          </button>
-        </div>
-      </div>
-    </form>
+      </form>
   </div>
+  </div>
+</div>
 <table class="table table-hover">
     <tr>
         <th>S.N</th>

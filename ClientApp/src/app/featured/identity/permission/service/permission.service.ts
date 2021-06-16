@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment';
 export class PermissionService {
 
     private baseUrl = environment.apiIdentityUrl;
-    private getPermissionUrl =   ApiGateway.identity.permission.base + '/' + ApiGateway.identity.permission.getPermission;
-    private postPermissionUrl = ApiGateway.identity.permission.base + '/' + ApiGateway.identity.permission.managePermission;
+    private getPermissionUrl =   ApiGateway.identity.permission.base  + ApiGateway.identity.permission.getPermission;
+    private postPermissionUrl = ApiGateway.identity.permission.base  + ApiGateway.identity.permission.managePermission;
     constructor(private http: HttpClient) { }
     getPermission(id: string): Observable<any>{
       return this.http.get<any>(`${this.baseUrl+ this.getPermissionUrl}/${id}`);

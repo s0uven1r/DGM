@@ -10,10 +10,33 @@
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>First name</th>
+            <th>S.N</th>
+            <th>Email</th>
+            <th>UserName</th>
+            <th>FullName</th>
+            <th>PhoneNo</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
+        <tbody>
+          <tr  *ngFor="let person of persons; let i = index;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ person.email }}</td>
+            <td>{{ person.userName }}</td>
+            <td>{{ person.firstName + (person.middleName?+ ' '+ person.middleName: '') + ' ' + person.lastName }}</td>
+            <td>{{person.phoneNumber}}</td>
+            <td>  <div class="custom-control form-control-lg custom-checkbox">
+              <input type="checkbox" class="custom-control-input" [id]="'id'+person.id" #val (click)="hasEnable(person.id, val)">
+              <label class="custom-control-label" [for]="'id'+person.id" ></label>
+            </div>
+            </td>
+            <td>
+              <button class="btn pt-0 pb-0 btn-xs btn-success" ><em class="fa fa-edit"></em></button>
+              <button  class="btn pt-0 pb-0 btn-xs btn-danger ml-1" ><em class="fa fa-trash"></em></button>
+            </td>
+          </tr>
+        </tbody>
       </table>
 </div>
 

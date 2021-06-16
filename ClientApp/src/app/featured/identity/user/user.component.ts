@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { UserModel } from 'src/app/infrastructure/model/UserManagement/user-model';
+import { UserService } from './service/user.service';
 
 @Component({
   selector: 'app-user',
@@ -10,31 +11,30 @@ import { Subject } from 'rxjs';
 })
 export class UserComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
-  persons: Person[] = [];
+  persons: UserModel[] = [];
   dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private httpClient: HttpClient, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private userService: UserService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10
     };
-
-    this.httpClient.get<Person[]>('assets/user.json')
-    .subscribe(data => {
-      this.persons = data;
-      // Calling the DT trigger to manually render the table
-      this.dtTrigger.next();
+    this.userService.getUser().subscribe(x => {this.persons = x;
       this.changeDetectorRef.markForCheck();
+      this.dtTrigger.next();
     });
   }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
+  hasEnable(id: string, val: any){
+      this.userService.enableDisableLogin(id, val.checked ).subscribe(() => {
+        this.changeDetectorRef.markForCheck();
+      }, () => {
+        val.checked = !val.checked
+      });;
+  }
+}
 
-}
-export interface Person{
-  id: string;
-  title:string;
-}

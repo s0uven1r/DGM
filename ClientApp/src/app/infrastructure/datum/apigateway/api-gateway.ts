@@ -13,8 +13,14 @@ export const ApiGateway = {
         },
         permission: {
             base: 'Permissions',
-            getPermission: 'GetRolePermission',
-            managePermission: 'ManageRolePermission'
+            getPermission: '/GetRolePermission',
+            managePermission: '/ManageRolePermission'
+        },
+        user: {
+            base: 'Users',
+            getUser: '/GetAllUsers',
+            enableUser: '/EnableLogin',
+            disableUser: '/DisableLogin'
         }
     }
 }
