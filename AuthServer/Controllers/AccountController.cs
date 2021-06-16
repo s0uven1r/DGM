@@ -1,24 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using AuthServer.Models;
-using System.Threading.Tasks;
-using IdentityServer4.Services;
-using System.Linq;
-using System;
-using IdentityServer4.Stores;
-using IdentityServer4.Models;
-using IdentityServer4.Events;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Auth.Infrastructure.Identity;
+﻿using Auth.Infrastructure.Identity;
 using AuthServer.Extensions;
+using AuthServer.Models;
 using IdentityServer4;
-using Auth.Infrastructure.Constants;
-using AuthServer.Models.Users.Employee.Response;
-using AuthServer.Models.Users.Employee.Request;
+using IdentityServer4.Events;
+using IdentityServer4.Models;
+using IdentityServer4.Services;
+using IdentityServer4.Stores;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Auth.Infrastructure.Persistence;
-using AuthServer.Models.Users;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AuthServer.Controllers
 {
@@ -31,11 +26,10 @@ namespace AuthServer.Controllers
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
-        private readonly AppIdentityDbContext _dbContext;
         private readonly ILogger<AccountController> _logger;
 
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events, ILogger<AccountController> logger, AppIdentityDbContext appIdentityDbContext)
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -45,7 +39,6 @@ namespace AuthServer.Controllers
             _events = events;
             _signInManager = signInManager;
             _logger = logger;
-            _dbContext = _dbContext;
         }
 
         /// <summary>
@@ -170,7 +163,6 @@ namespace AuthServer.Controllers
             return View(vm);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterRequestViewModel model)
         {
@@ -179,17 +171,24 @@ namespace AuthServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new AppUser { UserName = model.Email, FirstName = model.FirstName, Email = model.Email };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var role = _roleManager.Roles.Where(x => x.Id == model.RoleId).FirstOrDefault();
+            if (role == null) return BadRequest("Role not found");
+            if (!role.IsPublic) return BadRequest("Role is not public.");
 
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            var user = new AppUser { UserName = model.Email, FirstName = model.FirstName, Email = model.Email };
+            var userResult = await _userManager.CreateAsync(user, model.Password);
+
+            if (!userResult.Succeeded) return BadRequest(userResult.Errors);
 
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("username", user.UserName));
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("firstname", user.FirstName));
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("middlename", user.MiddleName));
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("lastname", user.LastName));
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("email", user.Email));
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", SystemRoles.Consumer));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", role.Name));
+
+            var roleResult = await _userManager.AddToRoleAsync(user, role.Name);
+            if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
             return Ok(new RegisterResponseViewModel(user));
         }
@@ -202,121 +201,7 @@ namespace AuthServer.Controllers
             return Redirect(context.PostLogoutRedirectUri ?? "http://localhost:4200/auth-callback");
         }
 
-        [HttpGet]
-        public IActionResult GetAllUsers()
-        {
-            var users = _userManager.Users.Select(x => new GetUserResponse
-            {
-                Id = x.Id,
-                Email = x.Email,
-                FirstName = x.FirstName,
-                MiddleName = x.MiddleName,
-                LastName = x.LastName,
-                PhoneNumber = x.PhoneNumber
-            }).ToList();
-            if (users == null) return NotFound();
-            return Ok(users);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest createEmployeeRequest)
-        {
-            var requestedBy = User.FindFirst("UserId").ToString();
-            bool usernameExists = await _userManager.FindByNameAsync(createEmployeeRequest.UserName) != null;
-            if (usernameExists)
-            {
-                return BadRequest("Username is taken.");
-            }
-
-            bool emailExists = await _userManager.FindByEmailAsync(createEmployeeRequest.Email) != null;
-            if (emailExists)
-            {
-                return BadRequest("Email is in use.");
-            }
-
-            var applicationUser = new AppUser
-            {
-                UserName = createEmployeeRequest.UserName,
-                Email = createEmployeeRequest.Email,
-                FirstName = createEmployeeRequest.FirstName,
-                MiddleName = createEmployeeRequest.MiddleName,
-                LastName = createEmployeeRequest.LastName,
-                PhoneNumber = createEmployeeRequest.Phone,
-                CreatedBy = requestedBy,
-                CreatedDate = DateTime.UtcNow,
-            };
-
-            var identityResult = await _userManager.CreateAsync(applicationUser, createEmployeeRequest.Password);
-
-            if (!identityResult.Succeeded)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-
-            var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
-
-            if (string.IsNullOrEmpty(roleName))
-            {
-                await _userManager.DeleteAsync(applicationUser);
-                return BadRequest("Role not found.");
-            }
-
-            var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
-
-            if (roleResult.Succeeded)
-            {
-                return Ok();
-            }
-            else
-            {
-                await _userManager.DeleteAsync(applicationUser);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-
-        } 
-        
-        [HttpPost]
-        public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeRequest createEmployeeRequest)
-        {
-            var requestedBy = User.FindFirst("UserId").ToString();
-            bool userExists = await _userManager.FindByIdAsync(createEmployeeRequest.Id) != null;
-            if (userExists)
-            {
-                return BadRequest("User not found.");
-            }
-
-            var applicationUser = new AppUser
-            {
-                FirstName = createEmployeeRequest.FirstName,
-                MiddleName = createEmployeeRequest.MiddleName,
-                LastName = createEmployeeRequest.LastName,
-                PhoneNumber = createEmployeeRequest.Phone,
-                LastUpdatedBy = requestedBy,
-                LastUpdatedDate = DateTime.UtcNow,
-            };
-
-            var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
-
-            if (string.IsNullOrEmpty(roleName))
-            {
-                return BadRequest("Role not found.");
-            }
-
-            var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
-
-            if (roleResult.Succeeded)
-            {
-                return Ok();
-            }
-            else
-            {
-                await _userManager.DeleteAsync(applicationUser);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-
-        }
-
-
+       
         /*****************************************/
         /* helper APIs for the AccountController */
         /*****************************************/

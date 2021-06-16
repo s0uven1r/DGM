@@ -34,10 +34,10 @@ namespace Auth.Infrastructure.Persistence.Migrations.IdentityServer
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsPublic")
+                    b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsSuperAdmin")
+                    b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastUpdatedBy")
@@ -92,7 +92,7 @@ namespace Auth.Infrastructure.Persistence.Migrations.IdentityServer
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool>("IsDisabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")

@@ -1,8 +1,8 @@
 ﻿dotnet tool install --global dotnet-ef --version 5.0.5
 
-dotnet ef migrations add InitialIdentityServerAppDbMigration -c AppIdentityDbContext -o Persistence/Migrations/IdentityServer
-dotnet ef migrations add InitialIdentityServerPersistedGrantDbMigration -c PersistedGrantDbContext -o Persistence/Migrations/IdentityServer/PersistedGrantDb
-dotnet ef migrations add InitialIdentityServerConfigurationDbMigration -c ConfigurationDbContext -o Persistence/Migrations/IdentityServer/ConfigurationDb
+dotnet ef migrations add Initial_IdentityServerAppDbMigration -c AppIdentityDbContext -o Persistence/Migrations/IdentityServer
+dotnet ef migrations add Initial_PersistedGrantDbMigration -c PersistedGrantDbContext -o Persistence/Migrations/IdentityServer/PersistedGrantDb
+dotnet ef migrations add Initial_ConfigurationDbMigration -c ConfigurationDbContext -o Persistence/Migrations/IdentityServer/ConfigurationDb
 
 dotnet ef database update -c AppIdentityDbContext
 dotnet ef database update -c PersistedGrantDbContext

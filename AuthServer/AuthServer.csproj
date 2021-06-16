@@ -26,6 +26,7 @@
     <Folder Include="Models\Users\Consumer\Response\" />
     <Folder Include="Models\Users\Consumer\Request\" />
     <Folder Include="Services\" />
+    <Folder Include="wwwroot\font\" />
   </ItemGroup>
 
 </Project>

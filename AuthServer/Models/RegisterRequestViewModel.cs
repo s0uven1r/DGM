@@ -26,7 +26,7 @@ namespace AuthServer.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        //[Required]
+        [Required]
         public string RoleId { get; set; }
     }
 }
