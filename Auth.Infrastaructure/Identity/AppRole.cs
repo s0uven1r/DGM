@@ -11,7 +11,6 @@ namespace Auth.Infrastructure.Identity
         }
 
         public bool IsDefault { get; set; }
-        public bool IsDeleted { get; set; }
         public bool IsPublic { get; set; } //role should be public or not
 
         public string CreatedBy { get; set; }

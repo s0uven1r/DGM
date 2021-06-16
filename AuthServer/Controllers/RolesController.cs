@@ -6,6 +6,7 @@ using Dgm.Common.Authorization.Claim.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading;
@@ -20,10 +21,12 @@ namespace AuthServer.Controllers
     public class RolesController : ControllerBase
     {
         private readonly RoleManager<AppRole> _roleManager;
+        private readonly ILogger<RolesController> _logger;
 
-        public RolesController(RoleManager<AppRole> roleManager)
+        public RolesController(RoleManager<AppRole> roleManager, ILogger<RolesController> logger)
         {
             _roleManager = roleManager;
+            _logger = logger;
         }
 
 
@@ -32,15 +35,14 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.ViewRole)]
         public IActionResult GetRoles()
         {
-            var abc = User.Claims.ToList();
-            var users = _roleManager.Roles.Where(x => !x.IsDeleted).Select(x => new GetRoleResponse
+            var roles = _roleManager.Roles.Select(x => new GetRoleResponse
             {
                 Id = x.Id,
                 Name = x.Name,
                 IsPublic = x.IsPublic
             });
-            if (users == null) return NotFound();
-            return Ok(users);
+            if (roles == null) return NotFound();
+            return Ok(roles);
         }
 
         [HttpPost]
@@ -75,8 +77,8 @@ namespace AuthServer.Controllers
             var requestedBy = User.FindFirst("UserId").ToString();
             var role = await _roleManager.FindByIdAsync(createRoleRequest.Id);
 
-            if (role.IsDefault) return BadRequest($"Role \'{createRoleRequest.Name}\' cannot be updated.");
             if (role == null) return BadRequest($"Role \'{createRoleRequest.Name}\' not found.");
+            if (role.IsDefault) return BadRequest($"Role \'{createRoleRequest.Name}\' cannot be updated.");
 
             role.Name = createRoleRequest.Name;
             role.IsPublic = createRoleRequest.IsPublic;
@@ -100,14 +102,11 @@ namespace AuthServer.Controllers
             }
             var role = await _roleManager.FindByIdAsync(id);
 
-            if (role.IsDefault) return BadRequest("Role cannot be deleted.");
             if (role == null) return BadRequest("Role not found.");
+            if (role.IsDefault) return BadRequest("Role cannot be deleted.");
 
-            role.IsDeleted = true;
-            role.LastUpdatedBy = requestedBy;
-            role.LastUpdatedDate = DateTime.UtcNow;
-
-            await _roleManager.UpdateAsync(role);
+            await _roleManager.DeleteAsync(role);
+            _logger.LogWarning("Role {1} deleted by user:{2} on {3}", role.Name, requestedBy, DateTime.UtcNow);
             return Ok();
         }
     }

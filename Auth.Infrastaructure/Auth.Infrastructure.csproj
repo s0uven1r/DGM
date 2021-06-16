@@ -25,6 +25,8 @@
   <ItemGroup>
     <Folder Include="Constants\" />
     <Folder Include="Persistence\Migrations\" />
+    <Folder Include="Persistence\Migrations\IdentityServer\ConfigurationDb\" />
+    <Folder Include="Persistence\Migrations\IdentityServer\PersistedGrantDb\" />
   </ItemGroup>
 
   <ItemGroup>

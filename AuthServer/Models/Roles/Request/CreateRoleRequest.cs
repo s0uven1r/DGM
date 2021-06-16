@@ -9,5 +9,6 @@ namespace AuthServer.Models.Roles.Request
     {
         public string Name { get; set; }
         public bool IsPublic { get; set; }
+        //public bool CanBeDeleted { get; set; }
     }
 }

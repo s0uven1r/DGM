@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 
 namespace AuthServer.Validators.Users.Employee
 {
-    public class CreateEmployeeRequestValidator : AbstractValidator<CreateEmployeeRequest>
+    public class UpdateEmployeeRequestValidator : AbstractValidator<UpdateEmployeeRequest>
     {
-        public CreateEmployeeRequestValidator()
+        public UpdateEmployeeRequestValidator()
         {
+            RuleFor(x => x.Id)
+                .NotEmpty();
+            
             RuleFor(x => x.FirstName)
                 .NotEmpty()
                 .Length(2, 20);
@@ -22,19 +25,7 @@ namespace AuthServer.Validators.Users.Employee
             RuleFor(x => x.LastName)
                 .NotEmpty()
                 .Length(2, 20);
-
-            RuleFor(x => x.Password)
-                            .NotEmpty()
-                            .Length(4, 100);
-
-            RuleFor(x => x.UserName)
-               .NotEmpty()
-               .Length(4, 100);
-
-            RuleFor(x => x.Email)
-                           .NotEmpty()
-                           .EmailAddress();
-
+         
             RuleFor(x => x.Phone)
                             .NotEmpty();
 
