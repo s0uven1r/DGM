@@ -48,7 +48,7 @@ namespace AuthServer.Controllers
                                         role
                                     }
                              ).ToListAsync();
-            
+
             if (joinResult == null) return NotFound();
 
             var users = joinResult.Select(x => new GetUserResponse
@@ -65,8 +65,36 @@ namespace AuthServer.Controllers
                 IsDefault = x.role.IsDefault
             }).ToList();
 
-            
+
             return Ok(users);
+        }
+
+        [HttpGet]
+        [Route("GetUser/{userId}")]
+        [ApiAuthorize(IdentityClaimConstant.ViewUser)]
+        public async Task<IActionResult> GetUser(string userId)
+        {
+            var user = await _userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
+            if (user == null) return BadRequest("User not found");
+
+            var roleNameList = await _userManager.GetRolesAsync(user);
+            var roleName = roleNameList.FirstOrDefault();
+            var role = await _roleManager.Roles.Where(r => r.Name == roleName).FirstOrDefaultAsync();
+
+            var userResult = new GetUserResponse
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                RoleId = role.Id,
+                RoleName = roleName,
+                IsDefault = role.IsDefault
+            };
+            return Ok(userResult);
         }
 
         [HttpPost]
