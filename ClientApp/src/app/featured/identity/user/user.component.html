@@ -24,10 +24,10 @@
             <td>{{ i + 1 }}</td>
             <td>{{ person.email }}</td>
             <td>{{ person.userName }}</td>
-            <td>{{ person.firstName+ ' ' +  (person.middleName?person.middleName: "")+' ' + person.lastName }}</td>
+            <td>{{ person.firstName+ ' ' +  (person.middleName?person.middleName: "") +' ' + person.lastName }}</td>
             <td>{{person.phoneNumber}}</td>
             <td>  <div class="custom-control form-control-lg custom-checkbox">
-              <input type="checkbox" class="custom-control-input" [id]="'id'+person.id" #val (click)="hasEnable(person.id, val)">
+              <input type="checkbox" [checked]="person.isEnabled" class="custom-control-input" [id]="'id'+person.id" #val (click)="hasEnable(person.id, val)">
               <label class="custom-control-label" [for]="'id'+person.id" ></label>
             </div>
             </td>

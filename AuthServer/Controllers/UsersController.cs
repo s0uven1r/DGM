@@ -62,7 +62,8 @@ namespace AuthServer.Controllers
                 PhoneNumber = x.user.PhoneNumber,
                 RoleId = x.role.Id,
                 RoleName = x.role.Name,
-                IsDefault = x.role.IsDefault
+                IsDefault = x.role.IsDefault,
+                IsEnabled = !x.user.IsDisabled
             }).ToList();
 
             
