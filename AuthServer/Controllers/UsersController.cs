@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,19 +35,37 @@ namespace AuthServer.Controllers
         [HttpGet]
         [Route("GetAllUsers")]
         [ApiAuthorize(IdentityClaimConstant.ViewUser)]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
-            var users = _userManager.Users.Select(x => new GetUserResponse
+            var joinResult = await (from user in _appIdentityDbContext.Users
+                                    join userRole in _appIdentityDbContext.UserRoles
+                                    on user.Id equals userRole.UserId
+                                    join role in _appIdentityDbContext.Roles
+                                    on userRole.RoleId equals role.Id
+                                    select new
+                                    {
+                                        user,
+                                        role
+                                    }
+                             ).ToListAsync();
+            
+            if (joinResult == null) return NotFound();
+
+            var users = joinResult.Select(x => new GetUserResponse
             {
-                Id = x.Id,
-                Email = x.Email,
-                UserName = x.UserName,
-                FirstName = x.FirstName,
-                MiddleName = x.MiddleName,
-                LastName = x.LastName,
-                PhoneNumber = x.PhoneNumber
+                Id = x.user.Id,
+                Email = x.user.Email,
+                UserName = x.user.UserName,
+                FirstName = x.user.FirstName,
+                MiddleName = x.user.MiddleName,
+                LastName = x.user.LastName,
+                PhoneNumber = x.user.PhoneNumber,
+                RoleId = x.role.Id,
+                RoleName = x.role.Name,
+                IsDefault = x.role.IsDefault
             }).ToList();
-            if (users == null) return NotFound();
+
+            
             return Ok(users);
         }
 
