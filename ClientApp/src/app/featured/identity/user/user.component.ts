@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { UserModel } from 'src/app/infrastructure/model/UserManagement/user-model';
 import { UserService } from './service/user.service';
@@ -13,7 +14,7 @@ export class UserComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   persons: UserModel[] = [];
   dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private userService: UserService, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private userService: UserService, private router: Router, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -35,6 +36,12 @@ export class UserComponent implements OnInit, OnDestroy {
       }, () => {
         val.checked = !val.checked
       });;
+  }
+  getEdit(id: string){
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/dashboard/user/edit/${id}`])
+    );
+    window.open(url, "_blank");
   }
 }
 

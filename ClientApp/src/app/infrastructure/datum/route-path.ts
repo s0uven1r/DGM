@@ -6,6 +6,7 @@ import { AuthCallbackComponent } from 'src/app/featured/auth-callback/auth-callb
 import { CounterComponent } from 'src/app/featured/counter/counter.component';
 import { PermissionComponent } from 'src/app/featured/identity/permission/permission.component';
 import { RoleComponent } from 'src/app/featured/identity/role/role.component';
+import { RoleResolverService } from 'src/app/featured/identity/role/service/resolver/role-resolver.service';
 import { CreateComponent } from 'src/app/featured/identity/user/create/create.component';
 import { UserComponent } from 'src/app/featured/identity/user/user.component';
 import { PermissionRoutePath } from './route-path/permission';
@@ -37,5 +38,7 @@ export const RoutePath = {
   RoleRoutePath:[{path: '', component: RoleComponent}],
   PermissionRoutePath:[{path: '', component: PermissionComponent}],
   UserRoutePath: [{path: '', component: UserComponent}],
-  UserCreateRoutePath: [{path: '', component: CreateComponent}],
+  UserCreateRoutePath: [{path: '', component: CreateComponent,resolve: {
+    roleData: RoleResolverService
+  }}],
 };

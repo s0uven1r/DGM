@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { RoleModel } from 'src/app/infrastructure/model/UserManagement/role-model';
 import Swal from 'sweetalert2';
 import { RoleService } from './service/role.service';
 
@@ -116,9 +117,4 @@ export class RoleComponent implements OnInit {
   })
   }
 }
-export interface RoleModel {
-  id: string;
-  name: string;
-  isPublic: boolean;
-  isDefault: boolean;
-}
+

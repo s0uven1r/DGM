@@ -20,7 +20,9 @@ export const ApiGateway = {
             base: 'Users',
             getUser: '/GetAllUsers',
             enableUser: '/EnableLogin',
-            disableUser: '/DisableLogin'
+            disableUser: '/DisableLogin',
+            createEmployee: '/CreateEmployee',
+            updateEmployee: '/UpdateEmployee'
         }
     }
 }

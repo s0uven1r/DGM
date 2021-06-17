@@ -1,0 +1,4 @@
+img {width:100%;}
+.ui.action.input input[type="file"] {
+  display: none;
+}
