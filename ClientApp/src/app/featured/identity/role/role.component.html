@@ -28,7 +28,9 @@
                 && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not greater than 50 character!</small>
               </span>
           </div>
-          
+          <div class="form-group col-md-4">
+            <input type="number" formControlName="rank" placeholder="Role Level" class="form-control">
+          </div>
           <div class="form-group publicDiv col-lg-2 col-md-3 col-sm-4">
             <div class="custom-control form-control-lg pull-right custom-checkbox">
               <input type="checkbox" formControlName="hasPublic" class="custom-control-input" id="idIsPublic">
@@ -50,12 +52,14 @@
     <tr>
         <th>S.N</th>
         <th>Title</th>
+        <th>Level</th>
         <th>Public</th>
         <th>Action</th>
     </tr>
     <tr *ngFor="let item of roleData; let i=index">
         <td>{{i+1}}</td>
         <td>{{item.name}}</td>
+        <td>{{item.rank}}</td>
         <td>{{item.isPublic?'Yes':'No'}}</td>
         <td *ngIf="!item.isDefault"> 
             <button class="btn pt-0 pb-0 btn-xs btn-success" (click)="getData(item.id, item.name, item.isPublic)"><em class="fa fa-edit"></em></button>

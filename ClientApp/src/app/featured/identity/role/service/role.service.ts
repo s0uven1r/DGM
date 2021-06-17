@@ -17,11 +17,11 @@ export class RoleService {
   getRole(): Observable<any>{
     return this.http.get<any>(`${this.baseUrl + this.getRoleUrl}`);
   }
-  performCreateEditRole( title:string, hasPublic: boolean, id:string): Observable<any>{
+  performCreateEditRole( title:string, hasPublic: boolean, id:string, rank: number): Observable<any>{
     if(id){
-      return this.http.put<any>(`${this.baseUrl + this.putUrl}`, { name : title, isPublic: hasPublic, id: id})
+      return this.http.put<any>(`${this.baseUrl + this.putUrl}`, { name : title, isPublic: hasPublic, id: id, rank: rank})
     }else{
-       return this.http.post<any>(`${this.baseUrl + this.postUrl}`, { name : title, isPublic: hasPublic})
+       return this.http.post<any>(`${this.baseUrl + this.postUrl}`, { name : title, isPublic: hasPublic, rank: rank})
     }
   }
   deleteRole(id: string){

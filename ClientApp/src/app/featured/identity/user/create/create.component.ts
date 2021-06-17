@@ -31,10 +31,18 @@ export class CreateComponent implements OnInit {
         this.isEdit = true;
         this.InternalUserForm.controls['email'].disable();
         this.InternalUserForm.controls['confirmEmail'].disable();
-        this.InternalUserForm.patchValue({'id': params['id']}); 
-        // this.userService.getUserById(params['id']).subscribe(x => {
-        //   this.InternalUserForm.patchValue({'id': params['id']}); 
-        // })
+        this.userService.getUserById(params['id']).subscribe(x => {
+          this.InternalUserForm.patchValue({
+            'id': params['id'],
+            'appliedRole': x.roleId,
+            'firstName': x.firstName,
+            'middleName': x.middleName,
+            'lastName': x.lastName,
+            'email': x.email,
+            'confirmEmail': x.email,
+            'phone': x.phoneNumber
+        }); 
+        })
       }
      
    });
