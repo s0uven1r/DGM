@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ChildActivationEnd, Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { ApiGateway } from 'src/app/infrastructure/datum/apigateway/api-gateway';
+import { MenuResultModel } from 'src/app/infrastructure/model/UserManagement/Menu/menu-result-model';
+import { environment } from 'src/environments/environment';
 
-import { SBRouteData } from '../models';
 
 @Injectable()
 export class NavigationService {
-    _sideNavVisible$ = new BehaviorSubject(true);
-    _routeData$ = new BehaviorSubject({} as SBRouteData);
-    _currentURL$ = new BehaviorSubject('');
-
+    
+    private baseUrl = environment.apiIdentityUrl;
+    private getMenuUrl = ApiGateway.identity.menu.base + ApiGateway.identity.menu.getMenu;
+   
     constructor(public route: ActivatedRoute, public router: Router, private http: HttpClient) {
         this.router.events
             .pipe(filter(event => event instanceof ChildActivationEnd))
@@ -20,38 +22,10 @@ export class NavigationService {
                 while (snapshot.firstChild !== null) {
                     snapshot = snapshot.firstChild;
                 }
-                this._routeData$.next(snapshot.data as SBRouteData);
-                this._currentURL$.next(router.url);
             });
     }
-
-    sideNavVisible$(): Observable<boolean> {
-        return this._sideNavVisible$;
-    }
-
-    toggleSideNav(visibility?: boolean) {
-        if (typeof visibility !== 'undefined') {
-            this._sideNavVisible$.next(visibility);
-        } else {
-            this._sideNavVisible$.next(!this._sideNavVisible$.value);
-        }
-    }
-
-    routeData$(): Observable<SBRouteData> {
-        return this._routeData$;
-    }
-
-    currentURL$(): Observable<string> {
-        return this._currentURL$;
-    }
-    getMenu(): Observable<MenuResultViewModel[]> {
-        return  this.http.get<MenuResultViewModel[]>('assets/menu.json');
+   
+    getMenu(): Observable<MenuResultModel[]> {
+        return this.http.get<any>(`${this.baseUrl + this.getMenuUrl}`);;
       }
-}
-export interface MenuResultViewModel{
-    id: number;
-    title: string;
-    class: string;
-    url: string;
-    menu?: MenuResultViewModel[];
 }

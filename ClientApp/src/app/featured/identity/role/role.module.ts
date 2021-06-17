@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { RoleRoutingModule, RoutingComponent } from './role-routing.module';
 import { RoleService } from './service/role.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: RoutingComponent,
   imports: [
     CommonModule,
-    RoleRoutingModule
+    RoleRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [ {
     provide: RoleService,
