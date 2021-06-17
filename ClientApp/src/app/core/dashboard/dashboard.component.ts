@@ -3,7 +3,8 @@ import {  ChildActivationEnd,  Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { MenuResultViewModel, NavigationService } from './services';
+import { MenuResultModel } from 'src/app/infrastructure/model/UserManagement/Menu/menu-result-model';
+import {  NavigationService } from './services';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnInit {
     expandNavStyle = '';
     expandContentStyle = '';
     expanded = false;
-    menuList: MenuResultViewModel[];
+    menuList: MenuResultModel[];
   constructor(public router: Router,
      private authService: OAuthService,
      public navigationService: NavigationService,

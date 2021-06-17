@@ -1,7 +1,5 @@
 import { NavigationService } from './navigation.service';
-import { SideNavService } from './side-nav.service';
 
-export const services = [NavigationService, SideNavService];
+export const services = [NavigationService];
 
 export * from './navigation.service';
-export * from './side-nav.service';

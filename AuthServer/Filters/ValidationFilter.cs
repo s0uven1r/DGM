@@ -1,8 +1,6 @@
 ﻿using AuthServer.Contracts.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,7 +17,7 @@ namespace AuthServer.Filters
                         .ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(y => y.ErrorMessage)).ToArray();
 
 
-                ErrorResponse errorResponse = new ErrorResponse();
+                ErrorResponse errorResponse = new();
                 foreach (var erorr in errorsInModelState)
                 {
                     foreach (var subError in erorr.Value)

@@ -33,4 +33,16 @@ namespace AuthServer.Models.Permission
         public string ClaimTitle { get; set; }
         public bool HasClaim { get; set; }
     }
+    public class PermissionManagementViewModel{
+        public string RoleId { get; set; }
+        public List<ClaimListViewModel> ClaimList { get; set; }
+        public PermissionManagementViewModel()
+        {
+            ClaimList = new List<ClaimListViewModel>();
+        }
+    }
+    public class ClaimListViewModel
+    {
+        public string Id { get; set; }
+    }
 }

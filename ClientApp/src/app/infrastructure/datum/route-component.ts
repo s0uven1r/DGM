@@ -4,6 +4,9 @@ import { CounterComponent } from "src/app/featured/counter/counter.component";
 import { AuthCallbackComponent } from "src/app/featured/auth-callback/auth-callback.component";
 import { DashboardComponent } from "src/app/core/dashboard/dashboard.component";
 import { RoleComponent } from "src/app/featured/identity/role/role.component";
+import { PermissionComponent } from "src/app/featured/identity/permission/permission.component";
+import { UserComponent } from "src/app/featured/identity/user/user.component";
+import { CreateComponent } from "src/app/featured/identity/user/create/create.component";
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -18,6 +21,9 @@ export const RouteComponent = {
         AuthCallbackComponent
       ],
       DashBoardRouteComponent: [],
-      RoleRouteComponent: [RoleComponent]
+      RoleRouteComponent: [RoleComponent],
+      PermissionRouteComponent: [PermissionComponent],
+      UserRouteComponent: [UserComponent],
+      UserCreateRouteComponent: [CreateComponent]
       
 }
