@@ -31,6 +31,7 @@ export class RoleComponent implements OnInit {
     return (this.roleForm = this.form.group({
       title: [null,  [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
       id: [null],
+      rank: [null],
       hasPublic: [false]
     }));
   }
@@ -55,7 +56,8 @@ export class RoleComponent implements OnInit {
       (this.roleService.performCreateEditRole(
         this.roleForm.get('title').value,
         this.roleForm.get('hasPublic').value,
-        this.roleForm.get('id').value
+        this.roleForm.get('id').value,
+        this.roleForm.get('rank').value
       )).subscribe(
         () => {
           Swal.fire(

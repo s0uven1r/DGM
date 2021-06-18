@@ -53,6 +53,7 @@ constructor(private http: HttpClient) { }
     });
   }
   getUserById(id: string): Observable<any>{
+    debugger;
     return this.http.get<any>(`${this.baseUrl + this.getUserUrl}/${id}`);
   }
 }

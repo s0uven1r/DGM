@@ -33,9 +33,9 @@ namespace AuthServer.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllUsers")]
+        [Route("GetUser")]
         [ApiAuthorize(IdentityClaimConstant.ViewUser)]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetUser()
         {
             var joinResult = await (from user in _appIdentityDbContext.Users
                                     join userRole in _appIdentityDbContext.UserRoles
@@ -62,7 +62,8 @@ namespace AuthServer.Controllers
                 PhoneNumber = x.user.PhoneNumber,
                 RoleId = x.role.Id,
                 RoleName = x.role.Name,
-                IsDefault = x.role.IsDefault
+                IsDefault = x.role.IsDefault,
+                IsEnabled = !x.user.IsDisabled
             }).ToList();
 
 

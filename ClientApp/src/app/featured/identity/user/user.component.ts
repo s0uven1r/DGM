@@ -19,7 +19,8 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10
+      pageLength: 5,
+      lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]]
     };
     this.userService.getUser().subscribe(x => {this.persons = x;
       this.changeDetectorRef.markForCheck();

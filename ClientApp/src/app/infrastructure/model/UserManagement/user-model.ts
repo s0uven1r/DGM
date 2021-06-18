@@ -6,4 +6,6 @@ export interface UserModel{
     middleName : string; 
     lastName: string;  
     phoneNumber: string;  
+    roleName: string;
+    isDefault: boolean;
 }

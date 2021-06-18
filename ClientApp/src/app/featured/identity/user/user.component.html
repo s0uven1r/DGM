@@ -15,6 +15,7 @@
             <th>UserName</th>
             <th>FullName</th>
             <th>PhoneNo</th>
+            <th>Role</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -24,15 +25,16 @@
             <td>{{ i + 1 }}</td>
             <td>{{ person.email }}</td>
             <td>{{ person.userName }}</td>
-            <td>{{ person.firstName+ ' ' +  (person.middleName?person.middleName: "")+' ' + person.lastName }}</td>
+            <td>{{ person.firstName+ ' ' +  (person.middleName?person.middleName: "") +' ' + person.lastName }}</td>
             <td>{{person.phoneNumber}}</td>
+            <td>{{person.roleName}}</td>
             <td>  <div class="custom-control form-control-lg custom-checkbox">
-              <input type="checkbox" class="custom-control-input" [id]="'id'+person.id" #val (click)="hasEnable(person.id, val)">
+              <input type="checkbox" [checked]="person.isEnabled" [disabled]="person.isDefault" class="custom-control-input" [id]="'id'+person.id" #val (click)="hasEnable(person.id, val)">
               <label class="custom-control-label" [for]="'id'+person.id" ></label>
             </div>
             </td>
             <td>
-              <button class="btn pt-0 pb-0 btn-xs btn-success" (click)="getEdit(person.id)" ><em class="fa fa-edit"></em></button>
+              <button *ngIf="!person.isDefault" class="btn pt-0 pb-0 btn-xs btn-success" (click)="getEdit(person.id)" ><em class="fa fa-edit"></em></button>
             </td>
           </tr>
         </tbody>
