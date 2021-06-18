@@ -12,6 +12,7 @@ namespace Auth.Infrastructure.Identity
 
         public bool IsDefault { get; set; }
         public bool IsPublic { get; set; } //role should be public or not
+        public int Rank { get; set; }
 
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
