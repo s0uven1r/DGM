@@ -1,107 +1,131 @@
 ﻿@model LoginViewModel
-
-    @if (Model.EnableLocalLogin)
-    {
-        <div class="main">
-            <section class="sign-in">
-                <div class="custom-container">
-                    <div class="signin-content">
-                        <div class="signin-image .d-sm-none">
-                            <figure><img src="~/images/signin-image.jpg" alt="sign in image"></figure>
-                            <a href="#" class="signup-image-link">Create an account</a>
+@if (Model.EnableLocalLogin)
+{
+    <div class="main">
+        <section class="sign-in d-flex justify-content-center">
+            <div class="card shadow bg-white rounded mt-5 mb-5">
+                <div class="row signin-content pl-5 pr-5">
+                    <div class="signin-image col-md-6">
+                        <div class="align-middle p-3 pt-5">
+                            <img src="~/images/signin-image.jpg" class=" img-fluid rounded" alt="sign in image" style="width:500px;height:auto">
                         </div>
-
-                        <div class="signin-form">
-                            <h2 class="form-title">Sign in</h2>
-                            <form method="POST" class="register-form" id="login-form">
-                                <div class="form-group">
-                                    <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                    <input type="text" name="your_name" id="your_name" placeholder="Your Name" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                    <input type="password" name="your_pass" id="your_pass" placeholder="Password" />
-                                </div>
-                                <div class="form-group">
-                                    <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                    <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
-                                </div>
-                                <div class="form-group form-button">
-                                    <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
-                                </div>
-                            </form>
-                            <div class="social-login">
-                                <span class="social-label">Or login with</span>
-                                <ul class="socials">
-                                    <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                    <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                                    <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-                                </ul>
+                        <div class="form-group mt-4">
+                            <div class="d-flex justify-content-center">
+                                Don't have an account?
                             </div>
+                            <div class="d-flex justify-content-center links">
+                                <a href="#">Sign Up</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="signin-form col-md-6">
+                        <div class="form-title">
+                            <h2>&nbsp;&nbsp;Sign in</h2>
+                        </div>
+                        <form asp-route="Login" class="register-form" id="login-form">
+                            <div class="form-floating mb-3">
+                                <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                                <label for="floatingInput">Username</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="d-flex justify-content-left forgot-password">
+                                    <a href="#">Forgot your password?</a>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                @if (Model.AllowRememberLogin)
+                                {
+                                    <input type="checkbox" asp-for="RememberLogin" class="form-check-input">
+                                    <label asp-for="RememberLogin" class="form-check-label">Remember My Login</label>
+                                }
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <button class="btn login_btn" name="button" value="login">Login</button>
+                            </div>
+                            <partial name="_ValidationSummary" />
+                        </form>
+                        <div class="col-md-12">
+                            <div class="login-or">
+                                <hr class="hr-or">
+                                <span class="span-or">or</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center links mb-2">
+                            <a class="btn btn-primary" style="background-color: #3b5998; margin:5px;" href="#!" role="button">
+                                <i class="fa fa-facebook-f"></i>
+                            </a>
+                            <a class="btn btn-primary" style="background-color: #dd4b39;margin:5px;" href="#!" role="button">
+                                <i class="fa fa-google"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </section>
-            @*<div class="col-md-12">
-                    <div class="col-md-4">
-                        <form asp-route="Login">
-                            <input type="hidden" asp-for="ReturnUrl" />
-                            <div class="form-group">
-                                <label asp-for="Username"></label>
-                                <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                            </div>
-
-                            @if (Model.AllowRememberLogin)
-                            {
-                                <div class="form-check">
-                                    <input type="checkbox" asp-for="RememberLogin" class="form-check-input">
-                                    <label asp-for="RememberLogin" class="form-check-label">Remember My Login</label>
-                                </div>
-                            }
-
-                            <div class="mt-4 mb-4">
-                                <button class="btn btn-primary" name="button" value="login">Login</button>
-                                <button class="btn btn-light" name="button" value="cancel">Cancel</button>
-                            </div>
-
-                            <partial name="_ValidationSummary" />
-                        </form>
-                    </div>
-                </div>*@
-        </div>
-
-    }
-
-    @if (Model.VisibleExternalProviders.Any())
-    {
-        <div class="col-md-4 ml-5">
-
-            <h1 class="mt-5 mb-3">External Login</h1>
-
-            <div class="list-group">
-                @foreach (var provider in Model.VisibleExternalProviders)
-                {
-                    <a class="list-group-item list-group-item-action"
-                       asp-controller="External"
-                       asp-action="Challenge"
-                       asp-route-provider="@provider.AuthenticationScheme"
-                       asp-route-returnUrl="@Model.ReturnUrl">
-                        @provider.DisplayName
-                    </a>
-                }
             </div>
-        </div>
-    }
+        </section>
+        @*<div class="col-md-12">
+                <div class="col-md-4">
+                    <form asp-route="Login">
+                        <input type="hidden" asp-for="ReturnUrl" />
+                        <div class="form-group">
+                            <label asp-for="Username"></label>
+                            <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                        </div>
 
-    @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
-    {
-        <div class="alert alert-warning">
-            <strong>Invalid login request</strong>
-            There are no login schemes configured for this client.
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                        </div>
+
+                        @if (Model.AllowRememberLogin)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" asp-for="RememberLogin" class="form-check-input">
+                                <label asp-for="RememberLogin" class="form-check-label">Remember My Login</label>
+                            </div>
+                        }
+
+                        <div class="mt-4 mb-4">
+                            <button class="btn btn-primary" name="button" value="login">Login</button>
+                            <button class="btn btn-light" name="button" value="cancel">Cancel</button>
+                        </div>
+
+                        <partial name="_ValidationSummary" />
+                    </form>
+                </div>
+            </div>*@
+    </div>
+
+}
+
+@if (Model.VisibleExternalProviders.Any())
+{
+    <div class="col-md-4 ml-5">
+
+        <h1 class="mt-5 mb-3">External Login</h1>
+
+        <div class="list-group">
+            @foreach (var provider in Model.VisibleExternalProviders)
+            {
+                <a class="list-group-item list-group-item-action"
+                   asp-controller="External"
+                   asp-action="Challenge"
+                   asp-route-provider="@provider.AuthenticationScheme"
+                   asp-route-returnUrl="@Model.ReturnUrl">
+                    @provider.DisplayName
+                </a>
+            }
         </div>
-    }
+    </div>
+}
+
+@if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
+{
+    <div class="alert alert-warning">
+        <strong>Invalid login request</strong>
+        There are no login schemes configured for this client.
+    </div>
+}
