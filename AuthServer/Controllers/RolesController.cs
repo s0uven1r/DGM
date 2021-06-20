@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using static IdentityServer4.IdentityServerConstants;
 
@@ -40,7 +39,8 @@ namespace AuthServer.Controllers
                 Id = x.Id,
                 Name = x.Name,
                 IsPublic = x.IsPublic,
-                IsDefault = x.IsDefault
+                IsDefault = x.IsDefault,
+                Rank = x.Rank
             });
             if (roles == null) return NotFound();
             return Ok(roles);
@@ -61,6 +61,7 @@ namespace AuthServer.Controllers
             var role = new AppRole
             {
                 Name = createRoleRequest.Name,
+                Rank = createRoleRequest.Rank,
                 IsPublic = createRoleRequest.IsPublic,
                 CreatedBy = requestedBy,
                 CreatedDate = DateTime.UtcNow
@@ -83,6 +84,7 @@ namespace AuthServer.Controllers
 
             role.Name = createRoleRequest.Name;
             role.IsPublic = createRoleRequest.IsPublic;
+            role.Rank = createRoleRequest.Rank;
             role.LastUpdatedBy = requestedBy;
             role.LastUpdatedDate = DateTime.UtcNow;
 
