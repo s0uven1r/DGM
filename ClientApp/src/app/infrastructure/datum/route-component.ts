@@ -7,12 +7,14 @@ import { RoleComponent } from "src/app/featured/identity/role/role.component";
 import { PermissionComponent } from "src/app/featured/identity/permission/permission.component";
 import { UserComponent } from "src/app/featured/identity/user/user.component";
 import { CreateComponent } from "src/app/featured/identity/user/create/create.component";
+import { ForbiddenComponent } from "src/app/core/forbidden/forbidden.component";
 
 export const RouteComponent = {
     AppRouteComponent: [
         AppComponent,
         HomeComponent,
-        DashboardComponent
+        DashboardComponent,
+        ForbiddenComponent
       ],
       CounterRouteComponent: [
         CounterComponent
