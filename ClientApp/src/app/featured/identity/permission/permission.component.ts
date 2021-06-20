@@ -79,13 +79,7 @@ export class PermissionComponent implements OnInit {
             if(this.user.RoleId ===  this.permissionForm.get('roleId').value){
               this.authService.revokeTokenAndLogout();
             }
-          },(err) => {
-                Swal.fire(
-                  'Error Added!',
-                  err,
-                  'error'
-              )
-            })
+          })
         }}})
   }
   getInitData(){

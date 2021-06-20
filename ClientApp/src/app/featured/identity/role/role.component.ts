@@ -68,13 +68,6 @@ export class RoleComponent implements OnInit {
         this.subscription.add(this.roleService.getRole().subscribe(x => {this.roleData = x;
           this.changeDetectorRef.markForCheck();}));
         this.roleForm.reset();
-        },
-        (err) => {
-          Swal.fire(
-            `Error ${msg}`,
-            err,
-            'error'
-        )
         }
     );
     }

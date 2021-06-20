@@ -18,11 +18,11 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 
 import { retry, catchError } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-
   constructor(private router: Router) {
 
   }
@@ -39,16 +39,34 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           let errorMessage = '';
           let url : string = '';
           switch (error.status) {
+            
             case 403:
               url = "/forbidden";
-              this.router.navigateByUrl(url);
-              return;
+              this.router.navigateByUrl(url, { state: { 
+                name: error.name,
+                code: error.status,
+                error: error.error,
+                errorMessage: error.message
+              }});
+              break;
 
               case 500:
               url = "/internal-server-error";
-              this.router.navigateByUrl(url);
-              return;
+              this.router.navigateByUrl(url, { state: { 
+                name: error.name,
+                code: error.status,
+                error: error.error,
+                errorMessage: error.message
+              }});
+              break;
 
+              case 400:
+                Swal.fire(
+                  `${error.status}`,
+                  error.error,
+                  'error'
+              );
+          break;
             default:
               break;
           }

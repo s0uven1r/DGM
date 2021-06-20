@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-forbidden',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./forbidden.component.css']
 })
 export class ForbiddenComponent implements OnInit {
-
-  constructor() { }
+  data:any;
+  constructor() {
+   }
 
   ngOnInit(): void {
+    this.data = history.state;
   }
 
 }
