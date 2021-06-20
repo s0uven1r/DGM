@@ -37,11 +37,18 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
+          let url : string = '';
           switch (error.status) {
             case 403:
-              const url = "/forbidden";
+              url = "/forbidden";
               this.router.navigateByUrl(url);
               return;
+
+              case 500:
+              url = "/internal-server-error";
+              this.router.navigateByUrl(url);
+              return;
+
             default:
               break;
           }

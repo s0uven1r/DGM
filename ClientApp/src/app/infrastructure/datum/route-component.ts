@@ -14,7 +14,8 @@ export const RouteComponent = {
         AppComponent,
         HomeComponent,
         DashboardComponent,
-        ForbiddenComponent
+        ForbiddenComponent,
+        InternalServerErrorComponent
       ],
       CounterRouteComponent: [
         CounterComponent
