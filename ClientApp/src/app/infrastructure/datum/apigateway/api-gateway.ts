@@ -14,7 +14,8 @@ export const ApiGateway = {
         permission: {
             base: 'Permissions',
             getPermission: '/GetRolePermission',
-            managePermission: '/ManageRolePermission'
+            managePermission: '/ManageRolePermission',
+            checkPermission: '/CheckPermission'
         },
         user: {
             base: 'Users',

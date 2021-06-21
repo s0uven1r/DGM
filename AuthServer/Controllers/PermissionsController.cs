@@ -29,12 +29,15 @@ namespace AuthServer.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("CheckPermission")]
         [ApiAuthorize(IdentityClaimConstant.ViewPermission)]
         public IActionResult CheckPermission([FromBody] List<string> permissionList)
         {
             bool hasPermission = false;
+
+            if (User.IsInRole(SystemRoles.SuperAdmin)) return Ok(true);
+
             var userClaims = User.Claims
                                 .Where(x => x.Type == ClaimType.Permission)
                                 .Select(a => a.Value).ToList();
