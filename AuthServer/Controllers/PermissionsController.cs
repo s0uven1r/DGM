@@ -31,7 +31,6 @@ namespace AuthServer.Controllers
 
         [HttpPost]
         [Route("CheckPermission")]
-        [ApiAuthorize(IdentityClaimConstant.ViewPermission)]
         public IActionResult CheckPermission([FromBody] List<string> permissionList)
         {
             bool hasPermission = false;

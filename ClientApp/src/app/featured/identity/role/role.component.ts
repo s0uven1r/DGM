@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { IdentityControllersClaim } from 'src/app/infrastructure/datum/claim/user-management';
 import { RoleModel } from 'src/app/infrastructure/model/UserManagement/role-model';
 import Swal from 'sweetalert2';
 import { RoleService } from './service/role.service';
@@ -16,6 +17,7 @@ export class RoleComponent implements OnInit {
   subscription: Subscription = new Subscription();
   roleForm: FormGroup;
   isEdit: boolean;
+  roleCreateClaim = [IdentityControllersClaim.Role.WriteRole];
   constructor(private form: FormBuilder, private roleService: RoleService, private changeDetectorRef: ChangeDetectorRef) { 
     this.FormDesign();
   }

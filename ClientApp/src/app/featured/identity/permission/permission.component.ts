@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
+import { IdentityControllersClaim } from 'src/app/infrastructure/datum/claim/user-management';
 import Swal from 'sweetalert2';
 import { PermissionService } from './service/permission.service';
 
@@ -20,6 +21,7 @@ export class PermissionComponent implements OnInit {
   permissionForm: FormGroup;
   claims: FormArray;
   subscription: Subscription = new Subscription();
+  permissionCreateClaim = [IdentityControllersClaim.Permission.WritePermission];
   constructor(private route: ActivatedRoute,
      private permissionService: PermissionService, private authService: OAuthService,
       private form: FormBuilder, private changeDetectorRef: ChangeDetectorRef) { 
