@@ -73,6 +73,16 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Authorization,
                      ClaimTitle = "View Permission"
                  },
+                 new SeedClaimViewModel { Id = "0c626829-5d91-46f1-b3a8-c3fa6541d634",
+                     ClaimValue=IdentityClaimConstant.ViewMenu,
+                     ClaimModule = PermissionModuleConstant.Authorization,
+                     ClaimTitle = "View Menu"
+                 },
+                 new SeedClaimViewModel { Id = "0c626829-5d91-46f1-b3a8-c3fa6541d635",
+                     ClaimValue=IdentityClaimConstant.WriteMenu,
+                     ClaimModule = PermissionModuleConstant.Authorization,
+                     ClaimTitle = "Write Menu"
+                 },
                 #endregion
             };
         }
