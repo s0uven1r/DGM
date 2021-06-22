@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DataTablesModule } from 'angular-datatables'
 import { UserRoutingModule, RoutingComponent } from './user-routing.module';
 import { UserService } from './service/user.service';
+import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { UserService } from './service/user.service';
   imports: [
     CommonModule,
     UserRoutingModule,
-    DataTablesModule
+    DataTablesModule,
+    CheckDirectiveModule
   ],
   providers: [ {
     provide: UserService,

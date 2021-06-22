@@ -25,7 +25,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("GetMenu")]
-        [ApiAuthorize(IdentityClaimConstant.ViewRole)]
+        [ApiAuthorize(IdentityClaimConstant.ViewMenu)]
         public async Task<IActionResult> GetMenu()
         {
             IQueryable<MenuControl> menuControl;

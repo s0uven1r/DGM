@@ -18,7 +18,8 @@ import { BreadcrumbModule } from 'angular-crumbs';
     HttpClientModule,
     AppRoutingModule,
     BreadcrumbModule,
-    OAuthModule.forRoot()
+    OAuthModule.forRoot(),
+    
   ],
   providers: [ {
 

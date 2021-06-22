@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RoleRoutingModule, RoutingComponent } from './role-routing.module';
 import { RoleService } from './service/role.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RoleRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CheckDirectiveModule
   ],
   providers: [ {
     provide: RoleService,
