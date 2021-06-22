@@ -21,7 +21,7 @@
             </div>
               
           </div>
-          <button [disabled]="(!permissionForm.valid)" type="submit" value="save" class="btn mt-5 ml-4 btn-primary">
+          <button *appCheckclaim ="permissionCreateClaim" [disabled]="(!permissionForm.valid)" type="submit" value="save" class="btn mt-5 ml-4 btn-primary">
             Save
         </button>
       </form>

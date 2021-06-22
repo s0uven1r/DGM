@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { IdentityControllersClaim } from 'src/app/infrastructure/datum/claim/user-management';
 import { UserModel } from 'src/app/infrastructure/model/UserManagement/user-model';
 import { UserService } from './service/user.service';
 
@@ -14,6 +15,7 @@ export class UserComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   persons: UserModel[] = [];
   dtTrigger: Subject<any> = new Subject<any>();
+  userCreateClaim = [IdentityControllersClaim.User.WriteUser];
   constructor(private userService: UserService, private router: Router, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {

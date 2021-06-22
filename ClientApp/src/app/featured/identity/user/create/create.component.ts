@@ -81,11 +81,6 @@ export class CreateComponent implements OnInit {
                       'User Action',
                       'success'
                   )},
-                err => { Swal.fire(
-                  'Error!',
-                  err,
-                  'error'
-              )},
           () => console.log('HTTP request completed.') );
       }
     })};
