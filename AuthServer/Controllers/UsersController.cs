@@ -37,11 +37,13 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.ViewUser)]
         public async Task<IActionResult> GetUser()
         {
+            int rank = Convert.ToInt32(User.Claims.Where(x => x.Type == "RoleRank").FirstOrDefault().Value);
             var joinResult = await (from user in _appIdentityDbContext.Users
                                     join userRole in _appIdentityDbContext.UserRoles
                                     on user.Id equals userRole.UserId
                                     join role in _appIdentityDbContext.Roles
                                     on userRole.RoleId equals role.Id
+                                    where role.Rank < rank
                                     select new
                                     {
                                         user,
@@ -104,7 +106,7 @@ namespace AuthServer.Controllers
         public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest createEmployeeRequest)
         {
             var requestedBy = User.FindFirst("UserId").ToString();
-
+           
             bool usernameExists = await _userManager.FindByNameAsync(createEmployeeRequest.UserName) != null;
             if (usernameExists)
             {
@@ -129,32 +131,29 @@ namespace AuthServer.Controllers
                 CreatedDate = DateTime.UtcNow,
             };
 
-            var identityResult = await _userManager.CreateAsync(applicationUser, createEmployeeRequest.Password);
-
-            if (!identityResult.Succeeded)
+            var transaction = await _appIdentityDbContext.Database.BeginTransactionAsync();
+            try
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+                var identityResult = await _userManager.CreateAsync(applicationUser, createEmployeeRequest.Password);
 
-            var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
+                if (!identityResult.Succeeded)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, identityResult.Errors);
+                }
 
-            if (string.IsNullOrEmpty(roleName))
-            {
-                await _userManager.DeleteAsync(applicationUser);
-                return BadRequest("Role not found.");
-            }
+                var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
 
-            var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
-
-            if (roleResult.Succeeded)
-            {
+                await _userManager.AddToRoleAsync(applicationUser, roleName);
+                await _appIdentityDbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
                 return Ok();
             }
-            else
+            catch
             {
-                await _userManager.DeleteAsync(applicationUser);
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                await transaction.RollbackAsync();
+                throw;
             }
+
         }
 
 

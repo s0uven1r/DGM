@@ -52,6 +52,7 @@ namespace Auth.Infrastructure.Identity
                 new Claim("Email", user.Email),
                 new Claim("Role",  roleDetail.Name),
                 new Claim("RoleId",  roleDetail.Id),
+                 new Claim("RoleRank",  roleDetail.Rank.ToString()),
             });
             userClaims.AddRange(roleClaims.Select(a => new Claim("permission", a.ClaimValue)));
             userClaims.AddRange(roleClaims.Select(a => new Claim("permissionIds", a.Id)));

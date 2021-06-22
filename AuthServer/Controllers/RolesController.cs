@@ -1,4 +1,5 @@
-﻿using Auth.Infrastructure.Identity;
+﻿using Auth.Infrastructure.Constants;
+using Auth.Infrastructure.Identity;
 using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Models.Roles.Request;
 using AuthServer.Models.Roles.Response;
@@ -34,7 +35,8 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.ViewRole)]
         public IActionResult GetRoles()
         {
-            var roles = _roleManager.Roles.Select(x => new GetRoleResponse
+            int rank = Convert.ToInt32(User.Claims.Where(x => x.Type =="RoleRank").FirstOrDefault().Value);
+            var roles = _roleManager.Roles.Where(x => x.Rank < rank && x.Name != SystemRoles.Admin).Select(x => new GetRoleResponse
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -56,6 +58,10 @@ namespace AuthServer.Controllers
             if (exists)
             {
                 return BadRequest($"Role \'{createRoleRequest.Name}\' is already taken.");
+            }
+            if(createRoleRequest.Rank >= 10000)
+            {
+                return BadRequest($"Role \'{createRoleRequest.Name}\' rank exceeded upto 10000 Only.");
             }
 
             var role = new AppRole
