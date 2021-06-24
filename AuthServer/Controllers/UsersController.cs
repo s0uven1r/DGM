@@ -141,6 +141,7 @@ namespace AuthServer.Controllers
             var transaction = await _appIdentityDbContext.Database.BeginTransactionAsync();
             try
             {
+                var password = PasswordGenerator.GenerateRandomPassword();
                 var identityResult = await _userManager.CreateAsync(applicationUser, password);
 
                 if (!identityResult.Succeeded)
@@ -150,18 +151,26 @@ namespace AuthServer.Controllers
 
                 var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
 
-            if (string.IsNullOrEmpty(roleName))
-            {
-                await _userManager.DeleteAsync(applicationUser);
-                return BadRequest("Role not found.");
-            }
+                if (string.IsNullOrEmpty(roleName))
+                {
+                    await _userManager.DeleteAsync(applicationUser);
+                    return BadRequest("Role not found.");
+                }
 
-            var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
+                var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
+                await _appIdentityDbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
 
-            if (roleResult.Succeeded)
-            {
-                await SendEmployeeRegistrationEmail(createEmployeeRequest, password);
-                return Ok();
+                if (roleResult.Succeeded)
+                {
+                    await SendEmployeeRegistrationEmail(createEmployeeRequest, password);
+                    return Ok();
+                }
+                else
+                {
+                    await _userManager.DeleteAsync(applicationUser);
+                    return BadRequest("Error while adding role.");
+                }
             }
             catch
             {
@@ -180,57 +189,63 @@ namespace AuthServer.Controllers
             var requestedBy = User.FindFirst("UserId").Value.ToString();
             using (var transaction = _appIdentityDbContext.Database.BeginTransaction())
             {
-
-                var user = await _userManager.FindByIdAsync(updateEmployeeRequest.Id);
-                if (user == null)
+                try
                 {
-                    return BadRequest("User not found.");
-                }
+                    var user = await _userManager.FindByIdAsync(updateEmployeeRequest.Id);
+                    if (user == null)
+                    {
+                        return BadRequest("User not found.");
+                    }
 
-                user.FirstName = updateEmployeeRequest.FirstName;
-                user.MiddleName = updateEmployeeRequest.MiddleName;
-                user.LastName = updateEmployeeRequest.LastName;
-                user.PhoneNumber = updateEmployeeRequest.Phone;
-                user.LastUpdatedBy = requestedBy;
-                user.LastUpdatedDate = DateTime.UtcNow;
+                    user.FirstName = updateEmployeeRequest.FirstName;
+                    user.MiddleName = updateEmployeeRequest.MiddleName;
+                    user.LastName = updateEmployeeRequest.LastName;
+                    user.PhoneNumber = updateEmployeeRequest.Phone;
+                    user.LastUpdatedBy = requestedBy;
+                    user.LastUpdatedDate = DateTime.UtcNow;
 
 
-                var identityResult = await _userManager.UpdateAsync(user);
-                if (!identityResult.Succeeded)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError, identityResult.Errors);
-                }
+                    var identityResult = await _userManager.UpdateAsync(user);
+                    if (!identityResult.Succeeded)
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, identityResult.Errors);
+                    }
 
-                var roleName = (await _roleManager.FindByIdAsync(updateEmployeeRequest.RoleId))?.Name;
+                    var roleName = (await _roleManager.FindByIdAsync(updateEmployeeRequest.RoleId))?.Name;
 
-                if (string.IsNullOrEmpty(roleName))
-                {
-                    transaction.Rollback();
-                    return BadRequest("Role not found.");
-                }
+                    if (string.IsNullOrEmpty(roleName))
+                    {
+                        transaction.Rollback();
+                        return BadRequest("Role not found.");
+                    }
 
-                var isInRole = await _userManager.IsInRoleAsync(user, roleName);
-                if (isInRole)
-                {
-                    transaction.Commit();
-                    return Ok();
-                }
-                else
-                {
-                    var prevRole = await _userManager.GetRolesAsync(user);
-                    var removeroleResult = await _userManager.RemoveFromRolesAsync(user, prevRole);
-                    var updateRoleResult = await _userManager.AddToRoleAsync(user, roleName);
-                    if (removeroleResult.Succeeded && updateRoleResult.Succeeded)
+                    var isInRole = await _userManager.IsInRoleAsync(user, roleName);
+                    if (isInRole)
                     {
                         transaction.Commit();
                         return Ok();
                     }
                     else
                     {
-                        return BadRequest("Role cannot be updated.");
+                        var prevRole = await _userManager.GetRolesAsync(user);
+                        var removeroleResult = await _userManager.RemoveFromRolesAsync(user, prevRole);
+                        var updateRoleResult = await _userManager.AddToRoleAsync(user, roleName);
+                        if (removeroleResult.Succeeded && updateRoleResult.Succeeded)
+                        {
+                            transaction.Commit();
+                            return Ok();
+                        }
+                        else
+                        {
+                            return BadRequest("Role cannot be updated.");
+                        }
                     }
                 }
-
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
             }
         }
 
@@ -250,7 +265,7 @@ namespace AuthServer.Controllers
             var passwordChangeResult = await _userManager.ChangePasswordAsync(user, updateEmployeeRequest.Password, updateEmployeeRequest.NewPassword);
 
             if (passwordChangeResult.Succeeded) return Ok();
-            
+
             return BadRequest("Error while changing password.");
         }
 
