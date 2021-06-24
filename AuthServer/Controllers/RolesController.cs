@@ -1,4 +1,5 @@
-﻿using Auth.Infrastructure.Identity;
+﻿using Auth.Infrastructure.Constants;
+using Auth.Infrastructure.Identity;
 using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Models.Roles.Request;
 using AuthServer.Models.Roles.Response;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using static IdentityServer4.IdentityServerConstants;
 
@@ -35,11 +35,14 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.ViewRole)]
         public IActionResult GetRoles()
         {
-            var roles = _roleManager.Roles.Select(x => new GetRoleResponse
+            int rank = Convert.ToInt32(User.Claims.Where(x => x.Type =="RoleRank").FirstOrDefault().Value);
+            var roles = _roleManager.Roles.Where(x => x.Rank < rank && x.Name != SystemRoles.Admin).Select(x => new GetRoleResponse
             {
                 Id = x.Id,
                 Name = x.Name,
-                IsPublic = x.IsPublic
+                IsPublic = x.IsPublic,
+                IsDefault = x.IsDefault,
+                Rank = x.Rank
             });
             if (roles == null) return NotFound();
             return Ok(roles);
@@ -56,10 +59,15 @@ namespace AuthServer.Controllers
             {
                 return BadRequest($"Role \'{createRoleRequest.Name}\' is already taken.");
             }
+            if(createRoleRequest.Rank >= 10000)
+            {
+                return BadRequest($"Role \'{createRoleRequest.Name}\' rank exceeded upto 10000 Only.");
+            }
 
             var role = new AppRole
             {
                 Name = createRoleRequest.Name,
+                Rank = createRoleRequest.Rank,
                 IsPublic = createRoleRequest.IsPublic,
                 CreatedBy = requestedBy,
                 CreatedDate = DateTime.UtcNow
@@ -82,6 +90,7 @@ namespace AuthServer.Controllers
 
             role.Name = createRoleRequest.Name;
             role.IsPublic = createRoleRequest.IsPublic;
+            role.Rank = createRoleRequest.Rank;
             role.LastUpdatedBy = requestedBy;
             role.LastUpdatedDate = DateTime.UtcNow;
 

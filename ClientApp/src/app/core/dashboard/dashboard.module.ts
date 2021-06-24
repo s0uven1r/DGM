@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { DashboardRoutingModule, RoutingComponent } from './dashboard-routing.module';
 import { NavigationService } from './services';
 

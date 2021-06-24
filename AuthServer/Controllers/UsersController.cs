@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
 using System.Linq;
@@ -39,22 +40,71 @@ namespace AuthServer.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllUsers")]
+        [Route("GetUser")]
         [ApiAuthorize(IdentityClaimConstant.ViewUser)]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetUser()
         {
-            var users = _userManager.Users.Select(x => new GetUserResponse
+            int rank = Convert.ToInt32(User.Claims.Where(x => x.Type == "RoleRank").FirstOrDefault().Value);
+            var joinResult = await (from user in _appIdentityDbContext.Users
+                                    join userRole in _appIdentityDbContext.UserRoles
+                                    on user.Id equals userRole.UserId
+                                    join role in _appIdentityDbContext.Roles
+                                    on userRole.RoleId equals role.Id
+                                    where role.Rank < rank
+                                    select new
+                                    {
+                                        user,
+                                        role
+                                    }
+                             ).ToListAsync();
+
+            if (joinResult == null) return NotFound();
+
+            var users = joinResult.Select(x => new GetUserResponse
             {
-                Id = x.Id,
-                Email = x.Email,
-                UserName = x.UserName,
-                FirstName = x.FirstName,
-                MiddleName = x.MiddleName,
-                LastName = x.LastName,
-                PhoneNumber = x.PhoneNumber
+                Id = x.user.Id,
+                Email = x.user.Email,
+                UserName = x.user.UserName,
+                FirstName = x.user.FirstName,
+                MiddleName = x.user.MiddleName,
+                LastName = x.user.LastName,
+                PhoneNumber = x.user.PhoneNumber,
+                RoleId = x.role.Id,
+                RoleName = x.role.Name,
+                IsDefault = x.role.IsDefault,
+                IsEnabled = !x.user.IsDisabled
             }).ToList();
-            if (users == null) return NotFound();
+
+
             return Ok(users);
+        }
+
+        [HttpGet]
+        [Route("GetUser/{userId}")]
+        [ApiAuthorize(IdentityClaimConstant.ViewUser)]
+        public async Task<IActionResult> GetUser(string userId)
+        {
+            var user = await _userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
+            if (user == null) return BadRequest("User not found");
+
+            var roleNameList = await _userManager.GetRolesAsync(user);
+            var roleName = roleNameList.FirstOrDefault();
+            var role = await _roleManager.Roles.Where(r => r.Name == roleName).FirstOrDefaultAsync();
+
+            var userResult = new GetUserResponse
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                RoleId = role.Id,
+                RoleName = roleName,
+                IsDefault = role.IsDefault
+            };
+            return Ok(userResult);
         }
 
         [HttpPost]
@@ -88,15 +138,17 @@ namespace AuthServer.Controllers
                 CreatedDate = DateTime.UtcNow,
             };
 
-            var password = PasswordGenerator.GenerateRandomPassword();
-            var identityResult = await _userManager.CreateAsync(applicationUser, password);
-
-            if (!identityResult.Succeeded)
+            var transaction = await _appIdentityDbContext.Database.BeginTransactionAsync();
+            try
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+                var identityResult = await _userManager.CreateAsync(applicationUser, password);
 
-            var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
+                if (!identityResult.Succeeded)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, identityResult.Errors);
+                }
+
+                var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
 
             if (string.IsNullOrEmpty(roleName))
             {
@@ -111,11 +163,12 @@ namespace AuthServer.Controllers
                 await SendEmployeeRegistrationEmail(createEmployeeRequest, password);
                 return Ok();
             }
-            else
+            catch
             {
-                await _userManager.DeleteAsync(applicationUser);
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                await transaction.RollbackAsync();
+                throw;
             }
+
         }
 
 

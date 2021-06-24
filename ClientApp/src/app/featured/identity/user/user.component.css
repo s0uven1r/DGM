@@ -1,0 +1,13 @@
+.custom-control-label::before, 
+.custom-control-label::after {
+width: 1.25rem;
+height: 1.25rem;
+}
+label{
+    font-size: 13px;
+    padding-top: 4px;
+   
+}
+.custom-checkbox{
+    padding-left: 44px !important;
+}

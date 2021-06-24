@@ -54,6 +54,9 @@ namespace Auth.Infrastructure.Persistence.Migrations.IdentityServer
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int>("Rank")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
