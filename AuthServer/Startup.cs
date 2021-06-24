@@ -1,5 +1,7 @@
 using Auth.Infrastructure;
+using AuthServer.Configurations;
 using AuthServer.Filters;
+using AuthServer.Services.EmailSender;
 using Dgm.Common.Error;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -32,7 +34,10 @@ namespace AuthServer
               });
 
             services.AddInfrastructure(Config);
-
+            
+            services.Configure<EmailSenderConfig>(Config.GetSection("EmailMailSenderSettings"));
+            services.AddTransient<IEmailSender, EmailSender>();
+           
             services.AddCors(options => options.AddPolicy("AllowAll", p =>
               p.AllowAnyOrigin()
                .AllowAnyMethod()

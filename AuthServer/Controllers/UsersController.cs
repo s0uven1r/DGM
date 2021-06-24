@@ -2,14 +2,18 @@
 using Auth.Infrastructure.Identity;
 using Auth.Infrastructure.Persistence;
 using AuthServer.Filters.AuthorizationFilter;
+using AuthServer.Helpers;
+using AuthServer.Models.EmailSender;
 using AuthServer.Models.Users;
 using AuthServer.Models.Users.Employee.Request;
+using AuthServer.Services.EmailSender;
 using Dgm.Common.Authorization.Claim.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using static IdentityServer4.IdentityServerConstants;
@@ -23,12 +27,15 @@ namespace AuthServer.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly AppIdentityDbContext _appIdentityDbContext;
+        private readonly IEmailSender _emailSender;
 
-        public UsersController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, AppIdentityDbContext appIdentityDbContext)
+        public UsersController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, AppIdentityDbContext appIdentityDbContext,
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _appIdentityDbContext = appIdentityDbContext;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -55,7 +62,7 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.WriteUser)]
         public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest createEmployeeRequest)
         {
-            var requestedBy = User.FindFirst("UserId").ToString();
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
 
             bool usernameExists = await _userManager.FindByNameAsync(createEmployeeRequest.UserName) != null;
             if (usernameExists)
@@ -81,7 +88,8 @@ namespace AuthServer.Controllers
                 CreatedDate = DateTime.UtcNow,
             };
 
-            var identityResult = await _userManager.CreateAsync(applicationUser, createEmployeeRequest.Password);
+            var password = PasswordGenerator.GenerateRandomPassword();
+            var identityResult = await _userManager.CreateAsync(applicationUser, password);
 
             if (!identityResult.Succeeded)
             {
@@ -100,6 +108,7 @@ namespace AuthServer.Controllers
 
             if (roleResult.Succeeded)
             {
+                await SendEmployeeRegistrationEmail(createEmployeeRequest, password);
                 return Ok();
             }
             else
@@ -113,22 +122,22 @@ namespace AuthServer.Controllers
         [HttpPut]
         [Route("UpdateEmployee")]
         [ApiAuthorize(IdentityClaimConstant.WriteUser)]
-        public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeRequest createEmployeeRequest)
+        public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeRequest updateEmployeeRequest)
         {
-            var requestedBy = User.FindFirst("UserId").ToString();
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
             using (var transaction = _appIdentityDbContext.Database.BeginTransaction())
             {
 
-                var user = await _userManager.FindByIdAsync(createEmployeeRequest.Id);
+                var user = await _userManager.FindByIdAsync(updateEmployeeRequest.Id);
                 if (user == null)
                 {
                     return BadRequest("User not found.");
                 }
 
-                user.FirstName = createEmployeeRequest.FirstName;
-                user.MiddleName = createEmployeeRequest.MiddleName;
-                user.LastName = createEmployeeRequest.LastName;
-                user.PhoneNumber = createEmployeeRequest.Phone;
+                user.FirstName = updateEmployeeRequest.FirstName;
+                user.MiddleName = updateEmployeeRequest.MiddleName;
+                user.LastName = updateEmployeeRequest.LastName;
+                user.PhoneNumber = updateEmployeeRequest.Phone;
                 user.LastUpdatedBy = requestedBy;
                 user.LastUpdatedDate = DateTime.UtcNow;
 
@@ -139,7 +148,7 @@ namespace AuthServer.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError, identityResult.Errors);
                 }
 
-                var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
+                var roleName = (await _roleManager.FindByIdAsync(updateEmployeeRequest.RoleId))?.Name;
 
                 if (string.IsNullOrEmpty(roleName))
                 {
@@ -172,12 +181,32 @@ namespace AuthServer.Controllers
             }
         }
 
+
+        [HttpPost]
+        [Route("UpdateEmployeePassword")]
+        [ApiAuthorize(IdentityClaimConstant.WriteUser)]
+        public async Task<IActionResult> UpdateEmployeePassword([FromBody] UpdateEmployeePasswordRequest updateEmployeeRequest)
+        {
+            if (updateEmployeeRequest.NewPassword != updateEmployeeRequest.NewConfirmPassword)
+                return BadRequest("New passwords didnot matched.");
+
+            var user = await _userManager.FindByIdAsync(updateEmployeeRequest.Id);
+            if (user == null)
+                return BadRequest("User not found");
+
+            var passwordChangeResult = await _userManager.ChangePasswordAsync(user, updateEmployeeRequest.Password, updateEmployeeRequest.NewPassword);
+
+            if (passwordChangeResult.Succeeded) return Ok();
+            
+            return BadRequest("Error while changing password.");
+        }
+
         [HttpGet]
         [Route("DisableLogin/{userId}")]
         [ApiAuthorize(IdentityClaimConstant.WriteUser)]
         public async Task<IActionResult> DisableLogin(string userId)
         {
-            var requestedBy = User.FindFirst("UserId").ToString();
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
 
             var user = await _userManager.FindByIdAsync(userId);
             var role = await _userManager.GetRolesAsync(user);
@@ -201,7 +230,7 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.WriteUser)]
         public async Task<IActionResult> EnableLogin(string userId)
         {
-            var requestedBy = User.FindFirst("UserId").ToString();
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
 
             var user = await _userManager.FindByIdAsync(userId);
             var role = await _userManager.GetRolesAsync(user);
@@ -219,5 +248,29 @@ namespace AuthServer.Controllers
             else return BadRequest("Error while enabling user.");
 
         }
+
+        #region helpers
+        private async Task SendEmployeeRegistrationEmail(CreateEmployeeRequest model, string password)
+        {
+            EmailSenderRequest emailSenderRequest = new EmailSenderRequest
+            {
+                ToEmail = model.Email,
+                Subject = "Sucessfully registered a account."
+            };
+
+            string FilePath = Directory.GetCurrentDirectory() + "\\Views\\EmailTemplates\\WelcomeTemplate.html";
+            StreamReader str = new StreamReader(FilePath);
+            string MailText = str.ReadToEnd();
+            str.Close();
+            MailText = MailText.Replace("[username]", model.UserName).Replace("[email]", model.Email).Replace("[password]", password);
+
+            emailSenderRequest.Body = MailText;
+
+            await _emailSender.SendEmailAsync(emailSenderRequest);
+
+            // _logger.LogInformation(3, "Employee User created a new account with password.");
+        }
+        #endregion
+
     }
 }
