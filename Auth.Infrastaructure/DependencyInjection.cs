@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Auth.Infrastructure
 {
@@ -21,9 +22,11 @@ namespace Auth.Infrastructure
                 config.Password.RequireDigit = false;
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = true;
-            })
-                 .AddEntityFrameworkStores<AppIdentityDbContext>()
-                 .AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<AppIdentityDbContext>()
+              .AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            options.TokenLifespan = TimeSpan.FromHours(1));
 
             services.AddIdentityServer()
                 .AddAspNetIdentity<AppUser>()
