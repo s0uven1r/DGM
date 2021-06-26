@@ -1,12 +1,17 @@
 using Auth.Infrastructure;
+using AuthServer.Configurations;
 using AuthServer.Filters;
+using AuthServer.Services.EmailSender;
 using Dgm.Common.Error;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using System.IO;
+using System.Reflection;
 
 namespace AuthServer
 {
@@ -31,7 +36,10 @@ namespace AuthServer
               });
 
             services.AddInfrastructure(Config);
-
+            
+            services.Configure<EmailSenderConfig>(Config.GetSection("EmailMailSenderSettings"));
+            services.AddTransient<IEmailSender, EmailSender>();
+           
             services.AddCors(options => options.AddPolicy("AllowAll", p =>
               p.AllowAnyOrigin()
                .AllowAnyMethod()

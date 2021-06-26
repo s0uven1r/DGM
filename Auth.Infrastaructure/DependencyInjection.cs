@@ -53,7 +53,6 @@ namespace Auth.Infrastructure
                     // custom requirements
                 });
             });
-
             return services;
         }
     }

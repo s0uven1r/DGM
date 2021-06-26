@@ -23,10 +23,6 @@ namespace AuthServer.Validators.Users.Employee
                 .NotEmpty()
                 .Length(2, 20);
 
-            RuleFor(x => x.Password)
-                            .NotEmpty()
-                            .Length(4, 100);
-
             RuleFor(x => x.UserName)
                .NotEmpty()
                .Length(4, 100);
