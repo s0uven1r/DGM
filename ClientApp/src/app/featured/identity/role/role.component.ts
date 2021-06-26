@@ -76,11 +76,12 @@ export class RoleComponent implements OnInit {
     }
   }
 
-  getData(id: string, title: string, isPublic: boolean){
+  getData(id: string, title: string, isPublic: boolean, rank: number){
     this.isEdit = true;
     this.roleForm.patchValue({
       'id':id,
       'title': title,
+      'rank': rank,
       'hasPublic': isPublic
     });
   }
