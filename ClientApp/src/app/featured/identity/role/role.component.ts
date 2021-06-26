@@ -18,6 +18,7 @@ export class RoleComponent implements OnInit {
   roleForm: FormGroup;
   isEdit: boolean;
   roleCreateClaim = [IdentityControllersClaim.Role.WriteRole];
+  roleViewClaim = [IdentityControllersClaim.Permission.ViewPermission];
   constructor(private form: FormBuilder, private roleService: RoleService, private changeDetectorRef: ChangeDetectorRef) { 
     this.FormDesign();
   }
