@@ -1,5 +1,7 @@
 ﻿using Dgm.Common.Authorization.Claim.Identity;
+using Dgm.Common.Authorization.Claim.Resource;
 using Dgm.Common.Authorization.MenuControl.Identity;
+using Dgm.Common.Authorization.MenuControl.Resource;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,7 +36,7 @@ namespace Dgm.Common.Authorization.Claim
                      Class= "text-primary",
                      FaClass= "",
                      ParentId = "7f51ab29-844a-470e-9172-42cde237dad0",
-                     Rank = 1,
+                     Rank = 2,
                      RouteUrl = "user",
                      ClaimModule = PermissionModuleConstant.Authorization,
                      ClaimTitle = "View User"
@@ -62,7 +64,7 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Authorization,
                      ClaimTitle = "Write Role"
                  },
-                
+
                  new SeedClaimViewModel { Id = "68cc24d2-36c3-4b80-97a7-14ece753a318",
                      ClaimValue=IdentityClaimConstant.WritePermission,
                      ClaimModule = PermissionModuleConstant.Authorization,
@@ -73,15 +75,57 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Authorization,
                      ClaimTitle = "View Permission"
                  },
-                 new SeedClaimViewModel { Id = "0c626829-5d91-46f1-b3a8-c3fa6541d634",
-                     ClaimValue=IdentityClaimConstant.ViewMenu,
-                     ClaimModule = PermissionModuleConstant.Authorization,
-                     ClaimTitle = "View Menu"
+                 #endregion
+
+                #region Vehicle
+                 new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72800",
+                     ClaimValue = VehicleClaimConstant.ViewVehicle,
+                     MenuId = "a17d4044-8dad-4058-9488-841d3332d270",
+                     Alias = VehicleMenuConstant.VehicleManagement.Value,
+                     Title = VehicleMenuConstant.VehicleManagement.Key,
+                     Class= "text-primary",
+                     FaClass= "fa-car",
+                     ParentId = null,
+                     Rank = 2,
+                     RouteUrl = "vehicle",
+                     ClaimModule = PermissionModuleConstant.Vehicle,
+                     ClaimTitle = "View Vehicle Management"
                  },
-                 new SeedClaimViewModel { Id = "0c626829-5d91-46f1-b3a8-c3fa6541d635",
-                     ClaimValue=IdentityClaimConstant.WriteMenu,
-                     ClaimModule = PermissionModuleConstant.Authorization,
-                     ClaimTitle = "Write Menu"
+                  new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72801",
+                     ClaimValue = VehicleClaimConstant.ViewRegistration,
+                     MenuId = "a17d4044-8dad-4058-9488-841d3332d271",
+                     Alias = VehicleMenuConstant.Registration.Value,
+                     Title = VehicleMenuConstant.Registration.Key,
+                     Class= "text-primary",
+                     FaClass= "",
+                     ParentId = "a17d4044-8dad-4058-9488-841d3332d270",
+                     Rank = 1,
+                     RouteUrl = "register",
+                     ClaimModule = PermissionModuleConstant.Vehicle,
+                     ClaimTitle = "View Vehicle Registration"
+                 },
+                   new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72802",
+                     ClaimValue = VehicleClaimConstant.ViewMaintenance,
+                     MenuId = "a17d4044-8dad-4058-9488-841d3332d272",
+                     Alias = VehicleMenuConstant.Maintenance.Value,
+                     Title = VehicleMenuConstant.Maintenance.Key,
+                     Class= "text-primary",
+                     FaClass= "",
+                     ParentId = "a17d4044-8dad-4058-9488-841d3332d270",
+                     Rank = 2,
+                     RouteUrl = "maintain",
+                     ClaimModule = PermissionModuleConstant.Vehicle,
+                     ClaimTitle = "View Vehicle Maintenance"
+                 },
+                   new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72803",
+                     ClaimValue = VehicleClaimConstant.WriteRegistration,
+                     ClaimModule = PermissionModuleConstant.Vehicle,
+                     ClaimTitle = "Write Vehicle Registration"
+                 },
+                new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72804",
+                     ClaimValue = VehicleClaimConstant.WriteMaintenance,
+                     ClaimModule = PermissionModuleConstant.Vehicle,
+                     ClaimTitle = "Write Vehicle Maintenance"
                  },
                 #endregion
             };

@@ -15,8 +15,5 @@
         public const string ViewPermission = "Claim.Permission.Read";
         public const string WritePermission = "Claim.Permission.Write";
 
-        //menu
-        public const string ViewMenu = "Claim.Menu.Read";
-        public const string WriteMenu = "Claim.Menu.Write";
     }
 }
