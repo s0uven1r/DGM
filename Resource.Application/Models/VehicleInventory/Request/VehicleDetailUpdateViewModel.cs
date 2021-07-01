@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Resource.Application.Models.VehicleInventory.Request
 {
-    public class VehicleDetailCreateViewModel
+    public class VehicleDetailUpdateViewModel
     {
+        [JsonIgnore]
+        public string Id { get; set; }
+
         [Required]
         public string RegistrationNumber { get; set; }
         [Required]

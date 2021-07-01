@@ -10,7 +10,7 @@ using Resource.Domain.Persistence;
 namespace Resource.Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210701084652_InitialAPIDbMigration")]
+    [Migration("20210701153221_InitialAPIDbMigration")]
     partial class InitialAPIDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,20 +26,35 @@ namespace Resource.Domain.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Capacity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChasisNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EngineNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ManufacturedYear")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RegistrationNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SubModel")
                         .HasColumnType("nvarchar(max)");
@@ -49,9 +64,6 @@ namespace Resource.Domain.Migrations
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("VehicleName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

@@ -3,22 +3,22 @@ using FluentValidation;
 using MediatR;
 using Resource.Application.Models.VehicleInventory.Request;
 using Resource.Application.Service.Abstract;
-using Resource.Domain.Entities.VehicleInventory;
 using Resource.Domain.Persistence;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Resource.Application.Command.VehicleInventory
 {
-    public class AddVehicleDetail
+    public class UpdateVehicleDetail
     {
-        public class AddVehicleDetailCommand : VehicleDetailCreateViewModel, IRequest
+        public class UpdateVehicleDetailCommand : VehicleDetailUpdateViewModel, IRequest
         {
 
         }
 
-        public class AddVehicleDetailCommandValidator : AbstractValidator<AddVehicleDetailCommand>
+        public class AddVehicleDetailCommandValidator : AbstractValidator<UpdateVehicleDetailCommand>
         {
             public AddVehicleDetailCommandValidator()
             {
@@ -28,7 +28,7 @@ namespace Resource.Application.Command.VehicleInventory
             }
         }
 
-        public class Handler : IRequestHandler<AddVehicleDetailCommand, Unit>
+        public class Handler : IRequestHandler<UpdateVehicleDetailCommand, Unit>
         {
             private readonly AppDbContext _context;
             private readonly IUserAccessor _userAccessor;
@@ -37,30 +37,31 @@ namespace Resource.Application.Command.VehicleInventory
                 _context = context;
                 _userAccessor = userAccessor;
             }
-            public async Task<Unit> Handle(AddVehicleDetailCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateVehicleDetailCommand request, CancellationToken cancellationToken)
             {
                 var transaction = await _context.Database.BeginTransactionAsync();
                 try
                 {
-                    var checkExisting = _context.VehicleDetails.Where(q => q.RegistrationNumber == request.RegistrationNumber && !q.IsDeleted).FirstOrDefault();
+                    var existing = _context.VehicleDetails.Where(q => q.Id == request.Id && !q.IsDeleted).SingleOrDefault();
+                    if (existing == null) throw new AppException("Invalid! Vehicle Detail not found!");
+
+                    var checkExisting = _context.VehicleDetails.Where(q => q.Id != request.Id && q.RegistrationNumber == request.RegistrationNumber && !q.IsDeleted).FirstOrDefault();
                     if (checkExisting != null) throw new AppException("Vehicle Detail with same Registration Number already exists!");
 
                     string userId = _userAccessor.GetCurrentUserId();
 
-                    VehicleDetail vehicle = new()
-                    {
-                        RegistrationNumber = request.RegistrationNumber,
-                        EngineNumber = request.EngineNumber,
-                        ChasisNumber = request.ChasisNumber,
-                        Model = request.Model,
-                        SubModel = request.SubModel,
-                        CreatedBy = userId,
-                        Price = request.Price,
-                        Capacity = request.Capacity,
-                        ManufacturedYear = request.ManufacturedYear
-                    };
+                    existing.RegistrationNumber = request.RegistrationNumber;
+                    existing.EngineNumber = request.EngineNumber;
+                    existing.ChasisNumber = request.ChasisNumber;
+                    existing.Model = request.Model;
+                    existing.SubModel = request.SubModel;
+                    existing.UpdatedBy = userId;
+                    existing.UpdatedDate = DateTime.UtcNow;
+                    existing.Price = request.Price;
+                    existing.Capacity = request.Capacity;
+                    existing.ManufacturedYear = request.ManufacturedYear;
 
-                    await _context.VehicleDetails.AddAsync(vehicle);
+                    _context.VehicleDetails.Update(existing);
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
                     return Unit.Value;

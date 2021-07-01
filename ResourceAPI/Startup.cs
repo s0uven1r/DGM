@@ -77,9 +77,6 @@ namespace ResourceAPI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // global error handler
-            app.UseMiddleware<ErrorHandlerMiddleware>();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -94,6 +91,9 @@ namespace ResourceAPI
             }
 
             app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+            // global error handler
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseHttpsRedirection();
 

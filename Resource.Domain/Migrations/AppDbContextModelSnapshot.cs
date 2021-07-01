@@ -24,20 +24,35 @@ namespace Resource.Domain.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Capacity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChasisNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EngineNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ManufacturedYear")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RegistrationNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SubModel")
                         .HasColumnType("nvarchar(max)");
@@ -47,9 +62,6 @@ namespace Resource.Domain.Migrations
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("VehicleName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

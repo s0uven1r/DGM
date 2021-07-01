@@ -33,7 +33,11 @@ namespace Resource.Application.Query.VehicleInventory
                                         .Select(x => new VehicleDetailResponseViewModel
                                         {
                                             Id = x.Id,
-                                            VehicleName = x.VehicleName,
+                                            RegistrationNumber = x.RegistrationNumber,
+                                            EngineNumber = x.EngineNumber,
+                                            ChasisNumber = x.ChasisNumber,
+                                            Capacity = x.Capacity,
+                                            ManufacturedYear = x.ManufacturedYear,
                                             CreatedBy = x.CreatedBy,
                                             CreatedDate = x.CreatedDate,
                                             Model = x.Model,

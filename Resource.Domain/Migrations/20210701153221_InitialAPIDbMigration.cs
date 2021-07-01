@@ -12,9 +12,13 @@ namespace Resource.Domain.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    VehicleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChasisNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EngineNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubModel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Capacity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ManufacturedYear = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
