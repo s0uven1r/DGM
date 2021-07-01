@@ -1,0 +1,6 @@
+﻿
+--apply migration
+dotnet ef -s ../ResourceAPI migrations add InitialAPIDbMigration -c AppDbContext -o Migrations
+
+--update database
+dotnet ef --startup-project ../ResourceAPI database update -c AppDbContext

@@ -9,10 +9,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Dgm.Common\Dgm.Common.csproj" />
+    <ProjectReference Include="..\Resource.Application\Resource.Application.csproj" />
+    <ProjectReference Include="..\Resource.Infrastructure\Resource.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,16 @@
 using Dgm.Common.Error;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Resource.Application.Command.VehicleInventory;
+using Resource.Domain.Persistence;
+using Resource.Infrastructure.Extention.DependencyInjection;
 using ResourceAPI.Helper.Swagger;
 using System;
 using System.Collections.Generic;
@@ -23,6 +28,9 @@ namespace ResourceAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -41,6 +49,7 @@ namespace ResourceAPI
             //    options.AddPolicy("Consumer", policy => policy.RequireClaim(ClaimTypes.Role, "consumer"));
             //});
 
+            services.AddMediatR(typeof(AddVehicleDetail.Handler).Assembly);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -63,6 +72,7 @@ namespace ResourceAPI
                 });
                 c.OperationFilter<AuthorizationCheckOperationFilter>();
             });
+            services.RegisterAllDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
