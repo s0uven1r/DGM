@@ -18,6 +18,7 @@ export class RoleComponent implements OnInit {
   roleForm: FormGroup;
   isEdit: boolean;
   roleCreateClaim = [IdentityControllersClaim.Role.WriteRole];
+  roleViewClaim = [IdentityControllersClaim.Permission.ViewPermission];
   constructor(private form: FormBuilder, private roleService: RoleService, private changeDetectorRef: ChangeDetectorRef) { 
     this.FormDesign();
   }
@@ -75,11 +76,12 @@ export class RoleComponent implements OnInit {
     }
   }
 
-  getData(id: string, title: string, isPublic: boolean){
+  getData(id: string, title: string, isPublic: boolean, rank: number){
     this.isEdit = true;
     this.roleForm.patchValue({
       'id':id,
       'title': title,
+      'rank': rank,
       'hasPublic': isPublic
     });
   }

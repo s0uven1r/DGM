@@ -45,8 +45,7 @@ namespace AuthServer.Controllers
                 IsPublic = x.IsPublic,
                 IsDefault = x.IsDefault,
                 Rank = x.Rank
-            });
-            if (roles == null) return NotFound();
+            }).ToList();
             return Ok(roles);
         }
 

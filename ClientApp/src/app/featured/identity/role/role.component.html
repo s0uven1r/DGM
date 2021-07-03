@@ -62,10 +62,13 @@
         <td>{{item.rank}}</td>
         <td>{{item.isPublic?'Yes':'No'}}</td>
         <td *ngIf="!item.isDefault"> 
-            <button class="btn pt-0 pb-0 btn-xs btn-success" (click)="getData(item.id, item.name, item.isPublic)"><em class="fa fa-edit"></em></button>
-            <button  class="btn pt-0 pb-0 btn-xs btn-danger ml-1" (click)="deleteData(item.id)"><em class="fa fa-trash"></em></button>
-            <a class="btn pt-0 pb-0 btn-xs btn-info ml-1"  [routerLink]="['/dashboard/permission', item.id]" ><em class="fa fa-eye"></em> Manage Permission</a>
+            <button *appCheckclaim ="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="getData(item.id, item.name, item.isPublic, item.rank)"><em class="fa fa-edit"></em></button>
+            <button *appCheckclaim ="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1" (click)="deleteData(item.id)"><em class="fa fa-trash"></em></button>
+            <a class="btn pt-0 pb-0 btn-xs btn-info ml-1" *appCheckclaim ="roleViewClaim"  [routerLink]="['/dashboard/permission', item.id]" ><em class="fa fa-eye"></em> Manage Permission</a>
         </td>
         <td *ngIf="item.isDefault"></td>
+    </tr>
+    <tr *ngIf="!roleData.length">
+      <td colspan="5" class="text-center border text-dark">No data available in table</td>
     </tr>
 </table>

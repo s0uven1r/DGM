@@ -34,7 +34,7 @@
             </div>
             </td>
             <td>
-              <button *ngIf="!person.isDefault" class="btn pt-0 pb-0 btn-xs btn-success" (click)="getEdit(person.id)" ><em class="fa fa-edit"></em></button>
+              <button *appCheckclaim ="userCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="getEdit(person.id)" ><em class="fa fa-edit"></em></button>
             </td>
           </tr>
         </tbody>
