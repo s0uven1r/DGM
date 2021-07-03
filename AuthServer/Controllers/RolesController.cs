@@ -21,11 +21,13 @@ namespace AuthServer.Controllers
     public class RolesController : ControllerBase
     {
         private readonly RoleManager<AppRole> _roleManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<RolesController> _logger;
 
-        public RolesController(RoleManager<AppRole> roleManager, ILogger<RolesController> logger)
+        public RolesController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager, ILogger<RolesController> logger)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -35,7 +37,7 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.ViewRole)]
         public IActionResult GetRoles()
         {
-            int rank = Convert.ToInt32(User.Claims.Where(x => x.Type =="RoleRank").FirstOrDefault().Value);
+            int rank = Convert.ToInt32(User.Claims.Where(x => x.Type == "RoleRank").FirstOrDefault().Value);
             var roles = _roleManager.Roles.Where(x => x.Rank < rank && x.Name != SystemRoles.Admin).Select(x => new GetRoleResponse
             {
                 Id = x.Id,
@@ -59,7 +61,7 @@ namespace AuthServer.Controllers
             {
                 return BadRequest($"Role \'{createRoleRequest.Name}\' is already taken.");
             }
-            if(createRoleRequest.Rank >= 10000)
+            if (createRoleRequest.Rank >= 10000)
             {
                 return BadRequest($"Role \'{createRoleRequest.Name}\' rank exceeded upto 10000 Only.");
             }
@@ -68,7 +70,6 @@ namespace AuthServer.Controllers
             {
                 Name = createRoleRequest.Name,
                 Rank = createRoleRequest.Rank,
-                IsPublic = createRoleRequest.IsPublic,
                 CreatedBy = requestedBy,
                 CreatedDate = DateTime.UtcNow
             };
@@ -89,7 +90,6 @@ namespace AuthServer.Controllers
             if (role.IsDefault) return BadRequest($"Role \'{createRoleRequest.Name}\' cannot be updated.");
 
             role.Name = createRoleRequest.Name;
-            role.IsPublic = createRoleRequest.IsPublic;
             role.Rank = createRoleRequest.Rank;
             role.LastUpdatedBy = requestedBy;
             role.LastUpdatedDate = DateTime.UtcNow;
@@ -98,6 +98,26 @@ namespace AuthServer.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("SetPublic/{roleId}")]
+        [ApiAuthorize(IdentityClaimConstant.WriteRole)]
+        public async Task<IActionResult> SetPublic(string roleId)
+        {
+            var requestedBy = User.FindFirst("UserId").ToString();
+            var publicRoleExists = _roleManager.Roles.Where(x => x.IsPublic).FirstOrDefault() != null;
+
+            if (publicRoleExists)
+                return BadRequest("There is already a public role,");
+
+            var role = _roleManager.Roles.Where(y => y.Id == roleId).FirstOrDefault();
+            if (role == null) return BadRequest("Role not found.");
+
+            role.IsPublic = true;
+            await _roleManager.UpdateAsync(role);
+
+            return Ok();
+
+        }
 
         [HttpDelete]
         [Route("DeleteRole/{id}")]
@@ -105,12 +125,12 @@ namespace AuthServer.Controllers
         public async Task<IActionResult> DeleteRole(string id)
         {
             var requestedBy = User.FindFirst("UserId").ToString();
-            if (string.IsNullOrEmpty(id))
-            {
-                return BadRequest("Id param cannot be empty.");
-            }
-            var role = await _roleManager.FindByIdAsync(id);
+            if (string.IsNullOrEmpty(id)) return BadRequest("Id param cannot be empty.");
 
+            var role = await _roleManager.FindByIdAsync(id);
+            var users = await _userManager.GetUsersInRoleAsync(role.Name);
+
+            if (users.Count > 0) return BadRequest("Role is assigned to one or more users.");
             if (role == null) return BadRequest("Role not found.");
             if (role.IsDefault) return BadRequest("Role cannot be deleted.");
 

@@ -173,6 +173,7 @@ namespace AuthServer.Controllers
         {
             // build a model so we know what to show on the login page
             var vm = await BuildRegisterViewModelAsync(returnUrl);
+            var publicRole = _roleManager.Roles.Where(x => x.IsPublic == true);
 
             if (vm.IsExternalLoginOnly)
             {
@@ -192,9 +193,14 @@ namespace AuthServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            var role = _roleManager.Roles.Where(x => x.Id == model.RoleId).FirstOrDefault();
-            if (role == null) return BadRequest("Role not found");
-            if (!role.IsPublic) return BadRequest("Role is not public.");
+            var role = _roleManager.Roles.Where(x => x.IsPublic == true).FirstOrDefault();
+            if (role == null)
+            {
+                ModelState.AddModelError(string.Empty, "Public user cannot be registered in this system.");
+                // something went wrong, show form with error
+                var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
+                return View(vm);
+            }
 
             var user = new AppUser { UserName = model.Email, FirstName = model.FirstName, Email = model.Email };
             var userResult = await _userManager.CreateAsync(user, model.Password);

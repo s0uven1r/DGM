@@ -14,6 +14,8 @@ namespace AuthServer.Models
         [Display(Name = "Name")]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
+        
+        [Required]
         public string LastName { get; set; }
 
         [Required]
@@ -30,9 +32,6 @@ namespace AuthServer.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
-        [Required]
-        public string RoleId { get; set; }
 
         public string ReturnUrl { get; set; }
     }
