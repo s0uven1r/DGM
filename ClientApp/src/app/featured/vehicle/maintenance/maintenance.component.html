@@ -1,0 +1,33 @@
+<div *appCheckclaim ="maintainCreateClaim" class="row m-2">
+    <div class="col-12 text-right">
+        <a href="#" [routerLink]='"create"' class="btn btn-primary btn-sm">Create</a>
+    </div>
+
+</div>
+
+<div class="col-12">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead>
+          <tr>
+            <th>S.N</th>
+            <th>Vehicle No</th>
+            <th>Type</th>
+            <th>Remarks</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of vehicleData; let i=index">
+            <td>{{i+1}}</td>
+            <td>{{item.RegistrationNumber}}</td>
+            <td>{{item.Type}}</td>
+            <td>{{item.Remark}}</td>
+            <td> 
+              <button *appCheckclaim ="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"  ><em class="fa fa-edit"></em></button>
+              <button *appCheckclaim ="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1"><em class="fa fa-trash"></em></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+

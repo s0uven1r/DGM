@@ -9,6 +9,7 @@ import { UserComponent } from "src/app/featured/identity/user/user.component";
 import { CreateComponent } from "src/app/featured/identity/user/create/create.component";
 import { ForbiddenComponent } from "src/app/core/forbidden/forbidden.component";
 import { InternalServerErrorComponent } from "src/app/core/internal-server-error/internal-server-error.component";
+import { MaintenanceComponent } from "src/app/featured/vehicle/maintenance/maintenance.component";
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -28,6 +29,8 @@ export const RouteComponent = {
       RoleRouteComponent: [RoleComponent],
       PermissionRouteComponent: [PermissionComponent],
       UserRouteComponent: [UserComponent],
-      UserCreateRouteComponent: [CreateComponent]
+      UserCreateRouteComponent: [CreateComponent],
+      VehicleMaintenanceRouteComponent: [MaintenanceComponent],
+      VehicleMaintenanceCreateRouteComponent: [],
       
 }

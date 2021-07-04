@@ -40,7 +40,7 @@ namespace Resource.Application.Query.VehicleInventory
                                             Remark = x.Remark,
                                             Id = x.Id
                                             
-                                        }).ToListAsync();
+                                        }).ToListAsync(cancellationToken: cancellationToken);
 
                     return getAllVehicle;
                 }
