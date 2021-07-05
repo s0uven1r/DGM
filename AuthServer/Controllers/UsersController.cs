@@ -40,7 +40,7 @@ namespace AuthServer.Controllers
         }
 
         [HttpGet]
-        [Route("GetUsers")]
+        [Route("GetUser")]
         [ApiAuthorize(IdentityClaimConstant.ViewUser)]
         public async Task<IActionResult> GetUser()
         {

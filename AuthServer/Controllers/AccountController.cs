@@ -202,7 +202,13 @@ namespace AuthServer.Controllers
                 return View(vm);
             }
 
-            var user = new AppUser { UserName = model.Email, FirstName = model.FirstName, Email = model.Email };
+            var user = new AppUser
+            {
+                UserName = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email
+            };
             var userResult = await _userManager.CreateAsync(user, model.Password);
 
             if (!userResult.Succeeded) return BadRequest(userResult.Errors);

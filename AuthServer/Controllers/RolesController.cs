@@ -38,7 +38,7 @@ namespace AuthServer.Controllers
         public IActionResult GetRoles()
         {
             int rank = Convert.ToInt32(User.Claims.Where(x => x.Type == "RoleRank").FirstOrDefault().Value);
-            var roles = _roleManager.Roles.Where(x => x.Rank < rank && x.Name != SystemRoles.Admin).Select(x => new GetRoleResponse
+            var roles = _roleManager.Roles.Where(x => x.Rank < rank).Select(x => new GetRoleResponse
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -54,7 +54,7 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> AddRole([FromBody] CreateRoleRequest createRoleRequest)
         {
-            var requestedBy = User.FindFirst("UserId").ToString();
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
             bool exists = await _roleManager.RoleExistsAsync(createRoleRequest.Name);
             if (exists)
             {
@@ -82,7 +82,7 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleRequest createRoleRequest)
         {
-            var requestedBy = User.FindFirst("UserId").ToString();
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
             var role = await _roleManager.FindByIdAsync(createRoleRequest.Id);
 
             if (role == null) return BadRequest($"Role \'{createRoleRequest.Name}\' not found.");
@@ -102,16 +102,37 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> SetPublic(string roleId)
         {
-            var requestedBy = User.FindFirst("UserId").ToString();
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
             var publicRoleExists = _roleManager.Roles.Where(x => x.IsPublic).FirstOrDefault() != null;
 
-            if (publicRoleExists)
-                return BadRequest("There is already a public role,");
+            if (publicRoleExists) return BadRequest("There is already a public role.");
+
+            var role = _roleManager.Roles.Where(y => y.Id == roleId).FirstOrDefault();
+
+            if (role == null) return BadRequest("Role not found.");
+            if (role.IsDefault) return BadRequest("Role cannot be modified.");
+
+            role.IsPublic = true;
+            await _roleManager.UpdateAsync(role);
+
+            return Ok();
+
+        }
+
+        [HttpGet]
+        [Route("RemovePublic/{roleId}")]
+        [ApiAuthorize(IdentityClaimConstant.WriteRole)]
+        public async Task<IActionResult> RemovePublic(string roleId)
+        {
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
 
             var role = _roleManager.Roles.Where(y => y.Id == roleId).FirstOrDefault();
             if (role == null) return BadRequest("Role not found.");
+           
+            if (role.IsDefault) return BadRequest("Role cannot be modified.");
+            if (!role.IsPublic) return BadRequest("This role is not Public.");
 
-            role.IsPublic = true;
+            role.IsPublic = false;
             await _roleManager.UpdateAsync(role);
 
             return Ok();
@@ -123,8 +144,8 @@ namespace AuthServer.Controllers
         [ApiAuthorize(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> DeleteRole(string id)
         {
-            var requestedBy = User.FindFirst("UserId").ToString();
-            if (string.IsNullOrEmpty(id)) return BadRequest("Id param cannot be empty.");
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
+            if (string.IsNullOrEmpty(id)) return BadRequest("Role id cannot be empty.");
 
             var role = await _roleManager.FindByIdAsync(id);
             var users = await _userManager.GetUsersInRoleAsync(role.Name);
