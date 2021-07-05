@@ -40,7 +40,6 @@ namespace Resource.Application.Query.VehicleInventory
                                             CreatedBy = x.CreatedBy,
                                             CreatedDate = x.CreatedDate,
                                             Model = x.Model,
-                                            Price = x.Price,
                                             SubModel = x.SubModel,
                                             UpdatedBy = x.UpdatedBy,
                                             UpdatedDate = x.UpdatedDate

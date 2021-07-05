@@ -1,4 +1,6 @@
-﻿namespace Resource.Domain.Entities.VehicleInventory
+﻿using System.Collections.Generic;
+
+namespace Resource.Domain.Entities.VehicleInventory
 {
     public class VehicleDetail : BaseEntity
     {
@@ -9,6 +11,6 @@
         public string SubModel { get; set; }
         public string Capacity { get; set; }
         public string ManufacturedYear { get; set; }
-        public decimal Price { get; set; }
+        public virtual ICollection<VehicleMaintenanceDetail> VehicleMaintenance { get; set; }
     }
 }

@@ -55,7 +55,6 @@ namespace Resource.Application.Command.VehicleInventory
                         Model = request.Model,
                         SubModel = request.SubModel,
                         CreatedBy = userId,
-                        Price = request.Price,
                         Capacity = request.Capacity,
                         ManufacturedYear = request.ManufacturedYear
                     };

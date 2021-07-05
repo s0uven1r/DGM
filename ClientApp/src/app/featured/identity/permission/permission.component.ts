@@ -52,11 +52,11 @@ export class PermissionComponent implements OnInit {
   addItem(permissionList: any): void {
     permissionList.forEach((element: { permissionList: any[]; }) => {
       element.permissionList.forEach((item: { claimId: string; hasClaim: boolean; claimTitle: string; }) => {
+          this.claims = this.form.array([]);
           this.claims = this.permissionForm.get('claims') as FormArray;
           this.claims.push(this.createItem(item.claimId, item.hasClaim, item.claimTitle));
       });
     });
-  
   }
 
   onSubmit(){

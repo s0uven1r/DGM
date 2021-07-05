@@ -100,7 +100,7 @@ namespace Dgm.Common.Authorization.Claim
                      FaClass= "",
                      ParentId = "a17d4044-8dad-4058-9488-841d3332d270",
                      Rank = 1,
-                     RouteUrl = "register",
+                     RouteUrl = "vehicle/register",
                      ClaimModule = PermissionModuleConstant.Vehicle,
                      ClaimTitle = "View Vehicle Registration"
                  },
@@ -113,7 +113,7 @@ namespace Dgm.Common.Authorization.Claim
                      FaClass= "",
                      ParentId = "a17d4044-8dad-4058-9488-841d3332d270",
                      Rank = 2,
-                     RouteUrl = "maintain",
+                     RouteUrl = "vehicle/maintain",
                      ClaimModule = PermissionModuleConstant.Vehicle,
                      ClaimTitle = "View Vehicle Maintenance"
                  },
