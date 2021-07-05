@@ -27,5 +27,16 @@ export const ApiGateway = {
             createEmployee: '/CreateEmployee',
             updateEmployee: '/UpdateEmployee'
         }
+    },
+    resource: {
+        vehicle: {
+            inventory: {
+                base: 'VehicleInventory',
+                GetAll: 'Get/GetAllVehicle'
+            },
+            maintenance:{
+                base: 'VehicleMaintenance',
+            }
+        }
     }
 }

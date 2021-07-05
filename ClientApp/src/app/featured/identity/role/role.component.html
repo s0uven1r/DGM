@@ -73,7 +73,7 @@
         </td>
         <td *ngIf="item.isDefault"></td>
     </tr>
-    <tr *ngIf="!roleData.length">
+    <tr *ngIf="!roleData?.length">
       <td colspan="5" class="text-center border text-dark">No data available in table</td>
     </tr>
 </table>

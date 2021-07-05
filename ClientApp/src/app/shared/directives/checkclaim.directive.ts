@@ -12,14 +12,12 @@ export class CheckclaimDirective {
     private permissionService: PermissionService) { }
 
     @Input() set appCheckclaim(claims: string[]) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
       this.permissionService.checkPermission(claims)
       .subscribe(
           (res) => {
            this.hasClaim = res;
-           if(this.hasClaim){
-            this.viewContainer.createEmbeddedView(this.templateRef);
-          }
-           else if (!this.hasClaim) {
+           if(!this.hasClaim){
             this.viewContainer.clear();
           }
         })

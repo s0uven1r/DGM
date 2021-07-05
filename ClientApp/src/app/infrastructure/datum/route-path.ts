@@ -11,9 +11,13 @@ import { RoleComponent } from 'src/app/featured/identity/role/role.component';
 import { RoleResolverService } from 'src/app/featured/identity/role/service/resolver/role-resolver.service';
 import { CreateComponent } from 'src/app/featured/identity/user/create/create.component';
 import { UserComponent } from 'src/app/featured/identity/user/user.component';
+import { CreatemaintenanceComponent } from 'src/app/featured/vehicle/maintenance/createmaintenance/createmaintenance.component';
+import { MaintenanceComponent } from 'src/app/featured/vehicle/maintenance/maintenance.component';
+import { VehicleResolverService } from 'src/app/featured/vehicle/service/vehicle-resolver.service';
 import { PermissionRoutePath } from './route-path/permission';
 import { RoleRoutePath } from './route-path/role';
 import { UserRoutePath } from './route-path/user';
+import { VehicleRoutePath } from './route-path/vehicle-route-path';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -35,7 +39,8 @@ export const RoutePath = {
   DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent, 
                       children: [RoleRoutePath,
                         PermissionRoutePath,
-                        UserRoutePath
+                        UserRoutePath,
+                        VehicleRoutePath
                       ],
                       canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: 'auth-callback', component: AuthCallbackComponent, canActivate: [AuthGuard]}],
@@ -45,4 +50,6 @@ export const RoutePath = {
   UserCreateRoutePath: [{path: '', component: CreateComponent,resolve: {
     roleData: RoleResolverService
   }}],
+  VehicleMaintenanceRoutePath: [{path: '', component: MaintenanceComponent}],
+  VehicleMaintenanceCreateRoutePath: [{path: '', component: CreatemaintenanceComponent}],
 };

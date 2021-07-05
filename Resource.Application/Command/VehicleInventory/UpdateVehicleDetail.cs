@@ -57,7 +57,6 @@ namespace Resource.Application.Command.VehicleInventory
                     existing.SubModel = request.SubModel;
                     existing.UpdatedBy = userId;
                     existing.UpdatedDate = DateTime.UtcNow;
-                    existing.Price = request.Price;
                     existing.Capacity = request.Capacity;
                     existing.ManufacturedYear = request.ManufacturedYear;
 

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiIdentityUrl: 'https://localhost:44316/Authorization/'
+  apiIdentityUrl: 'https://localhost:44316/Authorization/',
+  resourceUrl: 'https://localhost:44337/api/'
 };
 
 /*
