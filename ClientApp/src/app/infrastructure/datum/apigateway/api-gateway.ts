@@ -5,6 +5,8 @@ export const ApiGateway = {
             getRole: '/GetRoles',
             postRole: '/AddRole',
             putRole: '/UpdateRole',
+            setPublic: '/SetPublic',
+            removePublic: '/RemovePublic',
             deleteRole: '/DeleteRole'
         },
         menu: {

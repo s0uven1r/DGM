@@ -1,6 +1,8 @@
 ﻿using Auth.Infrastructure.Identity;
 using AuthServer.Extensions;
 using AuthServer.Models;
+using AuthServer.Models.EmailSender;
+using AuthServer.Services.EmailSender;
 using IdentityServer4;
 using IdentityServer4.Events;
 using IdentityServer4.Models;
@@ -11,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MimeKit;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,9 +30,10 @@ namespace AuthServer.Controllers
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
         private readonly ILogger<AccountController> _logger;
+        private readonly IEmailSender _emailSender;
 
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events, ILogger<AccountController> logger)
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events, ILogger<AccountController> logger, IEmailSender emailSender)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -39,6 +43,7 @@ namespace AuthServer.Controllers
             _events = events;
             _signInManager = signInManager;
             _logger = logger;
+            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -163,34 +168,62 @@ namespace AuthServer.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Register(string returnUrl)
+        {
+            // build a model so we know what to show on the login page
+            var vm = await BuildRegisterViewModelAsync(returnUrl);
+            var publicRole = _roleManager.Roles.Where(x => x.IsPublic == true);
+
+            if (vm.IsExternalLoginOnly)
+            {
+                // we only have one option for logging in and it's an external provider
+                return RedirectToAction("Challenge", "External", new { provider = vm.ExternalLoginScheme, returnUrl });
+            }
+
+            return View(vm);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var role = _roleManager.Roles.Where(x => x.Id == model.RoleId).FirstOrDefault();
-            if (role == null) return BadRequest("Role not found");
-            if (!role.IsPublic) return BadRequest("Role is not public.");
+            var role = _roleManager.Roles.Where(x => x.IsPublic == true).FirstOrDefault();
+            if (role == null)
+            {
+                ModelState.AddModelError(string.Empty, "Public user cannot be registered in this system.");
+                // something went wrong, show form with error
+                var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
+                return View(vm);
+            }
 
-            var user = new AppUser { UserName = model.Email, FirstName = model.FirstName, Email = model.Email };
+            var user = new AppUser
+            {
+                UserName = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email
+            };
             var userResult = await _userManager.CreateAsync(user, model.Password);
 
             if (!userResult.Succeeded) return BadRequest(userResult.Errors);
 
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("username", user.UserName));
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("firstname", user.FirstName));
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("middlename", user.MiddleName));
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("lastname", user.LastName));
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("email", user.Email));
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", role.Name));
+            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("username", user.UserName));
+            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("firstname", user.FirstName));
+            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("middlename", user.MiddleName));
+            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("lastname", user.LastName));
+            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("email", user.Email));
+            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", role.Name));
 
             var roleResult = await _userManager.AddToRoleAsync(user, role.Name);
             if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
-            return Ok(new RegisterResponseViewModel(user));
+            return Redirect(model.ReturnUrl);
         }
 
         [HttpGet]
@@ -201,7 +234,83 @@ namespace AuthServer.Controllers
             return Redirect(context.PostLogoutRedirectUri ?? "http://localhost:4200/auth-callback");
         }
 
-       
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword)
+        {
+            if (!ModelState.IsValid) return View(forgotPassword);
+
+            var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
+
+            if (user == null)
+                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var callBack = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
+
+            await SendEmailForForgotPasswordToken(callBack, user.Email);
+
+            return RedirectToAction(nameof(ForgotPasswordConfirmation));
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            var model = new ResetPasswordViewModel
+            {
+                Token = token,
+                Email = email
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null) return RedirectToAction(nameof(ResetPasswordConfirmation));
+
+            var resetPasswordResult = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+
+            if (!resetPasswordResult.Succeeded)
+            {
+
+                foreach (var error in resetPasswordResult.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+                return View();
+            }
+
+            return RedirectToAction(nameof(ResetPasswordConfirmation));
+        }
+
+
+        [HttpGet]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+
         /*****************************************/
         /* helper APIs for the AccountController */
         /*****************************************/
@@ -269,6 +378,70 @@ namespace AuthServer.Controllers
             vm.Username = model.Username;
             vm.RememberLogin = model.RememberLogin;
             return vm;
+        }
+
+        private async Task<RegisterViewModel> BuildRegisterViewModelAsync(string returnUrl)
+        {
+            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
+            if (context?.IdP != null)
+            {
+                var local = context.IdP == IdentityServer4.IdentityServerConstants.LocalIdentityProvider;
+
+                // this is meant to short circuit the UI and only trigger the one external IdP
+                var vm = new RegisterViewModel
+                {
+                    EnableLocalLogin = local,
+                };
+
+                if (!local)
+                {
+                    vm.ExternalProviders = new[] { new ExternalProvider { AuthenticationScheme = context.IdP } };
+                }
+
+                return vm;
+            }
+
+            var schemes = await _schemeProvider.GetAllSchemesAsync();
+
+            var providers = schemes.Where(x => x.DisplayName != null || (x.Name.Equals(AccountOptions.WindowsAuthenticationSchemeName, StringComparison.OrdinalIgnoreCase))
+                )
+                .Select(x => new ExternalProvider
+                {
+                    DisplayName = x.DisplayName,
+                    AuthenticationScheme = x.Name
+                }).ToList();
+
+            var allowLocal = true;
+            if (context?.Client.ClientId != null)
+            {
+                var client = await _clientStore.FindEnabledClientByIdAsync(context.Client.ClientId);
+                if (client != null)
+                {
+                    allowLocal = client.EnableLocalLogin;
+
+                    if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Any())
+                    {
+                        providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
+                    }
+                }
+            }
+
+            return new RegisterViewModel
+            {
+                EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
+                ExternalProviders = providers.ToArray()
+            };
+        }
+
+        private async Task SendEmailForForgotPasswordToken(string message, string email)
+        {
+            var mailRequest = new EmailSenderRequest
+            {
+                ToEmail = email,
+                Subject = "Reset Password link.",
+                Body = message
+            };
+            await _emailSender.SendEmailAsync(mailRequest);
         }
     }
 }

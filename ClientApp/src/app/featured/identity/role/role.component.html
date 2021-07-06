@@ -32,10 +32,10 @@
             <input type="number" formControlName="rank" placeholder="Role Level" class="form-control">
           </div>
           <div class="form-group publicDiv col-lg-2 col-md-3 col-sm-4">
-            <div class="custom-control form-control-lg pull-right custom-checkbox">
+            <!-- <div class="custom-control form-control-lg pull-right custom-checkbox">
               <input type="checkbox" formControlName="hasPublic" class="custom-control-input" id="idIsPublic">
               <label class="custom-control-label" [for]="'idIsPublic'">Has Public</label>
-            </div>
+            </div> -->
           </div>
         
           <div class="form-group col-md-4 pull-left">
@@ -60,7 +60,12 @@
         <td>{{i+1}}</td>
         <td>{{item.name}}</td>
         <td>{{item.rank}}</td>
-        <td>{{item.isPublic?'Yes':'No'}}</td>
+        <td>
+          <div class="custom-control form-control-lg custom-checkbox">
+            <input type="checkbox" [checked]="item.isEnabled" [disabled]="item.isDefault" class="custom-control-input" [id]="'id'+item.id" #val (click)="setPublic(item.id, val)">
+            <label class="custom-control-label" [for]="'id'+item.id" ></label>
+            </div>
+        </td>
         <td *ngIf="!item.isDefault"> 
             <button *appCheckclaim ="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="getData(item.id, item.name, item.isPublic, item.rank)"><em class="fa fa-edit"></em></button>
             <button *appCheckclaim ="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1" (click)="deleteData(item.id)"><em class="fa fa-trash"></em></button>

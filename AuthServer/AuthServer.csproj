@@ -27,6 +27,7 @@
     <Folder Include="Contracts\Request\" />
     <Folder Include="Models\Users\Consumer\Response\" />
     <Folder Include="Models\Users\Consumer\Request\" />
+    <Folder Include="Validators\Users\Consumer\" />
     <Folder Include="wwwroot\font\" />
   </ItemGroup>
 

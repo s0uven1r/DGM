@@ -115,5 +115,12 @@ export class RoleComponent implements OnInit {
       }
   })
   }
+  setPublic(id: string, val: any){
+    this.roleService.setPublic(id, val.checked ).subscribe(() => {
+      this.changeDetectorRef.markForCheck();
+    }, () => {
+      val.checked = !val.checked
+    });;
+}
 }
 
