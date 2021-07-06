@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { RouteComponent } from 'src/app/infrastructure/datum/route-component';
 import { RoutePath } from 'src/app/infrastructure/datum/route-path';
 
-const routes: Routes = RoutePath.VehicleInventoryRoutePath;
+const routes: Routes = RoutePath.VehicleInventoryCreateRoutePath;
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RegisterRoutingModule { }
-export const RoutingComponent = RouteComponent.VehicleInventoryRouteComponent;
+export class VehicleCreateRoutingModule { }
+export const RoutingComponent = RouteComponent.VehicleInventoryCreateRouteComponent;

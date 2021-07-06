@@ -13,6 +13,9 @@ import { CreateComponent } from 'src/app/featured/identity/user/create/create.co
 import { UserComponent } from 'src/app/featured/identity/user/user.component';
 import { CreatemaintenanceComponent } from 'src/app/featured/vehicle/maintenance/createmaintenance/createmaintenance.component';
 import { MaintenanceComponent } from 'src/app/featured/vehicle/maintenance/maintenance.component';
+import { VehicleRegisterComponent } from 'src/app/featured/vehicle/register/register.component';
+import { VehicleCreateComponent } from 'src/app/featured/vehicle/register/vehicle-create/vehicle-create.component';
+import { VehicleUpdateComponent } from 'src/app/featured/vehicle/register/vehicle-update/vehicle-update.component';
 import { VehicleResolverService } from 'src/app/featured/vehicle/service/vehicle-resolver.service';
 import { PermissionRoutePath } from './route-path/permission';
 import { RoleRoutePath } from './route-path/role';
@@ -50,6 +53,9 @@ export const RoutePath = {
   UserCreateRoutePath: [{path: '', component: CreateComponent,resolve: {
     roleData: RoleResolverService
   }}],
+  VehicleInventoryRoutePath: [{path: '', component: VehicleRegisterComponent}],
+  VehicleInventoryCreateRoutePath: [{path: '', component: VehicleCreateComponent}],
+  VehicleInventoryUpdateRoutePath: [{path: '', component: VehicleUpdateComponent}],
   VehicleMaintenanceRoutePath: [{path: '', component: MaintenanceComponent}],
   VehicleMaintenanceCreateRoutePath: [{path: '', component: CreatemaintenanceComponent}],
 };
