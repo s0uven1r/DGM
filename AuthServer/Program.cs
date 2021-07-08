@@ -52,20 +52,8 @@ namespace AuthServer
 
                     await AppIdentityDbContextSeed.SeedDefaultConfiguration(identityContext);
                     await SeedRolePermission.SeedRolewisePermission(roleManager, identityContext);
-
-                    var user = new AppUser
-                    {
-                        FirstName = "admin",
-                        LastName = "admin",
-                        Email = "admin@dgm.com",
-                        UserName = "admin@dgm.com",
-                        LockoutEnabled = false,
-                    };
-                    var result = userManager.CreateAsync(user, "Password").GetAwaiter().GetResult();
-                    if (result.Succeeded)
-                    {
-                        await userManager.AddToRoleAsync(user, SystemRoles.SuperAdmin);
-                    }
+                    await SeedUsers.SeedDefaultUsersAsync(userManager);
+                
                 }
                 catch (Exception ex)
                 {

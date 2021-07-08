@@ -27,7 +27,7 @@ namespace AuthServer.Extensions
             services.AddIdentity<AppUser, AppRole>(config =>
             {
                 config.Password.RequiredLength = 4;
-                config.Password.RequireDigit = false;
+                config.Password.RequireDigit = true;
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = true;
             }).AddEntityFrameworkStores<AppIdentityDbContext>()

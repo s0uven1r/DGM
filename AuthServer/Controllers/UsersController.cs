@@ -50,7 +50,7 @@ namespace AuthServer.Controllers
                                     on user.Id equals userRole.UserId
                                     join role in _appIdentityDbContext.Roles
                                     on userRole.RoleId equals role.Id
-                                    where role.Rank < rank
+                                    where role.Rank > rank
                                     select new
                                     {
                                         user,

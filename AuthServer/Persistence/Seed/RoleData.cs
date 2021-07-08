@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuthServer.Persistence.Seed
 {
-    public class RoleData
+    public static class RoleData
     {
         public static async Task SeedDefaultRolesAsync(RoleManager<AppRole> rm)
         {
@@ -18,8 +18,8 @@ namespace AuthServer.Persistence.Seed
                 {
                     Name = d.Title,
                     Id = d.Id,
-                    IsDefault = true,
-                    Rank = 10000
+                    IsDefault = d.IsDefault,
+                    Rank = d.Rank
                 }).ToList();
 
             foreach (var role in roles.Where(r => !existingRoles.Any(er => er.Id == r.Id)))

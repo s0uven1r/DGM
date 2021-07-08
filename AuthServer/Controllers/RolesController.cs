@@ -37,7 +37,7 @@ namespace AuthServer.Controllers
         public IActionResult GetRoles()
         {
             int rank = Convert.ToInt32(User.Claims.Where(x => x.Type == "RoleRank").FirstOrDefault().Value);
-            var roles = _roleManager.Roles.Where(x => x.Rank < rank).Select(x => new GetRoleResponse
+            var roles = _roleManager.Roles.Where(x => x.Rank > rank).Select(x => new GetRoleResponse
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -59,10 +59,8 @@ namespace AuthServer.Controllers
             {
                 return BadRequest($"Role \'{createRoleRequest.Name}\' is already taken.");
             }
-            if (createRoleRequest.Rank >= 10000)
-            {
-                return BadRequest($"Role \'{createRoleRequest.Name}\' rank exceeded upto 10000 Only.");
-            }
+
+            if (createRoleRequest.Rank == 0) return BadRequest("Invalid role rank.");
 
             var role = new AppRole
             {
@@ -86,6 +84,7 @@ namespace AuthServer.Controllers
 
             if (role == null) return BadRequest($"Role \'{createRoleRequest.Name}\' not found.");
             if (role.IsDefault) return BadRequest($"Role \'{createRoleRequest.Name}\' cannot be updated.");
+            if (createRoleRequest.Rank == 0) return BadRequest("Invalid role rank.");
 
             role.Name = createRoleRequest.Name;
             role.Rank = createRoleRequest.Rank;
@@ -127,7 +126,7 @@ namespace AuthServer.Controllers
 
             var role = _roleManager.Roles.Where(y => y.Id == roleId).FirstOrDefault();
             if (role == null) return BadRequest("Role not found.");
-           
+
             if (role.IsDefault) return BadRequest("Role cannot be modified.");
             if (!role.IsPublic) return BadRequest("This role is not Public.");
 
