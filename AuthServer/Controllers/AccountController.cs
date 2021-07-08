@@ -1,4 +1,4 @@
-﻿using Auth.Infrastructure.Identity;
+﻿using AuthServer.Entities;
 using AuthServer.Extensions;
 using AuthServer.Models;
 using AuthServer.Models.EmailSender;
@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MimeKit;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

@@ -1,5 +1,4 @@
-﻿using Auth.Infrastructure.Constants;
-using Auth.Infrastructure.Identity;
+﻿using AuthServer.Entities;
 using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Models.Roles.Request;
 using AuthServer.Models.Roles.Response;

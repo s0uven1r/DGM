@@ -1,8 +1,6 @@
 ﻿using Auth.Infrastructure.Constants;
-using Auth.Infrastructure.Identity;
-using Auth.Infrastructure.Persistence;
-using AuthServer.Filters.AuthorizationFilter;
-using Dgm.Common.Authorization.Claim.Identity;
+using AuthServer.Entities;
+using AuthServer.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

@@ -1,8 +1,8 @@
 ﻿using Auth.Infrastructure.Constants;
-using Auth.Infrastructure.Identity;
-using Auth.Infrastructure.Persistence;
+using AuthServer.Entities;
 using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Models.Permission;
+using AuthServer.Persistence;
 using Dgm.Common.Authorization.Claim;
 using Dgm.Common.Authorization.Claim.Identity;
 using Dgm.Common.Error;

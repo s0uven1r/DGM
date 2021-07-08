@@ -1,11 +1,11 @@
 ﻿using Auth.Infrastructure.Constants;
-using Auth.Infrastructure.Identity;
-using Auth.Infrastructure.Persistence;
+using AuthServer.Entities;
 using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Helpers;
 using AuthServer.Models.EmailSender;
 using AuthServer.Models.Users;
 using AuthServer.Models.Users.Employee.Request;
+using AuthServer.Persistence;
 using AuthServer.Services.EmailSender;
 using Dgm.Common.Authorization.Claim.Identity;
 using Microsoft.AspNetCore.Authorization;
