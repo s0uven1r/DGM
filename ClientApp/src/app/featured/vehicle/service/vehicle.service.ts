@@ -24,6 +24,7 @@ export class VehicleService {
     return this.http.get<any>(`${this.baseUrl + this.getInventoryUrl}`);
   }
   getVehicleDetailById(id: string): Observable<any>{
+    debugger;
     return this.http.get<any>(`${this.baseUrl + this.getInventoryByIdUrl}/${id}`);
   }
   createVehicleInventory(value: any){

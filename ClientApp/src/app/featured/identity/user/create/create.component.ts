@@ -74,8 +74,10 @@ export class CreateComponent implements OnInit {
             return throwError(err);
         }))
           .subscribe(() => {
-                    this.InternalUserForm.reset(); this.InternalUserForm.clearValidators();
-                    this.InternalUserForm.patchValue({appliedRole: ''});
+                    if( !this.isEdit){
+                      this.InternalUserForm.reset(); this.InternalUserForm.clearValidators();
+                      this.InternalUserForm.patchValue({appliedRole: ''});
+                    }
                     Swal.fire(
                       this.isEdit?'Updated':'Added!',
                       'User Action',

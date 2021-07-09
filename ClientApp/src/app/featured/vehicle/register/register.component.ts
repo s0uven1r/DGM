@@ -49,7 +49,7 @@ export class VehicleRegisterComponent implements OnInit, OnDestroy {
   }
   updateVehicleDetail(id: string) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/dashboard/vehicle/edit/${id}`])
+      this.router.createUrlTree([`/dashboard/vehicle/register/edit/${id}`])
     );
     window.open(url, "_self");
     //window.open(url, "_blank");
