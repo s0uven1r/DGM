@@ -1,25 +1,33 @@
-﻿using Auth.Infrastructure.Identity;
-using Auth.Infrastructure.Persistence;
+﻿using AuthServer.Configurations;
+using AuthServer.Entities;
+using AuthServer.Persistence;
+using AuthServer.Services;
+using AuthServer.Services.EmailSender;
 using IdentityServer4;
-using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection;
 
-namespace Auth.Infrastructure
+namespace AuthServer.Extensions
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            var connectionstring = configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(connectionstring,
+                                                        sql => sql.MigrationsAssembly(migrationsAssembly)
+                                                        ));
 
             services.AddIdentity<AppUser, AppRole>(config =>
             {
                 config.Password.RequiredLength = 4;
-                config.Password.RequireDigit = false;
+                config.Password.RequireDigit = true;
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = true;
             }).AddEntityFrameworkStores<AppIdentityDbContext>()
@@ -32,12 +40,14 @@ namespace Auth.Infrastructure
                 .AddAspNetIdentity<AppUser>()
                 .AddConfigurationStore(options =>
                 {
-                    options.ConfigureDbContext = builder => builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionstring,
+                                                     sql => sql.MigrationsAssembly(migrationsAssembly));
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
-                    options.ConfigureDbContext = builder => builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionstring,
+                                                      sql => sql.MigrationsAssembly(migrationsAssembly));
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 60; // interval in seconds
@@ -56,6 +66,10 @@ namespace Auth.Infrastructure
                     // custom requirements
                 });
             });
+
+            services.Configure<EmailSenderConfig>(configuration.GetSection("EmailMailSenderSettings"));
+            services.AddTransient<IEmailSender, EmailSender>();
+
             return services;
         }
     }

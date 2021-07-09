@@ -1,8 +1,7 @@
 using Auth.Infrastructure.Constants;
-using Auth.Infrastructure.Identity;
-using Auth.Infrastructure.Persistence;
-using Auth.Infrastructure.Persistence.Seed;
-using Dgm.Common.Constants.Authorization;
+using AuthServer.Entities;
+using AuthServer.Persistence;
+using AuthServer.Persistence.Seed;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.Threading.Tasks;
@@ -54,20 +52,8 @@ namespace AuthServer
 
                     await AppIdentityDbContextSeed.SeedDefaultConfiguration(identityContext);
                     await SeedRolePermission.SeedRolewisePermission(roleManager, identityContext);
-
-                    var user = new AppUser
-                    {
-                        FirstName = "admin",
-                        LastName = "admin",
-                        Email = "admin@dgm.com",
-                        UserName = "admin@dgm.com",
-                        LockoutEnabled = false,
-                    };
-                    var result = userManager.CreateAsync(user, "Password").GetAwaiter().GetResult();
-                    if (result.Succeeded)
-                    {
-                        await userManager.AddToRoleAsync(user, SystemRoles.SuperAdmin);
-                    }
+                    await SeedUsers.SeedDefaultUsersAsync(userManager);
+                
                 }
                 catch (Exception ex)
                 {
