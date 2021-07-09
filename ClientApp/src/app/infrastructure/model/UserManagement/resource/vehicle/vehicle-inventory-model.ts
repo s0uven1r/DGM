@@ -7,5 +7,4 @@ export interface VehicleInventoryModel {
     subModel: string;
     capacity: string;
     manufacturedYear: string;
-    price: number;
 }

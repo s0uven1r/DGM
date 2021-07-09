@@ -1,38 +1,36 @@
-import { Component, OnInit } from "@angular/core";
-import {  FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
-import { VehicleInventoryModel } from "src/app/infrastructure/model/UserManagement/resource/vehicle/vehicle-inventory-model";
-import Swal from "sweetalert2";
-import { VehicleService } from "../../service/vehicle.service";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import { VehicleService } from '../../service/vehicle.service';
 
 @Component({
-  selector: "app-vehicle-update",
-  templateUrl: "./vehicle-update.component.html",
-  styleUrls: ["./vehicle-update.component.css"],
+  selector: 'app-vehicle-update',
+  templateUrl: './vehicle-update.component.html',
+  styleUrls: ['./vehicle-update.component.css'],
 })
 export class VehicleUpdateComponent implements OnInit {
   updateInventoryForm: FormGroup;
-  vehicleData: VehicleInventoryModel[] = [];
-
   constructor(
     private route: ActivatedRoute,
     private vehicleService: VehicleService,
     private form: FormBuilder
   ) {
-    this.UpdateInventoryFormDesign();
+    this.FormDesign();
   }
 
   ngOnInit(): void {
-    this.vehicleData = this.route.snapshot.data.vehicleData;
     this.route.params.subscribe((params) => {
-      if (params["id"]) {
+      console.log(params);
+      console.log(this.route.snapshot.data);
+      if (params['id']) {
         this.vehicleService
-          .getVehicleDetailById(params["id"])
+          .getVehicleDetailById(params['id'])
           .subscribe((x) => {
             this.updateInventoryForm.patchValue({
-              id: params["id"],
+              id: x.id,
               registrationNumber: x.registrationNumber,
               engineNumber: x.engineNumber,
               chasisNumber: x.chasisNumber,
@@ -40,35 +38,33 @@ export class VehicleUpdateComponent implements OnInit {
               subModel: x.subModel,
               capacity: x.capacity,
               manufacturedYear: x.manufacturedYear,
-              price: x.price,
             });
           });
       }
     });
   }
 
-  UpdateInventoryFormDesign() {
+  FormDesign() {
     return (this.updateInventoryForm = this.form.group({
       id: [null],
-      registrationNumber: [null],
-      engineNumber: [null],
-      chasisNumber: [null],
+      registrationNumber: [null, Validators.required],
+      engineNumber: [null, Validators.required],
+      chasisNumber: [null, Validators.required],
       model: [null],
       subModel: [null],
       capacity: [null],
       manufacturedYear: [null],
-      price: [null],
     }));
   }
 
   updateVehicleInventory() {
     Swal.fire({
-      title: "Update Vehicle Detail",
-      text: "User Action",
-      icon: "warning",
+      title: 'Update Vehicle Detail',
+      text: 'User Action',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: "Ok",
-      cancelButtonText: "No",
+      confirmButtonText: 'Ok',
+      cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
         this.vehicleService
@@ -82,9 +78,9 @@ export class VehicleUpdateComponent implements OnInit {
             () => {
               this.updateInventoryForm.reset();
               this.updateInventoryForm.clearValidators();
-              Swal.fire("Updated!", "User Action", "success");
+              Swal.fire('Updated!', 'User Action', 'success');
             },
-            () => console.log("HTTP request completed.")
+            () => console.log('HTTP request completed.')
           );
       }
     });

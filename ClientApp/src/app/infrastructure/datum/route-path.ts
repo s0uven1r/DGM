@@ -16,7 +16,6 @@ import { MaintenanceComponent } from 'src/app/featured/vehicle/maintenance/maint
 import { VehicleRegisterComponent } from 'src/app/featured/vehicle/register/register.component';
 import { VehicleCreateComponent } from 'src/app/featured/vehicle/register/vehicle-create/vehicle-create.component';
 import { VehicleUpdateComponent } from 'src/app/featured/vehicle/register/vehicle-update/vehicle-update.component';
-import { VehicleResolverService } from 'src/app/featured/vehicle/service/vehicle-resolver.service';
 import { PermissionRoutePath } from './route-path/permission';
 import { RoleRoutePath } from './route-path/role';
 import { UserRoutePath } from './route-path/user';

@@ -56,7 +56,7 @@ namespace Resource.Application.Command.VehicleInventory
                         SubModel = request.SubModel,
                         CreatedBy = userId,
                         Capacity = request.Capacity,
-                        ManufacturedYear = request.ManufacturedYear
+                        ManufacturedYear = request.ManufacturedYear,
                     };
 
                     await _context.VehicleDetails.AddAsync(vehicle);

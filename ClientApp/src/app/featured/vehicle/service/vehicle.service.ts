@@ -35,8 +35,7 @@ export class VehicleService {
       model :value.model,
       subModel :value.subModel,
       capacity :value.capacity,
-      manufacturedYear :value.manufacturedYear,
-      price :value.price
+      manufacturedYear :value.manufacturedYear
     });
   }
   updateVehicleInventory(value: any){
@@ -48,8 +47,7 @@ export class VehicleService {
       model :value.model,
       subModel :value.subModel,
       capacity :value.capacity,
-      manufacturedYear :value.manufacturedYear,
-      price :value.price
+      manufacturedYear :value.manufacturedYear
     });
   }
   deleteVehicleDetailById(id: string): Observable<any>{

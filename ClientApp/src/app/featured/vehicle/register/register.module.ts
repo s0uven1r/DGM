@@ -7,9 +7,8 @@ import { VehicleService } from '../service/vehicle.service';
 
 
 @NgModule({
-  declarations: [
+  declarations: 
     RoutingComponent,
-  ],
   imports: [
     CommonModule,
     RegisterRoutingModule,

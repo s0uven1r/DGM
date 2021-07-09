@@ -14,6 +14,5 @@ namespace Resource.Application.Models.VehicleInventory.Request
         public string SubModel { get; set; }
         public string Capacity { get; set; }
         public string ManufacturedYear { get; set; }
-        public decimal Price { get; set; }
     }
 }
