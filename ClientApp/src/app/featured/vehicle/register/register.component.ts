@@ -4,8 +4,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataTableDirective } from 'angular-datatables';
 import { Subject, Subscription } from 'rxjs';
 import { VehicleControllersClaim } from 'src/app/infrastructure/datum/claim/vehicle-management';
 import { VehicleInventoryModel } from 'src/app/infrastructure/model/UserManagement/resource/vehicle/vehicle-inventory-model';
@@ -23,6 +25,9 @@ export class VehicleRegisterComponent implements OnInit, OnDestroy {
   vehicles: VehicleInventoryModel[] = [];
   dtTrigger: Subject<any> = new Subject<any>();
   vehicleCreateClaim = [VehicleControllersClaim.Inventory.Write];
+  isDtInitialized:boolean = false;
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   constructor(
     private vehicleService: VehicleService,
     private router: Router,
@@ -38,10 +43,7 @@ export class VehicleRegisterComponent implements OnInit, OnDestroy {
         [5, 10, 25, 50, 100, "All"],
       ],
     };
-    this.vehicleService.getInventory().subscribe(x => {this.vehicles = x;
-      this.changeDetectorRef.markForCheck();
-      this.dtTrigger.next();
-    });
+   this.getInitData();
   }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
@@ -71,16 +73,28 @@ export class VehicleRegisterComponent implements OnInit, OnDestroy {
               "Vehicle detail deleted successfully.",
               "success"
             );
-            this.vehicleService.getInventory().subscribe(x => {this.vehicles = x;
-              this.changeDetectorRef.markForCheck();
-              this.dtTrigger.next();
-            });
+           this.getInitData();
           },
           (err) => {
             Swal.fire("Error Deleted!", err, "error");
           }
         );
       }
+    });
+  }
+
+  getInitData(){
+    this.vehicleService.getInventory().subscribe(x => {this.vehicles = x;
+      if (this.isDtInitialized) {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+          this.dtTrigger.next();
+        });
+      } else {
+        this.isDtInitialized = true
+        this.dtTrigger.next();
+      }
+      this.changeDetectorRef.markForCheck();
     });
   }
 }

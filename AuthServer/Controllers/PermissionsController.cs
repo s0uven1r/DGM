@@ -90,7 +90,6 @@ namespace AuthServer.Controllers
             {
                 var role = await _roleManager.FindByIdAsync(model.RoleId);
                 if (role == null) throw new AppException("Invalid! Role not found");
-                if (model.ClaimList.Count == 0) throw new AppException("Invalid! Claims not available");
                 var claimsPermissionToAdd = new List<RoleClaim>();
                 var claimsPermissionToRemove = new List<RoleClaim>();
                 foreach (var claims in model.ClaimList)

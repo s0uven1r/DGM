@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -19,6 +19,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
   vehicleData: VehicleMaintenanceModel[] = [];
   maintainCreateClaim = [VehicleControllersClaim.Maintenance.Write];
   isDtInitialized:boolean = false;
+  @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   constructor(private vehicleService: VehicleService,private router: Router,
      private changeDetectorRef: ChangeDetectorRef) { }
@@ -29,10 +30,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
       pageLength: 5,
       lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]]
     };
-    this.vehicleService.getMaintenance().subscribe(x => {this.vehicleData = x;
-      this.changeDetectorRef.markForCheck();
-      this.initDataTable();
-    });
+   this.getInitData();
   }
   
 
@@ -60,10 +58,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
               "Vehicle maintenance detail deleted successfully.",
               "success"
             );
-            this.vehicleService.getMaintenance().subscribe(x => {this.vehicleData = x;
-              this.changeDetectorRef.markForCheck();
-              this.initDataTable();
-            });
+            this.getInitData();
           },
           (err) => {
             Swal.fire("Error Deleted!", err, "error");
@@ -72,19 +67,22 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
       }
     });
   }
+  getInitData(){
+    this.vehicleService.getMaintenance().subscribe(x => {this.vehicleData = x;
+      if (this.isDtInitialized) {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+          this.dtTrigger.next();
+        });
+      } else {
+        this.isDtInitialized = true
+        this.dtTrigger.next();
+      }
+      this.changeDetectorRef.markForCheck();
+    });
+  }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
-  }
-  initDataTable(){
-    if (this.isDtInitialized) {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-          this.dtTrigger.next();
-      });
-  } else {
-      this.isDtInitialized = true;
-      this.dtTrigger.next();
-  }
   }
 }
