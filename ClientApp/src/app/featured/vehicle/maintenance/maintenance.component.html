@@ -19,12 +19,12 @@
         <tbody>
           <tr *ngFor="let item of vehicleData; let i=index">
             <td>{{i+1}}</td>
-            <td>{{item.RegistrationNumber}}</td>
-            <td>{{item.Type}}</td>
-            <td>{{item.Remark}}</td>
+            <td>{{item.registrationNumber}}</td>
+            <td>-</td>
+            <td>{{item.remark}}</td>
             <td> 
-              <button *appCheckclaim ="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"  ><em class="fa fa-edit"></em></button>
-              <button *appCheckclaim ="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1"><em class="fa fa-trash"></em></button>
+              <button *appCheckclaim ="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="updateVehicleDetail(item.id)" ><em class="fa fa-edit"></em></button>
+              <button *appCheckclaim ="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1" (click)="deleteVehicleDetail(item.id)"><em class="fa fa-trash"></em></button>
             </td>
           </tr>
         </tbody>

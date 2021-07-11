@@ -40,6 +40,7 @@ export const ApiGateway = {
             },
             maintenance:{
                 base: 'VehicleMaintenance',
+                create: '/Create',
             }
         }
     }

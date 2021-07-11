@@ -13,6 +13,7 @@ import { MaintenanceComponent } from "src/app/featured/vehicle/maintenance/maint
 import { VehicleRegisterComponent } from "src/app/featured/vehicle/register/register.component";
 import { VehicleCreateComponent } from "src/app/featured/vehicle/register/vehicle-create/vehicle-create.component";
 import { VehicleUpdateComponent } from "src/app/featured/vehicle/register/vehicle-update/vehicle-update.component";
+import { CreatemaintenanceComponent } from "src/app/featured/vehicle/maintenance/createmaintenance/createmaintenance.component";
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -37,6 +38,6 @@ export const RouteComponent = {
       VehicleInventoryCreateRouteComponent: [VehicleCreateComponent],
       VehicleInventoryUpdateRouteComponent: [VehicleUpdateComponent],
       VehicleMaintenanceRouteComponent: [MaintenanceComponent],
-      VehicleMaintenanceCreateRouteComponent: [],
+      VehicleMaintenanceCreateRouteComponent: [CreatemaintenanceComponent],
       
 }

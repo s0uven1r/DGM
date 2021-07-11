@@ -12,6 +12,7 @@ namespace Resource.Application.Models.VehicleInventory.Response
         public string Remark { get; set; }
         public string Type { get; set; }
         public string Id { get; set; }
-        
+        public string VehicleId { get; set; }
+
     }
 }

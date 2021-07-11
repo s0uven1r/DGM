@@ -21,7 +21,7 @@ import { VehicleService } from '../service/vehicle.service';
 export class VehicleRegisterComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   vehicles: VehicleInventoryModel[] = [];
-  dtTrigger: Subject<any> = new Subject<any>();s
+  dtTrigger: Subject<any> = new Subject<any>();
   vehicleCreateClaim = [VehicleControllersClaim.Inventory.Write];
   constructor(
     private vehicleService: VehicleService,
