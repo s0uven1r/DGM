@@ -33,13 +33,14 @@ export const ApiGateway = {
             inventory: {
                 base: 'VehicleInventory',
                 getAll: '/Get/GetAllVehicle',
-                getSingleById: 'Get/GetVehicleDetailById',
+                getSingleById: '/Get/GetVehicleDetailById',
                 create: '/Create',
                 update: '/Update',
                 delete: '/Delete',
             },
             maintenance:{
                 base: 'VehicleMaintenance',
+                create: '/Create',
             }
         }
     }

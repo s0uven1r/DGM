@@ -21,6 +21,14 @@ export const VehicleRoutePath = {
               "src/app/featured/vehicle/maintenance/createmaintenance/createmaintenance.module"
             ).then((m) => m.CreatemaintenanceModule),
         },
+        {
+          path: "edit/:id",
+          data: { breadcrumb: "Edit" },
+          loadChildren: () =>
+            import(
+              "src/app/featured/vehicle/maintenance/createmaintenance/createmaintenance.module"
+            ).then((m) => m.CreatemaintenanceModule),
+        },
       ],
     },
 

@@ -36,7 +36,8 @@ namespace Resource.Application.Query.VehicleInventory
                                             RegistrationNumber = x.Vehicle.RegistrationNumber,
                                             Type = x.TypeId,
                                             Remark = x.Remark,
-                                            Id = x.Id
+                                            Id = x.Id,
+                                            VehicleId = x.VehicleId
 
                                         }).SingleOrDefaultAsync();
                     if (getVehicle == null) throw new AppException("Invalid! Vehicle Detail not found!");

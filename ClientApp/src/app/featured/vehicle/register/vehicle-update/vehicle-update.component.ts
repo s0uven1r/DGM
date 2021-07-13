@@ -23,8 +23,6 @@ export class VehicleUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      console.log(params);
-      console.log(this.route.snapshot.data);
       if (params['id']) {
         this.vehicleService
           .getVehicleDetailById(params['id'])
@@ -76,8 +74,6 @@ export class VehicleUpdateComponent implements OnInit {
           )
           .subscribe(
             () => {
-              this.updateInventoryForm.reset();
-              this.updateInventoryForm.clearValidators();
               Swal.fire('Updated!', 'User Action', 'success');
             },
             () => console.log('HTTP request completed.')

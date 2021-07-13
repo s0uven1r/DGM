@@ -15,10 +15,16 @@ export class VehicleService {
   private createInventoryUrl = ApiGateway.resource.vehicle.inventory.base + ApiGateway.resource.vehicle.inventory.create;
   private updateInventoryUrl = ApiGateway.resource.vehicle.inventory.base + ApiGateway.resource.vehicle.inventory.update;
   private deleteInventoryUrl = ApiGateway.resource.vehicle.inventory.base + ApiGateway.resource.vehicle.inventory.delete;
+
+  private createMaintenanceUrl = ApiGateway.resource.vehicle.maintenance.base + ApiGateway.resource.vehicle.maintenance.create;
+
   constructor(private http: HttpClient) { }
 
   getMaintenance(): Observable<any>{
     return this.http.get<any>(`${this.baseUrl + this.getMaintenanceUrl}`);
+  }
+  getSingeMaintenance(id: string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl + this.getMaintenanceUrl}/${id}`);
   }
   getInventory(): Observable<any>{
     return this.http.get<any>(`${this.baseUrl + this.getInventoryUrl}`);
@@ -52,5 +58,25 @@ export class VehicleService {
   }
   deleteVehicleDetailById(id: string): Observable<any>{
     return this.http.delete<any>(`${this.baseUrl + this.deleteInventoryUrl}/${id}`);
+  }
+
+  performAddUpdateVehicleMaintenance(value: any){
+    if(value.id){
+      return this.http
+      .put<any>(`${this.baseUrl + this.getMaintenanceUrl}/${value.id}`, {
+        TypeId: value.maintenanceType,
+        VehicleId: value.vehicleId,
+        Remark: value.remarks
+      });
+    }
+    return this.http
+    .post<any>(`${this.baseUrl + this.createMaintenanceUrl}`, {
+      TypeId: value.maintenanceType,
+      VehicleId: value.vehicleId,
+      Remark: value.remarks
+    });
+  }
+  deleteVehicleMaintenanceDetailById(id: string): Observable<any>{
+    return this.http.delete<any>(`${this.baseUrl + this.getMaintenanceUrl}/${id}`);
   }
 }
