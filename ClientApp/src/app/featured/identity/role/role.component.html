@@ -1,8 +1,8 @@
 
 <div *appCheckclaim ="roleCreateClaim" class="card mb-2">
   <div class="card-body">
-    <h5 class="card-title pl-3"><a class="btn disabled btn-outline-info btn-sm">{{isEdit?"Update":"Create"}}</a>
-    </h5>
+    <h5 class="card-title pl-3"><a class="btn disabled btn-outline-info btn-sm">{{isEdit?"Update":"Create"}}</a></h5>
+      
     <div class="container-fluid bordered  h-100">
       <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
@@ -42,6 +42,7 @@
             <button [disabled]="(!roleForm.valid)" type="submit" value="save" class="btn btn-primary">
                 Save
             </button>
+            <input class="ml-3 btn btn-danger" type="button" value="Reset" (click)="resetRoleForm()">
           </div>
         </div>
       </form>
