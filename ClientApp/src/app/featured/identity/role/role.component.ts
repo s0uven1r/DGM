@@ -85,6 +85,10 @@ export class RoleComponent implements OnInit {
       'hasPublic': isPublic
     });
   }
+  resetRoleForm(){
+    this.isEdit = false;
+    this.roleForm.reset();
+  }
   deleteData(id: string){
     Swal.fire({
       title: 'Delete a role',
