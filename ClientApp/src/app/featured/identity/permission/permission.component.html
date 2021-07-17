@@ -4,22 +4,22 @@
       <h3 class="card-title">{{permissionData['roleName']|titlecase}}</h3>
       <form [formGroup]="permissionForm" (ngSubmit)="onSubmit()">
           <input type="hidden" formControlName="roleId" >
-          <div *ngFor="let item of permissionData['rolePermissionGroup']; let i=index">
-            <div class="card-header">
-              {{item['module']}}
+          <div formArrayName="modules">
+            <div *ngFor="let module of permissionForm.controls.modules.controls; let i = index" formGroupName="{{i}}">
+              <div class="card-header">
+                {{module.value.title}}
+              </div>
+              <div class="row ml-3 mt-3" formArrayName="claims">
+                <div class="col-lg-3 permissionDiv col-md-5 col-sm-12" 
+                  *ngFor="let claim of module.controls.claims.controls; let j = index;">
+                  <div class="custom-control form-control-lg custom-checkbox" [formGroupName]="j">
+                    <input type="hidden" formControlName="id" >
+                    <input type="checkbox" formControlName="hasChecked" class="custom-control-input" [id]="'id'+claim.value.id">
+                    <label class="custom-control-label" [for]="'id'+claim.value.id">{{claim.value.title}}</label>
+                  </div>
+               </div>
+               </div>
             </div>
-            <div class="row ml-3 mt-3">
-              <!-- *ngFor="let claim of item['permissionList']; let i=index" -->
-              <div class="col-lg-3 permissionDiv col-md-5 col-sm-12" formArrayName="claims"
-               *ngFor="let item of permissionForm.get('claims').controls; let i = index;">
-                <div class="custom-control form-control-lg custom-checkbox" [formGroupName]="i">
-                  <input type="hidden" formControlName="id" >
-                  <input type="checkbox" formControlName="hasChecked" class="custom-control-input" [id]="'id'+i">
-                  <label class="custom-control-label" [for]="'id'+i">{{item.value.title}}</label>
-                </div>
-             </div>
-            </div>
-              
           </div>
           <button *appCheckclaim ="permissionCreateClaim" [disabled]="(!permissionForm.valid)" type="submit" value="save" class="btn mt-5 ml-4 btn-primary">
             Save
