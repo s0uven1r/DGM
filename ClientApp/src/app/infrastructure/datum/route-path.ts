@@ -4,8 +4,7 @@ import { ForbiddenComponent } from 'src/app/core/forbidden/forbidden.component';
 import { HomeComponent } from 'src/app/core/home/home.component';
 import { InternalServerErrorComponent } from 'src/app/core/internal-server-error/internal-server-error.component';
 import { UndefinedPageComponent } from 'src/app/core/undefined-page/undefined-page.component';
-import { AuthCallbackComponent } from 'src/app/featured/auth-callback/auth-callback.component';
-import { CounterComponent } from 'src/app/featured/counter/counter.component';
+import { AuthCallbackComponent } from 'src/app/core/auth-callback/auth-callback.component';
 import { PermissionComponent } from 'src/app/featured/identity/permission/permission.component';
 import { RoleComponent } from 'src/app/featured/identity/role/role.component';
 import { RoleResolverService } from 'src/app/featured/identity/role/service/resolver/role-resolver.service';
@@ -24,10 +23,7 @@ import { VehicleRoutePath } from './route-path/vehicle-route-path';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
-      {path:'',  loadChildren: () =>import('src/app/featured/counter/counter.module').then(
-        (m) => m.CounterModule
-      )},
-      {path:'', loadChildren: () =>import('src/app/featured/auth-callback/auth-callback.module').then(
+      {path:'', loadChildren: () =>import('src/app/core/auth-callback/auth-callback.module').then(
         (m) => m.AuthCallbackModule
       )},
       {path:'', loadChildren: () =>import('src/app/core/dashboard/dashboard.module').then(
@@ -38,7 +34,6 @@ export const RoutePath = {
       { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
     ],
 
-  CounterRoutePath:[{path: 'counter', component: CounterComponent}],
   DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent, 
                       children: [RoleRoutePath,
                         PermissionRoutePath,
