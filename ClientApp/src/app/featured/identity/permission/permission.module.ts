@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PermissionRoutingModule, RoutingComponent } from './permission-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PermissionService } from './service/permission.service';
 import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
 
@@ -9,6 +9,7 @@ import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.modul
   imports: [
     CommonModule,
     PermissionRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     CheckDirectiveModule
   ],
