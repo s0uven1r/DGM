@@ -1,0 +1,48 @@
+﻿using Dgm.Common.Error;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Resource.Application.Models.Account.AccountType.Response;
+using Resource.Domain.Persistence;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Resource.Application.Query.Account.AccountType
+{
+    public class GetSingleAccountTypeDetail
+    {
+        public class GetSingleAccountTypeQuery : IRequest<AccountTypeResponseViewModel>
+        {
+            public string Id { get; set; }
+        }
+
+        public class Handler : IRequestHandler<GetSingleAccountTypeQuery, AccountTypeResponseViewModel>
+        {
+            private readonly AppDbContext _context;
+            public Handler(AppDbContext context)
+            {
+                _context = context;
+            }
+
+            public async Task<AccountTypeResponseViewModel> Handle(GetSingleAccountTypeQuery request, CancellationToken cancellationToken)
+            {
+                try
+                {
+                    var getSingleAccTypes = await _context.AccountTypes.Where(q => !q.IsDeleted && q.Id == request.Id)
+                                        .Select(x => new AccountTypeResponseViewModel
+                                        {
+                                            Id = x.Id,
+                                            Title = x.Title,
+                                            Type = x.Type
+                                        }).SingleOrDefaultAsync(cancellationToken: cancellationToken);
+
+                    return getSingleAccTypes;
+                }
+                catch
+                {
+                    throw new AppException("Something went wrong!");
+                }
+            }
+        }
+    }
+}
