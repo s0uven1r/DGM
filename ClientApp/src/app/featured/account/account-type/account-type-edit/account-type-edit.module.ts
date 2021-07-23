@@ -8,6 +8,7 @@ import {
 } from "./account-type-edit-routing.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AccountService } from "../../service/account.service";
+import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
   declarations: RoutingComponent,
@@ -15,7 +16,7 @@ import { AccountService } from "../../service/account.service";
     CommonModule,
     ReactiveFormsModule,
     AccountTypeEditRoutingModule,
-    CheckDirectiveModule,
+    CheckDirectiveModule
   ],
   providers: [
     {

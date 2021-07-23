@@ -19,7 +19,7 @@ namespace ResourceAPI.Controllers.Account
         /// </summary>
         /// <returns></returns>
         //[Permission(Permission.)]
-        [HttpGet("Get/GetSingleById/{id}")]
+        [HttpGet("Get/GetById/{id}")]
         public async Task<IActionResult> GetSingleById(string id)
         {
             return Ok(await Mediator.Send(request: new GetSingleAccountHeadDetail.GetSingleAccountHeadQuery { Id = id }));

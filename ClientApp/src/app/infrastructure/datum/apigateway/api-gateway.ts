@@ -48,6 +48,7 @@ export const ApiGateway = {
                 base: 'AccountType',
                 getAll: '/Get/GetAll',
                 getSingleById: '/Get/GetById',
+                getAccountTypeDDL: '/Get/GetAccountTypeEnumDDL',
                 create: '/Create',
                 update: '/Update',
             },

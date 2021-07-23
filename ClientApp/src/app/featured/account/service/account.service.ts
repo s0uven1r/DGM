@@ -15,6 +15,8 @@ export class AccountService {
     this.accountType + ApiGateway.resource.account.accounttype.getAll;
   private getAccountTypeByIdUrl =
     this.accountType + ApiGateway.resource.account.accounttype.getSingleById;
+  private getAccountTypeDDLUrl =
+    this.accountType + ApiGateway.resource.account.accounttype.getAccountTypeDDL;
   private createAccountTypeUrl =
     this.accountType + ApiGateway.resource.account.accounttype.create;
   private updateAccountTypeUrl =
@@ -32,8 +34,11 @@ export class AccountService {
   getAllAccountType(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl + this.getAccountTypeUrl}`);
   }
-  getByIdAccountType(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl + this.getAccountTypeByIdUrl}`);
+  getByIdAccountType(id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAccountTypeByIdUrl}/${id}`);
+  }
+  getAccountTypeDDL(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAccountTypeDDLUrl}`);
   }
   createAccountType(value: any) {
     return this.http.post<any>(`${this.baseUrl + this.createAccountTypeUrl}`, {
@@ -53,8 +58,8 @@ export class AccountService {
   getAllAccountHead(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl + this.getAccountHeadUrl}`);
   }
-  getByIdAccountHead(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl + this.getAccountHeadByIdUrl}`);
+  getByIdAccountHead(id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAccountHeadByIdUrl}/${id}`);
   }
   createAccountHead(value: any) {
     return this.http.post<any>(`${this.baseUrl + this.createAccountHeadUrl}`, {
