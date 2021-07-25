@@ -1,8 +1,10 @@
-﻿using Dgm.Common.Error;
+﻿using Dgm.Common.Enum;
+using Dgm.Common.Error;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Resource.Application.Models.Account.AccountType.Response;
 using Resource.Domain.Persistence;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,7 +37,7 @@ namespace Resource.Application.Query.Account.AccountType
                                             Title = x.Title,
                                             Type = x.Type
                                         }).SingleOrDefaultAsync(cancellationToken: cancellationToken);
-
+                    if(getSingleAccTypes != null) getSingleAccTypes.TypeName = Enum.GetName(typeof(AccountTypeEnum), getSingleAccTypes.Type);
                     return getSingleAccTypes;
                 }
                 catch

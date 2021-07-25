@@ -64,7 +64,7 @@ export class AccountService {
   createAccountHead(value: any) {
     return this.http.post<any>(`${this.baseUrl + this.createAccountHeadUrl}`, {
       title: value.title,
-      accountType: value.accountType,
+      accountTypeId: value.accountTypeId,
     });
   }
   updateAccountHead(value: any) {
@@ -72,7 +72,7 @@ export class AccountService {
       `${this.baseUrl + this.updateAccountHeadUrl}/${value.id}`,
       {
         title: value.title,
-        accountType: value.accountType,
+        accountTypeId: value.accountTypeId,
       }
     );
   }

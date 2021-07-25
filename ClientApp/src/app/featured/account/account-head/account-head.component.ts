@@ -44,7 +44,7 @@ export class AccountHeadComponent implements OnInit {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/dashboard/account/accounthead/edit/${id}`])
     );
-    window.open(url, "_blank");
+    window.open(url, "_self");
   }
 
   getInitData() {

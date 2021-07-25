@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { AccountTypeDDL } from "src/app/infrastructure/model/UserManagement/resource/account/account-type-model";
@@ -13,22 +14,24 @@ import { AccountService } from "../../service/account.service";
 })
 export class AccountTypeCreateComponent implements OnInit {
   createForm: FormGroup;
-  accountTypeDDL: AccountTypeDDL[];
+  accountTypeDDL: AccountTypeDDL[] = [];
   constructor(
     private accountService: AccountService,
-    private form: FormBuilder
+    private form: FormBuilder, 
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.FormDesign();
   }
 
   ngOnInit(): void {
-    this.getInitData();
+    this.accountTypeDDL = this.route.snapshot.data.accountTypeDDL;
   }
 
   FormDesign() {
     return (this.createForm = this.form.group({
       title: [null, Validators.required],
-      type: [null, Validators.required],
+      type: ['', Validators.required],
     }));
   }
 
@@ -54,16 +57,14 @@ export class AccountTypeCreateComponent implements OnInit {
               this.createForm.reset();
               this.createForm.clearValidators();
               Swal.fire("Added!", "User Action", "success");
+              const url = this.router.serializeUrl(
+                this.router.createUrlTree([`/dashboard/account/accounttype`])
+              );
+              window.open(url, "_self");
             },
             () => console.log("HTTP request completed.")
           );
       }
-    });
-  }
-
-  getInitData() {
-    this.accountService.getAccountTypeDDL().subscribe((x) => {
-      this.accountTypeDDL = x;
     });
   }
 }

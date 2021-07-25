@@ -44,7 +44,7 @@ export class AccountTypeComponent implements OnInit, OnDestroy {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/dashboard/account/accounttype/edit/${id}`])
     );
-    window.open(url, "_blank");
+    window.open(url, "_self");
   }
 
   getInitData() {

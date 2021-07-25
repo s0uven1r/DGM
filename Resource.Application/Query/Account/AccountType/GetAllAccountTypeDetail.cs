@@ -1,8 +1,10 @@
-﻿using Dgm.Common.Error;
+﻿using Dgm.Common.Enum;
+using Dgm.Common.Error;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Resource.Application.Models.Account.AccountType.Response;
 using Resource.Domain.Persistence;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -37,7 +39,7 @@ namespace Resource.Application.Query.Account.AccountType
                                             Type = x.Type
                                         }).ToListAsync(cancellationToken: cancellationToken);
 
-                    return getAllAccTypes;
+                    return getAllAccTypes.Select(x => { x.TypeName = Enum.GetName(typeof(AccountTypeEnum), x.Type); return x; }).ToList();
                 }
                 catch
                 {

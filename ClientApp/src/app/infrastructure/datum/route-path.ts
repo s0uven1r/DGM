@@ -27,6 +27,8 @@ import { PermissionRoutePath } from './route-path/permission';
 import { RoleRoutePath } from './route-path/role';
 import { UserRoutePath } from './route-path/user';
 import { VehicleRoutePath } from './route-path/vehicle-route-path';
+import { AccountTypeResolverService } from 'src/app/featured/account/service/accounttype-resolver.service';
+import { AccountHeadResolverService } from 'src/app/featured/account/service/accounthead-resolver.service';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -64,9 +66,17 @@ export const RoutePath = {
     vehicleData: VehicleResolverService
   }}],
   AccountTypeRoutePath: [{path: '', component: AccountTypeComponent}],
-  AccountTypeCreateRoutePath: [{path: '', component: AccountTypeCreateComponent}],
-  AccountTypeEditRoutePath: [{path: '', component: AccountTypeEditComponent}],
+  AccountTypeCreateRoutePath: [{path: '', component: AccountTypeCreateComponent, resolve: {
+    accountTypeDDL: AccountTypeResolverService
+  }}],
+  AccountTypeEditRoutePath: [{path: '', component: AccountTypeEditComponent, resolve: {
+    accountTypeDDL: AccountTypeResolverService
+  }}],
   AccountHeadRoutePath: [{path: '', component: AccountHeadComponent}],
-  AccountHeadCreateRoutePath: [{path: '', component: AccountHeadCreateComponent}],
-  AccountHeadEditRoutePath: [{path: '', component: AccountHeadEditComponent}],
+  AccountHeadCreateRoutePath: [{path: '', component: AccountHeadCreateComponent, resolve: {
+    accountTypeDDL: AccountHeadResolverService
+  }}],
+  AccountHeadEditRoutePath: [{path: '', component: AccountHeadEditComponent, resolve: {
+    accountTypeDDL: AccountHeadResolverService
+  }}],
 };

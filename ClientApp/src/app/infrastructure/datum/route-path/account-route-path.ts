@@ -1,5 +1,5 @@
 export const AccountRoutePath = {
-  path: "Account",
+  path: "account",
   data: { breadcrumb: "Account" },
   children: [
     {

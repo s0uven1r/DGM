@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { AccountTypeDDL } from 'src/app/infrastructure/model/UserManagement/resource/account/account-type-model';
@@ -14,16 +14,18 @@ import { AccountService } from '../../service/account.service';
 })
 export class AccountTypeEditComponent implements OnInit {
   editForm: FormGroup;
-  accountTypeDDL: AccountTypeDDL[];
+  accountTypeDDL: AccountTypeDDL[] = [];
   constructor(
     private route: ActivatedRoute,
     private accountService: AccountService,
-    private form: FormBuilder
+    private form: FormBuilder,
+    private router: Router,
   ) {
     this.FormDesign();
   }
 
   ngOnInit(): void {
+    this.accountTypeDDL = this.route.snapshot.data.accountTypeDDL;
     this.getInitData();
   }
 
@@ -56,7 +58,11 @@ export class AccountTypeEditComponent implements OnInit {
             () => {
               this.editForm.reset();
               this.editForm.clearValidators();
-              Swal.fire("Added!", "User Action", "success");
+              Swal.fire("Updated!", "User Action", "success");
+              const url = this.router.serializeUrl(
+                this.router.createUrlTree([`/dashboard/account/accounttype`])
+              );
+              window.open(url, "_self");
             },
             () => console.log("HTTP request completed.")
           );
@@ -65,9 +71,6 @@ export class AccountTypeEditComponent implements OnInit {
   }
 
   getInitData() {
-    this.accountService.getAccountTypeDDL().subscribe((x) => {
-      this.accountTypeDDL = x;
-    });
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.accountService
