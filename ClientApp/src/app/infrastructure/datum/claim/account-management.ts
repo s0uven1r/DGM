@@ -1,10 +1,10 @@
 export const AccountControllersClaim = {
     AccountType: {
-      View: "Claim.Account.AccountType.Read",
-      Write: "Claim.Account.AccountType.Write",
+      View: "Claim.Accounting.AccountingType.Read",
+      Write: "Claim.Accounting.AccountingType.Write",
     },
     AccountHead: {
-      View: "Claim.Account.AccountHead.Read",
-      Write: "Claim.Account.AccountHead.Write",
+      View: "Claim.Accounting.AccountingHead.Read",
+      Write: "Claim.Accounting.AccountingHead.Write",
     }
   };

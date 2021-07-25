@@ -6,7 +6,6 @@ import {
   RoutingComponent,
   AccountTypeRoutingModule,
 } from "./account-type-routing.module";
-import { ReactiveFormsModule } from "@angular/forms";
 import { AccountService } from "../service/account.service";
 import { DataTablesModule } from "angular-datatables";
 
@@ -14,7 +13,6 @@ import { DataTablesModule } from "angular-datatables";
   declarations: RoutingComponent,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     AccountTypeRoutingModule,
     CheckDirectiveModule,
     DataTablesModule,

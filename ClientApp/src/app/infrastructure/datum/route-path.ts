@@ -4,14 +4,14 @@ import { ForbiddenComponent } from 'src/app/core/forbidden/forbidden.component';
 import { HomeComponent } from 'src/app/core/home/home.component';
 import { InternalServerErrorComponent } from 'src/app/core/internal-server-error/internal-server-error.component';
 import { UndefinedPageComponent } from 'src/app/core/undefined-page/undefined-page.component';
+import { AccountRoutePath } from './route-path/account-route-path';
 import { AccountHeadCreateComponent } from 'src/app/featured/account/account-head/account-head-create/account-head-create.component';
 import { AccountHeadEditComponent } from 'src/app/featured/account/account-head/account-head-edit/account-head-edit.component';
 import { AccountHeadComponent } from 'src/app/featured/account/account-head/account-head.component';
 import { AccountTypeCreateComponent } from 'src/app/featured/account/account-type/account-type-create/account-type-create.component';
 import { AccountTypeEditComponent } from 'src/app/featured/account/account-type/account-type-edit/account-type-edit.component';
 import { AccountTypeComponent } from 'src/app/featured/account/account-type/account-type.component';
-import { AuthCallbackComponent } from 'src/app/featured/auth-callback/auth-callback.component';
-import { CounterComponent } from 'src/app/featured/counter/counter.component';
+import { AuthCallbackComponent } from 'src/app/core/auth-callback/auth-callback.component';
 import { PermissionComponent } from 'src/app/featured/identity/permission/permission.component';
 import { RoleComponent } from 'src/app/featured/identity/role/role.component';
 import { RoleResolverService } from 'src/app/featured/identity/role/service/resolver/role-resolver.service';
@@ -23,7 +23,6 @@ import { VehicleRegisterComponent } from 'src/app/featured/vehicle/register/regi
 import { VehicleCreateComponent } from 'src/app/featured/vehicle/register/vehicle-create/vehicle-create.component';
 import { VehicleUpdateComponent } from 'src/app/featured/vehicle/register/vehicle-update/vehicle-update.component';
 import { VehicleResolverService } from 'src/app/featured/vehicle/service/vehicle-resolver.service';
-import { AccountRoutePath } from './route-path/account-route-path';
 import { PermissionRoutePath } from './route-path/permission';
 import { RoleRoutePath } from './route-path/role';
 import { UserRoutePath } from './route-path/user';
@@ -46,8 +45,8 @@ export const RoutePath = {
                       children: [RoleRoutePath,
                         PermissionRoutePath,
                         UserRoutePath,
+                        AccountRoutePath,
                         VehicleRoutePath,
-                        AccountRoutePath
                       ],
                       canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: 'auth-callback', component: AuthCallbackComponent, canActivate: [AuthGuard]}],

@@ -140,7 +140,7 @@ namespace Dgm.Common.Authorization.Claim
                     FaClass= "money-check-edit-alt",
                     ParentId = null,
                     Rank = 3,
-                    RouteUrl = "accounting",
+                    RouteUrl = "account",
                     ClaimModule = PermissionModuleConstant.Accounting,
                     ClaimTitle = "View Acconting"
                 },
@@ -155,7 +155,7 @@ namespace Dgm.Common.Authorization.Claim
                      FaClass= "",
                      ParentId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e41",
                      Rank = 1,
-                     RouteUrl = "accounting/accountingtype",
+                     RouteUrl = "account/accounttype",
                      ClaimModule = PermissionModuleConstant.Accounting,
                      ClaimTitle = "View Accounting Type"
                 },
@@ -170,7 +170,7 @@ namespace Dgm.Common.Authorization.Claim
                      FaClass= "",
                      ParentId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e41",
                      Rank = 2,
-                     RouteUrl = "accounting/accountinghead",
+                     RouteUrl = "account/accounthead",
                      ClaimModule = PermissionModuleConstant.Accounting,
                      ClaimTitle = "View Accounting Head"
                 },
