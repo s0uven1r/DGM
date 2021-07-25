@@ -91,7 +91,7 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Vehicle,
                      ClaimTitle = "View Vehicle Management"
                  },
-                  new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72801",
+                 new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72801",
                      ClaimValue = VehicleClaimConstant.ViewRegistration,
                      MenuId = "a17d4044-8dad-4058-9488-841d3332d271",
                      Alias = VehicleMenuConstant.Registration.Value,
@@ -104,7 +104,7 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Vehicle,
                      ClaimTitle = "View Vehicle Registration"
                  },
-                   new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72802",
+                 new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72802",
                      ClaimValue = VehicleClaimConstant.ViewMaintenance,
                      MenuId = "a17d4044-8dad-4058-9488-841d3332d272",
                      Alias = VehicleMenuConstant.Maintenance.Value,
@@ -117,15 +117,73 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Vehicle,
                      ClaimTitle = "View Vehicle Maintenance"
                  },
-                   new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72803",
+                 new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72803",
                      ClaimValue = VehicleClaimConstant.WriteRegistration,
                      ClaimModule = PermissionModuleConstant.Vehicle,
                      ClaimTitle = "Write Vehicle Registration"
                  },
-                new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72804",
+                 new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72804",
                      ClaimValue = VehicleClaimConstant.WriteMaintenance,
                      ClaimModule = PermissionModuleConstant.Vehicle,
                      ClaimTitle = "Write Vehicle Maintenance"
+                 },
+                #endregion
+
+                #region Accounting
+                new SeedClaimViewModel{
+                    Id ="8e5b2b58-a2c1-4a9e-92ee-6037f476cb3d",
+                    ClaimValue = AccountingClaimConstant.ViewAccounting,
+                    MenuId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e41",
+                    Alias = AccountMenuConstant.Accounting.Value,
+                    Title = AccountMenuConstant.Accounting.Key,
+                    Class= "text-primary",
+                    FaClass= "money-check-edit-alt",
+                    ParentId = null,
+                    Rank = 3,
+                    RouteUrl = "accounting",
+                    ClaimModule = PermissionModuleConstant.Accounting,
+                    ClaimTitle = "View Acconting"
+                },
+                new SeedClaimViewModel
+                {
+                     Id ="8e5b2b58-a2c1-4a9e-92ee-6037f476cb4e",
+                     ClaimValue = AccountingClaimConstant.ViewAccountingType,
+                     MenuId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e42",
+                     Title = AccountMenuConstant.AccountType.Key,
+                     Alias = AccountMenuConstant.AccountType.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e41",
+                     Rank = 1,
+                     RouteUrl = "accounting/accountingtype",
+                     ClaimModule = PermissionModuleConstant.Accounting,
+                     ClaimTitle = "View Accounting Type"
+                },
+                new SeedClaimViewModel
+                {
+                     Id ="8e5b2b58-a2c1-4a9e-92ee-6037f476cb5f",
+                     ClaimValue = AccountingClaimConstant.ViewAccountingHead,
+                     MenuId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e43",
+                     Title = AccountMenuConstant.AccountHead.Key,
+                     Alias = AccountMenuConstant.AccountHead.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e41",
+                     Rank = 2,
+                     RouteUrl = "accounting/accountinghead",
+                     ClaimModule = PermissionModuleConstant.Accounting,
+                     ClaimTitle = "View Accounting Head"
+                },
+                new SeedClaimViewModel { 
+                     Id = "8e5b2b58-a2c1-4a9e-92ee-6037f476cb6g",
+                     ClaimValue = AccountingClaimConstant.WriteAccountingType,
+                     ClaimModule = PermissionModuleConstant.Accounting,
+                     ClaimTitle = "Write Accounting Type"
+                 },
+                new SeedClaimViewModel { Id = "8e5b2b58-a2c1-4a9e-92ee-6037f476cb7h",
+                     ClaimValue = AccountingClaimConstant.WriteAccountingHead,
+                     ClaimModule = PermissionModuleConstant.Accounting,
+                     ClaimTitle = "Write Accounting Head"
                  },
                 #endregion
             };
