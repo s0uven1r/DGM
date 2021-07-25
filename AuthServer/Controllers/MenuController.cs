@@ -37,7 +37,7 @@ namespace AuthServer.Controllers
                 menuControl = _appIdentityDbContext.MenuControl.Include(x => x.Children.Where(i => permissionList.Any(a => a == i.ClaimId)))
                        .Where(x => x.ParentId == null && permissionList.Any(a => a == x.ClaimId)).AsQueryable();
             }
-            var menu = await menuControl.ToListAsync();
+            var menu = await menuControl.OrderBy(x => x.Rank).ToListAsync();
             return Ok(menu);
         }
     }
