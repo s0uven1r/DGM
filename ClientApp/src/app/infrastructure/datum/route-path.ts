@@ -32,7 +32,7 @@ import { AccountHeadResolverService } from 'src/app/featured/account/service/acc
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
-      {path:'', loadChildren: () =>import('src/app/core/auth-callback/auth-callback.module').then(
+      {path:'auth-callback', loadChildren: () =>import('src/app/core/auth-callback/auth-callback.module').then(
         (m) => m.AuthCallbackModule
       )},
       {path:'', loadChildren: () =>import('src/app/core/dashboard/dashboard.module').then(
@@ -43,7 +43,7 @@ export const RoutePath = {
       { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
     ],
 
-  DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent, 
+  DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent,
                       children: [RoleRoutePath,
                         PermissionRoutePath,
                         UserRoutePath,
@@ -51,7 +51,7 @@ export const RoutePath = {
                         VehicleRoutePath,
                       ],
                       canActivate: [AuthGuard] }],
-  AuthCallbackRoutePath:[{path: 'auth-callback', component: AuthCallbackComponent, canActivate: [AuthGuard]}],
+  AuthCallbackRoutePath:[{path: '', component: AuthCallbackComponent}],
   RoleRoutePath:[{path: '', component: RoleComponent}],
   PermissionRoutePath:[{path: '', component: PermissionComponent}],
   UserRoutePath: [{path: '', component: UserComponent}],
