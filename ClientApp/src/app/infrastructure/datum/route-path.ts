@@ -31,10 +31,7 @@ import { VehicleRoutePath } from './route-path/vehicle-route-path';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
-      {path:'',  loadChildren: () =>import('src/app/featured/counter/counter.module').then(
-        (m) => m.CounterModule
-      )},
-      {path:'', loadChildren: () =>import('src/app/featured/auth-callback/auth-callback.module').then(
+      {path:'', loadChildren: () =>import('src/app/core/auth-callback/auth-callback.module').then(
         (m) => m.AuthCallbackModule
       )},
       {path:'', loadChildren: () =>import('src/app/core/dashboard/dashboard.module').then(
@@ -45,7 +42,6 @@ export const RoutePath = {
       { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
     ],
 
-  CounterRoutePath:[{path: 'counter', component: CounterComponent}],
   DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent, 
                       children: [RoleRoutePath,
                         PermissionRoutePath,

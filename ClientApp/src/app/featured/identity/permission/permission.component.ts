@@ -19,7 +19,6 @@ export class PermissionComponent implements OnInit {
   private sub: any;
   permissionData!: any [];
   permissionForm: FormGroup;
-  claims: FormArray;
   subscription: Subscription = new Subscription();
   permissionCreateClaim = [IdentityControllersClaim.Permission.WritePermission];
   constructor(private route: ActivatedRoute,
@@ -39,24 +38,41 @@ export class PermissionComponent implements OnInit {
   FormDesign() {
     return (this.permissionForm = this.form.group({
       roleId: [null,  [Validators.required]],
-      claims: this.form.array([])
+      modules: this.form.array([])
     }));
   }
-  createItem(id: string, hasClaim: boolean = false, title: string): FormGroup {
-    return this.form.group({
-      id: [id, [Validators.required]],
-      hasChecked: [hasClaim],
-      title: [title]
+  createItem( title: string, permissionList: any,): FormGroup {
+    var moduleForm =  this.form.group({
+      title: [title],
+      claims: this.form.array([])
     });
+    return moduleForm;
   }
-  addItem(permissionList: any): void {
-    permissionList.forEach((element: { permissionList: any[]; }) => {
-      element.permissionList.forEach((item: { claimId: string; hasClaim: boolean; claimTitle: string; }) => {
-          this.claims = this.form.array([]);
-          this.claims = this.permissionForm.get('claims') as FormArray;
-          this.claims.push(this.createItem(item.claimId, item.hasClaim, item.claimTitle));
-      });
+
+  addClaim(permission: any, moduleIndex: number): void {
+    let fg = this.form.group({
+      id: [permission['claimId'], [Validators.required]],
+      hasChecked: [permission['hasClaim']],
+      title: [permission['claimTitle']]
     });
+
+    (<FormArray>(<FormGroup>(<FormArray>this.permissionForm.controls['modules'])
+        .controls[moduleIndex]).controls['claims']).push(fg);
+
+  }
+
+  addClaimModule(permissionList: any): void {
+    permissionList.forEach((item: { module: string; permissionList: any }) => {
+          var moduleForm =  this.form.group({
+            title: [item.module],
+            claims: this.form.array([])
+          });
+          (<FormArray>this.permissionForm.get('modules')).push(moduleForm);
+          let moduleIndex = (<FormArray>this.permissionForm.get('modules')).length - 1;
+            item.permissionList.forEach((claim: any) => {
+                this.addClaim(claim, moduleIndex);
+            });
+      });
   }
 
   onSubmit(){
@@ -86,7 +102,7 @@ export class PermissionComponent implements OnInit {
   }
   getInitData(){
     this.permissionData = [];
-    let frmArray = this.permissionForm.get('claims') as FormArray;
+    let frmArray = this.permissionForm.get('modules') as FormArray;
     frmArray.clear();
     this.sub = this.route.params.subscribe(params => {
       this.id = params['roleId']; 
@@ -94,7 +110,7 @@ export class PermissionComponent implements OnInit {
    });
    this.subscription.add(this.permissionService.getPermission(this.id).subscribe(x => {
      this.permissionData = x;
-     this.addItem(x['rolePermissionGroup']);
+     this.addClaimModule(x['rolePermissionGroup']);
      this.changeDetectorRef.markForCheck();
    }));
   }

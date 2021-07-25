@@ -11,13 +11,19 @@ export class PermissionService {
     private getPermissionUrl =   ApiGateway.identity.permission.base  + ApiGateway.identity.permission.getPermission;
     private postPermissionUrl = ApiGateway.identity.permission.base  + ApiGateway.identity.permission.managePermission;
     private checkPermissionUrl = ApiGateway.identity.permission.base  + ApiGateway.identity.permission.checkPermission;
+    private claimsData:any [] = [];
     constructor(private http: HttpClient) { }
     getPermission(id: string): Observable<any>{
       return this.http.get<any>(`${this.baseUrl+ this.getPermissionUrl}/${id}`);
     }
     assignPermission(val: any):Observable<any>{
-      var claimsData = val.claims.filter((x: { hasChecked: any; }) => x.hasChecked);
-      return this.http.post<any>(`${this.baseUrl+ this.postPermissionUrl}`, {roleId: val.roleId, claimList: claimsData});
+      val.modules.forEach(element => {
+        var claims = element.claims.filter((x: { hasChecked: any; }) => x.hasChecked);
+        claims.forEach(data => {
+          this.claimsData.push(data);
+        });
+      });
+      return this.http.post<any>(`${this.baseUrl+ this.postPermissionUrl}`, {roleId: val.roleId, claimList: this.claimsData});
     }
     checkPermission(claim: string[]):Observable<any>{
       return this.http.post<any>(`${this.baseUrl+ this.checkPermissionUrl}`, claim);
