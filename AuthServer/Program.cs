@@ -53,7 +53,7 @@ namespace AuthServer
                     await AppIdentityDbContextSeed.SeedDefaultConfiguration(identityContext);
                     await SeedRolePermission.SeedRolewisePermission(roleManager, identityContext);
                     await SeedUsers.SeedDefaultUsersAsync(userManager);
-                
+
                 }
                 catch (Exception ex)
                 {
@@ -83,6 +83,7 @@ namespace AuthServer
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls(new string[] { "https://*:44316" });
                 });
     }
 }

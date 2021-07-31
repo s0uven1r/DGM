@@ -21,7 +21,7 @@ namespace AuthServer.Controllers
 
         public IActionResult Index()
         {
-            if (_environment.IsDevelopment())
+            if (true) //_environment.IsDevelopment())
             {
                 // only show in development
                 return View();

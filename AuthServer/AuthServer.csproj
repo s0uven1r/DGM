@@ -4,6 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>AuthServer</RootNamespace>
     <AssemblyName>AuthServer</AssemblyName>
+    <UserSecretsId>7e964bf0-ef75-421b-8863-8b9f0dbf621b</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +25,7 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
     <PackageReference Include="MailKit" Version="2.13.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
     <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.1" />

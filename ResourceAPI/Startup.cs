@@ -28,6 +28,8 @@ namespace ResourceAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //string IdentityAuthority = "https://localhost:5004"; 
+            string IdentityAuthority = "https://localhost:44316";
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -37,7 +39,7 @@ namespace ResourceAPI
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
             {
-                o.Authority = "https://localhost:44316";
+                o.Authority = IdentityAuthority;
                 o.Audience = "resourceapi";
                 o.RequireHttpsMetadata = false; //research
             });
@@ -61,8 +63,8 @@ namespace ResourceAPI
                     {
                         Implicit = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri("https://localhost:44316/connect/authorize"),
-                            TokenUrl = new Uri("https://localhost:44316/connect/token"),
+                            AuthorizationUrl = new Uri($"{IdentityAuthority}/connect/authorize"),
+                            TokenUrl = new Uri($"{IdentityAuthority}/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
                                 {"api.read", "api.read"},
@@ -80,15 +82,16 @@ namespace ResourceAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ResourceAPI v1");
-                    c.OAuthClientId("demo_api_swagger");
-                    c.OAuthAppName("Demo API - Swagger");
-                    c.OAuthUsePkce();
-                });
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ResourceAPI v1");
+                c.OAuthClientId("demo_api_swagger");
+                c.OAuthAppName("Demo API - Swagger");
+                c.OAuthUsePkce();
+            });
 
             app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 

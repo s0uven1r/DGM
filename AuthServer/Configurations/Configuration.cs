@@ -41,6 +41,8 @@ namespace AuthServer.Configurations
 
         public static IEnumerable<Client> GetClients()
         {
+            //string clientUri = "https://localhost:5006"; 
+            string clientUri = "https://localhost:44337";
             return new[]
             {
                 new Client {
@@ -77,8 +79,8 @@ namespace AuthServer.Configurations
                     RequireClientSecret = false,
                     AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600,
-                    RedirectUris = {"https://localhost:44337/swagger/oauth2-redirect.html"},
-                    AllowedCorsOrigins = {"https://localhost:44337"},
+                    RedirectUris = {$"{clientUri}/swagger/oauth2-redirect.html"},
+                    AllowedCorsOrigins = {clientUri},
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
