@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Resource.Application.Service.Abstract;
 using Resource.Infrastructure.Service.Implementation;
 
-namespace Resource.Infrastructure.Extention.DependencyInjection
+namespace Resource.Infrastructure
 {
     public static class DependencyInjectionExtention
     {
