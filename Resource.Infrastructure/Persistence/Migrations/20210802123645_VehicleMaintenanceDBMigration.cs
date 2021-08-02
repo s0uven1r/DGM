@@ -1,15 +1,34 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Resource.Domain.Migrations
+namespace Resource.Infrastructure.Persistence.Migrations
 {
     public partial class VehicleMaintenanceDBMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Price",
-                table: "VehicleDetails");
+            migrationBuilder.CreateTable(
+                name: "VehicleDetails",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChasisNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EngineNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubModel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Capacity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ManufacturedYear = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VehicleDetails", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "VehicleMaintenaceDetails",
@@ -47,12 +66,8 @@ namespace Resource.Domain.Migrations
             migrationBuilder.DropTable(
                 name: "VehicleMaintenaceDetails");
 
-            migrationBuilder.AddColumn<decimal>(
-                name: "Price",
-                table: "VehicleDetails",
-                type: "decimal(18,2)",
-                nullable: false,
-                defaultValue: 0m);
+            migrationBuilder.DropTable(
+                name: "VehicleDetails");
         }
     }
 }

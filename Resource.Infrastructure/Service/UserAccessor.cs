@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Resource.Application.Service.Abstract;
+using Resource.Application.Common.Interfaces;
 using System;
 
-namespace Resource.Infrastructure.Service.Implementation
+namespace Resource.Infrastructure.Service
 {
     public class UserAccessor : IUserAccessor
     {
@@ -12,6 +12,6 @@ namespace Resource.Infrastructure.Service.Implementation
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
-        public string GetCurrentUserId() => _httpContextAccessor.HttpContext.User.FindFirst("UserId")?.Value;
+        public string UserId => _httpContextAccessor.HttpContext.User.FindFirst("UserId")?.Value;
     }
 }
