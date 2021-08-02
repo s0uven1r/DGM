@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Resource.Domain.Migrations
+namespace Resource.Infrastructure.Persistence.Migrations
 {
-    public partial class AccountDBMigration : Migration
+    public partial class AccountTypeandHeadMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

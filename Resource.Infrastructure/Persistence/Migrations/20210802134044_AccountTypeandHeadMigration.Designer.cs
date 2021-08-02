@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Resource.Domain.Persistence;
+using Resource.Infrastructure.Persistence;
 
-namespace Resource.Domain.Migrations
+namespace Resource.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210723074000_AccountDBMigration")]
-    partial class AccountDBMigration
+    [Migration("20210802134044_AccountTypeandHeadMigration")]
+    partial class AccountTypeandHeadMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

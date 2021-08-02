@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using Resource.Application.Common.Interfaces;
 using Resource.Domain.Entities;
+using Resource.Domain.Entities.Account;
 using Resource.Domain.Entities.VehicleInventory;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,9 @@ namespace Resource.Infrastructure.Persistence
 
         public DbSet<VehicleDetail> VehicleDetails { get; set; }
         public DbSet<VehicleMaintenanceDetail> VehicleMaintenaceDetails { get; set; }
+        
+        public DbSet<AccountType> AccountTypes { get; set; }
+        public DbSet<AccountHead> AccountHeads { get; set; }
 
     }
 }
