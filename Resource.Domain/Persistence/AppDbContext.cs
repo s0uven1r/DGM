@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Resource.Domain.Entities.Account;
 using Resource.Domain.Entities.VehicleInventory;
 
 namespace Resource.Domain.Persistence
@@ -22,9 +23,15 @@ namespace Resource.Domain.Persistence
             builder.Entity<VehicleMaintenanceDetail>().HasOne(x => x.Vehicle)
             .WithMany(y => y.VehicleMaintenance)
             .HasForeignKey(a => a.VehicleId);
+
+            builder.Entity<AccountHead>().HasOne(x => x.AccountType)
+            .WithMany(y => y.AccountHeads)
+            .HasForeignKey(a => a.AccountTypeId);
         }
 
         public DbSet<VehicleDetail> VehicleDetails { get; set; }
         public DbSet<VehicleMaintenanceDetail> VehicleMaintenaceDetails { get; set; }
+        public DbSet<AccountType> AccountTypes { get; set; }
+        public DbSet<AccountHead> AccountHeads { get; set; }
     }
 }

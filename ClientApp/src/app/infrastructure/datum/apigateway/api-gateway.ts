@@ -42,6 +42,23 @@ export const ApiGateway = {
                 base: 'VehicleMaintenance',
                 create: '/Create',
             }
+        },
+        account: {
+            accounttype: {
+                base: 'AccountType',
+                getAll: '/Get/GetAll',
+                getSingleById: '/Get/GetById',
+                getAccountTypeDDL: '/Get/GetAccountTypeEnumDDL',
+                create: '/Create',
+                update: '/Update',
+            },
+            accounthead:{
+                base: 'AccountHead',
+                getAll: '/Get/GetAll',
+                getSingleById: '/Get/GetById',
+                create: '/Create',
+                update: '/Update',
+            }
         }
     }
 }
