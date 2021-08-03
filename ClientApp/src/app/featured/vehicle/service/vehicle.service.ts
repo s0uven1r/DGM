@@ -72,14 +72,18 @@ export class VehicleService {
       .put<any>(`${this.baseUrl + this.getMaintenanceUrl}/${value.id}`, {
         TypeId: value.maintenanceType,
         VehicleId: value.vehicleId,
-        Remark: value.remarks
+        Remark: value.remarks,
+        RegisterDateNP: value.registerDateNP.day+'/'+value.registerDateNP.month+'/'+value.registerDateNP.year,
+        RegisterDateEN: value.registerDateEN
       });
     }
     return this.http
     .post<any>(`${this.baseUrl + this.createMaintenanceUrl}`, {
       TypeId: value.maintenanceType,
       VehicleId: value.vehicleId,
-      Remark: value.remarks
+      Remark: value.remarks,
+      registerDateNP: value.registerDateNP.day+'/'+value.registerDateNP.month+'/'+value.registerDateNP.year,
+      registerDateEN: value.registerDateEN
     });
   }
   deleteVehicleMaintenanceDetailById(id: string): Observable<any>{
