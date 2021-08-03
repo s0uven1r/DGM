@@ -57,6 +57,9 @@ namespace Resource.Application.Command.VehicleInventory
                         CreatedBy = userId,
                         Capacity = request.Capacity,
                         ManufacturedYear = request.ManufacturedYear,
+                        Manufacturer = request.Manufacturer,
+                        RegisterDateEN = request.RegisterDateEN,
+                        RegisterDateNP = request.RegisterDateNP,
                     };
 
                     await _context.VehicleDetails.AddAsync(vehicle);

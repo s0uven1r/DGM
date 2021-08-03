@@ -38,7 +38,7 @@ namespace ResourceAPI.Controllers.VehicleInventory
         /// <returns></returns>
         //[Permission(Permission.)]
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateVehicle(AddVehicleDetail.AddVehicleDetailCommand command)
+        public async Task<IActionResult> CreateVehicle([FromBody] AddVehicleDetail.AddVehicleDetailCommand command)
         {
             return Ok(await Mediator.Send(command));
         }

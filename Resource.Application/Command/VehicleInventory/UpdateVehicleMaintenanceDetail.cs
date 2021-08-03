@@ -50,7 +50,8 @@ namespace Resource.Application.Command.VehicleInventory
                     existing.VehicleId = request.VehicleId;
                     existing.TypeId = request.TypeId;
                     existing.Remark = request.Remark;
-                   
+                    existing.RegisterDateNP = request.RegisterDateNP;
+                    existing.RegisterDateEN = request.RegisterDateEN;
                     existing.UpdatedBy = userId;
                     existing.UpdatedDate = DateTime.UtcNow;
                    

@@ -13,6 +13,8 @@ namespace Resource.Application.Models.VehicleInventory.Request
         public string VehicleId { get; set; }
         public string Remark { get; set; }
         public string TypeId { get; set; }
+        public string RegisterDateNP { get; set; }
+        public string RegisterDateEN { get; set; }
 
     }
 }

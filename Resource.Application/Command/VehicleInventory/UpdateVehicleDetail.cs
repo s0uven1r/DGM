@@ -59,7 +59,9 @@ namespace Resource.Application.Command.VehicleInventory
                     existing.UpdatedDate = DateTime.UtcNow;
                     existing.Capacity = request.Capacity;
                     existing.ManufacturedYear = request.ManufacturedYear;
-
+                    existing.Manufacturer = request.Manufacturer;
+                    existing.RegisterDateNP = request.RegisterDateNP;
+                    existing.RegisterDateEN = request.RegisterDateEN;
                     _context.VehicleDetails.Update(existing);
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();

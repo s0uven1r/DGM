@@ -41,7 +41,10 @@ export class VehicleService {
       model :value.model,
       subModel :value.subModel,
       capacity :value.capacity,
-      manufacturedYear :value.manufacturedYear
+      manufacturedYear :value.manufacturedYear,
+      manufacturer: value.manufacturer,
+      registerDateNP: value.registerDateNP.day+'/'+value.registerDateNP.month+'/'+value.registerDateNP.year,
+      registerDateEN: value.registerDateEN
     });
   }
   updateVehicleInventory(value: any){
@@ -53,7 +56,10 @@ export class VehicleService {
       model :value.model,
       subModel :value.subModel,
       capacity :value.capacity,
-      manufacturedYear :value.manufacturedYear
+      manufacturedYear :value.manufacturedYear,
+      manufacturer: value.manufacturer,
+      registerDateNP: value.registerDateNP.day+'/'+value.registerDateNP.month+'/'+value.registerDateNP.year,
+      registerDateEN: value.registerDateEN
     });
   }
   deleteVehicleDetailById(id: string): Observable<any>{
