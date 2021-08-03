@@ -1,14 +1,8 @@
-﻿using Dgm.Common.Error;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
+using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.VehicleInventory.Request;
-using Resource.Application.Service.Abstract;
 using Resource.Domain.Entities.VehicleInventory;
-using Resource.Domain.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,27 +25,22 @@ namespace Resource.Application.Command.VehicleInventory
 
         public class Handler : IRequestHandler<AddVehicleMaintenanceDetailCommand, Unit>
         {
-            private readonly AppDbContext _context;
-            private readonly IUserAccessor _userAccessor;
-            public Handler(AppDbContext context, IUserAccessor userAccessor)
+            private readonly IAppDbContext _context;
+            public Handler(IAppDbContext context)
             {
                 _context = context;
-                _userAccessor = userAccessor;
             }
             public async Task<Unit> Handle(AddVehicleMaintenanceDetailCommand request, CancellationToken cancellationToken)
             {
-                var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+                var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
-                   
-                    string userId = _userAccessor.GetCurrentUserId();
 
                     VehicleMaintenanceDetail vehicle = new()
                     {
                         TypeId = request.TypeId,
                         VehicleId = request.VehicleId,
-                        Remark = request.Remark,
-                        CreatedBy = userId
+                        Remark = request.Remark
                     };
 
                     await _context.VehicleMaintenaceDetails.AddAsync(vehicle, cancellationToken);
