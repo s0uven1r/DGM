@@ -8,4 +8,9 @@
     <ProjectReference Include="..\Resource.Application\Resource.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\Migrations\" />
+    <Folder Include="Persistence\Seed\" />
+  </ItemGroup>
+
 </Project>

@@ -3,23 +3,85 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Resource.Domain.Persistence;
+using Resource.Infrastructure.Persistence;
 
-namespace Resource.Domain.Migrations
+namespace Resource.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210702113533_VehicleMaintenanceDBMigration")]
-    partial class VehicleMaintenanceDBMigration
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Resource.Domain.Entities.Account.AccountHead", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountTypeId");
+
+                    b.ToTable("AccountHeads");
+                });
+
+            modelBuilder.Entity("Resource.Domain.Entities.Account.AccountType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountTypes");
+                });
 
             modelBuilder.Entity("Resource.Domain.Entities.VehicleInventory.VehicleDetail", b =>
                 {
@@ -103,6 +165,15 @@ namespace Resource.Domain.Migrations
                     b.ToTable("VehicleMaintenaceDetails");
                 });
 
+            modelBuilder.Entity("Resource.Domain.Entities.Account.AccountHead", b =>
+                {
+                    b.HasOne("Resource.Domain.Entities.Account.AccountType", "AccountType")
+                        .WithMany("AccountHeads")
+                        .HasForeignKey("AccountTypeId");
+
+                    b.Navigation("AccountType");
+                });
+
             modelBuilder.Entity("Resource.Domain.Entities.VehicleInventory.VehicleMaintenanceDetail", b =>
                 {
                     b.HasOne("Resource.Domain.Entities.VehicleInventory.VehicleDetail", "Vehicle")
@@ -110,6 +181,11 @@ namespace Resource.Domain.Migrations
                         .HasForeignKey("VehicleId");
 
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("Resource.Domain.Entities.Account.AccountType", b =>
+                {
+                    b.Navigation("AccountHeads");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.VehicleInventory.VehicleDetail", b =>

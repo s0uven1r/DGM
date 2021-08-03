@@ -1,9 +1,8 @@
 ﻿using Dgm.Common.Error;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.VehicleInventory.Response;
-using Resource.Domain.Persistence;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,8 +18,8 @@ namespace Resource.Application.Query.VehicleInventory
 
         public class Handler : IRequestHandler<GetSingleVehicleDetailQuery, VehicleMaintenanceDetailResponseViewModel>
         {
-            private readonly AppDbContext _context;
-            public Handler(AppDbContext context)
+            private readonly IAppDbContext _context;
+            public Handler(IAppDbContext context)
             {
                 _context = context;
             }

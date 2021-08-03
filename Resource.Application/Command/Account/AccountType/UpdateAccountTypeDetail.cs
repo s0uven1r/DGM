@@ -2,9 +2,8 @@
 using Dgm.Common.Error;
 using FluentValidation;
 using MediatR;
+using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.Account.AccountType.Request;
-using Resource.Application.Service.Abstract;
-using Resource.Domain.Persistence;
 using System;
 using System.Linq;
 using System.Threading;
@@ -29,16 +28,15 @@ namespace Resource.Application.Command.Account.AccountType
 
         public class Handler : IRequestHandler<UpdateAccountTypeDetailCommand, Unit>
         {
-            private readonly AppDbContext _context;
-            private readonly IUserAccessor _userAccessor;
-            public Handler(AppDbContext context, IUserAccessor userAccessor)
+            private readonly IAppDbContext _context;
+            
+            public Handler(IAppDbContext context, IUserAccessor userAccessor)
             {
                 _context = context;
-                _userAccessor = userAccessor;
             }
             public async Task<Unit> Handle(UpdateAccountTypeDetailCommand request, CancellationToken cancellationToken)
             {
-                var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+                var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
                     var existing = _context.AccountTypes.Where(q => q.Id == request.Id && !q.IsDeleted).SingleOrDefault();
@@ -47,12 +45,9 @@ namespace Resource.Application.Command.Account.AccountType
                     var checkExisting = _context.AccountTypes.Where(q => q.Id != request.Id && q.Title.ToLower() == request.Title.ToLower() && !q.IsDeleted).FirstOrDefault();
                     if (checkExisting != null) throw new AppException("Account Type with same name already exists!");
                     if (!Enum.IsDefined(typeof(AccountTypeEnum), request.Type)) throw new AppException("Invalid Account Type!");
-                    string userId = _userAccessor.GetCurrentUserId();
 
                     existing.Title = request.Title;
                     existing.Type = request.Type;
-                    existing.UpdatedBy = userId;
-                    existing.UpdatedDate = DateTime.UtcNow;
 
                     _context.AccountTypes.Update(existing);
                     await _context.SaveChangesAsync(cancellationToken);

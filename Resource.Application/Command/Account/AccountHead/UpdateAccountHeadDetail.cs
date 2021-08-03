@@ -1,9 +1,8 @@
 ﻿using Dgm.Common.Error;
 using FluentValidation;
 using MediatR;
+using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.Account.AccountHead.Request;
-using Resource.Application.Service.Abstract;
-using Resource.Domain.Persistence;
 using System;
 using System.Linq;
 using System.Threading;
@@ -29,16 +28,14 @@ namespace Resource.Application.Command.Account.AccountHead
 
         public class Handler : IRequestHandler<UpdateAccountHeadDetailCommand, Unit>
         {
-            private readonly AppDbContext _context;
-            private readonly IUserAccessor _userAccessor;
-            public Handler(AppDbContext context, IUserAccessor userAccessor)
+            private readonly IAppDbContext _context;
+            public Handler(IAppDbContext context)
             {
                 _context = context;
-                _userAccessor = userAccessor;
             }
             public async Task<Unit> Handle(UpdateAccountHeadDetailCommand request, CancellationToken cancellationToken)
             {
-                var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+                var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
                     var existing = _context.AccountHeads.Where(q => q.Id == request.Id && !q.IsDeleted).SingleOrDefault();
@@ -50,21 +47,19 @@ namespace Resource.Application.Command.Account.AccountHead
                     var checkAccTypeValidity = _context.AccountTypes.Where(q => q.Id == request.AccountTypeId && !q.IsDeleted).FirstOrDefault();
                     if (checkAccTypeValidity == null) throw new AppException("Invalid account type!");
 
-                    string userId = _userAccessor.GetCurrentUserId();
 
                     existing.AccountTypeId = request.AccountTypeId;
                     existing.Title = request.Title;
-                    existing.UpdatedBy = userId;
-                    existing.UpdatedDate = DateTime.UtcNow;
 
                     _context.AccountHeads.Update(existing);
-                    await _context.SaveChangesAsync();
-                    await transaction.CommitAsync();
+                    await _context.SaveChangesAsync(cancellationToken);
+                    await transaction.CommitAsync(cancellationToken);
+
                     return Unit.Value;
                 }
                 catch
                 {
-                    await transaction.RollbackAsync();
+                    await transaction.RollbackAsync(cancellationToken);
                     throw;
                 }
             }

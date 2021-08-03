@@ -87,7 +87,7 @@ namespace AuthServer.Configurations
                     },
                 },
 
-                 new Client
+                new Client
                 {
                     ClientId = "js",
                     ClientName = "JavaScript Client",
@@ -105,6 +105,28 @@ namespace AuthServer.Configurations
                         "api.read",
                         IdentityServerConstants.LocalApi.ScopeName
                     }
+                },
+
+                new Client
+                {
+                    ClientId = "flutter",
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+
+                    RedirectUris = { "http://localhost:4040/" },
+                    AllowedCorsOrigins = { "http://localhost:4040" },
+
+                    AllowedScopes = {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "api.read"
+                    },
+
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false
                 }
             };
         }

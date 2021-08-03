@@ -1,8 +1,8 @@
 ﻿using Dgm.Common.Error;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.Account.AccountHead.Response;
-using Resource.Domain.Persistence;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -20,8 +20,8 @@ namespace Resource.Application.Query.Account.AccountHead
 
         public class Handler : IRequestHandler<GetAllAccountHeadQuery, List<AccountHeadResponseViewModel>>
         {
-            private readonly AppDbContext _context;
-            public Handler(AppDbContext context)
+            private readonly IAppDbContext _context;
+            public Handler(IAppDbContext context)
             {
                 _context = context;
             }
