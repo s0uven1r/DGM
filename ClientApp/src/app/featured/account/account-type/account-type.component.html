@@ -17,9 +17,9 @@
           <tr *ngFor="let acc of accountTypeData; let i = index;">
             <td>{{ i + 1 }}</td>
             <td>{{ acc.title }}</td>
-            <td>{{ acc.type }}</td>
+            <td>{{ acc.typeName }}</td>
             <td>
-              <button *appCheckclaim ="accountTypeCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="updateAccountTypeDetail(vehicle.id)" ><em class="fa fa-edit"></em></button>
+              <button *appCheckclaim ="accountTypeCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="updateAccountTypeDetail(acc.id)" ><em class="fa fa-edit"></em></button>
             </td>
           </tr>
         </tbody>
