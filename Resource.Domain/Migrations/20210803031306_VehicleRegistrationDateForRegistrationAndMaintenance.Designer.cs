@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Resource.Domain.Persistence;
 
 namespace Resource.Domain.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(AppContext))]
     [Migration("20210803031306_VehicleRegistrationDateForRegistrationAndMaintenance")]
     partial class VehicleRegistrationDateForRegistrationAndMaintenance
     {
