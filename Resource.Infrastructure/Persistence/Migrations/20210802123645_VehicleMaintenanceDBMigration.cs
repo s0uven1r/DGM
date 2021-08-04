@@ -1,19 +1,24 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Resource.Domain.Migrations
+namespace Resource.Infrastructure.Persistence.Migrations
 {
-    public partial class AccountDBMigration : Migration
+    public partial class VehicleMaintenanceDBMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AccountTypes",
+                name: "VehicleDetails",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<int>(type: "int", nullable: false),
+                    RegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChasisNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EngineNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubModel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Capacity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ManufacturedYear = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -22,16 +27,17 @@ namespace Resource.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountTypes", x => x.Id);
+                    table.PrimaryKey("PK_VehicleDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccountHeads",
+                name: "VehicleMaintenaceDetails",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountTypeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    VehicleId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TypeId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Remark = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -40,28 +46,28 @@ namespace Resource.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountHeads", x => x.Id);
+                    table.PrimaryKey("PK_VehicleMaintenaceDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AccountHeads_AccountTypes_AccountTypeId",
-                        column: x => x.AccountTypeId,
-                        principalTable: "AccountTypes",
+                        name: "FK_VehicleMaintenaceDetails_VehicleDetails_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "VehicleDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccountHeads_AccountTypeId",
-                table: "AccountHeads",
-                column: "AccountTypeId");
+                name: "IX_VehicleMaintenaceDetails_VehicleId",
+                table: "VehicleMaintenaceDetails",
+                column: "VehicleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccountHeads");
+                name: "VehicleMaintenaceDetails");
 
             migrationBuilder.DropTable(
-                name: "AccountTypes");
+                name: "VehicleDetails");
         }
     }
 }

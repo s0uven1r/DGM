@@ -3,14 +3,14 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Resource.Application.Command.VehicleInventory;
-using Resource.Domain.Persistence;
-using Resource.Infrastructure.Extention.DependencyInjection;
+using Resource.Application.Common.Interfaces;
+using Resource.Infrastructure;
+using Resource.Infrastructure.Service;
 using ResourceAPI.Helper.Swagger;
 using System;
 using System.Collections.Generic;
@@ -28,8 +28,8 @@ namespace ResourceAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddApplication();
+            services.AddInfrastructure(Configuration);
 
             services.AddAuthentication(options =>
             {
@@ -72,7 +72,12 @@ namespace ResourceAPI
                 });
                 c.OperationFilter<AuthorizationCheckOperationFilter>();
             });
-            services.RegisterAllDependencies();
+
+            services.AddTransient<IDateTime, DateTimeService>();
+            services.AddSingleton<IUserAccessor, UserAccessor>();
+            services.AddHttpContextAccessor();
+
+           
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
