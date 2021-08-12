@@ -79,8 +79,8 @@ namespace AuthServer.Configurations
                     RequireClientSecret = false,
                     AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600,
-                    RedirectUris = {$"{clientUri}/swagger/oauth2-redirect.html"},
-                    AllowedCorsOrigins = {clientUri},
+                    RedirectUris = {"https://localhost:44337/swagger/oauth2-redirect.html","https://localhost:44316/swagger/oauth2-redirect.html"},
+                    AllowedCorsOrigins = {"https://localhost:44337","https://localhost:44316"},
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
