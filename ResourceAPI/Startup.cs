@@ -76,8 +76,6 @@ namespace ResourceAPI
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddSingleton<IUserAccessor, UserAccessor>();
             services.AddHttpContextAccessor();
-
-           
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
