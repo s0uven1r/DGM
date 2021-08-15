@@ -19,7 +19,7 @@ import { BreadcrumbModule } from 'angular-crumbs';
     AppRoutingModule,
     BreadcrumbModule,
     OAuthModule.forRoot(),
-    
+
   ],
   providers: [ {
 

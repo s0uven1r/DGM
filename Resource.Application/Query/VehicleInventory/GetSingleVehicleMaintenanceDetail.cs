@@ -36,8 +36,10 @@ namespace Resource.Application.Query.VehicleInventory
                                             Type = x.TypeId,
                                             Remark = x.Remark,
                                             Id = x.Id,
-                                            VehicleId = x.VehicleId
-
+                                            VehicleId = x.VehicleId,
+                                             Manufacturer = x.Manufacturer,
+                                            RegisterDateEN = x.RegisterDateEN,
+                                            RegisterDateNP = x.RegisterDateNP,
                                         }).SingleOrDefaultAsync();
                     if (getVehicle == null) throw new AppException("Invalid! Vehicle Detail not found!");
                     return getVehicle;

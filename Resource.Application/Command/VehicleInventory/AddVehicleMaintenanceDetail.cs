@@ -40,7 +40,10 @@ namespace Resource.Application.Command.VehicleInventory
                     {
                         TypeId = request.TypeId,
                         VehicleId = request.VehicleId,
-                        Remark = request.Remark
+                        Remark = request.Remark,
+                        RegisterDateEN = request.RegisterDateEN,
+                        RegisterDateNP = request.RegisterDateNP,
+                        CreatedBy = request.UserId
                     };
 
                     await _context.VehicleMaintenaceDetails.AddAsync(vehicle, cancellationToken);
