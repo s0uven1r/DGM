@@ -43,7 +43,7 @@ namespace Resource.Application.Command.VehicleInventory
                         Remark = request.Remark,
                         RegisterDateEN = request.RegisterDateEN,
                         RegisterDateNP = request.RegisterDateNP,
-                        CreatedBy = userId
+                        CreatedBy = request.UserId
                     };
 
                     await _context.VehicleMaintenaceDetails.AddAsync(vehicle, cancellationToken);

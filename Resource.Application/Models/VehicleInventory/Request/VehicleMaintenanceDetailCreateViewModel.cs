@@ -15,6 +15,7 @@ namespace Resource.Application.Models.VehicleInventory.Request
         public string TypeId { get; set; }
         public string RegisterDateNP { get; set; }
         public string RegisterDateEN { get; set; }
+        public string UserId { get; set; }
 
     }
 }
