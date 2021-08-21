@@ -1,4 +1,4 @@
-﻿using Dgm.Common.Enum;
+﻿using Dgm.Common.Enums;
 using Dgm.Common.Error;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

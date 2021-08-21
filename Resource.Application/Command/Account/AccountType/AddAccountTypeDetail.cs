@@ -1,4 +1,4 @@
-﻿using Dgm.Common.Enum;
+﻿using Dgm.Common.Enums;
 using Dgm.Common.Error;
 using FluentValidation;
 using MediatR;
@@ -29,7 +29,7 @@ namespace Resource.Application.Command.Account.AccountType
         public class Handler : IRequestHandler<AddAccountTypeDetailCommand, Unit>
         {
             private readonly IAppDbContext _context;
-            public Handler(IAppDbContext context, IUserAccessor userAccessor)
+            public Handler(IAppDbContext context)
             {
                 _context = context;
             }

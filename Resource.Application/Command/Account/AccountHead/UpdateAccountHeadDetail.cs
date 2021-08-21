@@ -43,12 +43,7 @@ namespace Resource.Application.Command.Account.AccountHead
 
                     var checkExisting = _context.AccountHeads.Where(q => q.Id != request.Id && q.Title.ToLower() == request.Title.ToLower() && !q.IsDeleted).FirstOrDefault();
                     if (checkExisting != null) throw new AppException("Account Head with same name already exists!");
-
-                    var checkAccTypeValidity = _context.AccountTypes.Where(q => q.Id == request.AccountTypeId && !q.IsDeleted).FirstOrDefault();
-                    if (checkAccTypeValidity == null) throw new AppException("Invalid account type!");
-
-
-                    existing.AccountTypeId = request.AccountTypeId;
+                    
                     existing.Title = request.Title;
 
                     _context.AccountHeads.Update(existing);

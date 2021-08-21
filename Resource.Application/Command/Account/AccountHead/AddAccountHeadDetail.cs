@@ -1,8 +1,10 @@
-﻿using Dgm.Common.Error;
+﻿using Dgm.Common.Enums;
+using Dgm.Common.Error;
 using FluentValidation;
 using MediatR;
 using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.Account.AccountHead.Request;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,9 +30,11 @@ namespace Resource.Application.Command.Account.AccountHead
         public class Handler : IRequestHandler<AddAccountHeadDetailCommand, Unit>
         {
             private readonly IAppDbContext _context;
-            public Handler(IAppDbContext context)
+            private readonly IAccountHeadCountService _accountHeadCountService;
+            public Handler(IAppDbContext context, IAccountHeadCountService accountHeadCountService)
             {
                 _context = context;
+                _accountHeadCountService = accountHeadCountService;
             }
             public async Task<Unit> Handle(AddAccountHeadDetailCommand request, CancellationToken cancellationToken)
             {
@@ -42,12 +46,13 @@ namespace Resource.Application.Command.Account.AccountHead
 
                     var checkAccTypeValidity = _context.AccountTypes.Where(q => q.Id == request.AccountTypeId && !q.IsDeleted).FirstOrDefault();
                     if (checkAccTypeValidity == null) throw new AppException("Invalid account type!");
-
-
+                    var accTypeName = Enum.GetName(typeof(AccountTypeEnum), checkAccTypeValidity.Type);
+                    var accNumber = await _accountHeadCountService.GenerateAccountHeadNumber(accTypeName, checkAccTypeValidity.Type);
                     Domain.Entities.Account.AccountHead accHeads = new()
                     {
                         Title = request.Title,
-                        AccountTypeId = request.AccountTypeId
+                        AccountTypeId = request.AccountTypeId,
+                        AccountNumber = accNumber
                     };
 
                     await _context.AccountHeads.AddAsync(accHeads, cancellationToken);

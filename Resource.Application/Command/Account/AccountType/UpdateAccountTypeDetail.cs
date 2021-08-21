@@ -1,4 +1,4 @@
-﻿using Dgm.Common.Enum;
+﻿using Dgm.Common.Enums;
 using Dgm.Common.Error;
 using FluentValidation;
 using MediatR;
@@ -29,8 +29,8 @@ namespace Resource.Application.Command.Account.AccountType
         public class Handler : IRequestHandler<UpdateAccountTypeDetailCommand, Unit>
         {
             private readonly IAppDbContext _context;
-            
-            public Handler(IAppDbContext context, IUserAccessor userAccessor)
+
+            public Handler(IAppDbContext context)
             {
                 _context = context;
             }
@@ -47,7 +47,6 @@ namespace Resource.Application.Command.Account.AccountType
                     if (!Enum.IsDefined(typeof(AccountTypeEnum), request.Type)) throw new AppException("Invalid Account Type!");
 
                     existing.Title = request.Title;
-                    existing.Type = request.Type;
 
                     _context.AccountTypes.Update(existing);
                     await _context.SaveChangesAsync(cancellationToken);
