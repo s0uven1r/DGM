@@ -34,6 +34,7 @@ export class AccountHeadEditComponent implements OnInit {
       id: [null, Validators.required],
       title: [null, Validators.required],
       accountTypeId: [null, Validators.required],
+      accountNumber :[null, Validators.required]
     }));
   }
 
@@ -78,6 +79,7 @@ export class AccountHeadEditComponent implements OnInit {
             id: x.id,
             title: x.title,
             accountTypeId: x.accountTypeId,
+            accountNumber : x.accountNumber
           });
         });
       }

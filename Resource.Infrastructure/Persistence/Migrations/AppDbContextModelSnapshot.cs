@@ -203,9 +203,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 

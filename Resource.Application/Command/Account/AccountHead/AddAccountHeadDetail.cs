@@ -31,16 +31,19 @@ namespace Resource.Application.Command.Account.AccountHead
         {
             private readonly IAppDbContext _context;
             private readonly IAccountHeadCountService _accountHeadCountService;
-            public Handler(IAppDbContext context, IAccountHeadCountService accountHeadCountService)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(IAppDbContext context, IAccountHeadCountService accountHeadCountService, IUserAccessor userAccessor)
             {
                 _context = context;
                 _accountHeadCountService = accountHeadCountService;
+                _userAccessor = userAccessor;
             }
             public async Task<Unit> Handle(AddAccountHeadDetailCommand request, CancellationToken cancellationToken)
             {
                 var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
+                    var userId = _userAccessor.UserId;
                     var checkExisting = _context.AccountHeads.Where(q => q.Title.ToLower() == request.Title.ToLower() && !q.IsDeleted).FirstOrDefault();
                     if (checkExisting != null) throw new AppException("Account Head with same name already exists!");
 
@@ -52,7 +55,8 @@ namespace Resource.Application.Command.Account.AccountHead
                     {
                         Title = request.Title,
                         AccountTypeId = request.AccountTypeId,
-                        AccountNumber = accNumber
+                        AccountNumber = accNumber,
+                        CreatedBy = userId
                     };
 
                     await _context.AccountHeads.AddAsync(accHeads, cancellationToken);
