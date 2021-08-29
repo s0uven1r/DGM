@@ -10,8 +10,8 @@ using Resource.Infrastructure.Persistence;
 namespace Resource.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210818161407_AddedAccountHeadCountTable")]
-    partial class AddedAccountHeadCountTable
+    [Migration("20210827083650_InitialMigrationForResourceAPI")]
+    partial class InitialMigrationForResourceAPI
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -203,9 +203,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TypeId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")

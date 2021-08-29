@@ -3,4 +3,5 @@ export interface AccountHeadModel {
   title: string;
   accountTypeId: string;
   accountTypeTitle: string;
+  accountNumber: string;
 }
