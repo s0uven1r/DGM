@@ -33,7 +33,7 @@ export class AccountHeadEditComponent implements OnInit {
     return (this.editForm = this.form.group({
       id: [null, Validators.required],
       title: [null, Validators.required],
-      accountTypeId: [null, Validators.required],
+      accountTypeId: ["", Validators.required],
     }));
   }
 
