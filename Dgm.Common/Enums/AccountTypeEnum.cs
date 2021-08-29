@@ -8,9 +8,9 @@ namespace Dgm.Common.Enums
     public enum AccountTypeEnum
     {
         [Description("I")]
-        Credit = 1,
+        Income = 1,
         [Description("E")]
-        Debit = 2,
+        Expense = 2,
     }
 
     public static class AccountTypeEnumConversion

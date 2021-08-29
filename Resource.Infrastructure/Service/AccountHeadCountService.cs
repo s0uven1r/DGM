@@ -39,7 +39,7 @@ namespace Resource.Infrastructure.Service
                 }
                 var alias = AccountTypeEnumConversion.GetDescriptionByValue(enumVal);
                 if (string.IsNullOrEmpty(alias)) throw new AppException("Cannot get alias for Account Number");
-                return $"{alias}{count:D9}";
+                return $"{alias}_{count:D9}";
             }
             catch (DbUpdateConcurrencyException ex)
             {
