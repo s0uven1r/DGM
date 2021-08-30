@@ -13,6 +13,9 @@ namespace Resource.Application.Models.VehicleInventory.Response
         public string Type { get; set; }
         public string Id { get; set; }
         public string VehicleId { get; set; }
+        public string Manufacturer { get; set; }
+        public string RegisterDateNP { get; set; }
+        public string RegisterDateEN { get; set; }
 
     }
 }

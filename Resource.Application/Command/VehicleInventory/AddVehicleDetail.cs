@@ -52,7 +52,10 @@ namespace Resource.Application.Command.VehicleInventory
                         Model = request.Model,
                         SubModel = request.SubModel,
                         Capacity = request.Capacity,
-                        ManufacturedYear = request.ManufacturedYear
+                        ManufacturedYear = request.ManufacturedYear,
+                        Manufacturer = request.Manufacturer,
+                        RegisterDateEN = request.RegisterDateEN,
+                        RegisterDateNP = request.RegisterDateNP,
                     };
 
                     await _context.VehicleDetails.AddAsync(vehicle, cancellationToken);

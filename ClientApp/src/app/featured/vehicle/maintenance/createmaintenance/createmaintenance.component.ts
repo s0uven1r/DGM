@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import NepaliDate from 'nepali-date-converter';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { VehicleInventoryModel } from 'src/app/infrastructure/model/UserManagement/resource/vehicle/vehicle-inventory-model';
@@ -13,13 +15,14 @@ import { VehicleService } from '../../service/vehicle.service';
   styleUrls: ['./createmaintenance.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreatemaintenanceComponent implements OnInit, OnDestroy {
+export class CreatemaintenanceComponent implements OnInit, OnDestroy, AfterViewInit {
   vehicles: VehicleInventoryModel[] = [];
   MaintenanceForm: FormGroup;
+  @ViewChild('dateVal', { static: true }) dateVal: ElementRef;
   private isEdit: boolean;
   constructor(private vehicleService: VehicleService,
     private changeDetectorRef: ChangeDetectorRef, private route: ActivatedRoute,
-    private form: FormBuilder) { 
+    private form: FormBuilder) {
       this.FormDesign();
 
     }
@@ -35,13 +38,30 @@ export class CreatemaintenanceComponent implements OnInit, OnDestroy {
             'id': params['id'],
             'vehicleId': x.vehicleId,
             'maintenanceType': x.Type == null? "" : x.Type,
-            'remarks': x.remark
-        }); 
+            'remarks': x.remark,
+            registerDateEN: x.registerDateEN
+        });
+        if( x.registerDateNP){
+          var date =  x.registerDateNP.split("/", 3);
+          var y: number = +date[2];
+          var m: number = +date[1] ;
+          var d: number = +date[0];
+          var actualDate = new NepaliDate(y,m,d) ;
+          var npDate = actualDate.format('DD/MM/YYYY', 'np').toString();
+         this.dateVal['formattedDate'] = npDate;
+        }
+        this.changeDetectorRef.markForCheck();
+
         })
       }
-     
+
    });
   }
+  ngAfterViewInit(){
+    var div = (document.getElementsByClassName('datePickerDiv'));
+    div[0].children[0].children[0].className = "";
+    div[0].children[0].children[0].className = "form-control";
+   }
   ngOnDestroy(): void {
   }
 
@@ -51,6 +71,8 @@ export class CreatemaintenanceComponent implements OnInit, OnDestroy {
       vehicleId: [""],
       maintenanceType: [""],
       remarks: [null],
+      registerDateNP: [null],
+      registerDateEN: [null]
     });
   }
   registerMaintenance(){
@@ -78,7 +100,7 @@ export class CreatemaintenanceComponent implements OnInit, OnDestroy {
               this.MaintenanceForm.patchValue({
                 'vehicleId': "",
                 'maintenanceType':  "" ,
-              }); 
+              });
             }
 
             Swal.fire(
@@ -92,5 +114,24 @@ export class CreatemaintenanceComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
+  changeNepaliToEnglish(val: { formattedDate: string; }){
+    var dateValue = val.formattedDate;
+    if(dateValue){
+      var date = dateValue.split("/", 3);
+      var y: number = +date[2];
+      var m: number = +date[1] ;
+      var d: number = +date[0];
+      var actualDate = new NepaliDate(y,m,d) ;
+      var npDate = actualDate.format('DD/MM/YYYY', 'np').toString();
+      val.formattedDate = npDate;
+
+        require('nepali-date-converter');
+        var dateAd = formatDate(actualDate.toJsDate(),"dd/MM/yyyy","en-US");
+        this.MaintenanceForm.patchValue({
+          registerDateEN: dateAd
+        });
+
+
+    }
+  }
 }

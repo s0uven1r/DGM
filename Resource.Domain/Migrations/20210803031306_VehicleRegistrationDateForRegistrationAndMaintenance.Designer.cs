@@ -3,15 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Resource.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Resource.Infrastructure.Persistence.Migrations
+namespace Resource.Domain.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AppContext))]
+    [Migration("20210803031306_VehicleRegistrationDateForRegistrationAndMaintenance")]
+    partial class VehicleRegistrationDateForRegistrationAndMaintenance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,134 +81,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AccountTypes");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Account.ClosingBalance", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("AccountNumber")
-                        .HasColumnType("decimal(15,4)");
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(15,4)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ClosingBalances");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Account.Transaction", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AccountNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(15,4)");
-
-                    b.Property<decimal>("DueAmount")
-                        .HasColumnType("decimal(15,4)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsVehicle")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("NetAmount")
-                        .HasColumnType("decimal(15,4)");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(15,4)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VehicleNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Account.TransactionDetail", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AccountNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("AmountCredit")
-                        .HasColumnType("decimal(15,4)");
-
-                    b.Property<decimal>("AmountDebit")
-                        .HasColumnType("decimal(15,4)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ReferenceAccountNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TransactionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("TransactionDetails");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.VehicleInventory.VehicleDetail", b =>
@@ -320,15 +192,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Navigation("AccountType");
                 });
 
-            modelBuilder.Entity("Resource.Domain.Entities.Account.TransactionDetail", b =>
-                {
-                    b.HasOne("Resource.Domain.Entities.Account.Transaction", "Transaction")
-                        .WithMany("TransactionDetails")
-                        .HasForeignKey("TransactionId");
-
-                    b.Navigation("Transaction");
-                });
-
             modelBuilder.Entity("Resource.Domain.Entities.VehicleInventory.VehicleMaintenanceDetail", b =>
                 {
                     b.HasOne("Resource.Domain.Entities.VehicleInventory.VehicleDetail", "Vehicle")
@@ -341,11 +204,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Resource.Domain.Entities.Account.AccountType", b =>
                 {
                     b.Navigation("AccountHeads");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Account.Transaction", b =>
-                {
-                    b.Navigation("TransactionDetails");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.VehicleInventory.VehicleDetail", b =>

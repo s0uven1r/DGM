@@ -3,6 +3,7 @@ using FluentValidation;
 using MediatR;
 using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.VehicleInventory.Request;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,6 +45,10 @@ namespace Resource.Application.Command.VehicleInventory
                     existing.VehicleId = request.VehicleId;
                     existing.TypeId = request.TypeId;
                     existing.Remark = request.Remark;
+                    existing.RegisterDateNP = request.RegisterDateNP;
+                    existing.RegisterDateEN = request.RegisterDateEN;
+                    existing.UpdatedBy = request.UserId;
+                    existing.UpdatedDate = DateTime.UtcNow;
                    
 
                     _context.VehicleMaintenaceDetails.Update(existing);

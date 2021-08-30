@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CreatemaintenanceRoutingModule, RoutingComponent } from './createmaintenance-routing.module';
 import { VehicleService } from '../../service/vehicle.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NpDatepickerModule } from 'angular-nepali-datepicker';
 
 
 
@@ -12,7 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CreatemaintenanceRoutingModule
+    CreatemaintenanceRoutingModule,
+    NpDatepickerModule
   ],
   providers: [{
     provide: VehicleService,

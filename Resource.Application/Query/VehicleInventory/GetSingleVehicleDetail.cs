@@ -41,6 +41,9 @@ namespace Resource.Application.Query.VehicleInventory
                                             CreatedDate = x.CreatedDate,
                                             Model = x.Model,
                                             SubModel = x.SubModel,
+                                            Manufacturer = x.Manufacturer,
+                                            RegisterDateEN = x.RegisterDateEN,
+                                            RegisterDateNP = x.RegisterDateNP,
                                             UpdatedBy = x.UpdatedBy,
                                             UpdatedDate = x.UpdatedDate
                                         }).SingleOrDefaultAsync();

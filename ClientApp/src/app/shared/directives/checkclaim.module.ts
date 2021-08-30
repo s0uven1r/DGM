@@ -7,7 +7,7 @@ import { CheckclaimDirective } from "./checkclaim.directive";
     declarations: [CheckclaimDirective],
     imports: [
       CommonModule
-    ], 
+    ],
     providers: [{
       provide: PermissionService,
       useClass: PermissionService
