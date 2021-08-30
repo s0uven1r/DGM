@@ -15,6 +15,7 @@ namespace AuthServer.Entities
         public int Rank { get; set; }
 
         public string CreatedBy { get; set; }
+        public int Type { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         public string LastUpdatedBy { get; set; }

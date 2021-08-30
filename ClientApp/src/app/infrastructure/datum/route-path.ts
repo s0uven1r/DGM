@@ -1,3 +1,4 @@
+import { TransactionEntryComponent } from 'src/app/featured/account/transaction-entry/transaction-entry.component';
 import { AuthGuard } from 'src/app/core/authorize/auth-guard';
 import { DashboardComponent } from 'src/app/core/dashboard/dashboard.component';
 import { ForbiddenComponent } from 'src/app/core/forbidden/forbidden.component';
@@ -14,7 +15,7 @@ import { AccountTypeComponent } from 'src/app/featured/account/account-type/acco
 import { AuthCallbackComponent } from 'src/app/core/auth-callback/auth-callback.component';
 import { PermissionComponent } from 'src/app/featured/identity/permission/permission.component';
 import { RoleComponent } from 'src/app/featured/identity/role/role.component';
-import { RoleResolverService } from 'src/app/featured/identity/role/service/resolver/role-resolver.service';
+import { RoleResolverService, RoleTypeResolverService } from 'src/app/featured/identity/role/service/resolver/role-resolver.service';
 import { CreateComponent } from 'src/app/featured/identity/user/create/create.component';
 import { UserComponent } from 'src/app/featured/identity/user/user.component';
 import { CreatemaintenanceComponent } from 'src/app/featured/vehicle/maintenance/createmaintenance/createmaintenance.component';
@@ -52,7 +53,9 @@ export const RoutePath = {
                       ],
                       canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: '', component: AuthCallbackComponent}],
-  RoleRoutePath:[{path: '', component: RoleComponent}],
+  RoleRoutePath:[{path: '', component: RoleComponent, resolve: {
+    roleTypeDDL: RoleTypeResolverService
+  }}],
   PermissionRoutePath:[{path: '', component: PermissionComponent}],
   UserRoutePath: [{path: '', component: UserComponent}],
   UserCreateRoutePath: [{path: '', component: CreateComponent,resolve: {
@@ -79,4 +82,5 @@ export const RoutePath = {
   AccountHeadEditRoutePath: [{path: '', component: AccountHeadEditComponent, resolve: {
     accountTypeDDL: AccountHeadResolverService
   }}],
+  AccountTransactionEntryRoutePath: [{path: '', component: TransactionEntryComponent}],
 };

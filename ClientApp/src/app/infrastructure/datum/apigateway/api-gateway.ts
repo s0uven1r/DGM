@@ -7,7 +7,8 @@ export const ApiGateway = {
             putRole: '/UpdateRole',
             setPublic: '/SetPublic',
             removePublic: '/RemovePublic',
-            deleteRole: '/DeleteRole'
+            deleteRole: '/DeleteRole',
+            getRoleTypeDDL: '/Get/GetRoleTypeEnumDDL'
         },
         menu: {
             base: 'Menu',

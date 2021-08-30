@@ -60,5 +60,18 @@ export const AccountRoutePath = {
         },
       ],
     },
+    {
+      path: "transactionentry",
+      data: { breadcrumb: "Transaction Entry" },
+      children: [
+        {
+          path: "",
+          loadChildren: () =>
+            import(
+              "src/app/featured/account/transaction-entry/transaction-entry.module"
+            ).then((m) => m.TransactionEntryModule),
+        }
+      ],
+    },
   ],
 };
