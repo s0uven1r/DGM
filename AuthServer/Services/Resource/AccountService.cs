@@ -25,12 +25,12 @@ namespace AuthServer.Services.Resource
         public async Task<string> GetAccountNumber(string type, string alias)
         {
             var resourceBaseUrl = this.config.GetSection("ModuleUrl:Resource").Value;
-            var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].Last();
+            var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
             var request = new HttpRequestMessage(HttpMethod.Get,
                $"{resourceBaseUrl}api/AccountHead/GetAccountNumber?type={type}&alias={alias}");
             if (!string.IsNullOrEmpty(token))
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token.Split(' ').LastOrDefault());
+                request.Headers.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token.ToString().Split(' ').LastOrDefault());
             }
             var response = await this.httpClient.SendAsync(request);
 

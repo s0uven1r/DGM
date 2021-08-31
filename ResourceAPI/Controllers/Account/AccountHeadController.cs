@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.Account
 {
+    [Authorize]
     public class AccountHeadController : BaseController
     {
         private readonly IAccountHeadCountService _accountHeadCountService;
@@ -66,6 +67,8 @@ namespace ResourceAPI.Controllers.Account
 
         [HttpGet]
         [Route("GetAccountNumber")]
+        [AllowAnonymous]
+
         public async Task<IActionResult> GetAccountDetails(string type, string alias)
         {
             var data = await _accountHeadCountService.GenerateAccountNumber(type,alias);
