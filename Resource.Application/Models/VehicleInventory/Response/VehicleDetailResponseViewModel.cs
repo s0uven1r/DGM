@@ -15,6 +15,7 @@ namespace Resource.Application.Models.VehicleInventory.Response
         public string Manufacturer { get; set; }
         public string RegisterDateNP { get; set; }
         public string RegisterDateEN { get; set; }
+        public string AccountNumber { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }

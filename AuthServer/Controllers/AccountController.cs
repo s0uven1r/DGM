@@ -3,6 +3,8 @@ using AuthServer.Extensions;
 using AuthServer.Models;
 using AuthServer.Models.EmailSender;
 using AuthServer.Services.EmailSender;
+using AuthServer.Services.Resource;
+using Dgm.Common.Enums;
 using IdentityServer4;
 using IdentityServer4.Events;
 using IdentityServer4.Models;
@@ -30,9 +32,18 @@ namespace AuthServer.Controllers
         private readonly IEventService _events;
         private readonly ILogger<AccountController> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IAccountService _accountService;
 
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IIdentityServerInteractionService interaction, IAuthenticationSchemeProvider schemeProvider, IClientStore clientStore, IEventService events, ILogger<AccountController> logger, IEmailSender emailSender)
+        public AccountController(SignInManager<AppUser> signInManager,
+            UserManager<AppUser> userManager, RoleManager<AppRole> roleManager,
+            IIdentityServerInteractionService interaction,
+            IAuthenticationSchemeProvider schemeProvider,
+            IClientStore clientStore, IEventService events,
+            ILogger<AccountController> logger,
+            IEmailSender emailSender,
+            IAccountService accountService
+            )
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -43,6 +54,7 @@ namespace AuthServer.Controllers
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _accountService = accountService;
         }
 
         /// <summary>
@@ -200,13 +212,18 @@ namespace AuthServer.Controllers
                 var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
                 return View(vm);
             }
+            var accTypeName = Enum.GetName(typeof(RoleTypeEnum), role.Type);
+            var alias = RoleTypeEnumConversion.GetDescriptionByValue(role.Type);
+            if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
+            var accNo = await _accountService.GetAccountNumber(accTypeName, alias);
 
             var user = new AppUser
             {
                 UserName = model.Username,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Email = model.Email
+                Email = model.Email,
+                AccountNumber = accNo
             };
             var userResult = await _userManager.CreateAsync(user, model.Password);
 

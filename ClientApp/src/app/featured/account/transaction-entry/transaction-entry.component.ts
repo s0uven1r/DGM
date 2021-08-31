@@ -30,7 +30,7 @@ export class TransactionEntryComponent implements OnInit {
       netAmount: [null, Validators.required],
       dueAmount: [null],
       remarks: [null],
-      journalEntry: this.form.array([this.newJournalEntry()])
+      journalEntry: this.form.array([])
     }));
   }
   journalEntries(): FormArray {
@@ -40,6 +40,7 @@ export class TransactionEntryComponent implements OnInit {
   newJournalEntry(): FormGroup {
     return this.form.group({
       title: [null, Validators.required],
+      type: [null, Validators.required],
       entryDate:[null, Validators.required],
       debitAmount:[null, Validators.required],
       creditAmount:[null, Validators.required],
@@ -69,7 +70,7 @@ export class TransactionEntryComponent implements OnInit {
       dueAmount: "Due Amount Rs."+ (netAmount - this.debitPaidAmount)
     });
     if(this.debitPaidAmount !== this.creditPaidAmount){
-      this.balanceErrorMsg= `Sum of debit and credit amount is not equal to each others Debit Amount Rs.${this.debitPaidAmount}, Credit Amount Rs.${this.creditPaidAmount}`;
+      this.balanceErrorMsg= `Sum of debit and credit amount should equal to each others Debit Amount Rs.${this.debitPaidAmount}, Credit Amount Rs.${this.creditPaidAmount}`;
     }
     else if(netAmount < this.debitPaidAmount){
      this.errorMsg = `No due amount for this transaction. Due Amount Rs. ${netAmount-this.debitPaidAmount}`;

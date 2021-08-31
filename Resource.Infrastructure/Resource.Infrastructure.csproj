@@ -9,12 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Persistence\Migrations\" />
     <Folder Include="Persistence\Seed\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
   </ItemGroup>
 
 </Project>

@@ -19,7 +19,9 @@ namespace AuthServer.Persistence.Seed
                     Name = d.Title,
                     Id = d.Id,
                     IsDefault = d.IsDefault,
-                    Rank = d.Rank
+                    Rank = d.Rank,
+                    Type = d.Type,
+                    IsPublic = d.IsPublic
                 }).ToList();
 
             foreach (var role in roles.Where(r => !existingRoles.Any(er => er.Id == r.Id)))

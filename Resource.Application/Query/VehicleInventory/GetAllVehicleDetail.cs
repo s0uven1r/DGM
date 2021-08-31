@@ -43,7 +43,8 @@ namespace Resource.Application.Query.VehicleInventory
                                             Model = x.Model,
                                             SubModel = x.SubModel,
                                             UpdatedBy = x.UpdatedBy,
-                                            UpdatedDate = x.UpdatedDate
+                                            UpdatedDate = x.UpdatedDate,
+                                            AccountNumber = x.AccountNumber
                                         }).ToListAsync();
 
                     return getAllVehicle;

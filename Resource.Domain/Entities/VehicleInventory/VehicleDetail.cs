@@ -14,6 +14,7 @@ namespace Resource.Domain.Entities.VehicleInventory
         public string Manufacturer { get; set; }
         public string RegisterDateNP { get; set; }
         public string RegisterDateEN { get; set; }
+        public string AccountNumber { get; set; }
         public virtual ICollection<VehicleMaintenanceDetail> VehicleMaintenance { get; set; }
     }
 }

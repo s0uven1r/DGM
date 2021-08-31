@@ -64,7 +64,7 @@ namespace Resource.Infrastructure.Persistence
         
         public DbSet<AccountType> AccountTypes { get; set; }
         public DbSet<AccountHead> AccountHeads { get; set; }
-        public DbSet<AccountHeadCountTable> AccountHeadCountTables { get; set; }
+        public DbSet<AccountCountTable> AccountCountTables { get; set; }
 
     }
 }
