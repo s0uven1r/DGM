@@ -205,28 +205,7 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimValue = AccountingClaimConstant.WriteAccountingTransactionEntry,
                      ClaimModule = PermissionModuleConstant.Accounting,
                      ClaimTitle = "Write Accounting Transaction Entry"
-                },
-                new SeedClaimViewModel
-                {
-                     Id ="8e5b2b58-a2c1-4a8e-92ee-8088f477cb4e",
-                     ClaimValue = AccountingClaimConstant.ViewAccountingRoleConfiguration,
-                     MenuId = "0ff1f384-3c4f-4cf8-84eb-a7d082e72e48",
-                     Title = AccountMenuConstant.RoleConfiguration.Key,
-                     Alias = AccountMenuConstant.RoleConfiguration.Value,
-                     Class = "text-primary",
-                     FaClass= "",
-                     ParentId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e41",
-                     Rank = 4,
-                     RouteUrl = "account/roleconfiguration",
-                     ClaimModule = PermissionModuleConstant.Accounting,
-                     ClaimTitle = "View Accounting Role Configuration"
-                },
-                new SeedClaimViewModel
-                {    Id = "8e5b2b58-a2c1-2a8e-27ee-3034f457cb7h",
-                     ClaimValue = AccountingClaimConstant.WriteAccountingRoleConfiguration,
-                     ClaimModule = PermissionModuleConstant.Accounting,
-                     ClaimTitle = "Write Accounting Role Configuration"
-                },
+                }
                 #endregion
             };
         }
