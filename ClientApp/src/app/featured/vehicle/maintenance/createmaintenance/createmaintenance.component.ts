@@ -37,7 +37,6 @@ export class CreatemaintenanceComponent implements OnInit, OnDestroy, AfterViewI
           this.MaintenanceForm.patchValue({
             'id': params['id'],
             'vehicleId': x.vehicleId,
-            'maintenanceType': x.Type == null? "" : x.Type,
             'remarks': x.remark,
             registerDateEN: x.registerDateEN
         });
@@ -69,7 +68,6 @@ export class CreatemaintenanceComponent implements OnInit, OnDestroy, AfterViewI
     return this.MaintenanceForm = this.form.group({
       id: [null],
       vehicleId: [""],
-      maintenanceType: [""],
       remarks: [null],
       registerDateNP: [null],
       registerDateEN: [null]

@@ -75,6 +75,7 @@ namespace ResourceAPI
 
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddSingleton<IUserAccessor, UserAccessor>();
+            services.AddScoped<IAccountHeadCountService, AccountHeadCountService>();
             services.AddHttpContextAccessor();
         }
 

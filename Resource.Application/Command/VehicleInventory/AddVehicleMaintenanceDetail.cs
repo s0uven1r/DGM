@@ -26,24 +26,25 @@ namespace Resource.Application.Command.VehicleInventory
         public class Handler : IRequestHandler<AddVehicleMaintenanceDetailCommand, Unit>
         {
             private readonly IAppDbContext _context;
-            public Handler(IAppDbContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(IAppDbContext context, IUserAccessor userAccessor)
             {
                 _context = context;
+                _userAccessor = userAccessor;
             }
             public async Task<Unit> Handle(AddVehicleMaintenanceDetailCommand request, CancellationToken cancellationToken)
             {
                 var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
-
+                    var userId = _userAccessor.UserId;
                     VehicleMaintenanceDetail vehicle = new()
                     {
-                        TypeId = request.TypeId,
                         VehicleId = request.VehicleId,
                         Remark = request.Remark,
                         RegisterDateEN = request.RegisterDateEN,
                         RegisterDateNP = request.RegisterDateNP,
-                        CreatedBy = request.UserId
+                        CreatedBy = userId
                     };
 
                     await _context.VehicleMaintenaceDetails.AddAsync(vehicle, cancellationToken);

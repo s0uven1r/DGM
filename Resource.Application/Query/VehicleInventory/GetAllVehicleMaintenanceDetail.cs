@@ -35,7 +35,6 @@ namespace Resource.Application.Query.VehicleInventory
                                         {
                                             
                                             RegistrationNumber = x.Vehicle.RegistrationNumber,
-                                            Type = x.TypeId,
                                             Remark = x.Remark,
                                             Id = x.Id
                                             

@@ -51,7 +51,6 @@ export class AccountService {
       `${this.baseUrl + this.updateAccountTypeUrl}/${value.id}`,
       {
         title: value.title,
-        type: value.type,
       }
     );
   }
@@ -72,7 +71,6 @@ export class AccountService {
       `${this.baseUrl + this.updateAccountHeadUrl}/${value.id}`,
       {
         title: value.title,
-        accountTypeId: value.accountTypeId,
       }
     );
   }

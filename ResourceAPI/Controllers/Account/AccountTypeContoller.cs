@@ -1,4 +1,4 @@
-﻿using Dgm.Common.Enum;
+﻿using Dgm.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.Account.AccountType;
 using Resource.Application.Query.Account.AccountType;

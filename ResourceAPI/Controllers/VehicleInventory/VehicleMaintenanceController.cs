@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.VehicleInventory;
 using Resource.Application.Query.VehicleInventory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.VehicleInventory
@@ -38,7 +35,6 @@ namespace ResourceAPI.Controllers.VehicleInventory
         [HttpPost("Create")]
         public async Task<IActionResult> Create(AddVehicleMaintenanceDetail.AddVehicleMaintenanceDetailCommand command)
         {
-            command.UserId = User.FindFirst("UserId").Value;
             return Ok(await Mediator.Send(command));
         }
 
@@ -53,7 +49,6 @@ namespace ResourceAPI.Controllers.VehicleInventory
         public async Task<IActionResult> Update(string id, UpdateVehicleMaintenanceDetail.UpdateVehicleMaintenanceDetailCommand command)
         {
             command.Id = id;
-            command.UserId = User.FindFirst("UserId").Value;
             return Ok(await Mediator.Send(command));
         }
 

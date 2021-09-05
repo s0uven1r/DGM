@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dgm.Common.Authorization.Claim.Resource
+﻿namespace Dgm.Common.Authorization.Claim.Resource
 {
     public class AccountingClaimConstant
     {
@@ -17,5 +11,10 @@ namespace Dgm.Common.Authorization.Claim.Resource
         // Accounting Head
         public const string ViewAccountingHead = "Claim.Accounting.AccountingHead.Read";
         public const string WriteAccountingHead = "Claim.Accounting.AccountingHead.Write";
+        
+        //Accounting Transaction
+        public const string ViewAccountingTransactionEntry = "Claim.Accounting.TransactionEntry.Read";
+        public const string WriteAccountingTransactionEntry = "Claim.Accounting.TransactionEntry.Write";
+
     }
 }
