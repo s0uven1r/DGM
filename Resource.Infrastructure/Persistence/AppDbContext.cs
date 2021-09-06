@@ -52,6 +52,13 @@ namespace Resource.Infrastructure.Persistence
             return result;
         }
 
+        public async Task<int> SaveChangesForSeedAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            return result;
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             foreach (var property in builder.Model.GetEntityTypes()
@@ -67,11 +74,10 @@ namespace Resource.Infrastructure.Persistence
 
         public DbSet<VehicleDetail> VehicleDetails { get; set; }
         public DbSet<VehicleMaintenanceDetail> VehicleMaintenaceDetails { get; set; }
-        
-        public DbSet<ClosingBalance> ClosingBalances { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
         public DbSet<AccountHead> AccountHeads { get; set; }
         public DbSet<AccountHeadCountTable> AccountHeadCountTables { get; set; }
+        public DbSet<ClosingBalance> ClosingBalances { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionDetail> TransactionDetails { get; set; }
 
