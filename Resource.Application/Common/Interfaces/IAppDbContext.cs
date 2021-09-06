@@ -12,11 +12,16 @@ namespace Resource.Application.Common.Interfaces
         DbContext Instance { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesForSeedAsync(CancellationToken cancellationToken);
 
 
         DbSet<VehicleDetail> VehicleDetails { get; set; }
         DbSet<VehicleMaintenanceDetail> VehicleMaintenaceDetails { get; set; }
         DbSet<AccountType> AccountTypes { get; set; }
         DbSet<AccountHead> AccountHeads { get; set; }
+
+        public DbSet<ClosingBalance> ClosingBalances { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionDetail> TransactionDetails { get; set; }
     }
 }
