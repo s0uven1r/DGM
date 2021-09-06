@@ -71,6 +71,7 @@ namespace Resource.Infrastructure.Persistence
         public DbSet<ClosingBalance> ClosingBalances { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
         public DbSet<AccountHead> AccountHeads { get; set; }
+        public DbSet<AccountHeadCountTable> AccountHeadCountTables { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionDetail> TransactionDetails { get; set; }
 

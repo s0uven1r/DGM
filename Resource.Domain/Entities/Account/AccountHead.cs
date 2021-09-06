@@ -4,6 +4,7 @@
     {
         public string Title { get; set; }
         public string AccountTypeId { get; set; }
+        public string AccountNumber { get; set; }
         public virtual AccountType AccountType { get; set; }
     }
 }

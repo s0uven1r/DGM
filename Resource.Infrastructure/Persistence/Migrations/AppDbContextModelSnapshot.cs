@@ -24,6 +24,9 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AccountTypeId")
                         .HasColumnType("nvarchar(450)");
 
@@ -50,6 +53,42 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.HasIndex("AccountTypeId");
 
                     b.ToTable("AccountHeads");
+                });
+
+            modelBuilder.Entity("Resource.Domain.Entities.Account.AccountHeadCountTable", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountHeadCountTables");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.Account.AccountType", b =>
@@ -290,9 +329,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TypeId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")

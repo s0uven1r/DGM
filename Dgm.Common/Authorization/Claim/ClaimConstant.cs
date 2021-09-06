@@ -9,7 +9,7 @@ namespace Dgm.Common.Authorization.Claim
 {
     public static class ClaimConstant
     {
-        private static List<SeedClaimViewModel> _list;
+        private static readonly List<SeedClaimViewModel> _list;
         static ClaimConstant()
         {
             _list = new List<SeedClaimViewModel>()
@@ -185,6 +185,27 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Accounting,
                      ClaimTitle = "Write Accounting Head"
                  },
+                new SeedClaimViewModel
+                {
+                     Id ="7e5b2b57-a2c1-4a7e-92ee-7077f477cb4e",
+                     ClaimValue = AccountingClaimConstant.ViewAccountingTransactionEntry,
+                     MenuId = "0ff1f374-3c4f-4cf7-74eb-a7d072e72e47",
+                     Title = AccountMenuConstant.TransactionEntry.Key,
+                     Alias = AccountMenuConstant.TransactionEntry.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e41",
+                     Rank = 3,
+                     RouteUrl = "account/transactionentry",
+                     ClaimModule = PermissionModuleConstant.Accounting,
+                     ClaimTitle = "View Accounting Transaction Entry"
+                },
+                new SeedClaimViewModel 
+                {    Id = "7e5b2b57-a2c1-7a9e-92ee-7037f477cb7h",
+                     ClaimValue = AccountingClaimConstant.WriteAccountingTransactionEntry,
+                     ClaimModule = PermissionModuleConstant.Accounting,
+                     ClaimTitle = "Write Accounting Transaction Entry"
+                }
                 #endregion
             };
         }

@@ -6,7 +6,7 @@
             <input type="text" formControlName="title" placeholder="Title" class="form-control">
         </div>
         <div class="form-group col-md-4">
-            <select class="form-control dropdown-toggle" formControlName="type">
+            <select class="form-control dropdown-toggle" formControlName="type" disabled>
                 <option *ngFor="let ddl of accountTypeDDL" [value]="ddl.value">{{ddl.key}}</option>
             </select>
         </div>

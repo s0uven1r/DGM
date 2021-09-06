@@ -4,12 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Resource.Infrastructure.Persistence;
 
-namespace Resource.Domain.Migrations
+namespace Resource.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(AppContext))]
-    [Migration("20210803031306_VehicleRegistrationDateForRegistrationAndMaintenance")]
-    partial class VehicleRegistrationDateForRegistrationAndMaintenance
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20210827083650_InitialMigrationForResourceAPI")]
+    partial class InitialMigrationForResourceAPI
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +25,9 @@ namespace Resource.Domain.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AccountTypeId")
                         .HasColumnType("nvarchar(450)");
@@ -50,6 +55,42 @@ namespace Resource.Domain.Migrations
                     b.HasIndex("AccountTypeId");
 
                     b.ToTable("AccountHeads");
+                });
+
+            modelBuilder.Entity("Resource.Domain.Entities.Account.AccountHeadCountTable", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountHeadCountTables");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.Account.AccountType", b =>
@@ -162,9 +203,6 @@ namespace Resource.Domain.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TypeId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")

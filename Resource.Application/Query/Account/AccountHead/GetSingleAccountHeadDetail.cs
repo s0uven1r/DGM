@@ -34,7 +34,8 @@ namespace Resource.Application.Query.Account.AccountHead
                                             Id = x.Id,
                                             AccountTypeId = x.AccountTypeId,
                                             AccountTypeTitle = x.AccountType.Title,
-                                            Title = x.Title
+                                            Title = x.Title,
+                                            AccountNumber = x.AccountNumber
                                         }).SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
                     return getSingleAccHeads;

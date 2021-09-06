@@ -1,4 +1,4 @@
-﻿using Dgm.Common.Enum;
+﻿using Dgm.Common.Enums;
 using Dgm.Common.Error;
 using FluentValidation;
 using MediatR;
@@ -29,15 +29,18 @@ namespace Resource.Application.Command.Account.AccountType
         public class Handler : IRequestHandler<AddAccountTypeDetailCommand, Unit>
         {
             private readonly IAppDbContext _context;
+            private readonly IUserAccessor _userAccessor;
             public Handler(IAppDbContext context, IUserAccessor userAccessor)
             {
                 _context = context;
+                _userAccessor = userAccessor;
             }
             public async Task<Unit> Handle(AddAccountTypeDetailCommand request, CancellationToken cancellationToken)
             {
                 var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
+                    string userId = _userAccessor.UserId;
                     var checkExisting = _context.AccountTypes.Where(q => q.Title.ToLower() == request.Title.ToLower() && !q.IsDeleted).FirstOrDefault();
                     if (checkExisting != null) throw new AppException("Account Type with same name already exists!");
 
@@ -45,7 +48,8 @@ namespace Resource.Application.Command.Account.AccountType
                     Domain.Entities.Account.AccountType accTypes = new()
                     {
                         Title = request.Title,
-                        Type = request.Type
+                        Type = request.Type,
+                        CreatedBy = userId
                     };
 
                     await _context.AccountTypes.AddAsync(accTypes, cancellationToken);
