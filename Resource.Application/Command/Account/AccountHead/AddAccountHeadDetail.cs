@@ -50,7 +50,9 @@ namespace Resource.Application.Command.Account.AccountHead
                     var checkAccTypeValidity = _context.AccountTypes.Where(q => q.Id == request.AccountTypeId && !q.IsDeleted).FirstOrDefault();
                     if (checkAccTypeValidity == null) throw new AppException("Invalid account type!");
                     var accTypeName = Enum.GetName(typeof(AccountTypeEnum), checkAccTypeValidity.Type);
-                    var accNumber = await _accountHeadCountService.GenerateAccountHeadNumber(accTypeName, checkAccTypeValidity.Type);
+                    var alias = AccountTypeEnumConversion.GetDescriptionByValue(checkAccTypeValidity.Type);
+                    if (string.IsNullOrEmpty(alias)) throw new AppException("Cannot get alias for Account Number");
+                    var accNumber = await _accountHeadCountService.GenerateAccountNumber(accTypeName, alias);
                     Domain.Entities.Account.AccountHead accHeads = new()
                     {
                         Title = request.Title,

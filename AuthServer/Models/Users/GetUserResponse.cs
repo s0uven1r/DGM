@@ -18,6 +18,7 @@ namespace AuthServer.Models.Users
 
         public string RoleId { get; set; }
         public string RoleName { get; set; }
+        public string AccountNumber { get; set; }
         public bool IsEnabled { get; set; }
     }
 }

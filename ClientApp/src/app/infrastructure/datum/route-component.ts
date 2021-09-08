@@ -1,3 +1,4 @@
+import { TransactionEntryComponent } from 'src/app/featured/account/transaction-entry/transaction-entry.component';
 import { AppComponent } from "src/app/app.component";
 import { HomeComponent } from "src/app/core/home/home.component";
 import { AuthCallbackComponent } from "src/app/core/auth-callback/auth-callback.component";
@@ -47,4 +48,5 @@ export const RouteComponent = {
       AccountHeadRouteComponent: [AccountHeadComponent],
       AccountHeadCreateRouteComponent: [AccountHeadCreateComponent],
       AccountHeadEditRouteComponent: [AccountHeadEditComponent],
+      AccountTransactionEntryRouteComponent: [TransactionEntryComponent]
 }

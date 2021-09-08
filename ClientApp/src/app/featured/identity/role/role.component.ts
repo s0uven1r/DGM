@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IdentityControllersClaim } from 'src/app/infrastructure/datum/claim/user-management';
 import { RoleModel } from 'src/app/infrastructure/model/UserManagement/role-model';
@@ -19,10 +20,14 @@ export class RoleComponent implements OnInit {
   isEdit: boolean;
   roleCreateClaim = [IdentityControllersClaim.Role.WriteRole];
   roleViewClaim = [IdentityControllersClaim.Permission.ViewPermission];
-  constructor(private form: FormBuilder, private roleService: RoleService, private changeDetectorRef: ChangeDetectorRef) { 
+  roleTypeDDL: any[] = [];
+  constructor(private form: FormBuilder, private roleService: RoleService,
+    private route: ActivatedRoute,
+     private changeDetectorRef: ChangeDetectorRef) {
     this.FormDesign();
   }
   ngOnInit(): void {
+    this.roleTypeDDL = this.route.snapshot.data.roleTypeDDL;
     this.subscription.add(this.roleService.getRole().subscribe(x => {this.roleData = x;
       this.changeDetectorRef.markForCheck();}));
   }
@@ -35,7 +40,8 @@ export class RoleComponent implements OnInit {
       title: [null,  [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
       id: [null],
       rank: [null],
-      hasPublic: [false]
+      hasPublic: [false],
+      type:[null, [Validators.required]]
     }));
   }
   onSubmit() {
@@ -51,16 +57,17 @@ export class RoleComponent implements OnInit {
             this.PerformCreateEditRole();
         }
     })
- 
+
   }
  PerformCreateEditRole(){
     if (this.roleForm.valid) {
       var msg = this.roleForm.get('id').value ?'Updated!':'Added!';
       (this.roleService.performCreateEditRole(
         this.roleForm.get('title').value,
-        this.roleForm.get('hasPublic').value,
+        false,
         this.roleForm.get('id').value,
-        this.roleForm.get('rank').value
+        this.roleForm.get('rank').value,
+        this.roleForm.get('type').value
       )).subscribe(
         () => {
           Swal.fire(
@@ -76,18 +83,20 @@ export class RoleComponent implements OnInit {
     }
   }
 
-  getData(id: string, title: string, isPublic: boolean, rank: number){
+  getData(id: string, title: string, isPublic: boolean, rank: number, type: string){
     this.isEdit = true;
     this.roleForm.patchValue({
       'id':id,
       'title': title,
       'rank': rank,
-      'hasPublic': isPublic
+      'hasPublic': isPublic,
+      'type': type
     });
   }
   resetRoleForm(){
     this.isEdit = false;
     this.roleForm.reset();
+
   }
   deleteData(id: string){
     Swal.fire({

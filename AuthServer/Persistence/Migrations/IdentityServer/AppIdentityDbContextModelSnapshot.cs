@@ -57,6 +57,9 @@ namespace AuthServer.Persistence.Migrations.IdentityServer
                     b.Property<int>("Rank")
                         .HasColumnType("int");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")

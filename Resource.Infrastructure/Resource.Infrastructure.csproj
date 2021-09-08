@@ -10,10 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Persistence\Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
+    <Folder Include="Persistence\Seed\" />
   </ItemGroup>
 
 </Project>

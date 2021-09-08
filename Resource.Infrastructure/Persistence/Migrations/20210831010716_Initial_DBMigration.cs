@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Resource.Infrastructure.Persistence.Migrations
 {
-    public partial class InitialMigrationForResourceAPI : Migration
+    public partial class Initial_DBMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AccountHeadCountTables",
+                name: "AccountCountTables",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -23,7 +23,7 @@ namespace Resource.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountHeadCountTables", x => x.Id);
+                    table.PrimaryKey("PK_AccountCountTables", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +59,7 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     Manufacturer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RegisterDateNP = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RegisterDateEN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -136,7 +137,7 @@ namespace Resource.Infrastructure.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccountHeadCountTables");
+                name: "AccountCountTables");
 
             migrationBuilder.DropTable(
                 name: "AccountHeads");
