@@ -12,18 +12,18 @@ namespace Resource.Infrastructure.Persistence.Seed
     {
         public static async Task SeedAccountHeadCountAsync(AppDbContext dbContext)
         {
-            if (!dbContext.AccountHeadCountTables.Where(x => x.Type == nameof(AccountTypeEnum.Income)).Any())
+            if (!dbContext.AccountCountTables.Where(x => x.Type == nameof(AccountTypeEnum.Income)).Any())
             {
-                dbContext.AccountHeadCountTables.Add(new AccountHeadCountTable
+                dbContext.AccountCountTables.Add(new AccountCountTable
                 {
                     Count = 1,
                     Type = nameof(AccountTypeEnum.Income)
                 });
                 await dbContext.SaveChangesForSeedAsync();
             }
-            if (!dbContext.AccountHeadCountTables.Where(x => x.Type == nameof(AccountTypeEnum.Expense)).Any())
+            if (!dbContext.AccountCountTables.Where(x => x.Type == nameof(AccountTypeEnum.Expense)).Any())
             {
-                dbContext.AccountHeadCountTables.Add(new AccountHeadCountTable
+                dbContext.AccountCountTables.Add(new AccountCountTable
                 {
                     Count = 2,
                     Type = nameof(AccountTypeEnum.Expense)
