@@ -22,6 +22,8 @@ export class VehicleService {
   private updateInventoryUrl =
     ApiGateway.resource.vehicle.inventory.base +
     ApiGateway.resource.vehicle.inventory.update;
+  private getAccountDetailsUrl = ApiGateway.resource.vehicle.inventory.base +
+  ApiGateway.resource.vehicle.inventory.getAccountNumberDetails;
   private deleteInventoryUrl =
     ApiGateway.resource.vehicle.inventory.base +
     ApiGateway.resource.vehicle.inventory.delete;
@@ -126,5 +128,8 @@ export class VehicleService {
     return this.http.delete<any>(
       `${this.baseUrl + this.getMaintenanceUrl}/${id}`
     );
+  }
+  getAllAccountDetails(name: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAccountDetailsUrl}?value=${name}`);
   }
 }

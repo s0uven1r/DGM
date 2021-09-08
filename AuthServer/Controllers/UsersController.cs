@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace AuthServer.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IAccountService _accountService;
         public UsersController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, AppIdentityDbContext appIdentityDbContext,
-            IEmailSender emailSender,  IAccountService accountService)
+            IEmailSender emailSender, IAccountService accountService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -169,7 +170,7 @@ namespace AuthServer.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError, identityResult.Errors);
                 }
 
-               
+
 
                 var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
                 await _appIdentityDbContext.SaveChangesAsync();
@@ -331,6 +332,23 @@ namespace AuthServer.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetAccountDetails")]
+        public async Task<IActionResult> GetAccountDetails(string value)
+        {
+            var data = await (from user in _appIdentityDbContext.Users
+                              select new
+                              {
+                                  user
+                              }
+                           ).ToListAsync();
+
+            if (data.Count == 0) return NotFound(); ;
+            var accountDetails = data.Where(x => x.user.Email.Contains(value))
+                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.user.FirstName,x.user.MiddleName, x.user.LastName, "-", x.user.AccountNumber), x.user.AccountNumber));
+           
+            return Ok(accountDetails.ToList());
+        }
         #region helpers
         private async Task SendEmployeeRegistrationEmail(CreateEmployeeRequest model, string password)
         {

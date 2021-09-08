@@ -35,8 +35,8 @@ namespace Resource.Infrastructure.Service
                 else
                 {
                     entity.Count = count;
-                    await _appDbContext.SaveChangesAsync();
                 }
+                await _appDbContext.SaveChangesAsync();
                 return $"{alias}_{count:D9}";
             }
             catch (DbUpdateConcurrencyException ex)
