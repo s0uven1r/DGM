@@ -16,8 +16,5 @@
         public const string ViewAccountingTransactionEntry = "Claim.Accounting.TransactionEntry.Read";
         public const string WriteAccountingTransactionEntry = "Claim.Accounting.TransactionEntry.Write";
 
-        //Accounting Role Configuration
-        public const string ViewAccountingRoleConfiguration = "Claim.Accounting.RoleConfiguration.Read";
-        public const string WriteAccountingRoleConfiguration = "Claim.Accounting.RoleConfiguration.Write";
     }
 }
