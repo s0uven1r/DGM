@@ -17,7 +17,7 @@ export class AccountHeadCreateComponent implements OnInit {
   accountTypeDDL: AccountTypeModel[] = [];
   constructor(
     private accountService: AccountService,
-    private form: FormBuilder, 
+    private form: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -31,7 +31,7 @@ export class AccountHeadCreateComponent implements OnInit {
   FormDesign() {
     return (this.createForm = this.form.group({
       title: [null, Validators.required],
-      accountTypeId: [null, Validators.required],
+      accountTypeId: ["", Validators.required],
     }));
   }
 

@@ -16,6 +16,7 @@
             <th>FullName</th>
             <th>PhoneNo</th>
             <th>Role</th>
+            <th>Account No</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -28,6 +29,7 @@
             <td>{{ person.firstName+ ' ' +  (person.middleName?person.middleName: "") +' ' + person.lastName }}</td>
             <td>{{person.phoneNumber}}</td>
             <td>{{person.roleName}}</td>
+            <td>{{person.accountNumber}}</td>
             <td>  <div class="custom-control form-control-lg custom-checkbox">
               <input type="checkbox" [checked]="person.isEnabled" [disabled]="person.isDefault" class="custom-control-input" [id]="'id'+person.id" #val (click)="hasEnable(person.id, val)">
               <label class="custom-control-label" [for]="'id'+person.id" ></label>

@@ -15,7 +15,7 @@ import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.modul
     ReactiveFormsModule,
     CheckDirectiveModule
   ],
-  providers: [ {
+  providers: [{
     provide: RoleService,
     useClass: RoleService
   },]

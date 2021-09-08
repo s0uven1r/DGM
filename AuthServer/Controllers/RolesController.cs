@@ -3,6 +3,7 @@ using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Models.Roles.Request;
 using AuthServer.Models.Roles.Response;
 using Dgm.Common.Authorization.Claim.Identity;
+using Dgm.Common.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,9 @@ namespace AuthServer.Controllers
                 Name = x.Name,
                 IsPublic = x.IsPublic,
                 IsDefault = x.IsDefault,
-                Rank = x.Rank
+                Rank = x.Rank,
+                TypeName = x.Type == 0 ? "-" : ((RoleTypeEnum)x.Type).ToString(),
+                Type = x.Type
             }).ToList();
             return Ok(roles);
         }
@@ -66,6 +69,7 @@ namespace AuthServer.Controllers
             {
                 Name = createRoleRequest.Name,
                 Rank = createRoleRequest.Rank,
+                Type = createRoleRequest.Type,
                 CreatedBy = requestedBy,
                 CreatedDate = DateTime.UtcNow
             };
@@ -88,6 +92,7 @@ namespace AuthServer.Controllers
 
             role.Name = createRoleRequest.Name;
             role.Rank = createRoleRequest.Rank;
+            role.Type = createRoleRequest.Type;
             role.LastUpdatedBy = requestedBy;
             role.LastUpdatedDate = DateTime.UtcNow;
 
@@ -155,6 +160,12 @@ namespace AuthServer.Controllers
             await _roleManager.DeleteAsync(role);
             _logger.LogWarning("Role {1} deleted by user:{2} on {3}", role.Name, requestedBy, DateTime.UtcNow);
             return Ok();
+        }
+
+        [HttpGet("Get/GetRoleTypeEnumDDL")]
+        public IActionResult GetAccountTypeEnumDDL()
+        {
+            return Ok(RoleTypeEnumConversion.GetEnumList());
         }
     }
 }

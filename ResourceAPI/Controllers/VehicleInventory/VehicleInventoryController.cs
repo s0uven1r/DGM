@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.VehicleInventory;
 using Resource.Application.Query.VehicleInventory;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.VehicleInventory
@@ -72,6 +74,15 @@ namespace ResourceAPI.Controllers.VehicleInventory
         public async Task<IActionResult> DeleteVehicle(string id)
         {
             return Ok(await Mediator.Send(request: new DeleteVehicleDetail.DeleteVehicleDetailCommand { Id = id }));
+        }
+
+        [HttpGet]
+        [Route("GetAccountDetails")]
+        public async Task<IActionResult> GetAccountDetails(string value)
+        {
+            var data = await Mediator.Send(request: new GetAllVehicleDetail.GetAllVehicleDetailQuery());
+            var vehicleAccountDetails = data.ToList().Where(x => x.RegistrationNumber.Contains(value)).Select(x => new KeyValuePair<string, string>(string.Join(" ", x.RegistrationNumber, "-", x.AccountNumber), x.AccountNumber)).ToList();
+            return Ok(vehicleAccountDetails);
         }
     }
 }

@@ -44,6 +44,7 @@ namespace Resource.Application.Query.VehicleInventory
                                             Manufacturer = x.Manufacturer,
                                             RegisterDateEN = x.RegisterDateEN,
                                             RegisterDateNP = x.RegisterDateNP,
+                                            AccountNumber = x.AccountNumber,
                                             UpdatedBy = x.UpdatedBy,
                                             UpdatedDate = x.UpdatedDate
                                         }).SingleOrDefaultAsync();

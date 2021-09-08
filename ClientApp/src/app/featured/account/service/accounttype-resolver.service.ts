@@ -17,8 +17,6 @@ export class AccountTypeResolverService
   constructor(private accountService: AccountService) {}
   resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) {
     var x = this.accountService.getAccountTypeDDL();
-    console.log(x);
-    debugger;
     return x;
   }
 }

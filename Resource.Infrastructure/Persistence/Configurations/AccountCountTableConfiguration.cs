@@ -4,9 +4,9 @@ using Resource.Domain.Entities.Account;
 
 namespace Resource.Infrastructure.Persistence.Configurations
 {
-    public class AccountHeadCountTableConfiguration : IEntityTypeConfiguration<AccountHeadCountTable>
+    public class AccountCountTableConfiguration : IEntityTypeConfiguration<AccountCountTable>
     {
-        public void Configure(EntityTypeBuilder<AccountHeadCountTable> builder)
+        public void Configure(EntityTypeBuilder<AccountCountTable> builder)
         {
             builder.Property(p => p.Timestamp)
                     .IsRowVersion();

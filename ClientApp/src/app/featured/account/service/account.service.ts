@@ -23,6 +23,8 @@ export class AccountService {
     this.accountType + ApiGateway.resource.account.accounttype.update;
   private getAccountHeadUrl =
     this.accountHead + ApiGateway.resource.account.accounthead.getAll;
+    private getAccountHeadAccountDetailsUrl =
+    this.accountHead + ApiGateway.resource.account.accounthead.getAccountNumberDetails;
   private getAccountHeadByIdUrl =
     this.accountHead + ApiGateway.resource.account.accounthead.getSingleById;
   private createAccountHeadUrl =
@@ -73,5 +75,8 @@ export class AccountService {
         title: value.title,
       }
     );
+  }
+  getAllAccountHeadAccountDetails(name: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAccountHeadAccountDetailsUrl}?value=${name}`);
   }
 }

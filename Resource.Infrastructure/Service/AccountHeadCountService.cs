@@ -17,16 +17,16 @@ namespace Resource.Infrastructure.Service
         {
             _appDbContext = appDbContext;
         }
-        public async Task<string> GenerateAccountHeadNumber(string type, int enumVal)
+        public async Task<string> GenerateAccountNumber(string type, string alias)
         {
             try
             {
-                var entity = await _appDbContext.AccountHeadCountTables.Where(x => x.Type == type).AsTracking().SingleOrDefaultAsync();
+                var entity = await _appDbContext.AccountCountTables.Where(x => x.Type == type).AsTracking().SingleOrDefaultAsync();
                 int count = entity == null ? 0 : entity.Count;
                 ++count;
                 if (entity == null)
                 {
-                    await _appDbContext.AccountHeadCountTables.AddAsync(new AccountHeadCountTable
+                    await _appDbContext.AccountCountTables.AddAsync(new AccountCountTable
                     {
                         Count = count,
                         Type = type,
@@ -35,10 +35,8 @@ namespace Resource.Infrastructure.Service
                 else
                 {
                     entity.Count = count;
-                    await _appDbContext.SaveChangesAsync();
                 }
-                var alias = AccountTypeEnumConversion.GetDescriptionByValue(enumVal);
-                if (string.IsNullOrEmpty(alias)) throw new AppException("Cannot get alias for Account Number");
+                await _appDbContext.SaveChangesAsync();
                 return $"{alias}_{count:D9}";
             }
             catch (DbUpdateConcurrencyException ex)
@@ -46,7 +44,7 @@ namespace Resource.Infrastructure.Service
                 ex.Entries.Single().Reload();
                 await _appDbContext.SaveChangesAsync();
 
-                return await GenerateAccountHeadNumber(type, enumVal);
+                return await GenerateAccountNumber(type, alias);
             }
             catch (AppException)
             {

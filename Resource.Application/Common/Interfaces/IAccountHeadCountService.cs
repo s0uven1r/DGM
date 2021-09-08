@@ -4,6 +4,6 @@ namespace Resource.Application.Common.Interfaces
 {
     public interface IAccountHeadCountService
     {
-        Task<string> GenerateAccountHeadNumber(string type, int enumVal);
+        Task<string> GenerateAccountNumber(string type, string alias);
     }
 }
