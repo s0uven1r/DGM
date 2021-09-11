@@ -5,5 +5,6 @@
         public const string Authorization = "Authorization";
         public const string Vehicle = "Vehicle";
         public const string Accounting = "Accounting";
+        public const string Configuration = "Configuration";
     }
 }
