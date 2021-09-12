@@ -15,15 +15,16 @@ export class RoleService {
   private setPublicUrl = ApiGateway.identity.role.base + ApiGateway.identity.role.setPublic;
   private removePublicUrl = ApiGateway.identity.role.base + ApiGateway.identity.role.removePublic;
   private deleteUrl = ApiGateway.identity.role.base + ApiGateway.identity.role.deleteRole;
+  private getRoleTypeDDLUrl =  ApiGateway.identity.role.base + ApiGateway.identity.role.getRoleTypeDDL;
   constructor(private http: HttpClient) { }
   getRole(): Observable<any>{
     return this.http.get<any>(`${this.baseUrl + this.getRoleUrl}`);
   }
-  performCreateEditRole( title:string, hasPublic: boolean, id:string, rank: number): Observable<any>{
+  performCreateEditRole( title:string, hasPublic: boolean, id:string, rank: number, type: number): Observable<any>{
     if(id){
-      return this.http.put<any>(`${this.baseUrl + this.putUrl}`, { name : title, isPublic: hasPublic, id: id, rank: rank})
+      return this.http.put<any>(`${this.baseUrl + this.putUrl}`, { name : title, isPublic: hasPublic, id: id, rank: rank, type: type})
     }else{
-       return this.http.post<any>(`${this.baseUrl + this.postUrl}`, { name : title, isPublic: hasPublic, rank: rank})
+       return this.http.post<any>(`${this.baseUrl + this.postUrl}`, { name : title, isPublic: hasPublic, rank: rank, type: type})
     }
   }
   setPublic(id: string, isActivate: boolean): Observable<any>{
@@ -35,5 +36,8 @@ export class RoleService {
   }
   deleteRole(id: string){
     return this.http.delete<any>(`${this.baseUrl + this.deleteUrl + '/'+ id}`)
+  }
+  getRoleTypeDDL(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getRoleTypeDDLUrl}`);
   }
 }

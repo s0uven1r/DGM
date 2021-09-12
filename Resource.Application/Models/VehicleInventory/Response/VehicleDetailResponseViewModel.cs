@@ -12,6 +12,10 @@ namespace Resource.Application.Models.VehicleInventory.Response
         public string SubModel { get; set; }
         public string Capacity { get; set; }
         public string ManufacturedYear { get; set; }
+        public string Manufacturer { get; set; }
+        public string RegisterDateNP { get; set; }
+        public string RegisterDateEN { get; set; }
+        public string AccountNumber { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }

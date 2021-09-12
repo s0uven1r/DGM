@@ -6,5 +6,6 @@
         public string Title { get; set; }
         public string AccountTypeTitle { get; set; }
         public string AccountTypeId { get; set; }
+        public string AccountNumber { get; set; }
     }
 }

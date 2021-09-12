@@ -5,15 +5,19 @@ import { VehicleUpdateRoutingModule, RoutingComponent } from './vehicle-update-r
 import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
 import { VehicleService } from '../../service/vehicle.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NpDatepickerModule } from 'angular-nepali-datepicker';
+import { NgNepaliDateDirectiveModule } from 'src/app/shared/directives/attributes/ngNepaliDateDirective.module';
 
 @NgModule({
-  declarations: 
+  declarations:
     RoutingComponent,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     VehicleUpdateRoutingModule,
-    CheckDirectiveModule
+    CheckDirectiveModule,
+    NpDatepickerModule,
+    NgNepaliDateDirectiveModule
   ],
   providers: [{
     provide: VehicleService,

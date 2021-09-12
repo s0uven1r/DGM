@@ -7,13 +7,16 @@ using AuthServer.Models.Users;
 using AuthServer.Models.Users.Employee.Request;
 using AuthServer.Persistence;
 using AuthServer.Services.EmailSender;
+using AuthServer.Services.Resource;
 using Dgm.Common.Authorization.Claim.Identity;
+using Dgm.Common.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,14 +32,15 @@ namespace AuthServer.Controllers
         private readonly RoleManager<AppRole> _roleManager;
         private readonly AppIdentityDbContext _appIdentityDbContext;
         private readonly IEmailSender _emailSender;
-
+        private readonly IAccountService _accountService;
         public UsersController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, AppIdentityDbContext appIdentityDbContext,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IAccountService accountService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _appIdentityDbContext = appIdentityDbContext;
             _emailSender = emailSender;
+            _accountService = accountService;
         }
 
         [HttpGet]
@@ -72,7 +76,8 @@ namespace AuthServer.Controllers
                 RoleId = x.role.Id,
                 RoleName = x.role.Name,
                 IsDefault = x.role.IsDefault,
-                IsEnabled = !x.user.IsDisabled
+                IsEnabled = !x.user.IsDisabled,
+                AccountNumber = x.user.AccountNumber
             }).ToList();
 
 
@@ -102,7 +107,8 @@ namespace AuthServer.Controllers
                 PhoneNumber = user.PhoneNumber,
                 RoleId = role.Id,
                 RoleName = roleName,
-                IsDefault = role.IsDefault
+                IsDefault = role.IsDefault,
+                AccountNumber = user.AccountNumber
             };
             return Ok(userResult);
         }
@@ -141,7 +147,22 @@ namespace AuthServer.Controllers
             var transaction = await _appIdentityDbContext.Database.BeginTransactionAsync();
             try
             {
+                var role = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId));
+                var roleName = role?.Name;
+
+                if (string.IsNullOrEmpty(roleName))
+                {
+                    return BadRequest("Role not found.");
+                }
+
                 var password = PasswordGenerator.GenerateRandomPassword();
+
+                var accTypeName = Enum.GetName(typeof(RoleTypeEnum), role.Type);
+                var alias = RoleTypeEnumConversion.GetDescriptionByValue(role.Type);
+                if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
+                var accNo = await _accountService.GetAccountNumber(accTypeName, alias);
+                applicationUser.AccountNumber = accNo;
+
                 var identityResult = await _userManager.CreateAsync(applicationUser, password);
 
                 if (!identityResult.Succeeded)
@@ -149,13 +170,7 @@ namespace AuthServer.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError, identityResult.Errors);
                 }
 
-                var roleName = (await _roleManager.FindByIdAsync(createEmployeeRequest.RoleId))?.Name;
 
-                if (string.IsNullOrEmpty(roleName))
-                {
-                    await _userManager.DeleteAsync(applicationUser);
-                    return BadRequest("Role not found.");
-                }
 
                 var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
                 await _appIdentityDbContext.SaveChangesAsync();
@@ -317,6 +332,23 @@ namespace AuthServer.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetAccountDetails")]
+        public async Task<IActionResult> GetAccountDetails(string value)
+        {
+            var data = await (from user in _appIdentityDbContext.Users
+                              select new
+                              {
+                                  user
+                              }
+                           ).ToListAsync();
+
+            if (data.Count == 0) return NotFound(); ;
+            var accountDetails = data.Where(x => x.user.Email.Contains(value))
+                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.user.FirstName,x.user.MiddleName, x.user.LastName, "-", x.user.AccountNumber), x.user.AccountNumber));
+           
+            return Ok(accountDetails.ToList());
+        }
         #region helpers
         private async Task SendEmployeeRegistrationEmail(CreateEmployeeRequest model, string password)
         {

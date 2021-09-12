@@ -7,7 +7,8 @@ export const ApiGateway = {
             putRole: '/UpdateRole',
             setPublic: '/SetPublic',
             removePublic: '/RemovePublic',
-            deleteRole: '/DeleteRole'
+            deleteRole: '/DeleteRole',
+            getRoleTypeDDL: '/Get/GetRoleTypeEnumDDL'
         },
         menu: {
             base: 'Menu',
@@ -25,7 +26,8 @@ export const ApiGateway = {
             enableUser: '/EnableLogin',
             disableUser: '/DisableLogin',
             createEmployee: '/CreateEmployee',
-            updateEmployee: '/UpdateEmployee'
+            updateEmployee: '/UpdateEmployee',
+            getAccountNumberDetails: '/GetAccountDetails'
         }
     },
     resource: {
@@ -37,6 +39,7 @@ export const ApiGateway = {
                 create: '/Create',
                 update: '/Update',
                 delete: '/Delete',
+                getAccountNumberDetails:'/GetAccountDetails',
             },
             maintenance:{
                 base: 'VehicleMaintenance',
@@ -55,6 +58,7 @@ export const ApiGateway = {
             accounthead:{
                 base: 'AccountHead',
                 getAll: '/Get/GetAll',
+                getAccountNumberDetails:'/GetAccountDetails',
                 getSingleById: '/Get/GetById',
                 create: '/Create',
                 update: '/Update',

@@ -3,6 +3,7 @@ using AuthServer.Entities;
 using AuthServer.Persistence;
 using AuthServer.Services;
 using AuthServer.Services.EmailSender;
+using AuthServer.Services.Resource;
 using IdentityServer4;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,10 @@ namespace AuthServer.Extensions
                     // custom requirements
                 });
             });
+            services.AddHttpClient();
+
+            services.AddHttpClient<IAccountService, AccountService>()
+               .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
             services.Configure<EmailSenderConfig>(configuration.GetSection("EmailMailSenderSettings"));
             services.AddTransient<IEmailSender, EmailSender>();

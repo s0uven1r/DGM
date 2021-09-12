@@ -31,14 +31,14 @@ namespace Resource.Application.Query.VehicleInventory
                     var getVehicle = await _context.VehicleMaintenaceDetails.Include(x => x.Vehicle).Where(q => !q.IsDeleted && q.Id == request.Id)
                                         .Select(x => new VehicleMaintenanceDetailResponseViewModel
                                         {
-
                                             RegistrationNumber = x.Vehicle.RegistrationNumber,
-                                            Type = x.TypeId,
                                             Remark = x.Remark,
                                             Id = x.Id,
-                                            VehicleId = x.VehicleId
-
-                                        }).SingleOrDefaultAsync();
+                                            VehicleId = x.VehicleId,
+                                            Manufacturer = x.Manufacturer,
+                                            RegisterDateEN = x.RegisterDateEN,
+                                            RegisterDateNP = x.RegisterDateNP,
+                                        }).SingleOrDefaultAsync(cancellationToken);
                     if (getVehicle == null) throw new AppException("Invalid! Vehicle Detail not found!");
                     return getVehicle;
                 }

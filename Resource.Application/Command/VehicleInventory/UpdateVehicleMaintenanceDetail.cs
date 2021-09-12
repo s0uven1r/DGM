@@ -3,6 +3,7 @@ using FluentValidation;
 using MediatR;
 using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.VehicleInventory.Request;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,9 +28,11 @@ namespace Resource.Application.Command.VehicleInventory
         public class Handler : IRequestHandler<UpdateVehicleMaintenanceDetailCommand, Unit>
         {
             private readonly IAppDbContext _context;
-            public Handler(IAppDbContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(IAppDbContext context, IUserAccessor userAccessor)
             {
                 _context = context;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Unit> Handle(UpdateVehicleMaintenanceDetailCommand request, CancellationToken cancellationToken)
@@ -39,11 +42,14 @@ namespace Resource.Application.Command.VehicleInventory
                 {
                     var existing = _context.VehicleMaintenaceDetails.Where(q => q.Id == request.Id && !q.IsDeleted).SingleOrDefault();
                     if (existing == null) throw new AppException("Invalid! Vehicle Detail not found!");
-
+                    var userId = _userAccessor.UserId;
 
                     existing.VehicleId = request.VehicleId;
-                    existing.TypeId = request.TypeId;
                     existing.Remark = request.Remark;
+                    existing.RegisterDateNP = request.RegisterDateNP;
+                    existing.RegisterDateEN = request.RegisterDateEN;
+                    existing.UpdatedBy = userId;
+                    existing.UpdatedDate = DateTime.UtcNow;
                    
 
                     _context.VehicleMaintenaceDetails.Update(existing);

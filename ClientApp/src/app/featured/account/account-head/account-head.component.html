@@ -1,4 +1,4 @@
-<div *appCheckclaim ="updateAccountHeadDetail" class="row m-2">
+<div *appCheckclaim ="accountHeadCreateClaim" class="row m-2">
     <div class="col-12 text-right">
         <a href="#" [routerLink]='"create"' class="btn btn-primary btn-sm">Create</a>
     </div>
@@ -10,6 +10,7 @@
             <th>S.N</th>
             <th>Title</th>
             <th>Account Type</th>
+            <th>Account Number</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -18,6 +19,7 @@
             <td>{{ i + 1 }}</td>
             <td>{{ acc.title }}</td>
             <td>{{ acc.accountTypeTitle }}</td>
+            <td>{{ acc.accountNumber }}</td>
             <td>
               <button *appCheckclaim ="accountHeadCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="updateAccountHeadDetail(acc.id)" ><em class="fa fa-edit"></em></button>
             </td>

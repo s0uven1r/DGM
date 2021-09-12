@@ -16,13 +16,52 @@ namespace Resource.Infrastructure.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Resource.Domain.Entities.Account.AccountCountTable", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountCountTables");
+                });
 
             modelBuilder.Entity("Resource.Domain.Entities.Account.AccountHead", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AccountTypeId")
                         .HasColumnType("nvarchar(450)");
@@ -88,6 +127,9 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Capacity")
                         .HasColumnType("nvarchar(max)");
 
@@ -109,7 +151,16 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<string>("ManufacturedYear")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Manufacturer")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegisterDateEN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegisterDateNP")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegistrationNumber")
@@ -143,10 +194,16 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Remark")
+                    b.Property<string>("Manufacturer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeId")
+                    b.Property<string>("RegisterDateEN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegisterDateNP")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")

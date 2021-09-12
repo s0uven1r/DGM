@@ -2,7 +2,7 @@
 <div *appCheckclaim ="roleCreateClaim" class="card mb-2">
   <div class="card-body">
     <h5 class="card-title pl-3"><a class="btn disabled btn-outline-info btn-sm">{{isEdit?"Update":"Create"}}</a></h5>
-      
+
     <div class="container-fluid bordered  h-100">
       <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
@@ -31,13 +31,12 @@
           <div class="form-group col-md-4">
             <input type="number" formControlName="rank" placeholder="Role Level" class="form-control">
           </div>
-          <div class="form-group publicDiv col-lg-2 col-md-3 col-sm-4">
-            <!-- <div class="custom-control form-control-lg pull-right custom-checkbox">
-              <input type="checkbox" formControlName="hasPublic" class="custom-control-input" id="idIsPublic">
-              <label class="custom-control-label" [for]="'idIsPublic'">Has Public</label>
-            </div> -->
-          </div>
-        
+          <div class="form-group col-md-4">
+            <select class="form-control dropdown-toggle" formControlName="type">
+              <option value=null selected>--Select Type--</option>
+                <option *ngFor="let ddl of roleTypeDDL" [value]="ddl.value">{{ddl.key}}</option>
+            </select>
+        </div>
           <div class="form-group col-md-4 pull-left">
             <button [disabled]="(!roleForm.valid)" type="submit" value="save" class="btn btn-primary">
                 Save
@@ -54,21 +53,16 @@
         <th>S.N</th>
         <th>Title</th>
         <th>Level</th>
-        <th>Public</th>
+        <th>Role Type</th>
         <th>Action</th>
     </tr>
     <tr *ngFor="let item of roleData; let i=index">
         <td>{{i+1}}</td>
         <td>{{item.name}}</td>
         <td>{{item.rank}}</td>
-        <td>
-          <div class="custom-control form-control-lg custom-checkbox">
-            <input type="checkbox" [checked]="item.isEnabled" [disabled]="item.isDefault" class="custom-control-input" [id]="'id'+item.id" #val (click)="setPublic(item.id, val)">
-            <label class="custom-control-label" [for]="'id'+item.id" ></label>
-            </div>
-        </td>
-        <td *ngIf="!item.isDefault"> 
-            <button *appCheckclaim ="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="getData(item.id, item.name, item.isPublic, item.rank)"><em class="fa fa-edit"></em></button>
+        <td>{{item.typeName}}</td>
+        <td *ngIf="!item.isDefault">
+            <button *appCheckclaim ="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="getData(item.id, item.name, item.isPublic, item.rank, item.type)"><em class="fa fa-edit"></em></button>
             <button *appCheckclaim ="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1" (click)="deleteData(item.id)"><em class="fa fa-trash"></em></button>
             <a class="btn pt-0 pb-0 btn-xs btn-info ml-1" *appCheckclaim ="roleViewClaim"  [routerLink]="['/dashboard/permission', item.id]" ><em class="fa fa-eye"></em> Manage Permission</a>
         </td>

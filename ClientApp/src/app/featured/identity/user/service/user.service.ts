@@ -13,6 +13,8 @@ export class UserService {
   private enableUserUrl = ApiGateway.identity.user.base + ApiGateway.identity.user.enableUser;
   private disableUserUrl = ApiGateway.identity.user.base + ApiGateway.identity.user.disableUser;
   private userRegistrationUrl = ApiGateway.identity.user.base + ApiGateway.identity.user.createEmployee;
+  private getAccountDetailsUrl = ApiGateway.identity.user.base +
+  ApiGateway.identity.user.getAccountNumberDetails;
   private userUpdateUrl = ApiGateway.identity.user.base + ApiGateway.identity.user.updateEmployee;
 constructor(private http: HttpClient) { }
 
@@ -54,6 +56,9 @@ constructor(private http: HttpClient) { }
   }
   getUserById(id: string): Observable<any>{
     return this.http.get<any>(`${this.baseUrl + this.getUserUrl}/${id}`);
+  }
+  getAllAccountDetails(name: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAccountDetailsUrl}?value=${name}`);
   }
 }
 

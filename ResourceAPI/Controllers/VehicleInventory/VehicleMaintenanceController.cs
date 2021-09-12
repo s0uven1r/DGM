@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.VehicleInventory;
 using Resource.Application.Query.VehicleInventory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.VehicleInventory
