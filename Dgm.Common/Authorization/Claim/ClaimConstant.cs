@@ -142,7 +142,7 @@ namespace Dgm.Common.Authorization.Claim
                     Rank = 3,
                     RouteUrl = "account",
                     ClaimModule = PermissionModuleConstant.Accounting,
-                    ClaimTitle = "View Acconting"
+                    ClaimTitle = "View Accounting"
                 },
                 new SeedClaimViewModel
                 {
@@ -174,7 +174,7 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Accounting,
                      ClaimTitle = "View Accounting Head"
                 },
-                new SeedClaimViewModel { 
+                new SeedClaimViewModel {
                      Id = "8e5b2b58-a2c1-4a9e-92ee-6037f476cb6g",
                      ClaimValue = AccountingClaimConstant.WriteAccountingType,
                      ClaimModule = PermissionModuleConstant.Accounting,
@@ -200,12 +200,128 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Accounting,
                      ClaimTitle = "View Accounting Transaction Entry"
                 },
-                new SeedClaimViewModel 
+                new SeedClaimViewModel
                 {    Id = "7e5b2b57-a2c1-7a9e-92ee-7037f477cb7h",
                      ClaimValue = AccountingClaimConstant.WriteAccountingTransactionEntry,
                      ClaimModule = PermissionModuleConstant.Accounting,
                      ClaimTitle = "Write Accounting Transaction Entry"
-                }
+                },
+                new SeedClaimViewModel
+                {
+                     Id ="8e5b2b58-a2c1-4a8e-92ee-6037f109cb0c",
+                     ClaimValue = AccountingClaimConstant.ViewCustomerPayment,
+                     MenuId = "0ff1f370-3c4f-4cf7-74eb-a7d072e72e49",
+                     Title = AccountMenuConstant.CustomerPaymentEntry.Key,
+                     Alias = AccountMenuConstant.CustomerPaymentEntry.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "0ff1f384-3c4f-4cf9-84eb-a6d082e22e41",
+                     Rank = 4,
+                     RouteUrl = "account/customerpayment",
+                     ClaimModule = PermissionModuleConstant.Accounting,
+                     ClaimTitle = "View Customer Payment"
+                },
+                #endregion
+                #region package and course
+                 new SeedClaimViewModel{
+                    Id ="08888830-37e2-4fb2-88c2-85d142868122",
+                    ClaimValue = PackageCourseClaimConstant.ViewConfiguration,
+                    MenuId = "b814543a-4048-40e9-aa95-6a711c5fffaa",
+                    Alias = PackageCourseMenuConstant.ConfigurationManagement.Value,
+                    Title = PackageCourseMenuConstant.ConfigurationManagement.Key,
+                    Class= "text-primary",
+                    FaClass= "fa-cogs",
+                    ParentId = null,
+                    Rank = 5,
+                    RouteUrl = "config",
+                    ClaimModule = PermissionModuleConstant.Configuration,
+                    ClaimTitle = "View Configuration"
+                },
+                new SeedClaimViewModel
+                {
+                     Id ="08888831-37e2-4fb2-88c2-85d142868122",
+                     ClaimValue = PackageCourseClaimConstant.ViewCourseType,
+                     MenuId = "b814543b-4048-40e9-aa95-6a711c5fffbb",
+                     Title = PackageCourseMenuConstant.CourseType.Key,
+                     Alias =  PackageCourseMenuConstant.CourseType.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "b814543a-4048-40e9-aa95-6a711c5fffaa",
+                     Rank = 1,
+                     RouteUrl = "config/coursetype",
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "View Course Type"
+                },
+
+                new SeedClaimViewModel {
+                     Id = "08888832-37e2-4fb2-88c2-85d142868122",
+                     ClaimValue = PackageCourseClaimConstant.WriteCourse,
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "Write Course Type"
+                 },
+                 new SeedClaimViewModel
+                {
+                     Id ="08888833-37e2-4fb2-88c2-85d142868122",
+                     ClaimValue = PackageCourseClaimConstant.ViewCourse,
+                     MenuId = "b814543b-4048-40e9-aa95-6a711c5fffcc",
+                     Title = PackageCourseMenuConstant.Course.Key,
+                     Alias =  PackageCourseMenuConstant.Course.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "b814543a-4048-40e9-aa95-6a711c5fffaa",
+                     Rank = 2,
+                     RouteUrl = "config/course",
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "View Course"
+                },
+                new SeedClaimViewModel {
+                     Id = "08888834-37e2-4fb2-88c2-85d142868122",
+                     ClaimValue = PackageCourseClaimConstant.WriteCourse,
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "Write Course"
+                 },
+                 new SeedClaimViewModel
+                {
+                     Id ="08888835-37e2-4fb2-88c2-85d142868122",
+                     ClaimValue = PackageCourseClaimConstant.ViewPackage,
+                     MenuId = "b814543b-4048-40e9-aa95-6a711c5fffdd",
+                     Title = PackageCourseMenuConstant.Package.Key,
+                     Alias =  PackageCourseMenuConstant.Package.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "b814543a-4048-40e9-aa95-6a711c5fffaa",
+                     Rank = 3,
+                     RouteUrl = "config/package",
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "View package"
+                },
+                  new SeedClaimViewModel {
+                     Id = "08888836-37e2-4fb2-88c2-85d142868122",
+                     ClaimValue = PackageCourseClaimConstant.WritePackage,
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "Write Package"
+                 },
+                  new SeedClaimViewModel
+                {
+                     Id ="08888837-37e2-4fb2-88c2-85d142868122",
+                     ClaimValue = PackageCourseClaimConstant.ViewPromo,
+                     MenuId = "b814543b-4048-40e9-aa95-6a711c5fffee",
+                     Title = PackageCourseMenuConstant.Promo.Key,
+                     Alias =  PackageCourseMenuConstant.Promo.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "b814543a-4048-40e9-aa95-6a711c5fffaa",
+                     Rank = 4,
+                     RouteUrl = "config/promo",
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "View Promo"
+                },
+                  new SeedClaimViewModel {
+                     Id = "08888838-37e2-4fb2-88c2-85d142868122",
+                     ClaimValue = PackageCourseClaimConstant.Writepromo,
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "Write promo"
+                 },
                 #endregion
             };
         }

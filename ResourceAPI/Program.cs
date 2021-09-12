@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Resource.Infrastructure.Persistence;
+using Resource.Infrastructure.Persistence.Seed;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 
@@ -11,46 +13,60 @@ namespace ResourceAPI
 {
     public class Program
     {
-        public static object Log { get; private set; }
-
-        public static async Task Main(string[] args)
+        public async static Task Main(string[] args)
         {
-            //CreateHostBuilder(args).Build().Run();
-            var host = CreateHostBuilder(args).Build();
+            //Read Configuration from appSettings
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+            //Initialize Logger
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(config)
+                .CreateLogger();
 
+            var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
                 try
                 {
-                    var context = services.GetRequiredService<AppDbContext>();
+                    var dbContext = services.GetRequiredService<AppDbContext>();
+                    await dbContext.Database.MigrateAsync();
 
-                    if (context.Database.IsSqlServer())
-                    {
-                        context.Database.Migrate();
-                    }
+                    await SeedAccountHeadCountTable.SeedAccountHeadCountAsync(dbContext);
+                    await SeedAccountTypes.SeedAccountTypesAsync(dbContext);
+                    await SeedAccountHeads.SeedAccountHeadsAsync(dbContext);
 
                 }
                 catch (Exception ex)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
+                    Log.Fatal(ex, "An error occurred while migrating or seeding the database.");
                     throw;
                 }
             }
 
-            await host.RunAsync();
+            try
+            {
+                Log.Information("Application Starting.");
+                await host.RunAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "The Application failed to start.");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls(new string[] { "https://*:44337" });
-                });
+        Host.CreateDefaultBuilder(args)
+         .UseSerilog()
+            //Uses Serilog instead of default .NET Logger
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
     }
 }

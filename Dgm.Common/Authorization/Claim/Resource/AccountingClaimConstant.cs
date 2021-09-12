@@ -16,5 +16,9 @@
         public const string ViewAccountingTransactionEntry = "Claim.Accounting.TransactionEntry.Read";
         public const string WriteAccountingTransactionEntry = "Claim.Accounting.TransactionEntry.Write";
 
+        //Customer Payment
+        public const string ViewCustomerPayment = "Claim.Accounting.CustomerPayment.Read";
+        public const string WriteCustomerPayment = "Claim.Accounting.CustomerPayment.Write";
+
     }
 }

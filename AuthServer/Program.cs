@@ -1,4 +1,3 @@
-using Auth.Infrastructure.Constants;
 using AuthServer.Entities;
 using AuthServer.Persistence;
 using AuthServer.Persistence.Seed;
@@ -79,7 +78,8 @@ namespace AuthServer
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog() //Uses Serilog instead of default .NET Logger
+                .UseSerilog()
+                //Uses Serilog instead of default .NET Logger
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

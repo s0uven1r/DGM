@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Resource.Application.Common.Interfaces;
 using Resource.Domain.Entities;
 using Resource.Domain.Entities.Account;
+using Resource.Domain.Entities.PackageCourse;
 using Resource.Domain.Entities.VehicleInventory;
 using System;
 using System.Collections.Generic;
@@ -52,8 +53,21 @@ namespace Resource.Infrastructure.Persistence
             return result;
         }
 
+        public async Task<int> SaveChangesForSeedAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            return result;
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            foreach (var property in builder.Model.GetEntityTypes()
+                   .SelectMany(t => t.GetProperties())
+                   .Where(p => p.ClrType == typeof(decimal)))
+            {
+                property.SetColumnType("decimal(15, 4)");
+            }
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(builder);
@@ -61,10 +75,16 @@ namespace Resource.Infrastructure.Persistence
 
         public DbSet<VehicleDetail> VehicleDetails { get; set; }
         public DbSet<VehicleMaintenanceDetail> VehicleMaintenaceDetails { get; set; }
-        
         public DbSet<AccountType> AccountTypes { get; set; }
         public DbSet<AccountHead> AccountHeads { get; set; }
         public DbSet<AccountCountTable> AccountCountTables { get; set; }
-
+        public DbSet<ClosingBalance> ClosingBalances { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionDetail> TransactionDetails { get; set; }
+        public DbSet<CourseType> CourseTypes { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Package> Packages { get; set; }
+        public DbSet<PackagePromoOffer> PackagePromoOffers { get; set; }
+        public DbSet<CustomerPayment> CustomerPayments { get; set; }
     }
 }
