@@ -8,6 +8,7 @@ namespace Resource.Domain.Entities.Account
 {
     public class CustomerPayment: BaseEntity
     {
+        public string AccountNumber { get; set; }
         public decimal PackageAmount { get; set; }
         public decimal PaidAmount { get; set; }
         public bool IsDiscountAvail { get; set; }
@@ -16,6 +17,6 @@ namespace Resource.Domain.Entities.Account
         public decimal DiscountPercent { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal NetAmount { get; set; }
-       
+
     }
 }

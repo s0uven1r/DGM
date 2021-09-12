@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Resource.Domain.Entities.Account;
+using Resource.Domain.Entities.PackageCourse;
 using Resource.Domain.Entities.VehicleInventory;
 using System;
 using System.Threading;
@@ -23,5 +24,10 @@ namespace Resource.Application.Common.Interfaces
         public DbSet<ClosingBalance> ClosingBalances { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionDetail> TransactionDetails { get; set; }
+        public DbSet<CourseType> CourseTypes { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Package> Packages { get; set; }
+        public DbSet<PackagePromoOffer> PackagePromoOffers { get; set; }
+        public DbSet<CustomerPayment> CustomerPayments { get; set; }
     }
 }
