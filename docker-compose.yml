@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  authserver:
+    image: ${DOCKER_REGISTRY-}authserver
+    build:
+      context: .
+      dockerfile: AuthServer/Dockerfile
+
+  resourceapi:
+    image: ${DOCKER_REGISTRY-}resourceapi
+    build:
+      context: .
+      dockerfile: ResourceAPI/Dockerfile
+
