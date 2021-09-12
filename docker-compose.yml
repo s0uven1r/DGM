@@ -1,15 +1,59 @@
 version: '3.4'
 
+networks:
+    dgm:
+      name: dgm
+
 services:
+
+  sqlserver:
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      - "SA_PASSWORD=Admin@123"
+      - "ACCEPT_EULA=Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - dgm
+    restart: on-failure
+
   authserver:
     image: ${DOCKER_REGISTRY-}authserver
     build:
       context: .
       dockerfile: AuthServer/Dockerfile
+    ports:
+        - '5001:5001'
+    environment:
+        - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DGM_Identity_Db;User=sa;Password=Admin@123;MultipleActiveResultSets=true"
+        - ASPNETCORE_URLS="https://+;"
+        - ASPNETCORE_HTTPS_PORT=5001
+        - ASPNETCORE_Kestrel__Certificates__Default__Password=pa55word
+        - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/AuthServer.pfx
+    depends_on:
+        - sqlserver
+    networks:
+      - dgm
+    restart: on-failure
 
   resourceapi:
     image: ${DOCKER_REGISTRY-}resourceapi
     build:
       context: .
       dockerfile: ResourceAPI/Dockerfile
+    ports:
+        - '6001:6001'
+    environment:
+      - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DGM_API;User=sa;Password=Admin@123;MultipleActiveResultSets=true"
+      - ASPNETCORE_URLS="https://+;"
+      - ASPNETCORE_HTTPS_PORT=6001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=pa55word
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ResourceAPI.pfx
+    depends_on:
+        - sqlserver
+        - authserver
+    networks:
+      - dgm
+    restart: on-failure
 

@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>AuthServer</RootNamespace>
     <AssemblyName>AuthServer</AssemblyName>
-    <UserSecretsId>7e964bf0-ef75-421b-8863-8b9f0dbf621b</UserSecretsId>
+    <UserSecretsId>d7015224-fd40-45c7-beb4-18de0f70fc8c</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>

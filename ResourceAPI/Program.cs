@@ -67,6 +67,7 @@ namespace ResourceAPI
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
+                webBuilder.UseUrls(new string[] { "https://*:44337" });
             });
     }
 }
