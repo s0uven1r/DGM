@@ -31,10 +31,12 @@ services:
         - ASPNETCORE_HTTPS_PORT=5001
         - ASPNETCORE_Kestrel__Certificates__Default__Password=pa55word
         - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/AuthServer.pfx
+    volumes:
+        - ~/.aspnet/https:/https:ro
     depends_on:
         - sqlserver
     networks:
-      - dgm
+        - dgm
     restart: on-failure
 
   resourceapi:
@@ -50,10 +52,12 @@ services:
       - ASPNETCORE_HTTPS_PORT=6001
       - ASPNETCORE_Kestrel__Certificates__Default__Password=pa55word
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ResourceAPI.pfx
+    volumes:
+       - ~/.aspnet/https:/https:ro
     depends_on:
-        - sqlserver
-        - authserver
+       - sqlserver
+       - authserver
     networks:
-      - dgm
+       - dgm
     restart: on-failure
 
