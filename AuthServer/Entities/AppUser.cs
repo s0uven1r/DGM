@@ -18,5 +18,6 @@ namespace AuthServer.Entities
         public DateTime? LastUpdatedDate { get; set; }
 
         public bool IsDisabled { get; set; }
+        public bool IsKYCUpdated { get; set; }
     }
 }
