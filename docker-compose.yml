@@ -24,11 +24,13 @@ services:
       context: .
       dockerfile: AuthServer/Dockerfile
     ports:
-        - '5001:5001'
+        - '5050:80'
+        - '5051:443'
     environment:
         - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DGM_Identity_Db;User=sa;Password=Admin@123;MultipleActiveResultSets=true"
-        - ASPNETCORE_URLS="https://+;"
-        - ASPNETCORE_HTTPS_PORT=5001
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=https://+:443;http://+:80
+        - ASPNETCORE_HTTPS_PORT=5051
         - ASPNETCORE_Kestrel__Certificates__Default__Password=pa55word
         - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/AuthServer.pfx
     volumes:
@@ -45,11 +47,13 @@ services:
       context: .
       dockerfile: ResourceAPI/Dockerfile
     ports:
-        - '6001:6001'
+        - '6060:80'
+        - '6061:443'
     environment:
       - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DGM_API;User=sa;Password=Admin@123;MultipleActiveResultSets=true"
-      - ASPNETCORE_URLS="https://+;"
-      - ASPNETCORE_HTTPS_PORT=6001
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=6061
       - ASPNETCORE_Kestrel__Certificates__Default__Password=pa55word
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ResourceAPI.pfx
     volumes:

@@ -83,7 +83,6 @@ namespace AuthServer
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls(new string[] { "https://*:44316" });
                 });
     }
 }
