@@ -20,6 +20,7 @@ import { AccountTypeCreateComponent } from "src/app/featured/account/account-typ
 import { AccountTypeEditComponent } from "src/app/featured/account/account-type/account-type-edit/account-type-edit.component";
 import { AccountHeadCreateComponent } from "src/app/featured/account/account-head/account-head-create/account-head-create.component";
 import { AccountHeadEditComponent } from "src/app/featured/account/account-head/account-head-edit/account-head-edit.component";
+import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -37,6 +38,7 @@ export const RouteComponent = {
       PermissionRouteComponent: [PermissionComponent],
       UserRouteComponent: [UserComponent],
       UserCreateRouteComponent: [CreateComponent],
+      KYCRouteComponent: [KycComponent],
       VehicleInventoryRouteComponent: [VehicleRegisterComponent],
       VehicleInventoryCreateRouteComponent: [VehicleCreateComponent],
       VehicleInventoryUpdateRouteComponent: [VehicleUpdateComponent],

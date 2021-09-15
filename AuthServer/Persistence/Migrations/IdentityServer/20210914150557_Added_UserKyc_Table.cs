@@ -7,12 +7,6 @@ namespace AuthServer.Persistence.Migrations.IdentityServer
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "AccountNumber",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
-
             migrationBuilder.AddColumn<bool>(
                 name: "IsKYCUpdated",
                 table: "AspNetUsers",
@@ -56,10 +50,6 @@ namespace AuthServer.Persistence.Migrations.IdentityServer
         {
             migrationBuilder.DropTable(
                 name: "UserKYC");
-
-            migrationBuilder.DropColumn(
-                name: "AccountNumber",
-                table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
                 name: "IsKYCUpdated",

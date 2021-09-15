@@ -27,7 +27,10 @@ export const ApiGateway = {
             disableUser: '/DisableLogin',
             createEmployee: '/CreateEmployee',
             updateEmployee: '/UpdateEmployee',
-            getAccountNumberDetails: '/GetAccountDetails'
+            getAccountNumberDetails: '/GetAccountDetails',
+            updateKyc: '/UpdateKYC',
+            getKyc:'/GetKYC',
+            getKycDDL:'/GetKYCDDL'
         }
     },
     resource: {

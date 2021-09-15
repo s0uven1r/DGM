@@ -30,6 +30,8 @@ import { UserRoutePath } from './route-path/user';
 import { VehicleRoutePath } from './route-path/vehicle-route-path';
 import { AccountTypeResolverService } from 'src/app/featured/account/service/accounttype-resolver.service';
 import { AccountHeadResolverService } from 'src/app/featured/account/service/accounthead-resolver.service';
+import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
+import { KycResolverService } from 'src/app/featured/identity/user/service/Resolver/kyc-resolver.service';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -60,6 +62,9 @@ export const RoutePath = {
   UserRoutePath: [{path: '', component: UserComponent}],
   UserCreateRoutePath: [{path: '', component: CreateComponent,resolve: {
     roleData: RoleResolverService
+  }}],
+  UserKycRoutePath: [{path: '', component: KycComponent,resolve: {
+    kycDDLData: KycResolverService
   }}],
   VehicleInventoryRoutePath: [{path: '', component: VehicleRegisterComponent}],
   VehicleInventoryCreateRoutePath: [{path: '', component: VehicleCreateComponent}],

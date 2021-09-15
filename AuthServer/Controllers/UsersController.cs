@@ -8,7 +8,9 @@ using AuthServer.Models.Users.Employee.Request;
 using AuthServer.Persistence;
 using AuthServer.Services.EmailSender;
 using AuthServer.Services.Resource;
+using AutoMapper;
 using Dgm.Common.Authorization.Claim.Identity;
+using Dgm.Common.Constants.KYC;
 using Dgm.Common.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -33,14 +35,16 @@ namespace AuthServer.Controllers
         private readonly AppIdentityDbContext _appIdentityDbContext;
         private readonly IEmailSender _emailSender;
         private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
         public UsersController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, AppIdentityDbContext appIdentityDbContext,
-            IEmailSender emailSender, IAccountService accountService)
+            IEmailSender emailSender, IAccountService accountService, IMapper mapper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _appIdentityDbContext = appIdentityDbContext;
             _emailSender = emailSender;
             _accountService = accountService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -345,10 +349,65 @@ namespace AuthServer.Controllers
 
             if (data.Count == 0) return NotFound(); ;
             var accountDetails = data.Where(x => x.user.Email.Contains(value))
-                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.user.FirstName,x.user.MiddleName, x.user.LastName, "-", x.user.AccountNumber), x.user.AccountNumber));
-           
+                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.user.FirstName, x.user.MiddleName, x.user.LastName, "-", x.user.AccountNumber), x.user.AccountNumber));
+
             return Ok(accountDetails.ToList());
         }
+
+        [HttpPost]
+        [Route("UpdateKYC")]
+        public async Task<IActionResult> UpdateKYC([FromBody] UserKYCRequestModel kycModel)
+        {
+            var requestedBy = User.FindFirst("UserId").Value.ToString();
+            UserKYC kyc = _mapper.Map<UserKYC>(kycModel);
+            kyc.UserId = requestedBy;
+            kyc.CreatedBy = requestedBy;
+            kyc.CreatedDate = DateTime.UtcNow;
+
+            var transaction = await _appIdentityDbContext.Database.BeginTransactionAsync();
+            try
+            {
+                await _appIdentityDbContext.UserKYC.AddAsync(kyc);
+                await _appIdentityDbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return Ok();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("GetKYC/{userId}")]
+        public async Task<IActionResult> GetKYC(string userId)
+        {
+            var kyc = await _appIdentityDbContext.UserKYC.OrderByDescending(x => x.CreatedDate).Where(x => x.UserId == userId).FirstOrDefaultAsync();
+
+            if (kyc == null)
+            {
+                return BadRequest("Kyc not found!");
+            }
+
+            var kycResponse = _mapper.Map<UserKYCResponseModel>(kyc);
+            return Ok(kycResponse);
+        }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetKYCDDL")]
+        public IActionResult GetKYCDDL()
+        {
+            var obj = new
+            {
+                MaritalStatusDDL = MaritalStatus.TypeOfMaritalStatus,
+                BloodGroupDDL = BloodGroupConstant.TypeOfBloodGroup,
+                GenderDDL = GenderConstant.TypeOfGender
+            };
+            return Ok(obj);
+        }
+
         #region helpers
         private async Task SendEmployeeRegistrationEmail(CreateEmployeeRequest model, string password)
         {
