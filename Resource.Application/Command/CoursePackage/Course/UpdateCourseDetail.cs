@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Resource.Application.Command.CoursePackage.Course
 {
-    public class UpdateCourseDetail
+    public class UpdatePackageDetail
     {
         public class UpdateCourseDetailCommand : CourseUpdateViewModel, IRequest
         {
