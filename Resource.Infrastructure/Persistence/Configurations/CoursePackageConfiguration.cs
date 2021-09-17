@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Resource.Domain.Entities.PackageCourse;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Resource.Infrastructure.Persistence.Configurations
 {
-    public class CourseConfiguration
+    public class CourseConfiguration : IEntityTypeConfiguration<Course>
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
@@ -17,7 +18,7 @@ namespace Resource.Infrastructure.Persistence.Configurations
             .HasForeignKey(a => a.CourseTypeId);
         }
     }
-    public class PackageConfiguration
+    public class PackageConfiguration : IEntityTypeConfiguration<Package>
     {
         public void Configure(EntityTypeBuilder<Package> builder)
         {
@@ -26,13 +27,16 @@ namespace Resource.Infrastructure.Persistence.Configurations
             .HasForeignKey(a => a.CourseId);
         }
     }
-    public class PromoConfiguration
+    public class PromoConfiguration : IEntityTypeConfiguration<PackagePromoOffer>
     {
         public void Configure(EntityTypeBuilder<PackagePromoOffer> builder)
         {
             builder.HasOne(x => x.Package)
             .WithMany(y => y.PackagePromoOffers)
             .HasForeignKey(a => a.PackageId);
+
+            builder.HasIndex(b => b.PromoCode)
+           .IsUnique();
         }
     }
 }
