@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Exceptions\" />
+    <Folder Include="Models\Account\AccountEntry\Response\" />
   </ItemGroup>
 
 </Project>

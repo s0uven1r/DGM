@@ -45,7 +45,7 @@ namespace Resource.Application.Query.VehicleInventory
                                             UpdatedBy = x.UpdatedBy,
                                             UpdatedDate = x.UpdatedDate,
                                             AccountNumber = x.AccountNumber
-                                        }).ToListAsync();
+                                        }).ToListAsync(cancellationToken);
 
                     return getAllVehicle;
 
