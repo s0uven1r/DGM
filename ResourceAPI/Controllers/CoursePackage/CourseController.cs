@@ -54,6 +54,16 @@ namespace ResourceAPI.Controllers.CoursePackage
             command.Id = id;
             return Ok(await Mediator.Send(command));
         }
+        /// <summary>
+        /// <param name="Id"></param>
+        /// </summary>
+        /// <returns></returns>
+        //[Permission(Permission.)]
+        [HttpDelete("Type/Delete/{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            return Ok(await Mediator.Send(request: new DeleteCourseTypeDetail.DeleteCourseTypeDetailCommand { Id = id }));
+        }
         #endregion end course type
 
         #region begin course
@@ -94,12 +104,22 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <returns></returns>
         //[Permission(Permission.)]
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> UpdateCourse(string id, UpdateCourseDetail.UpdateCourseDetailCommand command)
+        public async Task<IActionResult> UpdateCourse(string id, UpdatePackageDetail.UpdateCourseDetailCommand command)
         {
             command.Id = id;
             return Ok(await Mediator.Send(command));
         }
 
+        /// <summary>
+        /// <param name="Id"></param>
+        /// </summary>
+        /// <returns></returns>
+        //[Permission(Permission.)]
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> DeleteCourse(string id)
+        {
+            return Ok(await Mediator.Send(request: new DeleteCourseDetail.DeleteCourseDetailCommand { Id = id }));
+        }
 
         #endregion end course
     }
