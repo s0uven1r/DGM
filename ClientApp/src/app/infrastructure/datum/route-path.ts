@@ -32,6 +32,11 @@ import { AccountTypeResolverService } from 'src/app/featured/account/service/acc
 import { AccountHeadResolverService } from 'src/app/featured/account/service/accounthead-resolver.service';
 import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
 import { KycResolverService } from 'src/app/featured/identity/user/service/Resolver/kyc-resolver.service';
+import { PackageComponent } from 'src/app/featured/package-course/package/package.component';
+import { PackageUpdateComponent } from 'src/app/featured/package-course/package/package-update/package-update.component';
+import { PackageResolverService } from 'src/app/featured/package-course/service/package-resolver.service';
+import { PackageCreateComponent } from 'src/app/featured/package-course/package/package-create/package-create.component';
+import { ConfigRoutePath } from './route-path/config-route-path';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -52,6 +57,7 @@ export const RoutePath = {
                         UserRoutePath,
                         AccountRoutePath,
                         VehicleRoutePath,
+                        ConfigRoutePath
                       ],
                       canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: '', component: AuthCallbackComponent}],
@@ -88,4 +94,12 @@ export const RoutePath = {
     accountTypeDDL: AccountHeadResolverService
   }}],
   AccountTransactionEntryRoutePath: [{path: '', component: TransactionEntryComponent}],
+
+  PackageRoutePath: [{path: '', component: PackageComponent}],
+  PackageCreateRoutePath: [{path: '', component: PackageCreateComponent, resolve: {
+    courseDDL: PackageResolverService
+  }}],
+  PackageUpdateRoutePath: [{path: '', component: PackageUpdateComponent, resolve: {
+    courseDDL: PackageResolverService
+  }}],
 };

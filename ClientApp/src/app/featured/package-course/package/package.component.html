@@ -1,0 +1,32 @@
+<div *appCheckclaim ="packageCreateClaim" class="row m-2">
+    <div class="col-12 text-right">
+        <a href="#" [routerLink]='"create"' class="btn btn-primary btn-sm">Create</a>
+    </div>
+
+</div>
+
+
+<div class="col-12">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead>
+          <tr>
+            <th>S.N</th>
+            <th>Package Name</th>
+            <th>Course Title</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pack of packages; let i = index;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ pack.packageName }}</td>
+            <td>{{ pack.courseTitle }}</td>
+            <td>
+              <button *appCheckclaim ="packageCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="updatePackageDetail(pack.id)" ><em class="fa fa-edit"></em></button>
+              <button *appCheckclaim ="packageCreateClaim" class="btn pt-0 pb-0 ml-2 btn-xs btn-danger" (click)="deletePackageDetail(pack.id)" ><em class="fa fa-trash"></em></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+

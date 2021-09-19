@@ -21,6 +21,9 @@ import { AccountTypeEditComponent } from "src/app/featured/account/account-type/
 import { AccountHeadCreateComponent } from "src/app/featured/account/account-head/account-head-create/account-head-create.component";
 import { AccountHeadEditComponent } from "src/app/featured/account/account-head/account-head-edit/account-head-edit.component";
 import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
+import { PackageComponent } from 'src/app/featured/package-course/package/package.component';
+import { PackageUpdateComponent } from 'src/app/featured/package-course/package/package-update/package-update.component';
+import { PackageCreateComponent } from 'src/app/featured/package-course/package/package-create/package-create.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -50,5 +53,8 @@ export const RouteComponent = {
       AccountHeadRouteComponent: [AccountHeadComponent],
       AccountHeadCreateRouteComponent: [AccountHeadCreateComponent],
       AccountHeadEditRouteComponent: [AccountHeadEditComponent],
-      AccountTransactionEntryRouteComponent: [TransactionEntryComponent]
+      AccountTransactionEntryRouteComponent: [TransactionEntryComponent],
+      PackageRouteComponent: [PackageComponent],
+      PackageCreateRouteComponent: [PackageCreateComponent],
+      PackageUpdateRouteComponent: [PackageUpdateComponent],
 }
