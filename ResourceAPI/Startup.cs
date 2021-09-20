@@ -87,6 +87,7 @@ namespace ResourceAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseHttpsRedirection();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -102,7 +103,6 @@ namespace ResourceAPI
             // global error handler
             app.UseMiddleware<ErrorHandlerMiddleware>();
 
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

@@ -79,7 +79,7 @@ namespace AuthServer
                     c.OAuthUsePkce();
                 });
             }
-
+            app.UseHttpsRedirection();
             // global error handler
             app.UseMiddleware<ErrorHandlerMiddleware>();
 
