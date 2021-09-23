@@ -31,5 +31,34 @@ export const ConfigRoutePath = {
         },
       ],
     },
+    {
+      path: "promo",
+      data: { breadcrumb: "Promo" },
+      children: [
+        {
+          path: "",
+          loadChildren: () =>
+            import(
+              "src/app/featured/package-course/promo/promo.module"
+            ).then((m) => m.PromoModule),
+        },
+        {
+          path: "create",
+          data: { breadcrumb: "Create" },
+          loadChildren: () =>
+            import(
+              "src/app/featured/package-course/promo/promo-create/promo-create.module"
+            ).then((m) => m.PromoCreateModule),
+        },
+        {
+          path: "edit/:id",
+          data: { breadcrumb: "Edit" },
+          loadChildren: () =>
+            import(
+              "src/app/featured/package-course/promo/promo-update/promo-update.module"
+            ).then((m) => m.PromoUpdateModule),
+        },
+      ],
+    },
   ],
 };

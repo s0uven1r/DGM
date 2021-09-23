@@ -24,6 +24,9 @@ import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
 import { PackageComponent } from 'src/app/featured/package-course/package/package.component';
 import { PackageUpdateComponent } from 'src/app/featured/package-course/package/package-update/package-update.component';
 import { PackageCreateComponent } from 'src/app/featured/package-course/package/package-create/package-create.component';
+import { PromoComponent } from 'src/app/featured/package-course/promo/promo.component';
+import { PromoCreateComponent } from 'src/app/featured/package-course/promo/promo-create/promo-create.component';
+import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -57,4 +60,7 @@ export const RouteComponent = {
       PackageRouteComponent: [PackageComponent],
       PackageCreateRouteComponent: [PackageCreateComponent],
       PackageUpdateRouteComponent: [PackageUpdateComponent],
+      PromoRouteComponent: [PromoComponent],
+      PromoCreateRouteComponent: [PromoCreateComponent],
+      PromoUpdateRouteComponent: [PromoUpdateComponent],
 }

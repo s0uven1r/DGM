@@ -34,9 +34,12 @@ import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
 import { KycResolverService } from 'src/app/featured/identity/user/service/Resolver/kyc-resolver.service';
 import { PackageComponent } from 'src/app/featured/package-course/package/package.component';
 import { PackageUpdateComponent } from 'src/app/featured/package-course/package/package-update/package-update.component';
-import { PackageResolverService } from 'src/app/featured/package-course/service/package-resolver.service';
+import { PackageResolverService, PromoResolverService } from 'src/app/featured/package-course/service/package-resolver.service';
 import { PackageCreateComponent } from 'src/app/featured/package-course/package/package-create/package-create.component';
 import { ConfigRoutePath } from './route-path/config-route-path';
+import { PromoComponent } from 'src/app/featured/package-course/promo/promo.component';
+import { PromoCreateComponent } from 'src/app/featured/package-course/promo/promo-create/promo-create.component';
+import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -101,5 +104,13 @@ export const RoutePath = {
   }}],
   PackageUpdateRoutePath: [{path: '', component: PackageUpdateComponent, resolve: {
     courseDDL: PackageResolverService
+  }}],
+
+  PromoRoutePath: [{path: '', component: PromoComponent}],
+  PromoCreateRoutePath: [{path: '', component: PromoCreateComponent, resolve: {
+    packageDDL: PromoResolverService
+  }}],
+  PromoUpdateRoutePath: [{path: '', component: PromoUpdateComponent, resolve: {
+    packageDDL: PromoResolverService
   }}],
 };

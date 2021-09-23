@@ -68,7 +68,7 @@ export const ApiGateway = {
             }
         },
         course: {
-            course: {
+        course: {
                 base: 'Course',
                 getAll: '/Get/GetAll',
                 getSingleById: '/Get/GetById',
@@ -86,7 +86,7 @@ export const ApiGateway = {
                 update: '/Update',
                 delete: '/Delete',
             },
-            promo:{
+        promo:{
                 base: 'Package/Promo',
                 getAll: '/Get/GetAll',
                 getSingleById: '/Get/GetById',
