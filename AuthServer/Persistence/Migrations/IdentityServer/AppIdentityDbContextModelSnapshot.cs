@@ -78,6 +78,9 @@ namespace AuthServer.Persistence.Migrations.IdentityServer
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -99,6 +102,9 @@ namespace AuthServer.Persistence.Migrations.IdentityServer
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsKYCUpdated")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
@@ -271,6 +277,76 @@ namespace AuthServer.Persistence.Migrations.IdentityServer
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("AuthServer.Entities.UserKYC", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AlternativeContactNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("AnyMedicalCondition")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AnyMedication")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("BloodGroup")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Child1Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Child2Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CitizenshipNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FathersName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaritalStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MothersName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PanNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermanentAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpouseName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TemporaryAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserKYC");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>

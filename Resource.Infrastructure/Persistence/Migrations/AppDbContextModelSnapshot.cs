@@ -444,7 +444,7 @@ namespace Resource.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PromoCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -461,6 +461,10 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PackageId");
+
+                    b.HasIndex("PromoCode")
+                        .IsUnique()
+                        .HasFilter("[PromoCode] IS NOT NULL");
 
                     b.ToTable("PackagePromoOffers");
                 });

@@ -1,0 +1,34 @@
+<div class="container-fluid  h-100">
+  <form [formGroup]="createPackageForm" (ngSubmit)="createPackage()">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>Package Name</label><span class="text-danger">*</span>
+        <input type="text" formControlName="packageName" placeholder="Package Number" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Total Days</label><span class="text-danger">*</span>
+        <input type="number" formControlName="totalDay" placeholder="Total Day" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Course</label><span class="text-danger">*</span>
+        <select class="form-control dropdown-toggle" formControlName="courseId">
+          <option value=null selected>--Select Course--</option>
+          <option *ngFor="let ddl of courses" [value]="ddl.id">{{ddl.courseName}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>Duration</label><span class="text-danger">*</span>
+        <input type="number" formControlName="duration" placeholder="Duration" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Price</label><span class="text-danger">*</span>
+        <input type="number" formControlName="price" placeholder="Price" class="form-control">
+      </div>
+    </div>
+    <div class="form-row">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>

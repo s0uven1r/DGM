@@ -20,6 +20,13 @@ import { AccountTypeCreateComponent } from "src/app/featured/account/account-typ
 import { AccountTypeEditComponent } from "src/app/featured/account/account-type/account-type-edit/account-type-edit.component";
 import { AccountHeadCreateComponent } from "src/app/featured/account/account-head/account-head-create/account-head-create.component";
 import { AccountHeadEditComponent } from "src/app/featured/account/account-head/account-head-edit/account-head-edit.component";
+import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
+import { PackageComponent } from 'src/app/featured/package-course/package/package.component';
+import { PackageUpdateComponent } from 'src/app/featured/package-course/package/package-update/package-update.component';
+import { PackageCreateComponent } from 'src/app/featured/package-course/package/package-create/package-create.component';
+import { PromoComponent } from 'src/app/featured/package-course/promo/promo.component';
+import { PromoCreateComponent } from 'src/app/featured/package-course/promo/promo-create/promo-create.component';
+import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -37,6 +44,7 @@ export const RouteComponent = {
       PermissionRouteComponent: [PermissionComponent],
       UserRouteComponent: [UserComponent],
       UserCreateRouteComponent: [CreateComponent],
+      KYCRouteComponent: [KycComponent],
       VehicleInventoryRouteComponent: [VehicleRegisterComponent],
       VehicleInventoryCreateRouteComponent: [VehicleCreateComponent],
       VehicleInventoryUpdateRouteComponent: [VehicleUpdateComponent],
@@ -48,5 +56,11 @@ export const RouteComponent = {
       AccountHeadRouteComponent: [AccountHeadComponent],
       AccountHeadCreateRouteComponent: [AccountHeadCreateComponent],
       AccountHeadEditRouteComponent: [AccountHeadEditComponent],
-      AccountTransactionEntryRouteComponent: [TransactionEntryComponent]
+      AccountTransactionEntryRouteComponent: [TransactionEntryComponent],
+      PackageRouteComponent: [PackageComponent],
+      PackageCreateRouteComponent: [PackageCreateComponent],
+      PackageUpdateRouteComponent: [PackageUpdateComponent],
+      PromoRouteComponent: [PromoComponent],
+      PromoCreateRouteComponent: [PromoCreateComponent],
+      PromoUpdateRouteComponent: [PromoUpdateComponent],
 }

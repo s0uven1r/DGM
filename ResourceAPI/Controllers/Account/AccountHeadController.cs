@@ -9,17 +9,12 @@ using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.Account
 {
-    [Authorize]
     public class AccountHeadController : BaseController
     {
         private readonly IAccountHeadCountService _accountHeadCountService;
         public AccountHeadController(IAccountHeadCountService accountHeadCountService)
         {
             _accountHeadCountService = accountHeadCountService;
-        }
-        AccountHeadController()
-        {
-
         }
         //[Permission(Permission.)]
         [HttpGet("Get/GetAll")]

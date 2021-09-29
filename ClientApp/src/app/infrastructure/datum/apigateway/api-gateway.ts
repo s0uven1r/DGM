@@ -27,7 +27,10 @@ export const ApiGateway = {
             disableUser: '/DisableLogin',
             createEmployee: '/CreateEmployee',
             updateEmployee: '/UpdateEmployee',
-            getAccountNumberDetails: '/GetAccountDetails'
+            getAccountNumberDetails: '/GetAccountDetails',
+            updateKyc: '/UpdateKYC',
+            getKyc:'/GetKYC',
+            getKycDDL:'/GetKYCDDL'
         }
     },
     resource: {
@@ -62,6 +65,34 @@ export const ApiGateway = {
                 getSingleById: '/Get/GetById',
                 create: '/Create',
                 update: '/Update',
+            }
+        },
+        course: {
+        course: {
+                base: 'Course',
+                getAll: '/Get/GetAll',
+                getSingleById: '/Get/GetById',
+                create: '/Create',
+                update: '/Update',
+                delete: '/Delete',
+            }
+        },
+        package: {
+            package: {
+                base: 'Package',
+                getAll: '/Get/GetAll',
+                getSingleById: '/Get/GetById',
+                create: '/Create',
+                update: '/Update',
+                delete: '/Delete',
+            },
+        promo:{
+                base: 'Package/Promo',
+                getAll: '/Get/GetAll',
+                getSingleById: '/Get/GetById',
+                create: '/Create',
+                update: '/Update',
+                delete: '/Delete',
             }
         }
     }
