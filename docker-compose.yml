@@ -65,3 +65,18 @@ services:
        - dgm
     restart: on-failure
 
+  clientapp:
+    image: ${DOCKER_REGISTRY-}clientapp
+    build:
+      context: .
+      dockerfile: ClientApp/Dockerfile
+    ports:
+      - '4200:80'
+    environment:
+      - NODE_ENV=prod
+    depends_on:
+       - authserver
+       - resourceapi
+    networks:
+       - dgm
+    restart: on-failure
