@@ -1,5 +1,5 @@
-import { CourseModel } from './../../../infrastructure/model/UserManagement/resource/course/coursemodel';
 import { CourseService } from './../service/course.service';
+import { CourseModel } from './../../../infrastructure/model/UserManagement/resource/course/coursemodel';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 import { CourseControllersClaim } from '../../../infrastructure/datum/claim/course-management';
 
 @Component({
-  selector: 'app-package',
+  selector: 'app-course',
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,14 +50,14 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
   updateCourseDetail(id: string) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/dashboard/config/package/edit/${id}`])
+      this.router.createUrlTree([`/dashboard/config/course/edit/${id}`])
     );
     window.open(url, "_self");
     //window.open(url, "_blank");
   }
   deleteCourseDetail(id: string) {
     Swal.fire({
-      title: "Delete pacakge details?",
+      title: "Delete Course details?",
       text: "",
       icon: "warning",
       showCancelButton: true,
@@ -65,7 +65,19 @@ export class CourseComponent implements OnInit, OnDestroy {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.value) {
-
+        this.courseService.deleteCourseById(id).subscribe(
+          () => {
+            Swal.fire(
+              "Deleted!",
+              "Course detail deleted successfully.",
+              "success"
+            );
+           this.getInitData();
+          },
+          (err) => {
+            Swal.fire("Error Deleted!", err, "error");
+          }
+        );
       }
     });
   }

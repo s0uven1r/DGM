@@ -29,6 +29,7 @@ import { PromoComponent } from 'src/app/featured/package-course/promo/promo.comp
 import { PromoCreateComponent } from 'src/app/featured/package-course/promo/promo-create/promo-create.component';
 import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
 import { CourseCreateComponent } from 'src/app/featured/package-course/course/course-create/course-create.component';
+import { CourseUpdateComponent } from 'src/app/featured/package-course/course/course-update/course-update.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -67,5 +68,5 @@ export const RouteComponent = {
       PromoUpdateRouteComponent: [PromoUpdateComponent],
       CourseRouteComponent: [CourseComponent],
       CourseCreateRouteComponent: [CourseCreateComponent],
-      // CourseUpdateRouteComponent: [CourseUpdateComponent],
+      CourseUpdateRouteComponent: [CourseUpdateComponent],
 }

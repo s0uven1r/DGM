@@ -84,8 +84,8 @@ export const ConfigRoutePath = {
           data: { breadcrumb: "Edit" },
           loadChildren: () =>
             import(
-              "src/app/featured/package-course/package/package-update/package-update.module"
-            ).then((m) => m.PackageUpdateModule),
+              "src/app/featured/package-course/course/Course-update/Course-update.module"
+            ).then((m) => m.CourseUpdateModule),
         },
       ],
     },

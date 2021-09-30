@@ -8,12 +8,12 @@ import Swal from 'sweetalert2';
 import { CourseService } from '../../service/Course.service';
 
 @Component({
-  selector: 'app-Course-create',
-  templateUrl: './Course-create.component.html',
-  styleUrls: ['./Course-create.component.css']
+  selector: 'app-Course-Update',
+  templateUrl: './Course-Update.component.html',
+  styleUrls: ['./Course-Update.component.css']
 })
-export class CourseCreateComponent implements OnInit {
-  createCourseForm: FormGroup;
+export class CourseUpdateComponent implements OnInit {
+  UpdateCourseForm: FormGroup;
   courses: CourseModel[] = [];
   constructor(
     private route: ActivatedRoute,
@@ -25,10 +25,25 @@ export class CourseCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.courses = this.route.snapshot.data.courseDDL;
+    this.route.params.subscribe((params) => {
+      if (params["id"]) {
+        this.CourseService.getSingleCourse(params["id"]).subscribe((x) => {
+          this.UpdateCourseForm.patchValue({
+            id: x.id,
+            CourseName: x.courseName,
+            courseTypeId: x.courseTypeId,
+            courseInfo: x.courseInfo,
+            requiredDocuments: x.requiredDocuments,
+            isAdvanceCourse: x.isAdvanceCourse,
+          });
+        });
+      }
+    });
   }
 
   FormDesign() {
-    return (this.createCourseForm = this.form.group({
+    return (this.UpdateCourseForm = this.form.group({
+      id: [null, Validators.required],
       CourseName: [null, Validators.required],
       courseTypeId: [null, Validators.required],
       courseInfo: [null, Validators.required],
@@ -37,9 +52,9 @@ export class CourseCreateComponent implements OnInit {
     }));
   }
 
-  createCourse() {
+  UpdateCourse() {
     Swal.fire({
-      title: "Create Course Detail",
+      title: "Update Course Detail",
       text: "User Action",
       icon: "warning",
       showCancelButton: true,
@@ -48,7 +63,7 @@ export class CourseCreateComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.CourseService
-          .createCourse(this.createCourseForm.value)
+          .UpdateCourse(this.UpdateCourseForm.value)
           .pipe(
             catchError((err) => {
               return throwError(err);
@@ -56,7 +71,7 @@ export class CourseCreateComponent implements OnInit {
           )
           .subscribe(
             () => {
-              Swal.fire("Created!", "User Action", "success");
+              Swal.fire("Updated!", "User Action", "success");
             },
             () => console.log("HTTP request completed.")
           );
