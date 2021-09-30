@@ -1,3 +1,4 @@
+import { CourseComponent } from 'src/app/featured/package-course/course/course.component';
 import { TransactionEntryComponent } from 'src/app/featured/account/transaction-entry/transaction-entry.component';
 import { AppComponent } from "src/app/app.component";
 import { HomeComponent } from "src/app/core/home/home.component";
@@ -27,6 +28,7 @@ import { PackageCreateComponent } from 'src/app/featured/package-course/package/
 import { PromoComponent } from 'src/app/featured/package-course/promo/promo.component';
 import { PromoCreateComponent } from 'src/app/featured/package-course/promo/promo-create/promo-create.component';
 import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
+import { CourseCreateComponent } from 'src/app/featured/package-course/course/course-create/course-create.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -63,4 +65,7 @@ export const RouteComponent = {
       PromoRouteComponent: [PromoComponent],
       PromoCreateRouteComponent: [PromoCreateComponent],
       PromoUpdateRouteComponent: [PromoUpdateComponent],
+      CourseRouteComponent: [CourseComponent],
+      CourseCreateRouteComponent: [CourseCreateComponent],
+      // CourseUpdateRouteComponent: [CourseUpdateComponent],
 }

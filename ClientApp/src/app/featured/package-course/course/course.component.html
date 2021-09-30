@@ -1,0 +1,38 @@
+<div *appCheckclaim ="courseCreateClaim" class="row m-2">
+  <div class="col-12 text-right">
+      <a href="#" [routerLink]='"create"' class="btn btn-primary btn-sm">Create</a>
+  </div>
+
+</div>
+
+
+<div class="col-12">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+      <thead>
+        <tr>
+          <th>S.N</th>
+          <th>Title</th>
+          <th>Type</th>
+          <th>Documents</th>
+          <th>Is Advance</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses; let i = index;">
+          <td>{{ i + 1 }}</td>
+          <td>{{ course.courseName }}</td>
+          <td>{{ course.courseType }}</td>
+          <td>{{ course.requiredDocuments }}</td>
+          <td>{{ course.isAdvanceCourse }}</td>
+          <td>{{ course.courseInfoName }}</td>
+          <td >
+            <button *appCheckclaim ="courseCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="updateCourseDetail(course.id)" ><em class="fa fa-edit"></em></button>
+            <button  *appCheckclaim ="courseCreateClaim" class="btn pt-0 pb-0 ml-2 btn-xs btn-danger" (click)="deleteCourseDetail(course.id)"><em class="fa fa-trash"></em></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+

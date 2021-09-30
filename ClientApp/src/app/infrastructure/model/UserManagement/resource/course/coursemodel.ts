@@ -2,8 +2,8 @@ export interface CourseModel {
     id: string;
     courseName: string;
     courseTypeId: string;
-    courseInfoName: string;
+    courseInfo: string;
     requiredDocuments: string;
     courseType: string;
-    ssAdvanceCourse: boolean;
+    isAdvanceCourse: boolean;
 }
