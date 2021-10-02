@@ -60,5 +60,34 @@ export const ConfigRoutePath = {
         },
       ],
     },
+    {
+      path: "course",
+      data: { breadcrumb: "Course" },
+      children: [
+        {
+          path: "",
+          loadChildren: () =>
+            import(
+              "src/app/featured/package-course/course/course.module"
+            ).then((m) => m.CourseModule),
+        },
+        {
+          path: "create",
+          data: { breadcrumb: "Create" },
+          loadChildren: () =>
+            import(
+              "src/app/featured/package-course/course/Course-create/Course-create.module"
+            ).then((m) => m.CourseCreateModule),
+        },
+        {
+          path: "edit/:id",
+          data: { breadcrumb: "Edit" },
+          loadChildren: () =>
+            import(
+              "src/app/featured/package-course/course/Course-update/Course-update.module"
+            ).then((m) => m.CourseUpdateModule),
+        },
+      ],
+    },
   ],
 };

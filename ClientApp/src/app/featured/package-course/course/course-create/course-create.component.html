@@ -1,0 +1,34 @@
+<div class="container-fluid  h-100">
+  <form [formGroup]="createCourseForm" (ngSubmit)="createCourse()">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>Course Name</label><span class="text-danger">*</span>
+        <input type="text" formControlName="CourseName" placeholder="Course Name" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Course Type</label><span class="text-danger">*</span>
+        <select class="form-control dropdown-toggle" formControlName="courseTypeId">
+          <option value=null selected>--Select Course Type--</option>
+          <option *ngFor="let ddl of courses" [value]="ddl.id">{{ddl.courseName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label>Required Documents</label><span class="text-danger">*</span>
+        <input type="text" formControlName="requiredDocuments" placeholder="Required Documents" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Description</label><span class="text-danger">*</span>
+        <input type="text" formControlName="courseInfo" placeholder="Course Description" class="form-control">
+      </div>
+      <div class="col-md-4">
+        <div class="mt-4 ml-3 pt-1 custom-control form-control-lg custom-checkbox">
+          <input type="checkbox" formControlName="isAdvanceCourse" class="custom-control-input" id="advance">
+          <label class="custom-control-label" [for]="'advance'">Advance</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
