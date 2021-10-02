@@ -3,13 +3,9 @@
 FROM node:latest as node
 
 WORKDIR /app
-
-RUN npm install -g @angular/cli
-
-COPY ./package.json .
+COPY  . .
 RUN npm install
-COPY . .
-RUN ng build --prod
+RUN npm run build --prod
 
 # Stage 2, use the compiled app, ready for production with Nginx
 
