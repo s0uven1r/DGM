@@ -2,6 +2,7 @@ using AuthServer.Extensions;
 using AuthServer.Filters;
 using AuthServer.Helpers;
 using Dgm.Common.Error;
+using Dgm.Common.Models;
 using FluentValidation.AspNetCore;
 using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
@@ -17,14 +18,28 @@ namespace AuthServer
 {
     public class Startup
     {
-        public Startup(IConfiguration config)
+        public IConfiguration Config { get; }
+
+        private IWebHostEnvironment _env;
+
+        public Startup(IConfiguration config, IWebHostEnvironment env)
         {
             Config = config;
+            _env = env;
         }
-        public IConfiguration Config { get; }
+       
 
         public void ConfigureServices(IServiceCollection services)
         {
+            if (_env.IsDevelopment())
+            {
+                services.Configure<ClientBaseUrls>(Config.GetSection("ClientBaseUrls"));
+            }
+            else
+            {
+                services.Configure<ClientBaseUrls>(x => ClientBaseUrlsHelper.Configure(x));
+            }
+
             services.AddControllersWithViews(options =>
               options.Filters.Add<ValidationFilter>()).AddNewtonsoftJson(options => 
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -79,25 +94,10 @@ namespace AuthServer
                     c.OAuthUsePkce();
                 });
             }
+
             app.UseHttpsRedirection();
             // global error handler
             app.UseMiddleware<ErrorHandlerMiddleware>();
-
-            //app.UseExceptionHandler(builder =>
-            //{
-            //    builder.Run(async context =>
-            //    {
-            //        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            //        context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
-            //        var error = context.Features.Get<IExceptionHandlerFeature>();
-            //        if (error != null)
-            //        {
-            //            context.Response.AddApplicationError(error.Error.Message);
-            //            await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
-            //        }
-            //    });
-            //});
 
             app.UseStaticFiles();
 

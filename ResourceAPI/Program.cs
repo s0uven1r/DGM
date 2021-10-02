@@ -40,19 +40,19 @@ namespace ResourceAPI
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal(ex, "An error occurred while migrating or seeding the database.");
+                    Log.Fatal(ex, "An error occurred while migrating or seeding the resource api database.");
                     throw;
                 }
             }
 
             try
             {
-                Log.Information("Application Starting.");
+                Log.Information("Resource API is starting.");
                 await host.RunAsync();
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "The Application failed to start.");
+                Log.Fatal(ex, "The Resource API failed to start.");
             }
             finally
             {

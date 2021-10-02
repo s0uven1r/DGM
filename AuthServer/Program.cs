@@ -1,6 +1,7 @@
 using AuthServer.Entities;
 using AuthServer.Persistence;
 using AuthServer.Persistence.Seed;
+using Dgm.Common.Models;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Serilog;
 using System;
 using System.Threading.Tasks;
@@ -32,7 +34,7 @@ namespace AuthServer
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
+                var clientUrls = services.GetRequiredService<IOptions<ClientBaseUrls>>();
                 try
                 {
                     var identityContext = services.GetRequiredService<AppIdentityDbContext>();
@@ -47,7 +49,7 @@ namespace AuthServer
                     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
                     await RoleData.SeedDefaultRolesAsync(roleManager);
-                    await ConfigurationDbContextSeed.SeedDefaultConfiguration(configContext);
+                    await ConfigurationDbContextSeed.SeedDefaultConfiguration(configContext, clientUrls);
 
                     await AppIdentityDbContextSeed.SeedDefaultConfiguration(identityContext);
                     await SeedRolePermission.SeedRolewisePermission(roleManager, identityContext);
@@ -56,19 +58,19 @@ namespace AuthServer
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal(ex, "An error occurred while migrating or seeding the database.");
+                    Log.Fatal(ex, "An error occurred while migrating or seeding the authserver database.");
                     throw;
                 }
             }
 
             try
             {
-                Log.Information("Application Starting.");
+                Log.Information("AuthServer is starting.");
                 await host.RunAsync();
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "The Application failed to start.");
+                Log.Fatal(ex, "The AuthServer failed to start.");
             }
             finally
             {

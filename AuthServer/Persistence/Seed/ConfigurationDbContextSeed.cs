@@ -1,6 +1,7 @@
 ﻿using AuthServer.Configurations;
+using Dgm.Common.Models;
 using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,51 +9,23 @@ namespace AuthServer.Persistence.Seed
 {
     public static class ConfigurationDbContextSeed
     {
-        public async static Task SeedDefaultConfiguration(ConfigurationDbContext context)
+        public async static Task SeedDefaultConfiguration(ConfigurationDbContext context, IOptions<ClientBaseUrls> clientUrls)
         {
-            await Task.Run(() =>
-            {
+            if (context.Clients.Any())
+                context.Clients.RemoveRange(context.Clients);
+            if (context.ApiScopes.Any())
+                context.ApiScopes.RemoveRange(context.ApiScopes);
+            if (context.IdentityResources.Any())
+                context.IdentityResources.RemoveRange(context.IdentityResources);
+            if (context.ApiResources.Any())
+                context.ApiResources.RemoveRange(context.ApiResources);
 
-                //if (!context.Clients.Any())
-                //{
-                foreach (var client in Configuration.GetClients())
-                {
-                    if (!context.Clients.Where(x => x.ClientId == client.ClientId).Any())
-                        context.Clients.Add(client.ToEntity());
-                }
-                context.SaveChanges();
-                //}
+            context.Clients.AddRange(Configuration.GetClients(clientUrls));
+            context.ApiScopes.AddRange(Configuration.GetApiScopes());
+            context.IdentityResources.AddRange(Configuration.GetIdentityResources());
+            context.ApiResources.AddRange(Configuration.GetApiResources());
 
-                //if (!context.ApiScopes.Any())
-                //{
-                foreach (var apiscope in Configuration.GetApiScopes())
-                {
-                    if (!context.ApiScopes.Where(x => x.Name == apiscope.Name).Any())
-                        context.ApiScopes.Add(apiscope.ToEntity());
-                }
-                context.SaveChanges();
-                //}
-
-                //if (!context.IdentityResources.Any())
-                //{
-                foreach (var resource in Configuration.GetIdentityResources())
-                {
-                    if (!context.IdentityResources.Where(x => x.Name == resource.Name).Any())
-                        context.IdentityResources.Add(resource.ToEntity());
-                }
-                context.SaveChanges();
-                //}
-
-                //if (!context.ApiResources.Any())
-                //{
-                foreach (var resource in Configuration.GetApiResources())
-                {
-                    if (!context.ApiResources.Where(x => x.Name == resource.Name).Any())
-                        context.ApiResources.Add(resource.ToEntity());
-                }
-                context.SaveChanges();
-                //}
-            });
+            await context.SaveChangesAsync();
         }
     }
 }

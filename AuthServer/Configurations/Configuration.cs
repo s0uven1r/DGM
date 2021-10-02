@@ -1,137 +1,113 @@
-﻿using IdentityServer4;
+﻿using Dgm.Common.Models;
+using IdentityServer4;
+using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 
 namespace AuthServer.Configurations
 {
     public class Configuration
     {
-        public static IEnumerable<IdentityResource> GetIdentityResources()
+        public static IEnumerable<IdentityServer4.EntityFramework.Entities.IdentityResource> GetIdentityResources()
         {
-            return new List<IdentityResource>
+            return new List<IdentityServer4.EntityFramework.Entities.IdentityResource>
             {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Email(),
-                new IdentityResources.Profile()
+                new IdentityResources.OpenId().ToEntity(),
+                new IdentityResources.Email().ToEntity(),
+                new IdentityResources.Profile().ToEntity()
             };
         }
 
-        public static IEnumerable<ApiScope> GetApiScopes()
+        public static IEnumerable<IdentityServer4.EntityFramework.Entities.ApiScope> GetApiScopes()
         {
-            return new List<ApiScope>
-           {
-                new ApiScope(name: "api.read",   displayName: "Read your data."),
-                new ApiScope(name: "api.write",  displayName: "Write your data."),
-                new ApiScope(name: "api.delete", displayName: "Delete your data.")
+            return new List<IdentityServer4.EntityFramework.Entities.ApiScope>
+            {
+                new ApiScope(name: "api.read",   displayName: "Read your data.").ToEntity(),
+                new ApiScope(name: "api.write",  displayName: "Write your data.").ToEntity(),
+                new ApiScope(name: "api.delete", displayName: "Delete your data.").ToEntity()
             };
         }
 
-        public static IEnumerable<ApiResource> GetApiResources()
+        public static IEnumerable<IdentityServer4.EntityFramework.Entities.ApiResource> GetApiResources()
         {
-            return new List<ApiResource>
+            return new List<IdentityServer4.EntityFramework.Entities.ApiResource>
             {
                 new ApiResource("resourceapi", "Resource API")
                 {
                     Scopes = {"api.read"}
-                },
-                // local API
-                new ApiResource(IdentityServerConstants.LocalApi.ScopeName),
+                }.ToEntity(),
+                new ApiResource(IdentityServerConstants.LocalApi.ScopeName).ToEntity(),
             };
         }
 
-        public static IEnumerable<Client> GetClients()
+        public static IEnumerable<IdentityServer4.EntityFramework.Entities.Client> GetClients(IOptions<ClientBaseUrls> clientUrls)
         {
-            //string clientUri = "https://localhost:5006"; 
-            string clientUri = "https://localhost:44337";
-            return new[]
+            return new List<IdentityServer4.EntityFramework.Entities.Client> {
+                new Client
             {
-                new Client {
-                    RequireConsent = false,
-                    ClientId = "angular_spa",
-                    ClientName = "Angular SPA",
-                    AllowedGrantTypes = GrantTypes.Implicit, //flow of access_token request
-                    AllowedScopes = {
+                RequireConsent = false,
+                ClientId = "angular_spa",
+                ClientName = "Angular SPA",
+                AllowedGrantTypes = GrantTypes.Implicit, //flow of access_token request
+                AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
                         "api.read"
                     },
-                    RedirectUris = {"http://localhost:4200/auth-callback"},
-                    PostLogoutRedirectUris = {"http://localhost:4200/signout-callback-oidc"},
-                    AllowedCorsOrigins = {"http://localhost:4200"},
-                    AllowAccessTokensViaBrowser = true,
-                    AccessTokenLifetime = 3600,
-                    ClientSecrets =
+                RedirectUris = { $"{clientUrls.Value.ClientApp}auth-callback" },
+                PostLogoutRedirectUris = { $"{clientUrls.Value.ClientApp}signout-callback-oidc" },
+                AllowedCorsOrigins = { clientUrls.Value.ClientApp },
+                AllowAccessTokensViaBrowser = true,
+                AccessTokenLifetime = 3600,
+                ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                    AccessTokenType = AccessTokenType.Jwt,
-                    AlwaysIncludeUserClaimsInIdToken = true,
-                    AllowOfflineAccess = true
-                },
-
-                new Client {
-                    ClientId = "demo_api_swagger",
-                    ClientName = "Swagger UI for demo_api",
-                    ClientSecrets = {new Secret("secret".Sha256())}, // change me!
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
-                    AllowAccessTokensViaBrowser = true,
-                    AccessTokenLifetime = 3600,
-                    RedirectUris = { $"{clientUri}/swagger/oauth2-redirect.html", "https://localhost:44316/swagger/oauth2-redirect.html"},
-                    AllowedCorsOrigins = {$"{clientUri}","https://localhost:44316"},
-                    AllowedScopes = {
+                AccessTokenType = AccessTokenType.Jwt,
+                AlwaysIncludeUserClaimsInIdToken = true,
+                AllowOfflineAccess = true
+            }.ToEntity(),
+                new Client
+            {
+                ClientId = "demo_api_swagger",
+                ClientName = "Swagger UI for demo_api",
+                ClientSecrets = { new Secret("secret".Sha256()) }, // change me!
+                AllowedGrantTypes = GrantTypes.Implicit,
+                RequirePkce = true,
+                RequireClientSecret = false,
+                AllowAccessTokensViaBrowser = true,
+                AccessTokenLifetime = 3600,
+                RedirectUris = { $"{clientUrls.Value.AuthServer}/swagger/oauth2-redirect.html", $"{clientUrls.Value.ResourceAPI}swagger/oauth2-redirect.html" },
+                AllowedCorsOrigins = { clientUrls.Value.AuthServer, clientUrls.Value.ResourceAPI },
+                AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
                         "api.read"
                     },
-                },
-
+            }.ToEntity(),
                 new Client
-                {
-                    ClientId = "js",
-                    ClientName = "JavaScript Client",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequireClientSecret = false,
-
-                    RedirectUris =           { "https://localhost:5003/callback.html" },
-                    PostLogoutRedirectUris = { "https://localhost:5003/index.html" },
-                    AllowedCorsOrigins =     { "https://localhost:5003" },
-
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "api.read",
-                        IdentityServerConstants.LocalApi.ScopeName
-                    }
-                },
-
-                new Client
-                {
-                    ClientId = "flutter",
-
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
-
-                    RedirectUris = { "http://localhost:4040/" },
-                    AllowedCorsOrigins = { "http://localhost:4040" },
-
-                    AllowedScopes = {
+            {
+                ClientId = "flutter",
+                RedirectUris = { clientUrls.Value.AuthServer },
+                AllowedCorsOrigins = { clientUrls.Value.AuthServer },
+                AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
                         "api.read"
                     },
-
-                    AllowAccessTokensViaBrowser = true,
-                    RequireConsent = false
-                }
-            };
+                AllowedGrantTypes = GrantTypes.Code,
+                RequirePkce = true,
+                RequireClientSecret = false,
+                AllowAccessTokensViaBrowser = true,
+                RequireConsent = false,
+                AllowOfflineAccess = true,
+                AccessTokenLifetime = 3600
+            }.ToEntity()
+             };
         }
     }
 }
-

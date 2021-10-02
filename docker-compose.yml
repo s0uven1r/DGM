@@ -26,6 +26,8 @@ services:
     ports:
         - '5050:80'
         - '5051:443'
+    env_file:
+      - prod.env
     environment:
         - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DGM_Identity_Db;User=sa;Password=Admin@123;MultipleActiveResultSets=true"
         - ASPNETCORE_ENVIRONMENT=Development
