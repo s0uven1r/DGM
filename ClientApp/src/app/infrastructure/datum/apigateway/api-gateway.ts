@@ -75,6 +75,9 @@ export const ApiGateway = {
                 create: '/Create',
                 update: '/Update',
                 delete: '/Delete',
+            },
+            courseType:{
+              base: 'Type',
             }
         },
         package: {
