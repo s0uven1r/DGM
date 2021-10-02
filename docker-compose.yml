@@ -70,7 +70,7 @@ services:
   clientapp:
     image: ${DOCKER_REGISTRY-}clientapp
     build:
-      context: .
+      context: ClientApp
       dockerfile: ClientApp/Dockerfile
     ports:
       - '4200:80'
