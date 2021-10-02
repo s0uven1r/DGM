@@ -42,8 +42,8 @@ jobs:
         tags: latest
 
 
-  build-and-deploy-frontend:
-    name: Build and Deploy Front-end
+  build-and-deploy-clientapp:
+    name: Build and Deploy clientapp
     runs-on: ubuntu-latest
     steps:
      - name: Checkout code
