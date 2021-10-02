@@ -2,6 +2,7 @@
 
 FROM node:latest as node
 
+RUN mkdir -p /app
 WORKDIR /app
 COPY  ./ClientApp ./app
 
