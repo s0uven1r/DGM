@@ -4,9 +4,9 @@ FROM node:latest as node
 
 WORKDIR /app
 
-COPY ClientApp/package*.json ./
+COPY ClientApp/package*.json .
 RUN npm install
-COPY ClientApp ./
+COPY ClientApp .
 
 RUN npm run build --prod
 
