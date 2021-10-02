@@ -2,11 +2,12 @@
 
 FROM node:latest as node
 
-RUN mkdir -p /app
 WORKDIR /app
-COPY  ./ClientApp ./app
 
+COPY ClientApp/package*.json ./
 RUN npm install
+COPY ClientApp ./
+
 RUN npm run build --prod
 
 # Stage 2, use the compiled app, ready for production with Nginx
