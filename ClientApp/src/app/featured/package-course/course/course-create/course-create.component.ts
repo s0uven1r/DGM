@@ -9,8 +9,8 @@ import { CourseService } from '../../service/Course.service';
 
 @Component({
   selector: 'app-Course-create',
-  templateUrl: './Course-create.component.html',
-  styleUrls: ['./Course-create.component.css']
+  templateUrl: './course-create.component.html',
+  styleUrls: ['./course-create.component.css']
 })
 export class CourseCreateComponent implements OnInit {
   createCourseForm: FormGroup;
