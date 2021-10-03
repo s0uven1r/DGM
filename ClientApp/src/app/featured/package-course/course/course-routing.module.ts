@@ -1,7 +1,7 @@
-import { RoutePath } from './../../../infrastructure/datum/route-path';
+import { RoutePath } from 'src/app/infrastructure/datum/route-path';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RouteComponent } from './../../../infrastructure/datum/route-component';
+import { RouteComponent } from 'src/app/infrastructure/datum/route-component';
 
 const routes: Routes = RoutePath.CourseRoutePath;
 @NgModule({

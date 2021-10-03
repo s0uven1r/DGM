@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import {
   RoutingComponent,
   CourseCreateRoutingModule,
-} from "./Course-create-routing.module";
+} from "./course-create-routing.module";
 import { CheckDirectiveModule } from "src/app/shared/directives/checkclaim.module";
 import { CourseService } from 'src/app/featured/package-course/service/course.service';
 
