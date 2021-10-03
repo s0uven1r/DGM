@@ -1,13 +1,11 @@
 # Stage 1: Build an Angular Docker Image
 
-FROM node:latest as node
+FROM node:14.16.0-alpine as node
 
 WORKDIR /app
 
-COPY ClientApp/package*.json ./ 
-RUN npm install
-
-COPY ClientApp .
+COPY ClientApp . 
+RUN npm install --silent
 
 RUN npm run build --prod
 
