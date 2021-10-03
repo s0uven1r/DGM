@@ -17,7 +17,7 @@ export class CourseCreateComponent implements OnInit {
   courses: CourseModel[] = [];
   constructor(
     private route: ActivatedRoute,
-    private CourseService: CourseService,
+    private courseService: CourseService,
     private form: FormBuilder
   ) {
     this.FormDesign();
@@ -47,7 +47,7 @@ export class CourseCreateComponent implements OnInit {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.value) {
-        this.CourseService
+        this.courseService
           .createCourse(this.createCourseForm.value)
           .pipe(
             catchError((err) => {
