@@ -8,16 +8,16 @@ import Swal from 'sweetalert2';
 import { CourseService } from '../../service/Course.service';
 
 @Component({
-  selector: 'app-Course-Update',
-  templateUrl: './Course-Update.component.html',
-  styleUrls: ['./Course-Update.component.css']
+  selector: 'app-course-update',
+  templateUrl: './course-update.component.html',
+  styleUrls: ['./course-update.component.css']
 })
 export class CourseUpdateComponent implements OnInit {
   UpdateCourseForm: FormGroup;
   courses: CourseModel[] = [];
   constructor(
     private route: ActivatedRoute,
-    private CourseService: CourseService,
+    private courseService: CourseService,
     private form: FormBuilder
   ) {
     this.FormDesign();
@@ -27,7 +27,7 @@ export class CourseUpdateComponent implements OnInit {
     this.courses = this.route.snapshot.data.courseDDL;
     this.route.params.subscribe((params) => {
       if (params["id"]) {
-        this.CourseService.getSingleCourse(params["id"]).subscribe((x) => {
+        this.courseService.getSingleCourse(params["id"]).subscribe((x) => {
           this.UpdateCourseForm.patchValue({
             id: x.id,
             CourseName: x.courseName,
@@ -62,7 +62,7 @@ export class CourseUpdateComponent implements OnInit {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.value) {
-        this.CourseService
+        this.courseService
           .UpdateCourse(this.UpdateCourseForm.value)
           .pipe(
             catchError((err) => {
