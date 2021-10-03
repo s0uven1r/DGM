@@ -76,7 +76,7 @@ export const ConfigRoutePath = {
           data: { breadcrumb: "Create" },
           loadChildren: () =>
             import(
-              "src/app/featured/package-course/course/Course-create/Course-create.module"
+              "src/app/featured/package-course/course/course-create/course-create.module"
             ).then((m) => m.CourseCreateModule),
         },
         {
@@ -84,7 +84,7 @@ export const ConfigRoutePath = {
           data: { breadcrumb: "Edit" },
           loadChildren: () =>
             import(
-              "src/app/featured/package-course/course/Course-update/Course-update.module"
+              "src/app/featured/package-course/course/course-update/course-update.module"
             ).then((m) => m.CourseUpdateModule),
         },
       ],
