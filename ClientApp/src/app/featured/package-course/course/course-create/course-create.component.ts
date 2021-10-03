@@ -5,10 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { CourseService } from '../../service/Course.service';
+import { CourseService } from 'src/app/featured/package-course/service/Course.service';
 
 @Component({
-  selector: 'app-Course-create',
+  selector: 'app-course-create',
   templateUrl: './course-create.component.html',
   styleUrls: ['./course-create.component.css']
 })
