@@ -41,8 +41,8 @@ import { ConfigRoutePath } from './route-path/config-route-path';
 import { PromoComponent } from 'src/app/featured/package-course/promo/promo.component';
 import { PromoCreateComponent } from 'src/app/featured/package-course/promo/promo-create/promo-create.component';
 import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
-import { CourseCreateComponent } from '../../featured/package-course/course/course-create/course-create.component';
-import { CourseUpdateComponent } from '../../featured/package-course/course/course-update/course-update.component';
+import { CourseCreateComponent } from 'src/app/featured/package-course/course/course-create/course-create.component';
+import { CourseUpdateComponent } from 'src/app/featured/package-course/course/course-update/course-update.component';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
