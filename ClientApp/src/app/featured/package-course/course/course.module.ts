@@ -1,5 +1,5 @@
-import { CourseService } from './../service/course.service';
-import { CheckDirectiveModule } from './../../../shared/directives/checkclaim.module';
+import { CourseService } from 'src/app/featured/package-course/service/course.service';
+import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

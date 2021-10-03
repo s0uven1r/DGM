@@ -1,5 +1,5 @@
-import { CourseService } from './../service/course.service';
-import { CourseModel } from './../../../infrastructure/model/UserManagement/resource/course/coursemodel';
+import { CourseService } from 'src/app/featured/package-course/service/course.service';
+import { CourseModel } from 'src/app/infrastructure/model/UserManagement/resource/course/coursemodel';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,

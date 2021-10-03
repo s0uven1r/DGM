@@ -6,7 +6,7 @@ import {
   CourseUpdateRoutingModule,
 } from "./course-update-routing.module";
 import { CheckDirectiveModule } from "src/app/shared/directives/checkclaim.module";
-import { CourseService } from "../../service/Course.service";
+import { CourseService } from 'src/app/featured/package-course/service/course.service';
 
 @NgModule({
   declarations: RoutingComponent,
