@@ -49,5 +49,6 @@ namespace AuthServer.Persistence
 
         public DbSet<ControllerClaim> ControllerClaim { get; set; }
         public DbSet<MenuControl> MenuControl { get; set; }
+        public DbSet<UserKYC> UserKYC { get; set; }
     }
 }

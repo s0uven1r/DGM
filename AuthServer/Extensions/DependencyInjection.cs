@@ -57,7 +57,7 @@ namespace AuthServer.Extensions
                 .AddProfileService<IdentityClaimsProfileService>();
 
             services.AddAuthentication().AddLocalApi();
-
+            services.AddAutoMapper(typeof(Startup));
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(IdentityServerConstants.LocalApi.PolicyName, policy =>

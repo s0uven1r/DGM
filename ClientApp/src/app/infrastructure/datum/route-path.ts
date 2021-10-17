@@ -1,3 +1,4 @@
+import { CourseComponent } from 'src/app/featured/package-course/course/course.component';
 import { TransactionEntryComponent } from 'src/app/featured/account/transaction-entry/transaction-entry.component';
 import { AuthGuard } from 'src/app/core/authorize/auth-guard';
 import { DashboardComponent } from 'src/app/core/dashboard/dashboard.component';
@@ -30,6 +31,18 @@ import { UserRoutePath } from './route-path/user';
 import { VehicleRoutePath } from './route-path/vehicle-route-path';
 import { AccountTypeResolverService } from 'src/app/featured/account/service/accounttype-resolver.service';
 import { AccountHeadResolverService } from 'src/app/featured/account/service/accounthead-resolver.service';
+import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
+import { KycResolverService } from 'src/app/featured/identity/user/service/Resolver/kyc-resolver.service';
+import { PackageComponent } from 'src/app/featured/package-course/package/package.component';
+import { PackageUpdateComponent } from 'src/app/featured/package-course/package/package-update/package-update.component';
+import { PackageResolverService, PromoResolverService } from 'src/app/featured/package-course/service/package-resolver.service';
+import { PackageCreateComponent } from 'src/app/featured/package-course/package/package-create/package-create.component';
+import { ConfigRoutePath } from './route-path/config-route-path';
+import { PromoComponent } from 'src/app/featured/package-course/promo/promo.component';
+import { PromoCreateComponent } from 'src/app/featured/package-course/promo/promo-create/promo-create.component';
+import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
+import { CourseCreateComponent } from '../../featured/package-course/course/course-create/course-create.component';
+import { CourseUpdateComponent } from '../../featured/package-course/course/course-update/course-update.component';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -50,6 +63,7 @@ export const RoutePath = {
                         UserRoutePath,
                         AccountRoutePath,
                         VehicleRoutePath,
+                        ConfigRoutePath
                       ],
                       canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: '', component: AuthCallbackComponent}],
@@ -60,6 +74,9 @@ export const RoutePath = {
   UserRoutePath: [{path: '', component: UserComponent}],
   UserCreateRoutePath: [{path: '', component: CreateComponent,resolve: {
     roleData: RoleResolverService
+  }}],
+  UserKycRoutePath: [{path: '', component: KycComponent,resolve: {
+    kycDDLData: KycResolverService
   }}],
   VehicleInventoryRoutePath: [{path: '', component: VehicleRegisterComponent}],
   VehicleInventoryCreateRoutePath: [{path: '', component: VehicleCreateComponent}],
@@ -83,4 +100,23 @@ export const RoutePath = {
     accountTypeDDL: AccountHeadResolverService
   }}],
   AccountTransactionEntryRoutePath: [{path: '', component: TransactionEntryComponent}],
+
+  PackageRoutePath: [{path: '', component: PackageComponent}],
+  PackageCreateRoutePath: [{path: '', component: PackageCreateComponent, resolve: {
+    courseDDL: PackageResolverService
+  }}],
+  PackageUpdateRoutePath: [{path: '', component: PackageUpdateComponent, resolve: {
+    courseDDL: PackageResolverService
+  }}],
+
+  PromoRoutePath: [{path: '', component: PromoComponent}],
+  PromoCreateRoutePath: [{path: '', component: PromoCreateComponent, resolve: {
+    packageDDL: PromoResolverService
+  }}],
+  PromoUpdateRoutePath: [{path: '', component: PromoUpdateComponent, resolve: {
+    packageDDL: PromoResolverService
+  }}],
+  CourseRoutePath: [{path: '', component: CourseComponent}],
+  CourseCreateRoutePath: [{path: '', component: CourseCreateComponent}],
+  CourseUpdateRoutePath: [{path: '', component: CourseUpdateComponent}],
 };

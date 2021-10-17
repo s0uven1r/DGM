@@ -1,11 +1,11 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
-
+import { environment } from 'src/environments/environment';
 export const oidcAuthConfig: AuthConfig = {
   // Url of the Identity Provider
-  issuer: 'https://localhost:44316',
+  issuer: environment.issuer,
 
   // URL of the SPA to redirect the user to after login
-  redirectUri: 'http://localhost:4200/auth-callback',
+  redirectUri: environment.redirectUri,
 
   // The SPA's id. The SPA is registered with this id at the auth-server
   clientId: 'angular_spa',
@@ -15,10 +15,10 @@ export const oidcAuthConfig: AuthConfig = {
   scope: 'api.read',
 
   // // Login Url of the Identity Provider
-  loginUrl: 'https://localhost:44316/connect/authorize',
+  loginUrl: `${environment.issuer}/connect/authorize`,
 
   // // Login Url of the Identity Provider
-  logoutUrl: 'https://localhost:44316/connect/endsession',
+  logoutUrl: `${environment.issuer}/connect/endsession`,
 
   // postLogoutRedirectUri: 'http://localhost:4200',
   useSilentRefresh: true,
