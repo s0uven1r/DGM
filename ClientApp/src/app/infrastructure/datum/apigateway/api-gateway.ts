@@ -65,6 +65,11 @@ export const ApiGateway = {
                 getSingleById: '/Get/GetById',
                 create: '/Create',
                 update: '/Update',
+            },
+            transactionentry:{
+                base:'AccountEntry',
+                getSingle:'Get/GetSingleAccountEntry',
+                create:'/Create'
             }
         },
         course: {

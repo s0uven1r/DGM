@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.Account.AccountEntry;
+using Resource.Application.Query.Account.AccountEntry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,10 @@ namespace ResourceAPI.Controllers.Account
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("Get/GetVehicleDetailById/{id}")]
-        public async Task<IActionResult> GetSingleVehicleById(string id)
+        [HttpGet("Get/GetSingleAccountEntry")]
+        public async Task<IActionResult> GetSingleVehicleById([FromBody] GetSingleAccountEntryDetail.GetSingleAccountEntryQuery query)
         {
-            return Ok(await Mediator.Send(request: new GetSingleAccountEntryQuery.get { Id = id }));
+            return Ok(await Mediator.Send(query));
         }
 
         /// <summary>

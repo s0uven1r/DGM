@@ -12,7 +12,7 @@ namespace Resource.Application.Models.Account.AccountEntry.Request
         public string AccountNumber { get; set; }
         public string Type { get; set; }
         public string EntryDateNP { get; set; }
-        public DateTime EntryDateEN { get; set; }
+        public string EntryDateEN { get; set; }
         public decimal MarketPrice { get; set; }
         public decimal DiscountedAmount { get; set; }
         public decimal NetAmount { get; set; }
@@ -28,7 +28,7 @@ namespace Resource.Application.Models.Account.AccountEntry.Request
         public string AccountNumber { get; set; }
         public string Type { get; set; }
         public string EntryDateNP { get; set; }
-        public DateTime EntryDateEN { get; set; }
+        public string EntryDateEN { get; set; }
         public decimal DebitAmount { get; set; }
         public decimal CreditAmount { get; set; }
         public string Remarks { get; set; }

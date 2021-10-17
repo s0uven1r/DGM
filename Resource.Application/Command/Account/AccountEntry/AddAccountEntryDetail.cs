@@ -5,6 +5,7 @@ using Resource.Application.Models.Account.AccountEntry.Request;
 using Resource.Domain.Entities.Account;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace Resource.Application.Command.Account.AccountEntry
                 RuleFor(x => x.Type).NotEmpty();
                 RuleFor(x => x.AccountNumber).NotEmpty();
                 RuleFor(x => x.EntryDateNP).NotEmpty();
-                RuleFor(x => x.EntryDateEN).GreaterThan(DateTime.MinValue);
+                RuleFor(x => x.EntryDateEN).NotNull();
                 RuleFor(x => x.Remarks).NotEmpty();
                 RuleFor(x => x.JournalEntries).NotNull();
             }
@@ -56,7 +57,7 @@ namespace Resource.Application.Command.Account.AccountEntry
                         DueAmount = request.DueAmount,
                         Remarks = request.Remarks,
                         Type = request.Type,
-                        TransactionDate = request.EntryDateEN,
+                        TransactionDate = DateTime.ParseExact(request.EntryDateEN, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date,
                         TransactionDateNP = request.EntryDateNP
                     };
                     var transactionDetails = request.JournalEntries.Select(x => new TransactionDetail
@@ -64,10 +65,10 @@ namespace Resource.Application.Command.Account.AccountEntry
                         AccountNumber = x.AccountNumber,
                         AmountCredit = x.CreditAmount,
                         AmountDebit = x.DebitAmount,
-                        TransactionDate = x.EntryDateEN,
+                        TransactionDate = DateTime.ParseExact(x.EntryDateEN, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                         TransactionDateNP = x.EntryDateNP,
                         Remarks = x.Remarks,
-                        Type =x.Type,
+                        Type = x.Type,
                         TransactionId = transactionEntity.Id,
                     }).ToList();
 
