@@ -43,6 +43,8 @@ import { PromoCreateComponent } from 'src/app/featured/package-course/promo/prom
 import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
 import { CourseCreateComponent } from '../../featured/package-course/course/course-create/course-create.component';
 import { CourseUpdateComponent } from '../../featured/package-course/course/course-update/course-update.component';
+import { SettingsRoutePath } from './route-path/settings-route-path';
+import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -63,7 +65,8 @@ export const RoutePath = {
                         UserRoutePath,
                         AccountRoutePath,
                         VehicleRoutePath,
-                        ConfigRoutePath
+                        ConfigRoutePath,
+                        SettingsRoutePath
                       ],
                       canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: '', component: AuthCallbackComponent}],
@@ -119,4 +122,6 @@ export const RoutePath = {
   CourseRoutePath: [{path: '', component: CourseComponent}],
   CourseCreateRoutePath: [{path: '', component: CourseCreateComponent}],
   CourseUpdateRoutePath: [{path: '', component: CourseUpdateComponent}],
+
+  LogoRoutePath : [{path: '', component:LogoComponent}]
 };

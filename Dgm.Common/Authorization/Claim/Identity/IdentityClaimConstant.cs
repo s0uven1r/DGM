@@ -15,5 +15,9 @@
         public const string ViewPermission = "Claim.Permission.Read";
         public const string WritePermission = "Claim.Permission.Write";
 
+        //settings
+        public const string ViewSettings = "Claim.Settings.Read";
+        public const string ViewLogo = "Claim.Logo.Read";
+
     }
 }

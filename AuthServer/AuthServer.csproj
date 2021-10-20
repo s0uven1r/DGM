@@ -44,6 +44,7 @@
     <Folder Include="Persistence\Migrations\" />
     <Folder Include="Validators\Users\Consumer\" />
     <Folder Include="wwwroot\font\" />
+    <Folder Include="wwwroot\Uploads\Logo\" />
   </ItemGroup>
 
  

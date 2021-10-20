@@ -75,10 +75,12 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Authorization,
                      ClaimTitle = "View Permission"
                  },
-                 #endregion
+                #endregion
+
+                
 
                 #region Vehicle
-                 new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72800",
+                new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72800",
                      ClaimValue = VehicleClaimConstant.ViewVehicle,
                      MenuId = "a17d4044-8dad-4058-9488-841d3332d270",
                      Alias = VehicleMenuConstant.VehicleManagement.Value,
@@ -322,6 +324,36 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Configuration,
                      ClaimTitle = "Write promo"
                  },
+                #endregion
+                #region Settings
+                new SeedClaimViewModel { Id = "7f81ab88-844a-880e-8178-48cde287aaa8",
+                     ClaimValue=IdentityClaimConstant.ViewSettings,
+                     MenuId = "8f51ac89-844a-470e-9172-42cde237aad8",
+                     Alias = IdentityMenuConstant.Settings.Value,
+                     Title = IdentityMenuConstant.Settings.Key,
+                     Class= "text-primary",
+                     FaClass= "tools",
+                     ParentId = null,
+                     Rank = 6,
+                     RouteUrl = "settings",
+                     ClaimModule = PermissionModuleConstant.Settings,
+                     ClaimTitle = "View Settings"
+                 },
+                new SeedClaimViewModel
+                {
+                     Id ="8e5b2b58-a2c1-5a2e-29ee-3067f218cb1e",
+                     ClaimValue = IdentityClaimConstant.ViewLogo,
+                     MenuId = "0ac6f041-7a4c-7cf2-84eb-a2d011e14e24",
+                     Title = IdentityMenuConstant.Logo.Value,
+                     Alias = IdentityMenuConstant.Logo.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "8f51ac89-844a-470e-9172-42cde237aad8",
+                     Rank = 1,
+                     RouteUrl = "settings/logo",
+                     ClaimModule = PermissionModuleConstant.Settings,
+                     ClaimTitle = "View Logo"
+                },
                 #endregion
             };
         }
