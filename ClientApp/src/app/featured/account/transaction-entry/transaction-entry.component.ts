@@ -235,8 +235,6 @@ export class TransactionEntryComponent implements OnInit, AfterViewInit {
         this.journalEntries().controls[index].patchValue({
           entryDateEN: dateAd
         });
-
-
     }
   }
 }
