@@ -344,7 +344,7 @@ namespace Dgm.Common.Authorization.Claim
                      Id ="8e5b2b58-a2c1-5a2e-29ee-3067f218cb1e",
                      ClaimValue = IdentityClaimConstant.ViewLogo,
                      MenuId = "0ac6f041-7a4c-7cf2-84eb-a2d011e14e24",
-                     Title = IdentityMenuConstant.Logo.Value,
+                     Title = IdentityMenuConstant.Logo.Key,
                      Alias = IdentityMenuConstant.Logo.Value,
                      Class = "text-primary",
                      FaClass= "",

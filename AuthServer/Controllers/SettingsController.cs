@@ -19,18 +19,20 @@ namespace AuthServer.Controllers
         }
 
         [HttpPost]
+        [Route("LogoUpload")]
         public IActionResult LogoUpload([FromForm] LogoUploadModel model)
         {
             try
             {
                 var logo = model.Logo;
-                string path = Path.Combine(this.Environment.WebRootPath, "Uploads/Logo");
+                string imageDirectory = Path.Combine("Uploads", "Logo");
+                string path = Path.Combine(this.Environment.WebRootPath, imageDirectory);
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
                 }
-                string fileName = Path.GetFileName(logo.FileName);
-                using (FileStream stream = new(Path.Combine(path, fileName), FileMode.Create))
+                string fullFilePath = Path.Combine(path, logo.FileName);
+                using (FileStream stream = new(fullFilePath, FileMode.Create))
                 {
                     logo.CopyTo(stream);
                 }
