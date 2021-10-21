@@ -43,9 +43,15 @@ import { PromoCreateComponent } from 'src/app/featured/package-course/promo/prom
 import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
 import { CourseCreateComponent } from '../../featured/package-course/course/course-create/course-create.component';
 import { CourseUpdateComponent } from '../../featured/package-course/course/course-update/course-update.component';
+<<<<<<< HEAD
 import { CourseTypeComponent } from 'src/app/featured/package-course/course-type/course-type.component';
 import { CourseTypeCreateComponent } from 'src/app/featured/package-course/course-type/course-type-create/course-type-create.component';
 import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/course-type/course-type-update/course-type-update.component';
+=======
+import { SettingsRoutePath } from './route-path/settings-route-path';
+import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
+import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
+>>>>>>> dgm
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -66,7 +72,8 @@ export const RoutePath = {
                         UserRoutePath,
                         AccountRoutePath,
                         VehicleRoutePath,
-                        ConfigRoutePath
+                        ConfigRoutePath,
+                        SettingsRoutePath
                       ],
                       canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: '', component: AuthCallbackComponent}],
@@ -125,4 +132,6 @@ export const RoutePath = {
   CourseTypeRoutePath:[{path:'',component:CourseTypeComponent}],
   CourseTypeCreateRoutePath: [{path: '', component: CourseTypeCreateComponent}],
   CourseTypeUpdateRoutePath: [{path: '', component: CourseTypeUpdateComponent}],
+  LogoRoutePath : [{path: '', component:LogoComponent}],
+  DescriptiveImageRoutePath : [{path: '', component:DescriptiveImageComponent}],
 };

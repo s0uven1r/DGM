@@ -39,8 +39,8 @@ namespace AuthServer.Persistence
               .WithMany(y => y.Children)
               .HasForeignKey(a => a.ParentId);
 
-            modelBuilder.Entity<UserClaim>().Ignore(x =>  x.ClaimType);
-            modelBuilder.Entity<UserClaim>().Ignore(x =>  x.ClaimValue);
+            modelBuilder.Entity<UserClaim>().Ignore(x => x.ClaimType);
+            modelBuilder.Entity<UserClaim>().Ignore(x => x.ClaimValue);
 
             modelBuilder.Entity<RoleClaim>().Ignore(x => x.ClaimType);
             modelBuilder.Entity<RoleClaim>().Ignore(x => x.ClaimValue);
@@ -50,5 +50,6 @@ namespace AuthServer.Persistence
         public DbSet<ControllerClaim> ControllerClaim { get; set; }
         public DbSet<MenuControl> MenuControl { get; set; }
         public DbSet<UserKYC> UserKYC { get; set; }
+        public DbSet<AppSettingImageRecord> AppSettingImageRecord { get; set; }
     }
 }

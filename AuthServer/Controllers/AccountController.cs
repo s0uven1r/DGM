@@ -2,6 +2,7 @@
 using AuthServer.Extensions;
 using AuthServer.Models;
 using AuthServer.Models.EmailSender;
+using AuthServer.Persistence;
 using AuthServer.Services.EmailSender;
 using AuthServer.Services.Resource;
 using Dgm.Common.Enums;
@@ -33,6 +34,7 @@ namespace AuthServer.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IAccountService _accountService;
+        private readonly AppIdentityDbContext _appIdentityDbContext;
 
 
         public AccountController(SignInManager<AppUser> signInManager,
@@ -42,7 +44,8 @@ namespace AuthServer.Controllers
             IClientStore clientStore, IEventService events,
             ILogger<AccountController> logger,
             IEmailSender emailSender,
-            IAccountService accountService
+            IAccountService accountService,
+            AppIdentityDbContext appIdentityDbContext
             )
         {
             _userManager = userManager;
@@ -55,6 +58,7 @@ namespace AuthServer.Controllers
             _logger = logger;
             _emailSender = emailSender;
             _accountService = accountService;
+            _appIdentityDbContext = appIdentityDbContext;
         }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace AuthServer.Controllers
                 // we only have one option for logging in and it's an external provider
                 return RedirectToAction("Challenge", "External", new { provider = vm.ExternalLoginScheme, returnUrl });
             }
-
+            ViewBag.LogoImage = GetLogoImage();
             return View(vm);
         }
 
@@ -84,7 +88,7 @@ namespace AuthServer.Controllers
         {
             // check if we are in the context of an authorization request
             AuthorizationRequest context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
-
+            ViewBag.LogoImage = GetLogoImage();
             // the user clicked the "cancel" button
             if (button != "login")
             {
@@ -184,6 +188,7 @@ namespace AuthServer.Controllers
         {
             // build a model so we know what to show on the login page
             var vm = await BuildRegisterViewModelAsync(returnUrl);
+            ViewBag.LogoImage = GetLogoImage();
             var publicRole = _roleManager.Roles.Where(x => x.IsPublic == true);
 
             if (vm.IsExternalLoginOnly)
@@ -203,7 +208,7 @@ namespace AuthServer.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            ViewBag.LogoImage = GetLogoImage();
             var role = _roleManager.Roles.Where(x => x.IsPublic == true).FirstOrDefault();
             if (role == null)
             {
@@ -459,5 +464,7 @@ namespace AuthServer.Controllers
             };
             await _emailSender.SendEmailAsync(mailRequest);
         }
+
+        private string GetLogoImage() => _appIdentityDbContext.AppSettingImageRecord.Where(x => x.IsLogo).FirstOrDefault()?.Name ?? $"defaultLogo.jpg";
     }
 }

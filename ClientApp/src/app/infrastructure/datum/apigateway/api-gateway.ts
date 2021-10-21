@@ -31,6 +31,11 @@ export const ApiGateway = {
             updateKyc: '/UpdateKYC',
             getKyc:'/GetKYC',
             getKycDDL:'/GetKYCDDL'
+        },
+        settings: {
+            base: 'Settings',
+            uploadLogo: '/LogoUpload',
+            uploadDescriptiveImage: '/DescriptiveImageUpload'
         }
     },
     resource: {
