@@ -31,6 +31,7 @@ import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/prom
 import { CourseCreateComponent } from 'src/app/featured/package-course/course/course-create/course-create.component';
 import { CourseUpdateComponent } from 'src/app/featured/package-course/course/course-update/course-update.component';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
+import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -71,4 +72,5 @@ export const RouteComponent = {
       CourseCreateRouteComponent: [CourseCreateComponent],
       CourseUpdateRouteComponent: [CourseUpdateComponent],
       LogoRouteComponent: [LogoComponent],
+      DescriptiveImageRouteComponent: [DescriptiveImageComponent],
 }

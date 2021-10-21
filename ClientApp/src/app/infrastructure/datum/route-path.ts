@@ -45,6 +45,7 @@ import { CourseCreateComponent } from '../../featured/package-course/course/cour
 import { CourseUpdateComponent } from '../../featured/package-course/course/course-update/course-update.component';
 import { SettingsRoutePath } from './route-path/settings-route-path';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
+import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -123,5 +124,6 @@ export const RoutePath = {
   CourseCreateRoutePath: [{path: '', component: CourseCreateComponent}],
   CourseUpdateRoutePath: [{path: '', component: CourseUpdateComponent}],
 
-  LogoRoutePath : [{path: '', component:LogoComponent}]
+  LogoRoutePath : [{path: '', component:LogoComponent}],
+  DescriptiveImageRoutePath : [{path: '', component:DescriptiveImageComponent}],
 };

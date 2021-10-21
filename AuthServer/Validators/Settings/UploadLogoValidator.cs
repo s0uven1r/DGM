@@ -8,13 +8,13 @@ namespace AuthServer.Validators.Settings
     {
         public UploadLogoValidator()
         {
-            RuleFor(x => x.Logo).SetValidator(new FileValidator());
+            RuleFor(x => x.Logo).SetValidator(new LogoFileValidator());
         }
     }
 
-    public class FileValidator : AbstractValidator<IFormFile>
+    public class LogoFileValidator : AbstractValidator<IFormFile>
     {
-        public FileValidator()
+        public LogoFileValidator()
         {
             RuleFor(x => x.Length).NotNull().LessThanOrEqualTo(200000)
                 .WithMessage("File size is larger than allowed size 2MB");

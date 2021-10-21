@@ -7,19 +7,22 @@ import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: "root",
 })
-export class LogoService {
+export class DescritptiveImageService {
   private baseUrl = environment.apiIdentityUrl;
   private settingsUrl = ApiGateway.identity.settings.base;
 
-  private uploadLogoUrl =
-    this.settingsUrl + ApiGateway.identity.settings.uploadLogo;
+  private uploadDescriptiveImageUrl =
+    this.settingsUrl + ApiGateway.identity.settings.uploadDescriptiveImage;
 
   constructor(private http: HttpClient) {}
 
-  uploadLogo(fileToUpload: File): Observable<any>  {
-    const endpoint = `${this.baseUrl + this.uploadLogoUrl}`;
+  uploadImages(filesToUpload: FileList): Observable<any> {
+    const endpoint = `${this.baseUrl + this.uploadDescriptiveImageUrl}`;
     const formData: FormData = new FormData();
-    formData.append('Logo', fileToUpload, fileToUpload.name);
-    return this.http.post<any>(endpoint, formData);
+    for (var i = 0; i < filesToUpload.length; i++) {
+      formData.append("Images", filesToUpload[i]);
     }
+    debugger;
+    return this.http.post<any>(endpoint, formData);
+  }
 }

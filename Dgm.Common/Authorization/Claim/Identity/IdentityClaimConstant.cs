@@ -18,6 +18,7 @@
         //settings
         public const string ViewSettings = "Claim.Settings.Read";
         public const string ViewLogo = "Claim.Logo.Read";
+        public const string ViewDescriptiveImages = "Claim.DescriptiveImages.Read";
 
     }
 }

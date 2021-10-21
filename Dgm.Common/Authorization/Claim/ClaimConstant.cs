@@ -353,6 +353,22 @@ namespace Dgm.Common.Authorization.Claim
                      RouteUrl = "settings/logo",
                      ClaimModule = PermissionModuleConstant.Settings,
                      ClaimTitle = "View Logo"
+                }
+                ,
+                new SeedClaimViewModel
+                {
+                     Id ="8e5b2b58-a2c1-5a2e-29ee-2135g238da4c",
+                     ClaimValue = IdentityClaimConstant.ViewDescriptiveImages,
+                     MenuId = "0ac6f041-7a4c-7cf2-84eb-b3c332c32d42",
+                     Title = IdentityMenuConstant.DescriptiveImage.Key,
+                     Alias = IdentityMenuConstant.DescriptiveImage.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "8f51ac89-844a-470e-9172-42cde237aad8",
+                     Rank = 2,
+                     RouteUrl = "settings/descriptiveimage",
+                     ClaimModule = PermissionModuleConstant.Settings,
+                     ClaimTitle = "View Descriptive Images"
                 },
                 #endregion
             };
