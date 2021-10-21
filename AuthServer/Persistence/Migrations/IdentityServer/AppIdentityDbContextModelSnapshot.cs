@@ -70,6 +70,31 @@ namespace AuthServer.Persistence.Migrations.IdentityServer
                     b.ToTable("AspNetRoles");
                 });
 
+            modelBuilder.Entity("AuthServer.Entities.AppSettingImageRecord", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLogo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppSettingImageRecord");
+                });
+
             modelBuilder.Entity("AuthServer.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")

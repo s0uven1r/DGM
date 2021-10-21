@@ -1,0 +1,6 @@
+<div class="form-group">
+    <input type="file" id="file" #inputFile (change)="handleFileInput($event.target.files)">
+</div>
+<div class="form-row">
+    <input type="button" class="btn btn-primary" (click)="uploadLogo()" value="Upload">
+</div>

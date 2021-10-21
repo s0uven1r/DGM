@@ -31,6 +31,11 @@ export const ApiGateway = {
             updateKyc: '/UpdateKYC',
             getKyc:'/GetKYC',
             getKycDDL:'/GetKYCDDL'
+        },
+        settings: {
+            base: 'Settings',
+            uploadLogo: '/LogoUpload',
+            uploadDescriptiveImage: '/DescriptiveImageUpload'
         }
     },
     resource: {
@@ -65,6 +70,11 @@ export const ApiGateway = {
                 getSingleById: '/Get/GetById',
                 create: '/Create',
                 update: '/Update',
+            },
+            transactionentry:{
+                base:'AccountEntry',
+                getSingle:'Get/GetSingleAccountEntry',
+                create:'/Create'
             }
         },
         course: {
