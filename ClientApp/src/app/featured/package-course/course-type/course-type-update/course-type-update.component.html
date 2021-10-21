@@ -1,1 +1,23 @@
-<p>course-type-update works!</p>
+<div class="container-fluid card h-100">
+    <div class="card-body">
+        <h5 class="card-title">
+            <div class="col-12 text-right">
+                <a href="#" [routerLink]='""' class="btn btn-primary btn-sm">Cancel</a>
+            </div>
+        </h5>
+        <form [formGroup]="UpdateCourseTypeForm" (ngSubmit)="UpdateCourseType()">
+            <div class="form-group col-md-6">
+                <input formControlName="id" type="hidden">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Course Type</label><span class="text-danger">*</span>
+                    <input type="text" formControlName="Title" placeholder="Course Type" class="form-control">
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,17 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CourseTypeUpdateRoutingModule } from './course-type-update-routing.module';
-import { CourseTypeUpdateComponent } from './course-type-update.component';
+import { CourseTypeUpdateRoutingModule, RoutingComponent } from './course-type-update-routing.module';
+import { CourseTypeService } from '../../service/course-type.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
 
 
 @NgModule({
-  declarations: [
-    CourseTypeUpdateComponent
-  ],
+  declarations: RoutingComponent,
   imports: [
     CommonModule,
-    CourseTypeUpdateRoutingModule
-  ]
+    ReactiveFormsModule,
+    CourseTypeUpdateRoutingModule,
+    CheckDirectiveModule,
+  ],
+  providers: [
+    {
+      provide: CourseTypeService,
+      useClass: CourseTypeService,
+    },
+  ],
 })
 export class CourseTypeUpdateModule { }
