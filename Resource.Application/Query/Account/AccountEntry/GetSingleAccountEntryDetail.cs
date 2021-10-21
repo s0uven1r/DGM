@@ -25,9 +25,9 @@ namespace Resource.Application.Query.Account.AccountEntry
         {
             public GetSingleAccountEntryQueryValidator()
             {
-                RuleFor(x => x.AccountNumber).NotEmpty().NotNull();
-                RuleFor(x => x.Type).NotEmpty().NotNull();
-                RuleFor(x => x.TransactionDateEN).NotEmpty().NotNull();
+                RuleFor(x => x.AccountNumber).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
+                RuleFor(x => x.Type).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
+                RuleFor(x => x.TransactionDateEN).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
             }
         }
 

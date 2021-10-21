@@ -63,7 +63,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               case 400:
                 Swal.fire(
                   `${error.status}`,
-                  error.error,
+                  error.error.message,
                   'error'
               );
           break;
@@ -72,17 +72,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           }
 
           if (error.error instanceof ErrorEvent) {
-
             // client-side error
-
             errorMessage = `Error: ${error.error}`;
 
           } else {
-
             // server-side error
-
             errorMessage = ` ${error.error}`;
-
           }
 
           return throwError(errorMessage);

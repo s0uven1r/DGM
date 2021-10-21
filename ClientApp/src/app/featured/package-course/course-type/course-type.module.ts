@@ -1,14 +1,19 @@
+import { CourseTypeService } from '../service/course-type.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CourseTypeRoutingModule } from './course-type-routing.module';
-
+import { RoutingComponent, CourseTypeRoutingModule } from './course-type-routing.module';
+import { DataTablesModule } from 'angular-datatables';
+import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
 
 @NgModule({
-  declarations: [],
+  declarations: RoutingComponent,
   imports: [
     CommonModule,
-    CourseTypeRoutingModule
-  ]
+    CourseTypeRoutingModule,
+    CheckDirectiveModule,
+    DataTablesModule,
+  ],
+  providers: [{provide: CourseTypeService, useClass: CourseTypeService}]
 })
 export class CourseTypeModule { }
