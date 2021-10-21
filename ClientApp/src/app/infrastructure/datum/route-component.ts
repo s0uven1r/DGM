@@ -34,6 +34,8 @@ import { CourseUpdateComponent } from 'src/app/featured/package-course/course/co
 import { CourseTypeComponent } from 'src/app/featured/package-course/course-type/course-type.component';
 import { CourseTypeCreateComponent } from 'src/app/featured/package-course/course-type/course-type-create/course-type-create.component';
 import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/course-type/course-type-update/course-type-update.component';
+import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
+import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
 =======
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
@@ -77,12 +79,9 @@ export const RouteComponent = {
       CourseRouteComponent: [CourseComponent],
       CourseCreateRouteComponent: [CourseCreateComponent],
       CourseUpdateRouteComponent: [CourseUpdateComponent],
-<<<<<<< HEAD
       CourseTypeRouteComponent:[CourseTypeComponent],
       CourseTypeCreateRouteComponent: [CourseTypeCreateComponent],
       CourseTypeUpdateRouteComponent: [CourseTypeUpdateComponent],
-=======
       LogoRouteComponent: [LogoComponent],
       DescriptiveImageRouteComponent: [DescriptiveImageComponent],
->>>>>>> dgm
 }

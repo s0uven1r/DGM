@@ -47,6 +47,8 @@ import { CourseUpdateComponent } from '../../featured/package-course/course/cour
 import { CourseTypeComponent } from 'src/app/featured/package-course/course-type/course-type.component';
 import { CourseTypeCreateComponent } from 'src/app/featured/package-course/course-type/course-type-create/course-type-create.component';
 import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/course-type/course-type-update/course-type-update.component';
+import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
+import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
 =======
 import { SettingsRoutePath } from './route-path/settings-route-path';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
