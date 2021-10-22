@@ -1,0 +1,10 @@
+.nav-bar-container{
+    background-color: #f6f9f9;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.nav.navbar-nav{
+    flex-direction: row;
+}
