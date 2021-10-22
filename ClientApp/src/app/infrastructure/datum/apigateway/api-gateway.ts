@@ -35,6 +35,7 @@ export const ApiGateway = {
         settings: {
             base: 'Settings',
             uploadLogo: '/LogoUpload',
+            getLogo: '/GetLogo',
             uploadDescriptiveImage: '/DescriptiveImageUpload'
         }
     },
