@@ -22,7 +22,7 @@ namespace Resource.Application.Command.Account.AccountType
         {
             public AddAccountTypeDetailCommandValidator()
             {
-                RuleFor(x => x.Title).NotEmpty();
+                RuleFor(x => x.Title).NotEmpty().NotNull();
             }
         }
 

@@ -31,16 +31,19 @@ namespace Dgm.Common.Error
                     case AppException:
                         // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        var err = error as AppException;
+                        var result = JsonSerializer.Serialize(new { message = err?.Message, error = err?.ErrorResponse });
+                        await response.WriteAsync(result);
                         break;
-
                     default:
                         // unhandled error
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        var resultUnhand = JsonSerializer.Serialize(new { message = error?.Message});
+                        await response.WriteAsync(resultUnhand);
                         break;
                 }
 
-                var result = JsonSerializer.Serialize(new { message = error?.Message });
-                await response.WriteAsync(result);
+               
             }
         }
     }

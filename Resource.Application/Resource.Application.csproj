@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Resource.Domain\Resource.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\Exceptions\" />
-  </ItemGroup>
-
 </Project>

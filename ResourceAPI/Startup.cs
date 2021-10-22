@@ -1,5 +1,5 @@
 using Dgm.Common.Error;
-using MediatR;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Resource.Application.Command.VehicleInventory;
+using Resource.Application;
 using Resource.Application.Common.Interfaces;
 using Resource.Infrastructure;
 using Resource.Infrastructure.Service;
@@ -28,7 +28,7 @@ namespace ResourceAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddApplication();
+            services.AddApplication();
             services.AddInfrastructure(Configuration);
 
             services.AddAuthentication(options =>
@@ -49,8 +49,12 @@ namespace ResourceAPI
             //    options.AddPolicy("Consumer", policy => policy.RequireClaim(ClaimTypes.Role, "consumer"));
             //});
 
-            services.AddMediatR(typeof(AddVehicleDetail.Handler).Assembly);
+            services.AddSingleton<IUserAccessor, UserAccessor>();
+            services.AddScoped<IAccountHeadCountService, AccountHeadCountService>();
+            services.AddHttpContextAccessor();
+
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ResourceAPI", Version = "v1" });
@@ -73,10 +77,6 @@ namespace ResourceAPI
                 c.OperationFilter<AuthorizationCheckOperationFilter>();
             });
 
-            services.AddTransient<IDateTime, DateTimeService>();
-            services.AddSingleton<IUserAccessor, UserAccessor>();
-            services.AddScoped<IAccountHeadCountService, AccountHeadCountService>();
-            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
