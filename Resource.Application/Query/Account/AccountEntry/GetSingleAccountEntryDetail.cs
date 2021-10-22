@@ -49,6 +49,7 @@ namespace Resource.Application.Query.Account.AccountEntry
                         .Select(y => new
                         AccountEntryResponseViewModel
                         {
+                            Id = y.Id,
                             AccountNumber = y.AccountNumber,
                             MarketPrice = y.TotalAmount,
                             DiscountedAmount = y.Discount,
@@ -61,6 +62,7 @@ namespace Resource.Application.Query.Account.AccountEntry
                             JournalEntries = y.TransactionDetails.Select(z => new
                             Models.Account.AccountEntry.Response.JournalEntry
                             {
+                                Id = z.Id,
                                 Type = z.Type,
                                 AccountNumber = z.AccountNumber,
                                 CreditAmount = z.AmountCredit,

@@ -8,6 +8,7 @@ namespace Resource.Application.Models.Account.AccountEntry.Response
 {
     public class AccountEntryResponseViewModel
     {
+        public string Id { get; set; }
         public string AccountNumber { get; set; }
         public string Type { get; set; }
         public string EntryDateNP { get; set; }
@@ -23,6 +24,7 @@ namespace Resource.Application.Models.Account.AccountEntry.Response
 
     public class JournalEntry
     {
+        public string Id { get; set; }
         public string AccountNumber { get; set; }
         public string Type { get; set; }
         public string EntryDateNP { get; set; }
