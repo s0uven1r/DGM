@@ -465,6 +465,6 @@ namespace AuthServer.Controllers
             await _emailSender.SendEmailAsync(mailRequest);
         }
 
-        private string GetLogoImage() => _appIdentityDbContext.AppSettingImageRecord.Where(x => x.IsLogo).FirstOrDefault()?.Name ?? $"defaultLogo.jpg";
+        private string GetLogoImage() => $"defaultLogo.jpg";
     }
 }

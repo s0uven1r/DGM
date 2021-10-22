@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.StaticFiles;
+using System;
 using System.IO;
 
 namespace Dgm.Common.Extension
@@ -13,6 +14,13 @@ namespace Dgm.Common.Extension
                 DateTime.UtcNow.ToString("yyyyMMddHHmmssfff"),
                 Path.GetExtension(fileName)
                 );
+        }
+
+        public static string GetContentType(this string fileName)
+        {
+            string contentType;
+            new FileExtensionContentTypeProvider().TryGetContentType(fileName, out contentType);
+            return contentType ?? "application/octet-stream";
         }
     }
 }

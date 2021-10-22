@@ -28,6 +28,17 @@ namespace AuthServer.Controllers
             _appIdentityDbContext = appIdentityDbContext;
         }
 
+        [HttpGet]
+        [Route("GetLogo")]
+        public IActionResult GetLogo()
+        {
+            var logoImageName = _appIdentityDbContext.AppSettingImageRecord.Where(x => x.IsLogo).FirstOrDefault()?.Name ?? $"defaultLogo.jpg";
+            string imageDirectory = Path.Combine("Uploads", "Logo");
+            string directoryFullpath = Path.Combine(this.Environment.WebRootPath, imageDirectory);
+            var image = System.IO.File.OpenRead(Path.Combine(directoryFullpath, logoImageName));
+            return File(image, logoImageName.GetContentType());
+        }
+
         [HttpPost]
         [Route("LogoUpload")]
         public async Task<IActionResult> LogoUpload([FromForm] LogoUploadModel model)
