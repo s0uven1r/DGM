@@ -33,7 +33,12 @@ namespace AuthServer.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            if (_environment.IsDevelopment())
+            {
+                // only show in development
+                return View();
+            }
+            return NotFound();
         }
     }
 }
