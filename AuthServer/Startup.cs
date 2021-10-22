@@ -31,12 +31,15 @@ namespace AuthServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var identityUrl = Config.GetSection("ClientBaseUrls:AuthServer").Value;
+
             if (_env.IsDevelopment())
             {
                 services.Configure<ClientBaseUrls>(Config.GetSection("ClientBaseUrls"));
             }
             else
             {
+                identityUrl = Environment.GetEnvironmentVariable("URL_AUTHSERVER");
                 services.Configure<ClientBaseUrls>(x => ClientBaseUrlsHelper.Configure(x));
             }
 
@@ -57,6 +60,7 @@ namespace AuthServer
                .AllowAnyMethod()
                .AllowAnyHeader()));
 
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
@@ -67,8 +71,8 @@ namespace AuthServer
                     {
                         Implicit = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri("https://localhost:44316/connect/authorize"),
-                            TokenUrl = new Uri("https://localhost:44316/connect/token"),
+                            AuthorizationUrl = new Uri($"{identityUrl}/connect/authorize"),
+                            TokenUrl = new Uri($"{identityUrl}/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
                                 {"api.read", "api.read"}
@@ -85,17 +89,19 @@ namespace AuthServer
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth server v1");
-                    c.OAuthClientId("demo_api_swagger");
-                    c.OAuthAppName("Demo API - Swagger");
-                    c.OAuthUsePkce();
-                });
             }
 
             app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+               
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth Server v1");
+                c.OAuthClientId("demo_api_swagger");
+                c.OAuthAppName("Demo API - Swagger");
+                c.OAuthUsePkce();
+            });
+
             // global error handler
             app.UseMiddleware<ErrorHandlerMiddleware>();
 

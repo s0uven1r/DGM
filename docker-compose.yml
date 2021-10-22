@@ -30,7 +30,7 @@ services:
       - prod.env
     environment:
         - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DGM_Identity_Db;User=sa;Password=Admin@123;MultipleActiveResultSets=true"
-        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_ENVIRONMENT=Production
         - ASPNETCORE_URLS=https://+:443;http://+:80
         - ASPNETCORE_HTTPS_PORT=5051
         - ASPNETCORE_Kestrel__Certificates__Default__Password=pa55word
@@ -53,7 +53,7 @@ services:
         - '6061:443'
     environment:
       - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DGM_API;User=sa;Password=Admin@123;MultipleActiveResultSets=true"
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=6061
       - ASPNETCORE_Kestrel__Certificates__Default__Password=pa55word
@@ -67,18 +67,18 @@ services:
        - dgm
     restart: on-failure
 
-  clientapp:
-    image: ${DOCKER_REGISTRY-}clientapp
-    build:
-      context: ClientApp
-      dockerfile: ClientApp/Dockerfile
-    ports:
-      - '4200:80'
-    environment:
-      - NODE_ENV=prod
-    depends_on:
-       - authserver
-       - resourceapi
-    networks:
-       - dgm
-    restart: on-failure
+  #clientapp:
+  #  image: ${DOCKER_REGISTRY-}clientapp
+  #  build:
+  #    context: ClientApp
+  #    dockerfile: ClientApp/Dockerfile
+  #  ports:
+  #    - '4200:80'
+  #  environment:
+  #    - NODE_ENV=prod
+  #  depends_on:
+  #     - authserver
+  #     - resourceapi
+  #  networks:
+  #     - dgm
+  #  restart: on-failure

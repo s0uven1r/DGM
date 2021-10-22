@@ -93,7 +93,7 @@ namespace ResourceAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ResourceAPI v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Resource API v1");
                 c.OAuthClientId("demo_api_swagger");
                 c.OAuthAppName("Demo API - Swagger");
                 c.OAuthUsePkce();
