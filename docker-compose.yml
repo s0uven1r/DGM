@@ -29,7 +29,7 @@ services:
     env_file:
       - prod.env
     environment:
-        - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DGM_Identity_Db;User=sa;Password=Admin@123;MultipleActiveResultSets=true"
+        - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=DGM_Identity;User=sa;Password=Admin@123;MultipleActiveResultSets=true"
         - ASPNETCORE_ENVIRONMENT=Production
         - ASPNETCORE_URLS=https://+:443;http://+:80
         - ASPNETCORE_HTTPS_PORT=5051

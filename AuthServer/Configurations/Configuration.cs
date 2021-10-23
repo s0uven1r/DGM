@@ -56,8 +56,8 @@ namespace AuthServer.Configurations
                         IdentityServerConstants.StandardScopes.Email,
                         "api.read"
                     },
-                RedirectUris = { $"{clientUrls.Value.ClientApp}auth-callback" },
-                PostLogoutRedirectUris = { $"{clientUrls.Value.ClientApp}signout-callback-oidc" },
+                RedirectUris = { $"{clientUrls.Value.ClientApp}/auth-callback" },
+                PostLogoutRedirectUris = { $"{clientUrls.Value.ClientApp}/signout-callback-oidc" },
                 AllowedCorsOrigins = { clientUrls.Value.ClientApp },
                 AllowAccessTokensViaBrowser = true,
                 AccessTokenLifetime = 3600,
