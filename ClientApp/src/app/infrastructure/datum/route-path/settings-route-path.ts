@@ -14,6 +14,19 @@ export const SettingsRoutePath = {
               ).then((m) => m.LogoModule),
           }
         ],
+      },
+      {
+        path: "descriptiveimage",
+        data: { breadcrumb: "DescriptiveImage" },
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import(
+                "src/app/featured/settings/descriptive-image/descriptive-image.module"
+              ).then((m) => m.DescriptiveImageModule),
+          }
+        ],
       }
     ],
   };

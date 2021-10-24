@@ -30,7 +30,11 @@ import { PromoCreateComponent } from 'src/app/featured/package-course/promo/prom
 import { PromoUpdateComponent } from 'src/app/featured/package-course/promo/promo-update/promo-update.component';
 import { CourseCreateComponent } from 'src/app/featured/package-course/course/course-create/course-create.component';
 import { CourseUpdateComponent } from 'src/app/featured/package-course/course/course-update/course-update.component';
+import { CourseTypeComponent } from 'src/app/featured/package-course/course-type/course-type.component';
+import { CourseTypeCreateComponent } from 'src/app/featured/package-course/course-type/course-type-create/course-type-create.component';
+import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/course-type/course-type-update/course-type-update.component';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
+import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -70,5 +74,9 @@ export const RouteComponent = {
       CourseRouteComponent: [CourseComponent],
       CourseCreateRouteComponent: [CourseCreateComponent],
       CourseUpdateRouteComponent: [CourseUpdateComponent],
+      CourseTypeRouteComponent:[CourseTypeComponent],
+      CourseTypeCreateRouteComponent: [CourseTypeCreateComponent],
+      CourseTypeUpdateRouteComponent: [CourseTypeUpdateComponent],
       LogoRouteComponent: [LogoComponent],
+      DescriptiveImageRouteComponent: [DescriptiveImageComponent],
 }

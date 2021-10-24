@@ -1,4 +1,5 @@
-﻿using AuthServer.Contracts.Response;
+﻿using Dgm.Common.Error;
+using Dgm.Common.Error.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
@@ -31,9 +32,9 @@ namespace AuthServer.Filters
                         errorResponse.Errors.Add(errorModel);
                     }
                 }
-
-                context.Result = new BadRequestObjectResult(errorResponse);
-                return;
+                throw new AppException("One or more validation failures have occurred.",errorResponse);
+                //context.Result = new BadRequestObjectResult(errorResponse);
+                //return;
             }
             await next();
         }

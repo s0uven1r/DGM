@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthServer.Contracts.Response
+namespace Dgm.Common.Error.Response
 {
     public class ErrorModel
     {

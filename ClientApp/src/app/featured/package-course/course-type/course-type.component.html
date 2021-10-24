@@ -1,0 +1,32 @@
+<div class="container-fluid card h-100">
+  <div class="card-body">
+    <div *appCheckclaim="courseTypeCreateClaim" class="row m-2">
+      <div class="col-12 text-right">
+        <a href="#" [routerLink]='"create"' class="btn btn-primary btn-sm">Create</a>
+      </div>
+    </div>
+    <div class="col-12">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead>
+          <tr>
+            <th>S.N</th>
+            <th>Title</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let courseType of courseTypes; let i = index;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ courseType.title }}</td>
+            <td>
+              <button *appCheckclaim="courseTypeCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"
+                (click)="updateCourseTypeDetail(courseType.id)"><em class="fa fa-edit"></em></button>
+              <button *appCheckclaim="courseTypeCreateClaim" class="btn pt-0 pb-0 ml-2 btn-xs btn-danger"
+                (click)="deleteCourseTypeDetail(courseType.id)"><em class="fa fa-trash"></em></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

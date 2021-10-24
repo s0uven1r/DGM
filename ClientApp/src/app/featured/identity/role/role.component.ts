@@ -133,7 +133,7 @@ export class RoleComponent implements OnInit {
       this.changeDetectorRef.markForCheck();
     }, () => {
       val.checked = !val.checked
-    });;
+    });
 }
 }
 

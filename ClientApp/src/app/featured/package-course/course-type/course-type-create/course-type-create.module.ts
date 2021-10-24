@@ -1,17 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CourseTypeCreateRoutingModule } from './course-type-create-routing.module';
-import { CourseTypeCreateComponent } from './course-type-create/course-type-create.component';
+import { CourseTypeCreateRoutingModule, RoutingComponent } from './course-type-create-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
+import { CourseTypeService } from '../../service/course-type.service';
 
 
 @NgModule({
-  declarations: [
-    CourseTypeCreateComponent
-  ],
+  declarations: RoutingComponent,
   imports: [
     CommonModule,
-    CourseTypeCreateRoutingModule
+    ReactiveFormsModule,
+    CourseTypeCreateRoutingModule,
+    CheckDirectiveModule,
+  ],
+  providers: [
+    {
+      provide: CourseTypeService,
+      useClass: CourseTypeService,
+    },
   ]
 })
 export class CourseTypeCreateModule { }

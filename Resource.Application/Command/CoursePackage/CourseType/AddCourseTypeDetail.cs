@@ -22,7 +22,7 @@ namespace Resource.Application.Command.CoursePackage.CourseType
         {
             public AddCourseTypeDetailCommandValidator()
             {
-                RuleFor(x => x.Title).NotEmpty();
+                RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
             }
         }
 

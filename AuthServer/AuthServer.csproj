@@ -44,7 +44,7 @@
     <Folder Include="Persistence\Migrations\" />
     <Folder Include="Validators\Users\Consumer\" />
     <Folder Include="wwwroot\font\" />
-    <Folder Include="wwwroot\Uploads\Logo\" />
+    <Folder Include="wwwroot\Uploads\DescriptiveImage\" />
   </ItemGroup>
 
  
@@ -53,6 +53,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\images\signup-image.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Uploads\Logo\defaultLogo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

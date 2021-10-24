@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { LogoService } from '../service/logo.service';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-logo',
@@ -11,6 +12,7 @@ import { LogoService } from '../service/logo.service';
 })
 export class LogoComponent implements OnInit {
   fileToUpload: File | null = null;
+  @ViewChild('inputFile') myInputVariable: ElementRef;
   constructor( private logoService: LogoService) { 
     
   }
@@ -44,6 +46,7 @@ export class LogoComponent implements OnInit {
             )
             .subscribe(
               () => {
+                this.reset();
                 Swal.fire("Uploaded!", "User Action", "success");
               },
               () => console.log("HTTP request completed.")
@@ -51,5 +54,8 @@ export class LogoComponent implements OnInit {
         }
       });
     }
-}
+  }
+  reset() {
+    this.myInputVariable.nativeElement.value = '';
+  }
 }

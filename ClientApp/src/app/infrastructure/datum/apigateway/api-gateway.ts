@@ -35,6 +35,8 @@ export const ApiGateway = {
         settings: {
             base: 'Settings',
             uploadLogo: '/LogoUpload',
+            getLogo: '/GetLogo',
+            uploadDescriptiveImage: '/DescriptiveImageUpload'
         }
     },
     resource: {
@@ -77,7 +79,7 @@ export const ApiGateway = {
             }
         },
         course: {
-        course: {
+            course: {
                 base: 'Course',
                 getAll: '/Get/GetAll',
                 getSingleById: '/Get/GetById',
@@ -86,7 +88,12 @@ export const ApiGateway = {
                 delete: '/Delete',
             },
             courseType:{
-              base: 'Type',
+              base: 'Course/Type',
+              getAll:'/Get/GetAll',
+              getSingleById:'/Get/GetById',
+              create:'/Create',
+              update: '/Update',
+              delete:'/Delete'
             }
         },
         package: {

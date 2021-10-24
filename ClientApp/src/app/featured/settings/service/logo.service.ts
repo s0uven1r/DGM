@@ -13,14 +13,20 @@ export class LogoService {
 
   private uploadLogoUrl =
     this.settingsUrl + ApiGateway.identity.settings.uploadLogo;
+  private getLogoUrl =
+    this.settingsUrl + ApiGateway.identity.settings.getLogo;
 
   constructor(private http: HttpClient) {}
 
   uploadLogo(fileToUpload: File): Observable<any>  {
-    debugger;
     const endpoint = `${this.baseUrl + this.uploadLogoUrl}`;
     const formData: FormData = new FormData();
     formData.append('Logo', fileToUpload, fileToUpload.name);
     return this.http.post<any>(endpoint, formData);
+    }
+
+    getLogo(): Observable<Blob>  {
+      const endpoint = `${this.baseUrl + this.getLogoUrl}`;
+      return this.http.get(endpoint, { responseType: 'blob' });
     }
 }
