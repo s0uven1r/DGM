@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
     expandNavStyle = '';
     expandContentStyle = '';
     expanded = false;
+    hideKyc = false;
     menuList: MenuResultModel[];
   constructor(public router: Router,
      private authService: OAuthService,
@@ -36,12 +37,19 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription.add(
-      this.navigationService.getMenu().subscribe(x => {
-         this.menuList = x;
-          this.changeDetectorRef.markForCheck();
-      }));
- 
+    if(this.authService.getIdentityClaims()['IsKYCUpdated']==='True'){
+      this.hideKyc = true;
+      this.subscription.add(
+        this.navigationService.getMenu().subscribe(x => {
+           this.menuList = x;
+            this.changeDetectorRef.markForCheck();
+        }));
+   
+    }else{
+      this.expandContentStyle = 'layoutMarginLeft';
+      this.hideKyc = false;
+      this.router.navigateByUrl('dashboard/user/kyc')
+    }
 }
 ngOnDestroy() {
   this.subscription.unsubscribe();

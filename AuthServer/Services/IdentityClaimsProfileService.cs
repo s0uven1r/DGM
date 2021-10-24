@@ -52,6 +52,7 @@ namespace AuthServer.Services
                 new Claim("Email", user.Email),
                 new Claim("Role",  roleDetail.Name),
                 new Claim("RoleId",  roleDetail.Id),
+                new Claim("IsKYCUpdated",  user.IsKYCUpdated.ToString()),
                  new Claim("RoleRank",  roleDetail.Rank.ToString()),
             });
             userClaims.AddRange(roleClaims.Select(a => new Claim("permission", a.ClaimValue)));
