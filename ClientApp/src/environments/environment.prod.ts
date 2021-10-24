@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiIdentityUrl: 'https://localhost:5051/Authorization/',
-  resourceUrl: 'https://localhost:6061/api/',
-  issuer: 'https://localhost:5051',
-  redirectUri: 'http://localhost:4200/auth-callback'
+  apiIdentityUrl: 'http://65.1.244.168:5051/Authorization/',
+  resourceUrl: 'http://65.1.244.168:6061/api/',
+  issuer: 'http://65.1.244.168:5051',
+  redirectUri: 'http://65.1.244.168:4200/auth-callback'
 };
