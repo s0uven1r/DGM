@@ -77,8 +77,6 @@ namespace Dgm.Common.Authorization.Claim
                  },
                 #endregion
 
-                
-
                 #region Vehicle
                 new SeedClaimViewModel { Id = "e41bc2af-2c61-4a1e-927f-72488df72800",
                      ClaimValue = VehicleClaimConstant.ViewVehicle,
@@ -224,6 +222,7 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimTitle = "View Customer Payment"
                 },
                 #endregion
+
                 #region package and course
                  new SeedClaimViewModel{
                     Id ="08888830-37e2-4fb2-88c2-85d142868122",
@@ -325,6 +324,7 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimTitle = "Write promo"
                  },
                 #endregion
+
                 #region Settings
                 new SeedClaimViewModel { Id = "7f81ab88-844a-880e-8178-48cde287aaa8",
                      ClaimValue=IdentityClaimConstant.ViewSettings,
@@ -370,6 +370,58 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Settings,
                      ClaimTitle = "View Descriptive Images"
                 },
+                #endregion
+
+                #region shift
+                new SeedClaimViewModel { Id = "9e587e5c-e35b-4a83-862a-6c62906a8443",
+                     ClaimValue = ShiftClaimConstant.ViewShiftManagement,
+                     MenuId = "a8fb9d05-3b2b-4fc6-a66c-396b56cee3e0",
+                     Alias = ShiftMenuConstant.ShiftManagement.Value,
+                     Title = ShiftMenuConstant.ShiftManagement.Key,
+                     Class= "text-primary",
+                     FaClass= "fa-clock-o",
+                     ParentId = null,
+                     Rank = 2,
+                     RouteUrl = "shift-config",
+                     ClaimModule = PermissionModuleConstant.Shift,
+                     ClaimTitle = "View Shift Management"
+                 },
+                 new SeedClaimViewModel { Id = "9e587e5c-e35b-4a83-862a-6c62906a8444",
+                     ClaimValue = ShiftClaimConstant.ViewShift,
+                     MenuId = "a8fb9d05-3b2b-4fc6-a66c-396b56cee3e1",
+                     Alias = ShiftMenuConstant.Shift.Value,
+                     Title = ShiftMenuConstant.Shift.Key,
+                     Class= "text-primary",
+                     FaClass= "",
+                     ParentId = "a8fb9d05-3b2b-4fc6-a66c-396b56cee3e0",
+                     Rank = 1,
+                     RouteUrl = "shift-config/shift",
+                     ClaimModule = PermissionModuleConstant.Shift,
+                     ClaimTitle = "View Shift"
+                 },
+                 new SeedClaimViewModel { Id = "9e587e5c-e35b-4a83-862a-6c62906a8445",
+                     ClaimValue = ShiftClaimConstant.ViewShiftFrequency,
+                     MenuId = "a8fb9d05-3b2b-4fc6-a66c-396b56cee3e2",
+                     Alias = ShiftMenuConstant.ShiftFrequency.Value,
+                     Title = ShiftMenuConstant.ShiftFrequency.Key,
+                     Class= "text-primary",
+                     FaClass= "",
+                     ParentId = "a8fb9d05-3b2b-4fc6-a66c-396b56cee3e0",
+                     Rank = 2,
+                     RouteUrl = "shift-config/frequency",
+                     ClaimModule = PermissionModuleConstant.Shift,
+                     ClaimTitle = "View Shift Frequency"
+                 },
+                 new SeedClaimViewModel { Id = "9e587e5c-e35b-4a83-862a-6c62906a8446",
+                     ClaimValue = ShiftClaimConstant.WriteShiftFrequency,
+                     ClaimModule = PermissionModuleConstant.Shift,
+                     ClaimTitle = "Write Shift Frequency"
+                 },
+                 new SeedClaimViewModel { Id = "9e587e5c-e35b-4a83-862a-6c62906a8447",
+                     ClaimValue = ShiftClaimConstant.WriteShift,
+                     ClaimModule = PermissionModuleConstant.Shift,
+                     ClaimTitle = "Write Shift"
+                 },
                 #endregion
             };
         }
