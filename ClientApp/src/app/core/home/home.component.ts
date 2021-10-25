@@ -7,7 +7,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  constructor(private oauthService: OAuthService, private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private oauthService: OAuthService) {
   }
   redirectToLogin(){
     this.oauthService.initImplicitFlow();
