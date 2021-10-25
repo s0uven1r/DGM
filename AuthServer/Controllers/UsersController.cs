@@ -359,15 +359,23 @@ namespace AuthServer.Controllers
         public async Task<IActionResult> UpdateKYC([FromBody] UserKYCRequestModel kycModel)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();
+            var user = await _userManager.Users.Where(u => u.Id == requestedBy).FirstOrDefaultAsync();
+            if (user == null) return BadRequest("User not found");
+
             UserKYC kyc = _mapper.Map<UserKYC>(kycModel);
             kyc.UserId = requestedBy;
             kyc.CreatedBy = requestedBy;
             kyc.CreatedDate = DateTime.UtcNow;
 
+            user.IsKYCUpdated = true;
+            user.LastUpdatedBy = requestedBy;
+            user.LastUpdatedDate = DateTime.UtcNow;
+
             var transaction = await _appIdentityDbContext.Database.BeginTransactionAsync();
             try
             {
                 await _appIdentityDbContext.UserKYC.AddAsync(kyc);
+                _appIdentityDbContext.Users.Update(user);
                 await _appIdentityDbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
                 return Ok();
@@ -393,7 +401,7 @@ namespace AuthServer.Controllers
             var kycResponse = _mapper.Map<UserKYCResponseModel>(kyc);
             return Ok(kycResponse);
         }
-        
+
         [HttpGet]
         [AllowAnonymous]
         [Route("GetKYCDDL")]

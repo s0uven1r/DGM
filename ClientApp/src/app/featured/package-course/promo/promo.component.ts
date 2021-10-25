@@ -43,7 +43,7 @@ export class PromoComponent implements OnInit, OnDestroy {
   }
   updatePromoDetail(id: string) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/dashboard/config/package/edit/${id}`])
+      this.router.createUrlTree([`/dashboard/config/promo/edit/${id}`])
     );
     window.open(url, "_self");
     //window.open(url, "_blank");
