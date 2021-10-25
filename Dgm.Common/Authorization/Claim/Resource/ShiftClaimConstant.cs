@@ -16,6 +16,10 @@ namespace Dgm.Common.Authorization.Claim.Resource
 
         // Shift
         public const string ViewShift = "Claim.ShiftManagement.Shift.Read";
-        public const string WriteShift = "Claim.ShiftManagement.Shift.Write";
+        public const string WriteShift = "Claim.ShiftManagement.Shift.Write"; 
+        
+        // Shift
+        public const string ViewIndividualShift = "Claim.ShiftManagement.IndividualShift.Read";
+        public const string WriteIndividualShift = "Claim.ShiftManagement.IndividualShift.Write";
     }
 }

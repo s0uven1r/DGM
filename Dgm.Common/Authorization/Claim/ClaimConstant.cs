@@ -412,6 +412,7 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Shift,
                      ClaimTitle = "View Shift Frequency"
                  },
+
                  new SeedClaimViewModel { Id = "9e587e5c-e35b-4a83-862a-6c62906a8446",
                      ClaimValue = ShiftClaimConstant.WriteShiftFrequency,
                      ClaimModule = PermissionModuleConstant.Shift,
@@ -421,6 +422,24 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimValue = ShiftClaimConstant.WriteShift,
                      ClaimModule = PermissionModuleConstant.Shift,
                      ClaimTitle = "Write Shift"
+                 }, 
+                new SeedClaimViewModel { Id = "9e587e5c-e35b-4a83-862a-6c62906a8448",
+                     ClaimValue = ShiftClaimConstant.WriteIndividualShift,
+                     ClaimModule = PermissionModuleConstant.Shift,
+                     ClaimTitle = "Write Individual Shift"
+                 },
+                 new SeedClaimViewModel { Id = "9e587e5c-e35b-4a83-862a-6c62906a8449",
+                     ClaimValue = ShiftClaimConstant.ViewIndividualShift,
+                     MenuId = "a8fb9d05-3b2b-4fc6-a66c-396b56cee3e3",
+                     Alias = ShiftMenuConstant.IndividualShift.Value,
+                     Title = ShiftMenuConstant.IndividualShift.Key,
+                     Class= "text-primary",
+                     FaClass= "",
+                     ParentId = "a8fb9d05-3b2b-4fc6-a66c-396b56cee3e0",
+                     Rank = 2,
+                     RouteUrl = "shift-config/individual-shift",
+                     ClaimModule = PermissionModuleConstant.Shift,
+                     ClaimTitle = "View Individual Shift"
                  },
                 #endregion
             };
