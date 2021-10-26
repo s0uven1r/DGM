@@ -1,0 +1,4 @@
+<img [src]="imageToShow" alt="DGM" *ngIf="!isImageLoading; else noImageFound" style="width: 180px; height:50px">
+<ng-template #noImageFound>
+    <img src="../../../assets/Image/defaultLogo.jpg" alt="Fallbackimage" style="width: 180px; height:50px"> 
+</ng-template>

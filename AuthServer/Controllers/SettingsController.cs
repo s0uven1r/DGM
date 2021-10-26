@@ -30,6 +30,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("GetLogo")]
+        [AllowAnonymous]
         public IActionResult GetLogo()
         {
             var logoImageName = _appIdentityDbContext.AppSettingImageRecord.Where(x => x.IsLogo).FirstOrDefault()?.Name ?? $"defaultLogo.jpg";
