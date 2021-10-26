@@ -35,6 +35,7 @@ import { CourseTypeCreateComponent } from 'src/app/featured/package-course/cours
 import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/course-type/course-type-update/course-type-update.component';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
+import { IndividualShiftComponent } from 'src/app/featured/shift/individual-shift/individual-shift.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -79,4 +80,5 @@ export const RouteComponent = {
       CourseTypeUpdateRouteComponent: [CourseTypeUpdateComponent],
       LogoRouteComponent: [LogoComponent],
       DescriptiveImageRouteComponent: [DescriptiveImageComponent],
+      IndividualShiftRouteComponent: [IndividualShiftComponent],
 }

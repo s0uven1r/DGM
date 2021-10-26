@@ -49,6 +49,8 @@ import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/cours
 import { SettingsRoutePath } from './route-path/settings-route-path';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
+import { IndividualShiftComponent } from 'src/app/featured/shift/individual-shift/individual-shift.component';
+import { ShiftRoutePath } from './route-path/shift-route-path';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -70,7 +72,8 @@ export const RoutePath = {
                         AccountRoutePath,
                         VehicleRoutePath,
                         ConfigRoutePath,
-                        SettingsRoutePath
+                        SettingsRoutePath,
+                        ShiftRoutePath
                       ],
                       canActivate: [AuthGuard] }],
   AuthCallbackRoutePath:[{path: '', component: AuthCallbackComponent}],
@@ -131,4 +134,5 @@ export const RoutePath = {
   CourseTypeUpdateRoutePath: [{path: '', component: CourseTypeUpdateComponent}],
   LogoRoutePath : [{path: '', component:LogoComponent}],
   DescriptiveImageRoutePath : [{path: '', component:DescriptiveImageComponent}],
+  IndividualShiftRoutePath : [{path: '', component:IndividualShiftComponent}],
 };
