@@ -7,5 +7,6 @@
         public const string Vehicle = "Vehicle";
         public const string Accounting = "Accounting";
         public const string Configuration = "Configuration";
+        public const string Shift = "Shift";
     }
 }
