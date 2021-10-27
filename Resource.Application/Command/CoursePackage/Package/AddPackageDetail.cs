@@ -1,5 +1,4 @@
-﻿using Dgm.Common.Enums;
-using Dgm.Common.Error;
+﻿using Dgm.Common.Error;
 using FluentValidation;
 using MediatR;
 using Resource.Application.Common.Interfaces;
@@ -47,11 +46,16 @@ namespace Resource.Application.Command.CoursePackage.Package
 
                     var checkCourseTypeValidity = _context.Courses.Where(q => q.Id == request.CourseId && !q.IsDeleted).FirstOrDefault();
                     if (checkCourseTypeValidity == null) throw new AppException("Invalid course!");
+
+                    var shiftFrequencyValidity = _context.ShiftFrequencies.Where(q => q.Id == request.ShiftFrequencyId && !q.IsDeleted).FirstOrDefault();
+                    if (shiftFrequencyValidity == null) throw new AppException("Invalid Shift Frequency!");
+
                     Domain.Entities.PackageCourse.Package Packages = new()
                     {
                         PackageName = request.PackageName,
                         CourseId = request.CourseId,
-                        Duration = request.Duration,
+                        ShiftFrequencyId = request.ShiftFrequencyId,
+                        Duration = shiftFrequencyValidity.Duration,
                         Price = request.Price,
                         TotalDay = request.TotalDay,
                         CreatedDate = DateTime.UtcNow,
