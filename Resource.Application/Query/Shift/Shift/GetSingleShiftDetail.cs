@@ -34,8 +34,8 @@ namespace Resource.Application.Query.Shift.Shift
                         Duration = x.Duration,
                         IsActive = x.IsActive,
                         Name = x.Name,
-                        StartTime = x.StartTime,
-                        EndTime = x.EndTime,
+                        StartTime = x.StartTime.ToString("HH:mm:ss"),
+                        EndTime = x.EndTime.ToString("HH:mm:ss"),
                         ShiftFrequencyId = x.ShiftFrequencyId
                     }).FirstOrDefaultAsync();
                     return response;

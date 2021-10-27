@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.Shift.Shift.Request;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,18 +41,21 @@ namespace Resource.Application.Command.Shift.Shift
                 var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
+
                     var shift = await _context.Shifts.Where(x => x.Id == request.Id).FirstOrDefaultAsync();
                     if (shift == null) throw new AppException("Invalid! Shift not found!");
 
                     var shiftFrequency = await _context.ShiftFrequencies.Where(x => x.Id == request.ShiftFrequencyId).FirstOrDefaultAsync();
                     if (shiftFrequency == null) throw new AppException("Invalid Shift Frequency");
-
-                    var endDate = request.StartTime.AddMinutes(shiftFrequency.Duration);
+                    
+                    var startTime = DateTime.Parse(request.StartTime, System.Globalization.CultureInfo.CurrentCulture);
+                    var endTime = startTime.AddMinutes(shiftFrequency.Duration);
+                    
                     shift.ShiftFrequencyId = request.ShiftFrequencyId;
                     shift.IsActive = request.IsActive;
                     shift.Duration = shiftFrequency.Duration;
-                    shift.StartTime = request.StartTime;
-                    shift.EndTime = endDate;
+                    shift.StartTime = startTime;
+                    shift.EndTime = endTime;
                     shift.Name = request.Name;
 
                     _context.Shifts.Update(shift);

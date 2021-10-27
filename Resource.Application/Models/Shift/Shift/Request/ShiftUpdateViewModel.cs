@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Resource.Application.Models.Shift.Shift.Request
 {
@@ -11,8 +9,6 @@ namespace Resource.Application.Models.Shift.Shift.Request
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public string ShiftFrequencyId { get; set; }
-
-        [DataType(DataType.Time)]
-        public DateTime StartTime { get; set; }
+        public string StartTime { get; set; }
     }
 }

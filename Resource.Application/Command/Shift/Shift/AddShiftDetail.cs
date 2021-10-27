@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.Shift.Shift.Request;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,14 +43,15 @@ namespace Resource.Application.Command.Shift.Shift
                     var shiftFrequency = await _context.ShiftFrequencies.Where(x => x.Id == request.ShiftFrequencyId).FirstOrDefaultAsync();
                     if (shiftFrequency == null) throw new AppException("Invalid Shift Frequency");
 
-                    var endDate = request.StartTime.AddMinutes(shiftFrequency.Duration);
+                    var startTime = DateTime.Parse(request.StartTime, System.Globalization.CultureInfo.CurrentCulture);
+                    var endTime = startTime.AddMinutes(shiftFrequency.Duration);
                     Domain.Entities.Shift.Shift newShift = new()
                     {
                         ShiftFrequencyId = request.ShiftFrequencyId,
                         IsActive = request.IsActive,
                         Duration = shiftFrequency.Duration,
-                        StartTime = request.StartTime,
-                        EndTime = endDate,
+                        StartTime = startTime,
+                        EndTime = endTime,
                         Name = request.Name,
                     };
 
