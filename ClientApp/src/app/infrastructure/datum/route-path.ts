@@ -35,7 +35,7 @@ import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
 import { KycResolverService } from 'src/app/featured/identity/user/service/Resolver/kyc-resolver.service';
 import { PackageComponent } from 'src/app/featured/package-course/package/package.component';
 import { PackageUpdateComponent } from 'src/app/featured/package-course/package/package-update/package-update.component';
-import { PackageResolverService, PromoResolverService } from 'src/app/featured/package-course/service/package-resolver.service';
+import { PackageResolverService, PackageShiftFrequencyResolverService, PromoResolverService } from 'src/app/featured/package-course/service/package-resolver.service';
 import { PackageCreateComponent } from 'src/app/featured/package-course/package/package-create/package-create.component';
 import { ConfigRoutePath } from './route-path/config-route-path';
 import { PromoComponent } from 'src/app/featured/package-course/promo/promo.component';
@@ -113,10 +113,10 @@ export const RoutePath = {
 
   PackageRoutePath: [{path: '', component: PackageComponent}],
   PackageCreateRoutePath: [{path: '', component: PackageCreateComponent, resolve: {
-    courseDDL: PackageResolverService
+    courseDDL: PackageResolverService, shiftFrequency: PackageShiftFrequencyResolverService
   }}],
   PackageUpdateRoutePath: [{path: '', component: PackageUpdateComponent, resolve: {
-    courseDDL: PackageResolverService
+    courseDDL: PackageResolverService, shiftFrequency: PackageShiftFrequencyResolverService
   }}],
 
   PromoRoutePath: [{path: '', component: PromoComponent}],

@@ -12,6 +12,7 @@ export class PackageService {
   private packageUrl = ApiGateway.resource.package.package.base;
   private promoUrl = ApiGateway.resource.package.promo.base;
   private courseUrl = ApiGateway.resource.course.course.base;
+  private shiftFrequencyUrl = ApiGateway.resource.shiftFrequency.base;
 
   private getAllPackageUrl = this.packageUrl + ApiGateway.resource.package.package.getAll;
   private getPackageByIdUrl = this.packageUrl+ ApiGateway.resource.package.package.getSingleById;
@@ -26,6 +27,8 @@ export class PackageService {
   private deletePromoUrl = this.promoUrl + ApiGateway.resource.package.promo.delete;
 
   private getAllCourseUrl = this.courseUrl + ApiGateway.resource.course.course.getAll;
+
+  private getAllShiftFrequencyUrl = this.shiftFrequencyUrl + ApiGateway.resource.shiftFrequency.getAll;
 
   constructor(private http: HttpClient) {}
   
@@ -44,7 +47,7 @@ export class PackageService {
       packageName: value.packageName,
       courseId: value.courseId,
       totalDay: value.totalDay,
-      duration: value.duration,
+      shiftFrequencyId: value.shiftFrequencyId,
       price: value.price,
     });
   }
@@ -55,7 +58,7 @@ export class PackageService {
         packageName: value.packageName,
         courseId: value.courseId,
         totalDay: value.totalDay,
-        duration: value.duration,
+        shiftFrequencyId: value.shiftFrequencyId,
         price: value.price,
       }
     );
@@ -127,5 +130,9 @@ export class PackageService {
     return this.http.delete<any>(
       `${this.baseUrl + this.deletePromoUrl}/${id}`
     );
+  }
+
+  getAllShiftFrequency(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAllShiftFrequencyUrl}`);
   }
 }

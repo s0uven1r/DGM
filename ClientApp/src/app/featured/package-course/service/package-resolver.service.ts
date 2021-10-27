@@ -7,6 +7,7 @@ import {
 import { Observable } from "rxjs";
 import { CourseModel } from "src/app/infrastructure/model/UserManagement/resource/course/coursemodel";
 import { PackageModel } from "src/app/infrastructure/model/UserManagement/resource/package/packagemodel";
+import { ShiftFrequencyModel } from "src/app/infrastructure/model/UserManagement/resource/shift/shift-frequency-model";
 import { PackageService } from "./package.service";
 
 @Injectable({
@@ -29,5 +30,17 @@ export class PromoResolverService
   constructor(private packageService: PackageService) {}
   resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) {
     return this.packageService.getPackage();
+  }
+}
+
+@Injectable({
+  providedIn: "root",
+})
+export class PackageShiftFrequencyResolverService
+  implements Resolve<Observable<ShiftFrequencyModel[]>>
+{
+  constructor(private packageService: PackageService) {}
+  resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) {
+    return this.packageService.getAllShiftFrequency();
   }
 }

@@ -25,7 +25,10 @@
     <div class="form-row">
       <div class="form-group col-md-4">
         <label>Duration</label><span class="text-danger">*</span>
-        <input type="number" formControlName="duration" placeholder="Duration" class="form-control">
+        <select class="form-control dropdown-toggle" formControlName="shiftFrequencyId">
+          <option value=null selected>--Select Shift Duration--</option>
+          <option *ngFor="let ddls of shiftFrequency" [value]="ddls.id">{{ddls.name}} ({{ddls.duration}} mins)</option>
+        </select>
       </div>
       <div class="form-group col-md-4">
         <label>Price</label><span class="text-danger">*</span>
