@@ -1,17 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.CoursePackage.Package;
-using Resource.Application.Query.CoursePackage.Package;
 using Resource.Application.Command.CoursePackage.Promo;
+using Resource.Application.Query.CoursePackage.Package;
 using Resource.Application.Query.CoursePackage.Promo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.CoursePackage
 {
-  
+
     public class PackageController : BaseController
     {
         #region begin package

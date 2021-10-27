@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Resource.Domain.Entities.Account;
 using Resource.Domain.Entities.PackageCourse;
+using Resource.Domain.Entities.Shift;
 using Resource.Domain.Entities.VehicleInventory;
 using System;
 using System.Threading;
@@ -29,5 +30,8 @@ namespace Resource.Application.Common.Interfaces
         public DbSet<Package> Packages { get; set; }
         public DbSet<PackagePromoOffer> PackagePromoOffers { get; set; }
         public DbSet<CustomerPayment> CustomerPayments { get; set; }
+
+        public DbSet<Shift> Shifts { get; set; }
+        public DbSet<ShiftFrequency> ShiftFrequencies { get; set; }
     }
 }
