@@ -56,7 +56,7 @@ namespace Resource.Application.Command.CoursePackage.Package
                     existing.Price = request.Price;
                     existing.TotalDay = request.TotalDay;
                     existing.ShiftFrequencyId = request.ShiftFrequencyId;
-                    existing.Duration = shiftFrequencyValidity.Duration;
+                    existing.Duration = shiftFrequencyValidity.Duration * request.TotalDay;
                     existing.CourseId = request.CourseId;
                     existing.UpdatedBy = userId;
                     existing.UpdatedDate = DateTime.UtcNow;
