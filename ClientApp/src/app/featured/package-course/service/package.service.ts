@@ -81,9 +81,19 @@ export class PackageService {
       hasDiscountPercent: value.hasDiscountPercent,
       discount: value.discount,
       startDate: value.startDate,
-      startDateNp: value.startDateNp,
+      startDateNp: 
+                value.startDateNp.day +
+                "/" +
+                value.startDateNp.month +
+                "/" +
+                value.startDateNp.year,
       endDate: value.endDate,
-      endDateNp: value.endDateNp,
+      endDateNp: 
+                value.endDateNp.day +
+                "/" +
+                value.endDateNp.month +
+                "/" +
+                value.endDateNp.year,
     });
   }
 
@@ -96,9 +106,19 @@ export class PackageService {
         hasDiscountPercent: value.hasDiscountPercent,
         discount: value.discount,
         startDate: value.startDate,
-        startDateNp: value.startDateNp,
+        startDateNp: 
+                value.startDateNp.day +
+                "/" +
+                value.startDateNp.month +
+                "/" +
+                value.startDateNp.year,
         endDate: value.endDate,
-        endDateNp: value.endDateNp,
+        endDateNp: 
+                value.endDateNp.day +
+                "/" +
+                value.endDateNp.month +
+                "/" +
+                value.endDateNp.year,
       }
     );
   }

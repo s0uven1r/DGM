@@ -1,21 +1,19 @@
-<span class="sb-nav-fixed">
+
+<span  class="sb-nav-fixed">
     <!------Top Nav-->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" routerLink="/dashboard">
-            <img [src]="imageToShow" alt="DGM" *ngIf="!isImageLoading; else noImageFound" style="width: 180px; height:50px">
-            <ng-template #noImageFound>
-                <img src="../../../assets/Image/defaultLogo.jpg" alt="Fallbackimage" style="width: 180px; height:50px"> 
-            </ng-template>
+            <app-logo></app-logo>
         </a>
-        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" data-cy="topNavToggleSideNav"
-            (click)="toggleSideNav()"><i class="fa fa-bars text-light"></i></button><!-- Navbar Search-->
+        <button *ngIf="hideKyc" class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" data-cy="topNavToggleSideNav"
+            (click)="toggleSideNav()"><i class="fa fa-bars fa-2x text-light"></i></button><!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-            <!-- <div class="input-group">
+            <div class="input-group">
                 <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
                 </div>
-            </div> -->
+            </div>
         </form>
         <!-- Navbar-->
         <ul class="navbar-nav ml-auto ml-md-0">
@@ -41,8 +39,8 @@
     <!---end -->
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav" [ngClass]="expandNavStyle">
-            <nav class="sb-sidenav accordion" id="sidenavAccordion" [ngClass]="sidenavStyle">
-                <div class="sb-sidenav-menu">
+            <nav class="sb-sidenav accordion" id="sidenavAccordion" [ngClass]="sidenavStyle" *ngIf="hideKyc" >
+                <div class="sb-sidenav-menu" >
                     <div class="nav">
                         <ng-container *ngTemplateOutlet="recursiveMenu; context:{ menuListItem: menuList }">
                         </ng-container>

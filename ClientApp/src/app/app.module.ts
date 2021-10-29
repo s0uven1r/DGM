@@ -9,6 +9,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthGuard } from './core/authorize/auth-guard';
 import { TokenInterceptor } from './core/interceptor/http-token-interceptor';
 import { BreadcrumbModule } from 'angular-crumbs';
+import { LogoModule } from './core/logo/logo.module';
 @NgModule({
   declarations: RoutingComponent,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -18,6 +19,7 @@ import { BreadcrumbModule } from 'angular-crumbs';
     HttpClientModule,
     AppRoutingModule,
     BreadcrumbModule,
+    LogoModule,
     OAuthModule.forRoot(),
 
   ],

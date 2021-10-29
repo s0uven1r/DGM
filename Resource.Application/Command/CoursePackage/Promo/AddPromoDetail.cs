@@ -5,6 +5,7 @@ using MediatR;
 using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.CoursePackage.Promo.Request;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,10 +51,10 @@ namespace Resource.Application.Command.CoursePackage.Promo
                         PromoCode = request.PromoCode,
                         PackageId = request.PackageId,
                         HasDiscountPercent = request.HasDiscountPercent,
-                        StartDate = request.StartDate,
+                        StartDate = DateTime.ParseExact(request.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date,
                         StartDateNp = request.StartDateNp,
                         Discount = request.Discount,
-                        EndDate = request.EndDate,
+                        EndDate = DateTime.ParseExact(request.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date,
                         CreatedDate = DateTime.UtcNow,
                         EndDateNp = request.EndDateNp,
                         CreatedBy = userId
