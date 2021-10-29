@@ -85,5 +85,6 @@ namespace Resource.Infrastructure.Persistence
         public DbSet<CustomerPayment> CustomerPayments { get; set; }
         public DbSet<ShiftFrequency> ShiftFrequencies { get; set; }
         public DbSet<Shift> Shifts { get; set; }
+        public DbSet<IndividualShift> IndividualShifts { get; set; }
     }
 }

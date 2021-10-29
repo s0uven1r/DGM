@@ -33,5 +33,6 @@ namespace Resource.Application.Common.Interfaces
 
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<ShiftFrequency> ShiftFrequencies { get; set; }
+        public DbSet<IndividualShift> IndividualShifts { get; set; }
     }
 }
