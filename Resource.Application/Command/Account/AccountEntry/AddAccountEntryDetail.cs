@@ -25,7 +25,7 @@ namespace Resource.Application.Command.Account.AccountEntry
         {
             public AddAccountEntryDetailCommandValidator()
             {
-                RuleFor(x => x.Title).NotEmpty();
+                RuleFor(x => x.Title).Cascade(CascadeMode.StopOnFirstFailure).NotNull().NotEmpty();
                 RuleFor(x => x.Type).NotEmpty();
                 RuleFor(x => x.AccountNumber).NotEmpty();
                 RuleFor(x => x.EntryDateNP).NotEmpty();
