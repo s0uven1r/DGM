@@ -1,6 +1,6 @@
 <div class="container-fluid  h-100 card mb-2">
 
-  <form [formGroup]="entryForm">
+  <form [formGroup]="entryForm" (ngSubmit)="createTransactionEntry()">
     <div class="card-body">
       <h5 class="card-title">Transaction Summary</h5>
       <div class="form-row">
@@ -35,10 +35,12 @@
             (ngModelChange)="calculateTotal()" placeholder="Discount Amount" class="form-control">
         </div>
         <div class="form-group col-md-4">
-          <input type="text" readonly formControlName="netAmount" placeholder="Total Amount" class="form-control">
+          <input type="text" readonly formControlName="netAmountLabel" placeholder="Net Amount" class="form-control">
+          <input type="hidden"  readonly formControlName="netAmount" class="form-control">
         </div>
         <div class="form-group col-md-4">
-          <input type="text" readonly formControlName="dueAmount" placeholder="Due Amount" class="form-control">
+          <input type="text" readonly formControlName="dueAmountLabel" placeholder="Due Amount" class="form-control">
+          <input type="hidden" readonly formControlName="dueAmount" class="form-control">
         </div>
         <div class="form-group col-md-4">
           <input type="text" formControlName="remarks" placeholder="Entry Remarks" class="form-control">

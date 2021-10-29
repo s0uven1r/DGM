@@ -14,7 +14,7 @@ namespace Resource.Application.Models.Account.AccountEntry.Request
         public string EntryDateNP { get; set; }
         public string EntryDateEN { get; set; }
         public decimal MarketPrice { get; set; }
-        public decimal DiscountedAmount { get; set; }
+        public decimal DiscountAmount { get; set; }
         public decimal NetAmount { get; set; }
         public decimal DueAmount { get; set; }
         public string Remarks { get; set; }

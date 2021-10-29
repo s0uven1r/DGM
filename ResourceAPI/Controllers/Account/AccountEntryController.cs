@@ -17,7 +17,7 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("Get/GetSingleAccountEntry")]
-        public async Task<IActionResult> GetSingleVehicleById([FromBody] GetSingleAccountEntryDetail.GetSingleAccountEntryQuery query)
+        public async Task<IActionResult> GetSingleAccountEntry([FromQuery] GetSingleAccountEntryDetail.GetSingleAccountEntryQuery query)
         {
             return Ok(await Mediator.Send(query));
         }

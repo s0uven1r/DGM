@@ -50,15 +50,15 @@ namespace Resource.Application.Query.Account.AccountEntry
                         AccountEntryResponseViewModel
                         {
                             Id = y.Id,
+                            Type = y.Type,
                             AccountNumber = y.AccountNumber,
                             MarketPrice = y.TotalAmount,
-                            DiscountedAmount = y.Discount,
+                            DiscountAmount = y.Discount,
                             NetAmount = y.NetAmount,
                             DueAmount = y.DueAmount,
-                            EntryDateEN = y.TransactionDate,
+                            EntryDateEN = y.TransactionDate.ToString("dd/MM/yyyyy"),
                             EntryDateNP = y.TransactionDateNP,
                             Remarks = y.Remarks,
-                            Type = y.Type,
                             JournalEntries = y.TransactionDetails.Select(z => new
                             Models.Account.AccountEntry.Response.JournalEntry
                             {
@@ -69,7 +69,7 @@ namespace Resource.Application.Query.Account.AccountEntry
                                 DebitAmount = z.AmountDebit,
                                 EntryDateEN = z.TransactionDate,
                                 EntryDateNP = z.TransactionDateNP,
-                                Remarks = z.Remarks,
+                                Remarks = z.Remarks
                             }).ToList()
                         }).FirstOrDefaultAsync(cancellationToken);
 

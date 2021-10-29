@@ -23,7 +23,7 @@ import { CourseControllersClaim } from '../../../infrastructure/datum/claim/cour
 export class CourseComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  isDtInitialized:boolean = false;
+  isDtInitialized: boolean = false;
   courseCreateClaim = [CourseControllersClaim.Course.Write];
   courses: CourseModel[] = [];
   @ViewChild(DataTableDirective)
@@ -31,7 +31,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   constructor(private courseService: CourseService,
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -42,7 +42,7 @@ export class CourseComponent implements OnInit, OnDestroy {
         [5, 10, 25, 50, 100, "All"],
       ],
     };
-   this.getInitData();
+    this.getInitData();
   }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
@@ -72,7 +72,7 @@ export class CourseComponent implements OnInit, OnDestroy {
               "Course detail deleted successfully.",
               "success"
             );
-           this.getInitData();
+            this.getInitData();
           },
           (err) => {
             Swal.fire("Error Deleted!", err, "error");
@@ -81,9 +81,9 @@ export class CourseComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  getInitData(){
-    this.courseService.getCourse().subscribe(x => {this.courses = x;
+  getInitData() {
+    this.courseService.getCourse().subscribe(x => {
+      this.courses = x;
       if (this.isDtInitialized) {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -96,4 +96,4 @@ export class CourseComponent implements OnInit, OnDestroy {
       this.changeDetectorRef.markForCheck();
     });
   }
-  }
+}

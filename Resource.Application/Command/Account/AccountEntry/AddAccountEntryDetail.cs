@@ -25,13 +25,15 @@ namespace Resource.Application.Command.Account.AccountEntry
         {
             public AddAccountEntryDetailCommandValidator()
             {
-                RuleFor(x => x.Title).Cascade(CascadeMode.StopOnFirstFailure).NotNull().NotEmpty();
-                RuleFor(x => x.Type).NotEmpty();
-                RuleFor(x => x.AccountNumber).NotEmpty();
-                RuleFor(x => x.EntryDateNP).NotEmpty();
-                RuleFor(x => x.EntryDateEN).NotNull();
-                RuleFor(x => x.Remarks).NotEmpty();
+                RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.Type).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.AccountNumber).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.EntryDateNP).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.EntryDateEN).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.Remarks).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
                 RuleFor(x => x.JournalEntries).NotNull();
+                RuleFor(x => x.MarketPrice).Cascade(CascadeMode.Stop).GreaterThan(0);
+                RuleFor(x => x.NetAmount).Cascade(CascadeMode.Stop).GreaterThan(0);
             }
         }
 
@@ -75,7 +77,7 @@ namespace Resource.Application.Command.Account.AccountEntry
                 {
                     AccountNumber = request.AccountNumber,
                     TotalAmount = request.MarketPrice,
-                    Discount = request.DiscountedAmount,
+                    Discount = request.DiscountAmount,
                     NetAmount = request.NetAmount,
                     DueAmount = request.DueAmount,
                     Remarks = request.Remarks,
@@ -105,7 +107,7 @@ namespace Resource.Application.Command.Account.AccountEntry
             {
                 accountEntry.AccountNumber = request.AccountNumber;
                 accountEntry.TotalAmount = request.MarketPrice;
-                accountEntry.Discount = request.DiscountedAmount;
+                accountEntry.Discount = request.DiscountAmount;
                 accountEntry.NetAmount = request.NetAmount;
                 accountEntry.DueAmount = request.DueAmount;
                 accountEntry.Remarks = request.Remarks;

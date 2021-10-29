@@ -74,7 +74,7 @@ export const ApiGateway = {
             },
             transactionentry:{
                 base:'AccountEntry',
-                getSingle:'Get/GetSingleAccountEntry',
+                getSingle:'/Get/GetSingleAccountEntry',
                 create:'/Create'
             }
         },
