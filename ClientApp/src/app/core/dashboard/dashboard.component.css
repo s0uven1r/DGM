@@ -717,6 +717,7 @@ pre code {
 
 .order-1 {
   order: 1;
+  margin-left: -35px;
 }
 
 .order-2 {

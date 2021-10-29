@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LogoService } from 'src/app/featured/settings/service/logo.service';
 import { Subscription } from "rxjs";
 
@@ -11,6 +11,7 @@ export class LogoComponent implements OnInit {
   isImageLoading = false;
   imageToShow: any;
   subscription: Subscription = new Subscription();
+  @Input() IsFront = false;
   constructor(public logoService: LogoService,) { }
 
   ngOnInit(): void {
