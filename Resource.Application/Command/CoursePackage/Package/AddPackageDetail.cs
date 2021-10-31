@@ -21,8 +21,8 @@ namespace Resource.Application.Command.CoursePackage.Package
         {
             public AddPackageDetailCommandValidator()
             {
-                RuleFor(x => x.PackageName).NotEmpty();
-                RuleFor(x => x.CourseId).NotEmpty();
+                RuleFor(x => x.PackageName).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.CourseId).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
             }
         }
 

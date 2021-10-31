@@ -25,13 +25,13 @@ namespace Resource.Application.Command.Account.AccountEntry
         {
             public AddAccountEntryDetailCommandValidator()
             {
-                RuleFor(x => x.Title).NotEmpty();
-                RuleFor(x => x.Type).NotEmpty();
-                RuleFor(x => x.AccountNumber).NotEmpty();
-                RuleFor(x => x.EntryDateNP).NotEmpty();
-                RuleFor(x => x.EntryDateEN).NotNull();
-                RuleFor(x => x.Remarks).NotEmpty();
-                RuleFor(x => x.JournalEntries).NotNull();
+                RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.Type).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.AccountNumber).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.EntryDateNP).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.EntryDateEN).Cascade(CascadeMode.Stop).NotNull().NotNull();
+                RuleFor(x => x.Remarks).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.JournalEntries).Cascade(CascadeMode.Stop).NotNull();
             }
         }
 

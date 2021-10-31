@@ -21,9 +21,9 @@ namespace Resource.Application.Command.Shift.ShiftFrequency
         {
             public UpdateShiftFrequencyValidator()
             {
-                RuleFor(x => x.Id).Cascade(CascadeMode.Continue).NotEmpty().NotNull();
-                RuleFor(x => x.Name).Cascade(CascadeMode.Continue).NotEmpty().NotNull();
-                RuleFor(x => x.Duration).Cascade(CascadeMode.Continue).Must(x => x > 0).WithMessage("Duration is invalid!");
+                RuleFor(x => x.Id).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
+                RuleFor(x => x.Name).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
+                RuleFor(x => x.Duration).Cascade(CascadeMode.Stop).Must(x => x > 0).WithMessage("Duration is invalid!");
             }
         }
 
