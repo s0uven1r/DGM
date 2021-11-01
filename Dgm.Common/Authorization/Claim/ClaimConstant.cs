@@ -323,6 +323,27 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimModule = PermissionModuleConstant.Configuration,
                      ClaimTitle = "Write promo"
                  },
+                   new SeedClaimViewModel
+                {
+                     Id ="08888831-37e2-4fb2-88c2-85d142868123",
+                     ClaimValue = PackageCourseClaimConstant.ViewCustomerPackage,
+                     MenuId = "b814543b-4048-40e9-aa95-6a711c5fffff",
+                     Title = PackageCourseMenuConstant.CustomerPackage.Key,
+                     Alias =  PackageCourseMenuConstant.CustomerPackage.Value,
+                     Class = "text-primary",
+                     FaClass= "",
+                     ParentId = "b814543a-4048-40e9-aa95-6a711c5fffaa",
+                     Rank = 1,
+                     RouteUrl = "config/customer-package",
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "View Customer Package"
+                },
+                   new SeedClaimViewModel {
+                     Id = "08888838-37e2-4fb2-88c2-85d142868124",
+                     ClaimValue = PackageCourseClaimConstant.WriteCustomerPackage,
+                     ClaimModule = PermissionModuleConstant.Configuration,
+                     ClaimTitle = "Write Customer Package"
+                 },
                 #endregion
 
                 #region Settings
@@ -422,7 +443,7 @@ namespace Dgm.Common.Authorization.Claim
                      ClaimValue = ShiftClaimConstant.WriteShift,
                      ClaimModule = PermissionModuleConstant.Shift,
                      ClaimTitle = "Write Shift"
-                 }, 
+                 },
                 new SeedClaimViewModel { Id = "9e587e5c-e35b-4a83-862a-6c62906a8448",
                      ClaimValue = ShiftClaimConstant.WriteIndividualShift,
                      ClaimModule = PermissionModuleConstant.Shift,

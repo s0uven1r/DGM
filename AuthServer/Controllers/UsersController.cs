@@ -341,16 +341,11 @@ namespace AuthServer.Controllers
         [Route("GetAccountDetails")]
         public async Task<IActionResult> GetAccountDetails(string value)
         {
-            var data = await (from user in _appIdentityDbContext.Users
-                              select new
-                              {
-                                  user
-                              }
-                           ).ToListAsync();
+            var data = await _appIdentityDbContext.Users.Where(x => !string.IsNullOrEmpty(x.AccountNumber)).ToListAsync();
 
             if (data.Count == 0) return NotFound(); ;
-            var accountDetails = data.Where(x => x.user.Email.Contains(value))
-                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.user.FirstName, x.user.MiddleName, x.user.LastName, "-", x.user.AccountNumber), x.user.AccountNumber));
+            var accountDetails = data.Where(x => x.Email.Contains(value))
+                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.FirstName, x.MiddleName, x.LastName, "-", x.AccountNumber), x.AccountNumber));
 
             return Ok(accountDetails.ToList());
         }
@@ -422,10 +417,6 @@ namespace AuthServer.Controllers
         [Route("RegisterCustomerPackage")]
         public async Task<IActionResult> RegisterCustomerPackage(RegisterCustomerPackageViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             var userDetails = await _userManager.FindByEmailAsync(model.CustomerDetail.Email);
             var accNo = string.Empty;
             if (userDetails != null)
@@ -456,6 +447,9 @@ namespace AuthServer.Controllers
                     Email = model.CustomerDetail.Email,
                     AccountNumber = accountNo
                 };
+                if (model.IsAdmin)
+                    model.CustomerDetail.Password = PasswordGenerator.GenerateRandomPassword();
+
                 var userResult = await _userManager.CreateAsync(user, model.CustomerDetail.Password);
 
                 if (!userResult.Succeeded) return BadRequest(userResult.Errors);

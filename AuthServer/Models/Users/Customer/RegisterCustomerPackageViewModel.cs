@@ -16,5 +16,6 @@ namespace AuthServer.Models.Users.Customer
         public int PaymentGateway { get; set; }
         public string ShiftId { get; set; }
         public decimal PaidAmount { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
