@@ -13,6 +13,7 @@ export class PackageService {
   private promoUrl = ApiGateway.resource.package.promo.base;
   private courseUrl = ApiGateway.resource.course.course.base;
   private shiftFrequencyUrl = ApiGateway.resource.shiftFrequency.base;
+  private shiftUrl = ApiGateway.resource.shift.base;
 
   private getAllPackageUrl = this.packageUrl + ApiGateway.resource.package.package.getAll;
   private getPackageByIdUrl = this.packageUrl+ ApiGateway.resource.package.package.getSingleById;
@@ -30,6 +31,8 @@ export class PackageService {
 
   private getAllShiftFrequencyUrl = this.shiftFrequencyUrl + ApiGateway.resource.shiftFrequency.getAll;
 
+  private getAllShiftUrl = this.shiftUrl + ApiGateway.resource.shift.getAll;
+  
   constructor(private http: HttpClient) {}
   
   getCourse(): Observable<any> {
@@ -134,5 +137,9 @@ export class PackageService {
 
   getAllShiftFrequency(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl + this.getAllShiftFrequencyUrl}`);
+  }
+
+  getAllShift(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAllShiftUrl}`);
   }
 }

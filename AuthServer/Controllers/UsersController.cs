@@ -443,6 +443,7 @@ namespace AuthServer.Controllers
                 {
                     UserName = model.CustomerDetail.Username,
                     FirstName = model.CustomerDetail.FirstName,
+                    MiddleName = model.CustomerDetail.MiddleName,
                     LastName = model.CustomerDetail.LastName,
                     Email = model.CustomerDetail.Email,
                     AccountNumber = accountNo

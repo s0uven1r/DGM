@@ -122,5 +122,9 @@ export const ApiGateway = {
       update: "/Update",
       delete: "/Delete",
     },
+    shift: {
+      base: "Shift",
+      getAll: "/Get/GetAll",
+    }
   },
 };

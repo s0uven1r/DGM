@@ -1,0 +1,78 @@
+<div class="container-fluid  h-100">
+  <form [formGroup]="registerPackageForm">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>First Name</label><span class="text-danger">*</span>
+          <input type="text" formControlName="firstName" placeholder="First Name" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Middle Name</label><span class="text-danger"></span>
+          <input type="text" formControlName="middleName" placeholder="Middle Name" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Last Name</label><span class="text-danger">*</span>
+        <input type="text" formControlName="lastName" placeholder="Last Name" class="form-control">
+    </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>Email</label><span class="text-danger">*</span>
+          <input type="text"  formControlName="email" placeholder="Email Address" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Confirm Email</label><span class="text-danger">*</span>
+        <input type="text" formControlName="confirmEmail" placeholder="Confirm Email Address" class="form-control">
+    </div>
+    <div class="form-group col-md-4">
+      <label>Package</label><span class="text-danger">*</span>
+      <select class="form-control dropdown-toggle" formControlName="packageId" #packageVal>
+        <option value=null selected>--Select Package--</option>
+        <option *ngFor="let ddl of packages" [value]="ddl.id">{{ddl.totalDay}} days - {{ddl.packageName}} - Rs.{{ddl.price}}</option>
+      </select>
+    </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label>Start Date(Np)</label><span class="text-danger">*</span>
+        <div class="datePickerDiv">
+         <np-datepicker  formControlName="startDateNP" #dateVal (ngModelChange)="changeNepaliToEnglish(dateVal)" ></np-datepicker>
+       </div>
+      </div>
+      <div class="form-group col-md-3">
+        <label>Start Date(En)</label><span class="text-danger">*</span>
+        <input readonly class="form-control" id="NpToENDate"  formControlName="startDateEN">
+      </div>
+      <div class="form-group col-md-3">
+        <label>End Date(Np)</label><span class="text-danger">*</span>
+        <div class="datePickerDiv">
+         <np-datepicker  formControlName="endDateNP" #dateEndVal (ngModelChange)="changeNepaliToEnglish(dateEndVal, true)" ></np-datepicker>
+       </div>
+      </div>
+      <div class="form-group col-md-3">
+        <label>End Date(En)</label><span class="text-danger">*</span>
+        <input readonly class="form-control" id="EndNpToENDate"  formControlName="endDateEN">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>Shift</label><span class="text-danger">*</span>
+        <select class="form-control dropdown-toggle" formControlName="shiftId">
+          <option value=null selected>--Select Shift--</option>
+          <option *ngFor="let shift of shifts" [value]="shift.id">{{shift.name}} ({{shift.startTime}}-{{shift.endTime}})</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label>Promo Code</label><span class="text-danger"></span>
+          <input type="text"  formControlName="promoCode" placeholder="Promo Code" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Paid Amount</label><span class="text-danger"></span>
+          <input type="number"  formControlName="paidAmount" placeholder="Paid Amount" class="form-control">
+      </div>
+    </div>
+    <div class="form-row">
+      <button [disabled]="(!registerPackageForm.valid)" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+

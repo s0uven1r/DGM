@@ -4,3 +4,9 @@ export interface ShiftFrequencyModel {
     duration: string;
     isActive: boolean;
 }
+export interface ShiftModel{
+    id: string;
+    name: string;
+    startTime: string;
+    endTime: string;
+}

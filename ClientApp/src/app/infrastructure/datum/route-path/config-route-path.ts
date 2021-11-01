@@ -118,5 +118,18 @@ export const ConfigRoutePath = {
         },
       ],
     },
+    {
+      path: "customer-package",
+      data: { breadcrumb: "CustomerPackage" },
+      children: [
+        {
+          path: "",
+          loadChildren: () =>
+            import(
+              "src/app/featured/package-course/customer-package/customer-package.module"
+            ).then((m) => m.CustomerPackageModule),
+        },
+      ]
+    },
   ],
 };

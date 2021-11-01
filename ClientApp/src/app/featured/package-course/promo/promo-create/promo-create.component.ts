@@ -32,13 +32,13 @@ export class PromoCreateComponent implements OnInit {
   FormDesign() {
     return (this.createPromoForm = this.form.group({
       packageId: [null, Validators.required],
-      promoCode: [null, Validators.required],
       startDateNp: [null, Validators.required],
       endDateNp: [null, Validators.required],
       startDate: [null, Validators.required],
       endDate: [null, Validators.required],
       hasDiscountPercent: [false, Validators.required],
-      discount: [null]
+      discount: [null],
+      promoCode: [null]
     }));
   }
 

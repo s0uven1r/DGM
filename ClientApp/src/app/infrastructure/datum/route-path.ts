@@ -51,6 +51,8 @@ import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
 import { IndividualShiftComponent } from 'src/app/featured/shift/individual-shift/individual-shift.component';
 import { ShiftRoutePath } from './route-path/shift-route-path';
+import { CustomerPackageComponent } from '../../featured/package-course/customer-package/customer-package.component';
+import { PackageShiftResolverService } from '../../featured/package-course/service/package-resolver.service';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -135,4 +137,8 @@ export const RoutePath = {
   LogoRoutePath : [{path: '', component:LogoComponent}],
   DescriptiveImageRoutePath : [{path: '', component:DescriptiveImageComponent}],
   IndividualShiftRoutePath : [{path: '', component:IndividualShiftComponent}],
+  CustomerPackageRouthPath: [{path:'', component: CustomerPackageComponent, resolve: {
+    packageDDL: PromoResolverService,
+    shifts: PackageShiftResolverService
+  }}]
 };
