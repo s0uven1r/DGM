@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Resource.Infrastructure.Persistence;
 
 namespace Resource.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211031090707_AddedCustomerPackageTable")]
+    partial class AddedCustomerPackageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,7 +196,7 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<decimal>("PaidAmount")
                         .HasColumnType("decimal(15,4)");
 
-                    b.Property<int>("PaymentGateway")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -416,9 +418,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PackageStartDateNp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PromoCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")

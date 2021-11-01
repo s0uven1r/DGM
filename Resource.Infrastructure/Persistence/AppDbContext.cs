@@ -82,9 +82,10 @@ namespace Resource.Infrastructure.Persistence
         public DbSet<Course> Courses { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<PackagePromoOffer> PackagePromoOffers { get; set; }
-        public DbSet<CustomerPayment> CustomerPayments { get; set; }
         public DbSet<ShiftFrequency> ShiftFrequencies { get; set; }
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<IndividualShift> IndividualShifts { get; set; }
+        public DbSet<CustomerPayment> CustomerPayments { get; set; }
+        public DbSet<CustomerPackage> CustomerPackages { get; set; }
     }
 }

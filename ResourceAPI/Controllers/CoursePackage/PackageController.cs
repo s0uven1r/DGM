@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dgm.Common.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.CoursePackage.Package;
 using Resource.Application.Command.CoursePackage.Promo;
+using Resource.Application.Command.Customer;
+using Resource.Application.Common.Interfaces;
 using Resource.Application.Query.CoursePackage.Package;
 using Resource.Application.Query.CoursePackage.Promo;
+using System;
 using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.CoursePackage
@@ -10,6 +15,13 @@ namespace ResourceAPI.Controllers.CoursePackage
 
     public class PackageController : BaseController
     {
+        private readonly IAccountHeadCountService _accountHeadCountService;
+        private readonly ICustomerPackageService _customerPackageService;
+        public PackageController(IAccountHeadCountService accountHeadCountService, ICustomerPackageService customerPackageService)
+        {
+            _accountHeadCountService = accountHeadCountService;
+            _customerPackageService = customerPackageService;
+        }
         #region begin package
         [HttpGet("Get/GetAll")]
         public async Task<IActionResult> GetAll()
@@ -115,5 +127,37 @@ namespace ResourceAPI.Controllers.CoursePackage
             return Ok(await Mediator.Send(request: new DeletePromoDetail.DeletePromoDetailCommand { Id = id }));
         }
         #endregion end course type
+
+
+        /// <summary> 
+        /// <param name="title"></param>
+        /// </summary>
+        /// <returns></returns>
+        //[Permission(Permission.)]
+        [HttpPost("RegisterCustomerPackage")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterCustomerPackage([FromBody] CustomerPackageViewModel model)
+        {
+            try
+            {
+                string accountNo = string.Empty;
+                if (string.IsNullOrEmpty(model.AccountNo))
+                {
+                    accountNo = await _accountHeadCountService.GenerateAccountNumber(model.RoleType, model.RoleAlias);
+
+                }
+                else
+                {
+                    accountNo = model.AccountNo;
+                }
+                await _customerPackageService.RegisterCustomerPackage(model, accountNo);
+                return Ok(accountNo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error in resource package");
+            }
+
+        }
     }
 }

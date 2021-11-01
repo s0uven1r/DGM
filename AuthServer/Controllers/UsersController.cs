@@ -4,6 +4,7 @@ using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Helpers;
 using AuthServer.Models.EmailSender;
 using AuthServer.Models.Users;
+using AuthServer.Models.Users.Customer;
 using AuthServer.Models.Users.Employee.Request;
 using AuthServer.Persistence;
 using AuthServer.Services.EmailSender;
@@ -416,6 +417,54 @@ namespace AuthServer.Controllers
             return Ok(obj);
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("RegisterCustomerPackage")]
+        public async Task<IActionResult> RegisterCustomerPackage(RegisterCustomerPackageViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var userDetails = await _userManager.FindByEmailAsync(model.CustomerDetail.Email);
+            var accNo = string.Empty;
+            if (userDetails != null)
+                accNo = userDetails.AccountNumber;
+            var roleType = (int)RoleTypeEnum.Customer;
+            var accTypeName = Enum.GetName(typeof(RoleTypeEnum), roleType);
+            var alias = RoleTypeEnumConversion.GetDescriptionByValue(roleType);
+            if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
+            var accountNo = await _accountService.RegisterCustomerPackage(accTypeName,
+                alias,
+                accNo,
+                model.StartDate,
+                model.StartDateNP,
+                model.EndDate,
+                model.EndDateNP,
+                model.PackageId,
+                model.ShiftId,
+                model.PaymentGateway,
+                model.PaidAmount
+                );
+            if (userDetails == null)
+            {
+                var user = new AppUser
+                {
+                    UserName = model.CustomerDetail.Username,
+                    FirstName = model.CustomerDetail.FirstName,
+                    LastName = model.CustomerDetail.LastName,
+                    Email = model.CustomerDetail.Email,
+                    AccountNumber = accountNo
+                };
+                var userResult = await _userManager.CreateAsync(user, model.CustomerDetail.Password);
+
+                if (!userResult.Succeeded) return BadRequest(userResult.Errors);
+
+                var roleResult = await _userManager.AddToRoleAsync(user, SystemRoles.Consumer);
+                if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
+            }
+            return Ok("Package has taken successfully");
+        }
         #region helpers
         private async Task SendEmployeeRegistrationEmail(CreateEmployeeRequest model, string password)
         {

@@ -1,6 +1,6 @@
 ﻿
 --apply migration
-dotnet ef -s ../ResourceAPI migrations add AddedIndividualShiftTable -c AppDbContext -o Persistence/Migrations
+dotnet ef -s ../ResourceAPI migrations add AddedCustomerPackageModificationTable -c AppDbContext -o Persistence/Migrations
 
 --update database
 dotnet ef -s ../ResourceAPI database update -c AppDbContext

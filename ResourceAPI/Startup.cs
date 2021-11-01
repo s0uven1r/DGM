@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Resource.Application;
+using Resource.Application.Command.Customer;
 using Resource.Application.Common.Interfaces;
 using Resource.Infrastructure;
 using Resource.Infrastructure.Service;
@@ -51,6 +52,7 @@ namespace ResourceAPI
 
             services.AddSingleton<IUserAccessor, UserAccessor>();
             services.AddScoped<IAccountHeadCountService, AccountHeadCountService>();
+            services.AddScoped<ICustomerPackageService, CustomerPackageService>();
             services.AddHttpContextAccessor();
 
             services.AddControllers();

@@ -13,6 +13,7 @@ namespace Resource.Domain.Entities.PackageCourse
         public decimal Price { get; set; }
         public string ShiftFrequencyId { get; set; }
         public virtual ICollection<PackagePromoOffer> PackagePromoOffers { get; set; }
+        public virtual ICollection<CustomerPackage> CustomerPackages { get; set; }
         public virtual Course Course { get; set; }
         public virtual ShiftFrequency ShiftFrequency { get; set; }
     }

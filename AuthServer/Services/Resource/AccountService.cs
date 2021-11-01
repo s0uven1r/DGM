@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Dgm.Common.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AuthServer.Services.Resource
@@ -32,6 +35,46 @@ namespace AuthServer.Services.Resource
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token.ToString().Split(' ').LastOrDefault());
             }
+            var response = await this.httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var msg = await response.Content.ReadAsStringAsync();
+                throw new Exception(msg);
+            }
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<string> RegisterCustomerPackage(string type, string alias, string accNo, string startDate, string startDateNP, string endDate, string endDateNP, string packageId, string shiftId, int paymentGateway, decimal paidAmount)
+        {
+            var model = new CustomerPackageViewModel
+            {
+                RoleType = type,
+                RoleAlias = alias,
+                AccountNo = accNo,
+                StartDate = startDate,
+                EndDate = endDate,
+                EndDateNP = endDateNP,
+                StartDateNP = startDateNP,
+                PackageId = packageId,
+                PaidAmount = paidAmount,
+                PaymentGateway = paymentGateway,
+                ShiftId = shiftId
+            };
+            var resourceBaseUrl = this.config.GetSection("ModuleUrl:Resource").Value;
+            var json = JsonConvert.SerializeObject(model);
+
+            //construct content to send
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"{resourceBaseUrl}api/Package/RegisterCustomerPackage"),
+                Content = content
+            };
+
             var response = await this.httpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
