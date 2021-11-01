@@ -10,8 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using NepaliDate;
-
+using NepaliCalendarBS;
 namespace Resource.Infrastructure.Service
 {
     public class CustomerPackageService : ICustomerPackageService
@@ -73,6 +72,7 @@ namespace Resource.Infrastructure.Service
 
             for (DateTime trainDate = data.PackageStartDate; trainDate <= data.PackageEndDate; trainDate = trainDate.AddDays(1))
             {
+                var nepaliTrainingDate = NepaliCalendar.Convert_AD2BS(trainDate);
                 var individualShift = new IndividualShift
                 {
                     PackageId = data.PackageId,
@@ -80,7 +80,7 @@ namespace Resource.Infrastructure.Service
                     UserAccountNumber = accNo,
                     VehicleId = vehicleId,
                     TrainingDate = trainDate,
-                    TrainingDateNp = NepaliDate trainDate
+                    TrainingDateNp = $"{nepaliTrainingDate.Day}/{nepaliTrainingDate.Month}/{nepaliTrainingDate.Year}"
                 };
                 individualShiftList.Value.Add(individualShift);
             }

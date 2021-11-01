@@ -13,4 +13,8 @@
     <Folder Include="Persistence\Seed\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NepaliCalendarBS" Version="1.1.4" />
+  </ItemGroup>
+
 </Project>
