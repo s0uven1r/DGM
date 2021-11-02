@@ -31,6 +31,7 @@ export const ApiGateway = {
       updateKyc: "/UpdateKYC",
       getKyc: "/GetKYC",
       getKycDDL: "/GetKYCDDL",
+      registerCustomerPackage: '/RegisterCustomerPackage',
     },
     settings: {
       base: "Settings",
@@ -112,6 +113,7 @@ export const ApiGateway = {
         create: "/Create",
         update: "/Update",
         delete: "/Delete",
+        getSingleByPromoCode: "/Get/GetByPromoCode"
       },
     },
     shiftFrequency: {

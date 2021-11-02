@@ -7,6 +7,7 @@ import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.modul
 import { ReactiveFormsModule } from '@angular/forms';
 import { NpDatepickerModule } from 'angular-nepali-datepicker';
 import { NgNepaliDateDirectiveModule } from 'src/app/shared/directives/attributes/ngNepaliDateDirective.module';
+import { PackageService } from '../service/package.service';
 @NgModule({
   declarations: RoutingComponent,
   imports: [
@@ -17,6 +18,10 @@ import { NgNepaliDateDirectiveModule } from 'src/app/shared/directives/attribute
     ReactiveFormsModule,
     NpDatepickerModule,
     NgNepaliDateDirectiveModule
-  ]
+  ],
+  providers: [ {
+    provide: PackageService,
+    useClass: PackageService
+  },]
 })
 export class CustomerPackageModule { }

@@ -1,5 +1,5 @@
 import { formatDate } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import NepaliDate from "nepali-date-converter";
@@ -14,7 +14,7 @@ import { PackageService } from "../../service/package.service";
   templateUrl: "./promo-create.component.html",
   styleUrls: ["./promo-create.component.css"],
 })
-export class PromoCreateComponent implements OnInit {
+export class PromoCreateComponent implements OnInit, AfterViewInit  {
   createPromoForm: FormGroup;
   packages: PackageModel[] = [];
   constructor(
@@ -28,7 +28,13 @@ export class PromoCreateComponent implements OnInit {
   ngOnInit(): void {
     this.packages = this.route.snapshot.data.packageDDL;
   }
-
+  ngAfterViewInit(){
+    var div = (document.getElementsByClassName('datePickerDiv'));
+    div[0].children[0].children[0].className = "";
+    div[0].children[0].children[0].className = "form-control";
+    div[1].children[0].children[0].className = "";
+    div[1].children[0].children[0].className = "form-control";
+   }
   FormDesign() {
     return (this.createPromoForm = this.form.group({
       packageId: [null, Validators.required],

@@ -13,6 +13,7 @@ using AutoMapper;
 using Dgm.Common.Authorization.Claim.Identity;
 using Dgm.Common.Constants.KYC;
 using Dgm.Common.Enums;
+using Dgm.Common.Error;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -415,7 +416,7 @@ namespace AuthServer.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("RegisterCustomerPackage")]
-        public async Task<IActionResult> RegisterCustomerPackage(RegisterCustomerPackageViewModel model)
+        public async Task<IActionResult> RegisterCustomerPackage([FromBody] RegisterCustomerPackageViewModel model)
         {
             var userDetails = await _userManager.FindByEmailAsync(model.CustomerDetail.Email);
             var accNo = string.Empty;
@@ -425,28 +426,37 @@ namespace AuthServer.Controllers
             var accTypeName = Enum.GetName(typeof(RoleTypeEnum), roleType);
             var alias = RoleTypeEnumConversion.GetDescriptionByValue(roleType);
             if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
-            var accountNo = await _accountService.RegisterCustomerPackage(accTypeName,
-                alias,
-                accNo,
-                model.StartDate,
-                model.StartDateNP,
-                model.EndDate,
-                model.EndDateNP,
-                model.PackageId,
-                model.ShiftId,
-                model.PaymentGateway,
-                model.PaidAmount
-                );
+            try
+            {
+                accNo = await _accountService.RegisterCustomerPackage(accTypeName,
+                 alias,
+                 accNo,
+                 model.StartDate,
+                 model.StartDateNP,
+                 model.EndDate,
+                 model.EndDateNP,
+                 model.PackageId,
+                 model.ShiftId,
+                 model.PaymentGateway,
+                 model.PaidAmount,
+                 model.PromoCode
+                 );
+            }
+            catch (Exception ex)
+            {
+                throw new AppException(ex.Message);
+            }
+
             if (userDetails == null)
             {
                 var user = new AppUser
                 {
-                    UserName = model.CustomerDetail.Username,
+                    UserName = model.CustomerDetail.UserName,
                     FirstName = model.CustomerDetail.FirstName,
                     MiddleName = model.CustomerDetail.MiddleName,
                     LastName = model.CustomerDetail.LastName,
                     Email = model.CustomerDetail.Email,
-                    AccountNumber = accountNo
+                    AccountNumber = accNo
                 };
                 if (model.IsAdmin)
                     model.CustomerDetail.Password = PasswordGenerator.GenerateRandomPassword();
@@ -458,7 +468,7 @@ namespace AuthServer.Controllers
                 var roleResult = await _userManager.AddToRoleAsync(user, SystemRoles.Consumer);
                 if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
             }
-            return Ok("Package has taken successfully");
+            return Ok();
         }
         #region helpers
         private async Task SendEmployeeRegistrationEmail(CreateEmployeeRequest model, string password)

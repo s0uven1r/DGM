@@ -92,7 +92,17 @@ namespace ResourceAPI.Controllers.CoursePackage
         {
             return Ok(await Mediator.Send(request: new GetSinglePromoDetail.GetSinglePromoQuery { Id = id }));
         }
-
+        /// <summary>
+        /// <param name="promoCode"></param>
+        /// </summary>
+        /// <returns></returns>
+        //[Permission(Permission.)]
+        [HttpGet("Promo/Get/GetByPromoCode/{promoCode}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetSinglePromoByPromoCode(string promoCode)
+        {
+            return Ok(await Mediator.Send(request: new GetSinglePromoDetailByPromoCode.GetSinglePromoQuery { PromoCode = promoCode }));
+        }
         /// <summary> 
         /// <param name="title"></param>
         /// </summary>
@@ -155,7 +165,7 @@ namespace ResourceAPI.Controllers.CoursePackage
             }
             catch (Exception ex)
             {
-                return BadRequest("Error in resource package");
+                return BadRequest(ex.Message);
             }
 
         }

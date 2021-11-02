@@ -45,7 +45,7 @@ namespace AuthServer.Services.Resource
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> RegisterCustomerPackage(string type, string alias, string accNo, string startDate, string startDateNP, string endDate, string endDateNP, string packageId, string shiftId, int paymentGateway, decimal paidAmount)
+        public async Task<string> RegisterCustomerPackage(string type, string alias, string accNo, string startDate, string startDateNP, string endDate, string endDateNP, string packageId, string shiftId, int paymentGateway, decimal paidAmount, string promoCode)
         {
             var model = new CustomerPackageViewModel
             {
@@ -59,7 +59,8 @@ namespace AuthServer.Services.Resource
                 PackageId = packageId,
                 PaidAmount = paidAmount,
                 PaymentGateway = paymentGateway,
-                ShiftId = shiftId
+                ShiftId = shiftId,
+                PromoCode = promoCode
             };
             var resourceBaseUrl = this.config.GetSection("ModuleUrl:Resource").Value;
             var json = JsonConvert.SerializeObject(model);
