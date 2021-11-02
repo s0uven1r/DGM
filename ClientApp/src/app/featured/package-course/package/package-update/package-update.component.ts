@@ -8,6 +8,7 @@ import { ActivatedRoute } from "@angular/router";
 import { throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { CourseModel } from "src/app/infrastructure/model/UserManagement/resource/course/coursemodel";
+import { ShiftFrequencyModel } from "src/app/infrastructure/model/UserManagement/resource/shift/shift-frequency-model";
 import Swal from "sweetalert2";
 import { PackageService } from "../../service/package.service";
 
@@ -20,6 +21,7 @@ import { PackageService } from "../../service/package.service";
 export class PackageUpdateComponent implements OnInit {
   updatePackageForm: FormGroup;
   courses: CourseModel[] = [];
+  shiftFrequency: ShiftFrequencyModel[] = [];
   constructor(
     private route: ActivatedRoute,
     private packageService: PackageService,
@@ -30,6 +32,7 @@ export class PackageUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.courses = this.route.snapshot.data.courseDDL;
+    this.shiftFrequency = this.route.snapshot.data.shiftFrequency;
     this.route.params.subscribe((params) => {
       if (params["id"]) {
         this.packageService.getSinglePackage(params["id"]).subscribe((x) => {
@@ -38,7 +41,7 @@ export class PackageUpdateComponent implements OnInit {
             packageName: x.packageName,
             courseId: x.courseId,
             totalDay: x.totalDay,
-            duration: x.duration,
+            shiftFrequencyId: x.shiftFrequencyId,
             price: x.price
           });
         });
@@ -52,7 +55,7 @@ export class PackageUpdateComponent implements OnInit {
       packageName: [null, Validators.required],
       courseId: [null, Validators.required],
       totalDay: [0, Validators.required],
-      duration: [0, Validators.required],
+      shiftFrequencyId: [null, Validators.required],
       price: [0, Validators.required],
     }));
   }

@@ -26,10 +26,12 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-4 datePickerDiv">
+            <div class="form-group col-md-4">
                 <label>Start Date (Np)</label><span class="text-danger">*</span>
-                <np-datepicker [ngbTooltip]="'Start Date' " formControlName="startDateNp" #dateValStart
-                    (ngModelChange)="changeNepaliToEnglishStartDate(dateValStart)"></np-datepicker>
+                <div class="datePickerDiv">
+                    <np-datepicker [ngbTooltip]="'Start Date' " formControlName="startDateNp" #dateValStart
+                        (ngModelChange)="changeNepaliToEnglishStartDate(dateValStart)"></np-datepicker>
+                </div>
             </div>
             <div class="form-group col-md-4">
                 <label>Start Date (En)</label><span class="text-danger">*</span>
@@ -37,10 +39,12 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-4 datePickerDiv">
+            <div class="form-group col-md-4">
                 <label>End Date (Np)</label><span class="text-danger">*</span>
-                <np-datepicker [ngbTooltip]="'End Date' " formControlName="endDateNp" #dateValEnd
+                <div class="datePickerDiv">
+                  <np-datepicker [ngbTooltip]="'End Date' " formControlName="endDateNp" #dateValEnd
                     (ngModelChange)="changeNepaliToEnglishEndDate(dateValEnd)"></np-datepicker>
+               </div>
             </div>
             <div class="form-group col-md-4">
                 <label>End Date (En)</label><span class="text-danger">*</span>

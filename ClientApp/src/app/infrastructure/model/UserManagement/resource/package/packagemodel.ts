@@ -6,4 +6,5 @@ export interface PackageModel {
     totalDay: number;
     duration: number;
     price: number;
+    shiftFrequencyId: string;
 }

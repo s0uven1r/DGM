@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { CourseModel } from 'src/app/infrastructure/model/UserManagement/resource/course/coursemodel';
-import Swal from 'sweetalert2';
-import { PackageService } from '../../service/package.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { CourseModel } from "src/app/infrastructure/model/UserManagement/resource/course/coursemodel";
+import { ShiftFrequencyModel } from "src/app/infrastructure/model/UserManagement/resource/shift/shift-frequency-model";
+import Swal from "sweetalert2";
+import { PackageService } from "../../service/package.service";
 
 @Component({
-  selector: 'app-package-create',
-  templateUrl: './package-create.component.html',
-  styleUrls: ['./package-create.component.css']
+  selector: "app-package-create",
+  templateUrl: "./package-create.component.html",
+  styleUrls: ["./package-create.component.css"],
 })
 export class PackageCreateComponent implements OnInit {
   createPackageForm: FormGroup;
   courses: CourseModel[] = [];
+  shiftFrequency: ShiftFrequencyModel[] = [];
   constructor(
     private route: ActivatedRoute,
     private packageService: PackageService,
@@ -25,6 +27,7 @@ export class PackageCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.courses = this.route.snapshot.data.courseDDL;
+    this.shiftFrequency = this.route.snapshot.data.shiftFrequency;
   }
 
   FormDesign() {
@@ -32,7 +35,7 @@ export class PackageCreateComponent implements OnInit {
       packageName: [null, Validators.required],
       courseId: [null, Validators.required],
       totalDay: [0, Validators.required],
-      duration: [0, Validators.required],
+      shiftFrequencyId: [null, Validators.required],
       price: [0, Validators.required],
     }));
   }
@@ -63,5 +66,4 @@ export class PackageCreateComponent implements OnInit {
       }
     });
   }
-
 }

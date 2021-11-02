@@ -1,19 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dgm.Common.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.CoursePackage.Package;
-using Resource.Application.Query.CoursePackage.Package;
 using Resource.Application.Command.CoursePackage.Promo;
+using Resource.Application.Command.Customer;
+using Resource.Application.Common.Interfaces;
+using Resource.Application.Query.CoursePackage.Package;
 using Resource.Application.Query.CoursePackage.Promo;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.CoursePackage
 {
-  
+
     public class PackageController : BaseController
     {
+       
         #region begin package
         [HttpGet("Get/GetAll")]
         public async Task<IActionResult> GetAll()
@@ -84,7 +86,17 @@ namespace ResourceAPI.Controllers.CoursePackage
         {
             return Ok(await Mediator.Send(request: new GetSinglePromoDetail.GetSinglePromoQuery { Id = id }));
         }
-
+        /// <summary>
+        /// <param name="promoCode"></param>
+        /// </summary>
+        /// <returns></returns>
+        //[Permission(Permission.)]
+        [HttpGet("Promo/Get/GetByPromoCode/{promoCode}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetSinglePromoByPromoCode(string promoCode)
+        {
+            return Ok(await Mediator.Send(request: new GetSinglePromoDetailByPromoCode.GetSinglePromoQuery { PromoCode = promoCode }));
+        }
         /// <summary> 
         /// <param name="title"></param>
         /// </summary>
@@ -119,5 +131,19 @@ namespace ResourceAPI.Controllers.CoursePackage
             return Ok(await Mediator.Send(request: new DeletePromoDetail.DeletePromoDetailCommand { Id = id }));
         }
         #endregion end course type
+
+
+        /// <summary> 
+        /// <param name="title"></param>
+        /// </summary>
+        /// <returns></returns>
+        //[Permission(Permission.)]
+        [HttpPost("RegisterCustomerPackage")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterCustomerPackage(AddCustomerPackageDetail.AddCustomerPackageDetailCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+
+        }
     }
 }
