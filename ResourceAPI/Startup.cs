@@ -52,7 +52,6 @@ namespace ResourceAPI
 
             services.AddSingleton<IUserAccessor, UserAccessor>();
             services.AddScoped<IAccountHeadCountService, AccountHeadCountService>();
-            services.AddScoped<ICustomerPackageService, CustomerPackageService>();
             services.AddHttpContextAccessor();
 
             services.AddControllers();

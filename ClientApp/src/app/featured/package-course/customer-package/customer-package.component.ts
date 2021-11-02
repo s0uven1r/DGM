@@ -108,7 +108,6 @@ export class CustomerPackageComponent implements OnInit, AfterViewInit {
           .subscribe(
             () => {
               Swal.fire("Register Package!", "User Action", "success");
-              this.registerPackageForm.reset();
             },
             ()=> {
               console.log("HTTP request completed.")

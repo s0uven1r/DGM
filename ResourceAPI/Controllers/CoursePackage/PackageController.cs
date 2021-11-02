@@ -15,13 +15,7 @@ namespace ResourceAPI.Controllers.CoursePackage
 
     public class PackageController : BaseController
     {
-        private readonly IAccountHeadCountService _accountHeadCountService;
-        private readonly ICustomerPackageService _customerPackageService;
-        public PackageController(IAccountHeadCountService accountHeadCountService, ICustomerPackageService customerPackageService)
-        {
-            _accountHeadCountService = accountHeadCountService;
-            _customerPackageService = customerPackageService;
-        }
+       
         #region begin package
         [HttpGet("Get/GetAll")]
         public async Task<IActionResult> GetAll()
@@ -146,27 +140,9 @@ namespace ResourceAPI.Controllers.CoursePackage
         //[Permission(Permission.)]
         [HttpPost("RegisterCustomerPackage")]
         [AllowAnonymous]
-        public async Task<IActionResult> RegisterCustomerPackage([FromBody] CustomerPackageViewModel model)
+        public async Task<IActionResult> RegisterCustomerPackage(AddCustomerPackageDetail.AddCustomerPackageDetailCommand command)
         {
-            try
-            {
-                string accountNo = string.Empty;
-                if (string.IsNullOrEmpty(model.AccountNo))
-                {
-                    accountNo = await _accountHeadCountService.GenerateAccountNumber(model.RoleType, model.RoleAlias);
-
-                }
-                else
-                {
-                    accountNo = model.AccountNo;
-                }
-                await _customerPackageService.RegisterCustomerPackage(model, accountNo);
-                return Ok(accountNo);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(await Mediator.Send(command));
 
         }
     }
