@@ -9,6 +9,7 @@ namespace Resource.Domain.Entities.Shift
         public string PackageId { get; set; }
         public string VehicleId { get; set; }
         public string TrainerId { get; set; }
+        public string TrainerDetail { get; set; }
         public DateTime? TrainingDate { get; set; }
         public string TrainingDateNp { get; set; }
         public string UserAccountNumber { get; set; }
