@@ -17,7 +17,6 @@ import { AccountService } from '../service/account.service';
 })
 
 export class TransactionEntryComponent implements OnInit, AfterViewInit {
-  @ViewChild('dateEntryVal', { static: true }) dateVal: ElementRef;
   entryForm: FormGroup;
   errorMsg = '';
   balanceErrorMsg = '';
@@ -305,9 +304,7 @@ export class TransactionEntryComponent implements OnInit, AfterViewInit {
               remarks: element.remarks
             })
           );
-          this.changeDetectorRef.markForCheck();
-          debugger;
-          this.dateVal['formattedDate'] = actualDate.format('DD/MM/YYYY', 'np').toString();
+          
         });
       });
     }

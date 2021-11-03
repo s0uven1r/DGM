@@ -6,6 +6,7 @@ namespace Resource.Domain.Entities.Account
     {
         public string AccountNumber { get; set; }
         public string Type { get; set; }
+        public string Title { get; set; }
         public DateTime TransactionDate { get; set; }
         public string TransactionDateNP { get; set; }
         public decimal AmountDebit { get; set; }

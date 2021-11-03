@@ -76,6 +76,7 @@ namespace Resource.Application.Command.Account.AccountEntry
                 var transactionEntity = new Transaction
                 {
                     AccountNumber = request.AccountNumber,
+                    Title = request.Title,
                     TotalAmount = request.MarketPrice,
                     Discount = request.DiscountAmount,
                     NetAmount = request.NetAmount,
@@ -88,6 +89,7 @@ namespace Resource.Application.Command.Account.AccountEntry
                 var transactionDetails = request.JournalEntries.Select(x => new TransactionDetail
                 {
                     AccountNumber = x.AccountNumber,
+                    Title = x.Title,
                     AmountCredit = x.CreditAmount,
                     AmountDebit = x.DebitAmount,
                     TransactionDate = DateTime.ParseExact(x.EntryDateEN, "dd/MM/yyyy", CultureInfo.InvariantCulture),
@@ -106,6 +108,7 @@ namespace Resource.Application.Command.Account.AccountEntry
             private async Task UpdateAccountEntry(Transaction accountEntry, AddAccountEntryDetailCommand request, CancellationToken cancellationToken)
             {
                 accountEntry.AccountNumber = request.AccountNumber;
+                accountEntry.Title = request.Title;
                 accountEntry.TotalAmount = request.MarketPrice;
                 accountEntry.Discount = request.DiscountAmount;
                 accountEntry.NetAmount = request.NetAmount;
@@ -129,6 +132,7 @@ namespace Resource.Application.Command.Account.AccountEntry
                     TransactionDateNP = x.EntryDateNP,
                     Remarks = x.Remarks,
                     Type = x.Type,
+                    Title = x.Title,
                     TransactionId = accountEntry.Id,
                 }).ToList();
 
