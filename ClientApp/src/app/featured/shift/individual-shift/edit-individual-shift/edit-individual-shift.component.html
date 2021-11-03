@@ -1,0 +1,57 @@
+
+<div class="container-fluid card h-100">
+<div class="card-body">
+    <h5 class="card-title">
+        <div class="col-12 text-right">
+            <a href="#" [routerLink]='"/dashboard/shift-config/individual-shift"' class="btn btn-primary btn-sm">Cancel</a>
+        </div>
+    </h5>
+    <form [formGroup]="UpdateIndividualShiftForm" (ngSubmit)="UpdateIndividualShift()">
+        <div class="form-group col-md-6">
+            <input formControlName="id" type="hidden">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Package</label><span class="text-danger">*</span>
+               <input type="text" readonly class="form-control" formControlName="packageName">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Shift</label><span class="text-danger">*</span>
+                <select class="form-control dropdown-toggle" formControlName="shiftId">
+                  <option value=null selected>--Select Shift--</option>
+                  <option *ngFor="let shift of shifts" [value]="shift.id">{{shift.name}} ({{shift.startTime}}-{{shift.endTime}})</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <input formControlName='id' type="hidden">
+                <label>Vehicle</label><span class="text-danger">*</span>
+                <select formControlName="vehicleId"  class="custom-select" aria-label="Example select with button addon">
+                  <option value=null>Select Vehicle</option>
+                  <option *ngFor="let item of vehicles" [value]="item.id">
+                    {{item.registrationNumber+ ' - '+ item.model}}
+                  </option>
+                </select>
+      
+              </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Training Date(Np)</label><span class="text-danger">*</span>
+                 <np-datepicker inputClass="form-control" formControlName="trainingDateNP" #dateVal (ngModelChange)="changeNepaliToEnglish(dateVal)" ></np-datepicker>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Training Date(En)</label><span class="text-danger">*</span>
+                <input readonly class="form-control" id="NpToENDate"   formControlName="trainingDateEN">
+              </div>
+              <div class="form-group col-md-7">
+                <input type="text" [ngbTooltip]="'Search User Assigned Shift'" [ngbTypeahead]="search" typeahead-editable='false' [resultFormatter]="formatter"
+                  (selectItem)="selectedItem($event)" placeholder="Search user for shift management"
+                  class="form-control">
+              </div>
+        </div>
+        <div class="form-row">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+</div>

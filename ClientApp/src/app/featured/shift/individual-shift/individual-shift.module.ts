@@ -5,6 +5,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { IndividualShiftRoutingModule, RoutingComponent } from './individual-shift-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../../identity/user/service/user.service';
+import { ShiftService } from '../service/shift.service';
 
 @NgModule({
   declarations: RoutingComponent,
@@ -19,6 +20,10 @@ import { UserService } from '../../identity/user/service/user.service';
    {
       provide: UserService,
       useClass: UserService,
+    },
+    {
+      provide: ShiftService,
+      useClass: ShiftService
     }
   ]
 })

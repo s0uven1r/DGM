@@ -128,25 +128,28 @@ export class CustomerPackageComponent implements OnInit, AfterViewInit {
     }
   }
   checkPromoCode(){
-    this.packageService
-    .getSinglePromoByPromocode(this.registerPackageForm.controls['promoCode'].value)
-    .subscribe(
-      (data) => {
-        var packageAmount = this.registerPackageForm.controls['packageAmount'].value;
-        var discountAmount = 0;
-        if(data['hasDiscountPercent']){
-            discountAmount = (packageAmount* data['discount'])/100;
-        }else{
-          discountAmount = data['discount'];
+    if(this.registerPackageForm.controls['promoCode'].value){
+      this.packageService
+      .getSinglePromoByPromocode(this.registerPackageForm.controls['promoCode'].value)
+      .subscribe(
+        (data) => {
+          var packageAmount = this.registerPackageForm.controls['packageAmount'].value;
+          var discountAmount = 0;
+          if(data['hasDiscountPercent']){
+              discountAmount = (packageAmount* data['discount'])/100;
+          }else{
+            discountAmount = data['discount'];
+          }
+          this.registerPackageForm.patchValue({
+            discountAmount: discountAmount
+          });
+        },
+        ()=> {
+          console.log("HTTP request completed.")
         }
-        this.registerPackageForm.patchValue({
-          discountAmount: discountAmount
-        });
-      },
-      ()=> {
-        console.log("HTTP request completed.")
-      }
-    );
+      );
+    }
+   
   }
 }
 

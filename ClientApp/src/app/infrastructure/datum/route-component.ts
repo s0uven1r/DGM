@@ -37,6 +37,7 @@ import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
 import { IndividualShiftComponent } from 'src/app/featured/shift/individual-shift/individual-shift.component';
 import { CustomerPackageComponent } from 'src/app/featured/package-course/customer-package/customer-package.component';
+import { EditIndividualShiftComponent } from '../../featured/shift/individual-shift/edit-individual-shift/edit-individual-shift.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -83,4 +84,5 @@ export const RouteComponent = {
       DescriptiveImageRouteComponent: [DescriptiveImageComponent],
       IndividualShiftRouteComponent: [IndividualShiftComponent],
       CustomerPackageRouteComponent: [CustomerPackageComponent],
+      IndividualShiftEditRouteComponent: [EditIndividualShiftComponent],
 }
