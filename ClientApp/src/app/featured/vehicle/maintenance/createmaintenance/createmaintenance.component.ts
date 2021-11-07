@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import NepaliDate from 'nepali-date-converter';
 import { throwError } from 'rxjs';
@@ -71,9 +71,9 @@ export class CreatemaintenanceComponent implements OnInit, OnDestroy, AfterViewI
   FormDesign() {
     return this.MaintenanceForm = this.form.group({
       id: [null],
-      vehicleId: [""],
-      remarks: [null],
-      registerDateNP: [null],
+      vehicleId: [null, Validators.required],
+      remarks: [null, Validators.required],
+      registerDateNP: [null, Validators.required],
       registerDateEN: [null]
     });
   }
