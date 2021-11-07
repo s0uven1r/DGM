@@ -33,10 +33,13 @@ export class AccountService {
     this.accountHead + ApiGateway.resource.account.accounthead.create;
   private updateAccountHeadUrl =
     this.accountHead + ApiGateway.resource.account.accounthead.update;
-  private createTransactionEntryUrl =
-    this.transactionEntry + ApiGateway.resource.account.transactionentry.create;
+  private getAllTransactionEntriesUrl =
+    this.transactionEntry + ApiGateway.resource.account.transactionentry.getAll;
   private getTransactionEntryUrl =
     this.transactionEntry + ApiGateway.resource.account.transactionentry.getSingle;
+  private createTransactionEntryUrl =
+    this.transactionEntry + ApiGateway.resource.account.transactionentry.create;
+
 
   constructor(private http: HttpClient) { }
 
@@ -86,13 +89,15 @@ export class AccountService {
   getAllAccountHeadAccountDetails(name: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl + this.getAccountHeadAccountDetailsUrl}?value=${name}`);
   }
+  getAllTransactionEntries(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAllTransactionEntriesUrl}`);
+  }
+  getTransactionEntry(id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getTransactionEntryUrl}?id=${id}`);
+  }
   createTransactionEntry(value: any) {
-    value.journalEntry.forEach(element => {
-      let date = element.entryDateNP.day + "/" + element.entryDateNP.month + "/" + element.entryDateNP.year;
-      element.entryDateNP = date;
-    });
-
     return this.http.post<any>(`${this.baseUrl + this.createTransactionEntryUrl}`, {
+      id: value.transactionId,
       accountNumber: value.accountNumber,
       discountAmount: value.discountAmount,
       dueAmount: value.dueAmount,
@@ -111,7 +116,5 @@ export class AccountService {
       journalEntries: value.journalEntry,
     });
   }
-  getTransactionEntry(type: string, accountNumber: string, transactionDateEN: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl + this.getTransactionEntryUrl}?type=${type}&accountNumber=${accountNumber}&transactionDateEN=${transactionDateEN}`);
-  }
+
 }

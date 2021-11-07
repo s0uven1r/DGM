@@ -35,6 +35,7 @@ import { CourseTypeCreateComponent } from 'src/app/featured/package-course/cours
 import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/course-type/course-type-update/course-type-update.component';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
+import { TransactionEntryCreateComponent } from 'src/app/featured/account/transaction-entry/transaction-entry-create/transaction-entry-create.component';
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -65,6 +66,7 @@ export const RouteComponent = {
       AccountHeadCreateRouteComponent: [AccountHeadCreateComponent],
       AccountHeadEditRouteComponent: [AccountHeadEditComponent],
       AccountTransactionEntryRouteComponent: [TransactionEntryComponent],
+      AccountTransactionEntryCreateRouteComponent: [TransactionEntryCreateComponent],
       PackageRouteComponent: [PackageComponent],
       PackageCreateRouteComponent: [PackageCreateComponent],
       PackageUpdateRouteComponent: [PackageUpdateComponent],

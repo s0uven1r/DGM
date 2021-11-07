@@ -8,8 +8,6 @@ namespace Resource.Application.Models.Account.AccountEntry.Request
 {
     public class AccountEntryGetSingleViewModel
     {
-        public string Type { get; set; }
-        public string AccountNumber { get; set; }
-        public string TransactionDateEN { get; set; }
+        public string Id { get; set; }
     }
 }

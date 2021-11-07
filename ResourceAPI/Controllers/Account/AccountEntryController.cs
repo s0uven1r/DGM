@@ -11,6 +11,18 @@ namespace ResourceAPI.Controllers.Account
 {
     public class AccountEntryController : BaseController
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("Get/GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await Mediator.Send(request: new GetAllAccountEntryDetail.GetAllAccountEntryQuery()));
+        }
+
         /// <summary>
         /// 
         /// </summary>

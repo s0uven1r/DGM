@@ -70,6 +70,22 @@ export const AccountRoutePath = {
             import(
               "src/app/featured/account/transaction-entry/transaction-entry.module"
             ).then((m) => m.TransactionEntryModule),
+        },
+        {
+          path: "create",
+          data: { breadcrumb: "Create" },
+          loadChildren: () =>
+            import(
+              "src/app/featured/account/transaction-entry/transaction-entry-create/transaction-entry-create.module"
+            ).then((m) => m.TransactionEntryCreateModule),
+        },
+        {
+          path: "edit/:id",
+          data: { breadcrumb: "Edit" },
+          loadChildren: () =>
+            import(
+              "src/app/featured/account/transaction-entry/transaction-entry-create/transaction-entry-create.module"
+            ).then((m) => m.TransactionEntryCreateModule),
         }
       ],
     },

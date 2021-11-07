@@ -49,6 +49,7 @@ import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/cours
 import { SettingsRoutePath } from './route-path/settings-route-path';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
+import { TransactionEntryCreateComponent } from 'src/app/featured/account/transaction-entry/transaction-entry-create/transaction-entry-create.component';
 
 export const RoutePath = {
     AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -107,6 +108,7 @@ export const RoutePath = {
     accountTypeDDL: AccountHeadResolverService
   }}],
   AccountTransactionEntryRoutePath: [{path: '', component: TransactionEntryComponent}],
+  AccountTransactionEntryCreateRoutePath: [{path: '', component: TransactionEntryCreateComponent}],
 
   PackageRoutePath: [{path: '', component: PackageComponent}],
   PackageCreateRoutePath: [{path: '', component: PackageCreateComponent, resolve: {

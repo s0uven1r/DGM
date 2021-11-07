@@ -25,9 +25,7 @@ namespace Resource.Application.Query.Account.AccountEntry
         {
             public GetSingleAccountEntryQueryValidator()
             {
-                RuleFor(x => x.AccountNumber).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
-                RuleFor(x => x.Type).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
-                RuleFor(x => x.TransactionDateEN).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
+                RuleFor(x => x.Id).Cascade(CascadeMode.Stop).NotEmpty().NotNull();
             }
         }
 
@@ -43,14 +41,14 @@ namespace Resource.Application.Query.Account.AccountEntry
             {
                 try
                 {
-                    var dateEN = DateTime.ParseExact(request.TransactionDateEN, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
                     var accountEntry = await _context.Transactions.Include(a => a.TransactionDetails)
-                        .Where(x => x.Type == request.Type && x.AccountNumber == request.AccountNumber && x.TransactionDate == dateEN)
+                        .Where(x => x.Id == request.Id && !x.IsDeleted)
                         .Select(y => new
                         AccountEntryResponseViewModel
                         {
                             Id = y.Id,
                             Type = y.Type,
+                            Title = y.Title,
                             AccountNumber = y.AccountNumber,
                             MarketPrice = y.TotalAmount,
                             DiscountAmount = y.Discount,
@@ -63,12 +61,11 @@ namespace Resource.Application.Query.Account.AccountEntry
                             Models.Account.AccountEntry.Response.JournalEntry
                             {
                                 Id = z.Id,
+                                Title = z.Title,
                                 Type = z.Type,
                                 AccountNumber = z.AccountNumber,
                                 CreditAmount = z.AmountCredit,
                                 DebitAmount = z.AmountDebit,
-                                EntryDateEN = z.TransactionDate,
-                                EntryDateNP = z.TransactionDateNP,
                                 Remarks = z.Remarks
                             }).ToList()
                         }).FirstOrDefaultAsync(cancellationToken);
