@@ -17,11 +17,10 @@ import { AccountService } from '../service/account.service';
 export class TransactionEntryComponent implements OnInit, OnDestroy {
   accountEntryViewClaim = [AccountControllersClaim.AccountEntry.View];
   accountEntryCreateClaim = [AccountControllersClaim.AccountEntry.Write];
-  
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   isDtInitialized: boolean = false;
-  transactionEntries: TransactionEntryModel[] = [];
+  journalEntries: TransactionEntryModel[] = [];
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
 
@@ -44,7 +43,7 @@ export class TransactionEntryComponent implements OnInit, OnDestroy {
 
   getInitData() {
     this.accountService.getAllTransactionEntries().subscribe(x => {
-      this.transactionEntries = x;
+      this.journalEntries = x;
       if (this.isDtInitialized) {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();

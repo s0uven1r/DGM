@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let transactionEntry of transactionEntries; let i = index;">
+          <tr *ngFor="let transactionEntry of journalEntries; let i = index;">
             <td>{{ i + 1 }}</td>
             <td>{{ transactionEntry.accountNumber }}</td>
             <td>{{ transactionEntry.entryDateNP }}</td>

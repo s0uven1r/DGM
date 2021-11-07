@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import NepaliDate from 'nepali-date-converter';
 import { fromEvent, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, filter } from 'rxjs/operators';
@@ -31,24 +31,27 @@ export class TransactionEntryCreateComponent implements OnInit, AfterViewInit {
   resultPair = [];
   focus$ = [0, 1].map(_ => new Subject<string>());
 
-  constructor(private form: FormBuilder,
+  constructor(
+    private form: FormBuilder,
     private changeDetectorRef: ChangeDetectorRef,
     private accountService: AccountService,
     private vehicleService: VehicleService,
     private userService: UserService,
     private route: ActivatedRoute,
+    private router: Router
   ) {
     this.FormDesign();
   }
 
   ngOnInit(): void {
     // Do not forget to unsubscribe the event
-    this.transactions = this.route.snapshot.data.vehicleData;
+    this.transactions = this.route.snapshot.data.journalEntries;
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.isEdit = true;
         this.accountService.getTransactionEntry(params['id']).subscribe(x => {
           this.entryForm.patchValue({
+            id: x.id,
             netAmount: x.netAmount,
             dueAmount: x.dueAmount,
             title: x.title,
@@ -104,8 +107,9 @@ export class TransactionEntryCreateComponent implements OnInit, AfterViewInit {
 
   FormDesign() {
     return (this.entryForm = this.form.group({
-      title: [null, Validators.required],
+      id: [null],
       accountNumber: [null, Validators.required],
+      title: [null, Validators.required],
       type: [null, Validators.required],
       entryDateNP: [null, Validators.required],
       entryDateEN: [null, Validators.required],
@@ -314,9 +318,7 @@ export class TransactionEntryCreateComponent implements OnInit, AfterViewInit {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.value) {
-        if (this.isEdit) {
-         this.entryForm.value.id = this.route.snapshot.paramMap.get('id');
-        }
+        debugger;
         this.accountService
           .createTransactionEntry(this.entryForm.value)
           .pipe(
@@ -326,17 +328,15 @@ export class TransactionEntryCreateComponent implements OnInit, AfterViewInit {
           )
           .subscribe(
             () => {
-              if (!this.isEdit) {
-                this.entryForm.reset();
-                this.entryForm.clearValidators();
-                //this.FormDesign();
-              }
-
               Swal.fire(
                 this.isEdit ? 'Updated' : 'Added!',
                 'User Action',
                 'success'
               );
+              const url = this.router.serializeUrl(
+                this.router.createUrlTree([`/dashboard/account/transactionentry`])
+              );
+              window.open(url, "_self");
             },
             () => console.log("HTTP request completed.")
           );

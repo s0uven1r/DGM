@@ -52,11 +52,9 @@ namespace Resource.Application.Command.Account.AccountEntry
 
                 try
                 {
-                    var dateEN = DateTime.ParseExact(request.EntryDateEN, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
+                    var accountEntry = await _context.Transactions.Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
 
-                    var accountEntry = await _context.Transactions.Where(x => x.Type == request.Type && x.AccountNumber == request.AccountNumber && x.TransactionDate == dateEN).FirstOrDefaultAsync(cancellationToken);
-
-                    if (accountEntry == null)
+                    if (string.IsNullOrEmpty(request.Id) && accountEntry == null)
                         await AddAccountEntry(request, cancellationToken);
                     else
                         await UpdateAccountEntry(accountEntry, request, cancellationToken);

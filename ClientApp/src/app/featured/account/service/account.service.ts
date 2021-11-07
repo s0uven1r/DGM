@@ -97,7 +97,7 @@ export class AccountService {
   }
   createTransactionEntry(value: any) {
     return this.http.post<any>(`${this.baseUrl + this.createTransactionEntryUrl}`, {
-      id: value.transactionId,
+      id: value.id,
       accountNumber: value.accountNumber,
       discountAmount: value.discountAmount,
       dueAmount: value.dueAmount,

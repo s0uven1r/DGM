@@ -50,87 +50,123 @@ import { SettingsRoutePath } from './route-path/settings-route-path';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
 import { TransactionEntryCreateComponent } from 'src/app/featured/account/transaction-entry/transaction-entry-create/transaction-entry-create.component';
+import { TransactionEntryResolverService } from 'src/app/featured/account/service/transactionentry-resolver.service';
 
 export const RoutePath = {
-    AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
-      {path:'auth-callback', loadChildren: () =>import('src/app/core/auth-callback/auth-callback.module').then(
-        (m) => m.AuthCallbackModule
-      )},
-      {path:'', loadChildren: () =>import('src/app/core/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ), data: { breadcrumb: 'Dashboard'}},
-      { path:'forbidden',component: ForbiddenComponent, pathMatch:'full'},
-      { path:'internal-server-error', component: InternalServerErrorComponent, pathMatch:'full'},
-      { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
+  AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
+  {
+    path: 'auth-callback', loadChildren: () => import('src/app/core/auth-callback/auth-callback.module').then(
+      (m) => m.AuthCallbackModule
+    )
+  },
+  {
+    path: '', loadChildren: () => import('src/app/core/dashboard/dashboard.module').then(
+      (m) => m.DashboardModule
+    ), data: { breadcrumb: 'Dashboard' }
+  },
+  { path: 'forbidden', component: ForbiddenComponent, pathMatch: 'full' },
+  { path: 'internal-server-error', component: InternalServerErrorComponent, pathMatch: 'full' },
+  { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
+  ],
+
+  DashboardRoutePath: [{
+    path: 'dashboard', component: DashboardComponent,
+    children: [RoleRoutePath,
+      PermissionRoutePath,
+      UserRoutePath,
+      AccountRoutePath,
+      VehicleRoutePath,
+      ConfigRoutePath,
+      SettingsRoutePath
     ],
+    canActivate: [AuthGuard]
+  }],
+  AuthCallbackRoutePath: [{ path: '', component: AuthCallbackComponent }],
+  RoleRoutePath: [{
+    path: '', component: RoleComponent, resolve: {
+      roleTypeDDL: RoleTypeResolverService
+    }
+  }],
+  PermissionRoutePath: [{ path: '', component: PermissionComponent }],
+  UserRoutePath: [{ path: '', component: UserComponent }],
+  UserCreateRoutePath: [{
+    path: '', component: CreateComponent, resolve: {
+      roleData: RoleResolverService
+    }
+  }],
+  UserKycRoutePath: [{
+    path: '', component: KycComponent, resolve: {
+      kycDDLData: KycResolverService
+    }
+  }],
+  VehicleInventoryRoutePath: [{ path: '', component: VehicleRegisterComponent }],
+  VehicleInventoryCreateRoutePath: [{ path: '', component: VehicleCreateComponent }],
+  VehicleInventoryUpdateRoutePath: [{ path: '', component: VehicleUpdateComponent }],
+  VehicleMaintenanceRoutePath: [{ path: '', component: MaintenanceComponent }],
+  VehicleMaintenanceCreateRoutePath: [{
+    path: '', component: CreatemaintenanceComponent, resolve: {
+      vehicleData: VehicleResolverService
+    }
+  }],
+  AccountTypeRoutePath: [{ path: '', component: AccountTypeComponent }],
+  AccountTypeCreateRoutePath: [{
+    path: '', component: AccountTypeCreateComponent, resolve: {
+      accountTypeDDL: AccountTypeResolverService
+    }
+  }],
+  AccountTypeEditRoutePath: [{
+    path: '', component: AccountTypeEditComponent, resolve: {
+      accountTypeDDL: AccountTypeResolverService
+    }
+  }],
+  AccountHeadRoutePath: [{ path: '', component: AccountHeadComponent }],
+  AccountHeadCreateRoutePath: [{
+    path: '', component: AccountHeadCreateComponent, resolve: {
+      accountTypeDDL: AccountHeadResolverService
+    }
+  }],
+  AccountHeadEditRoutePath: [{
+    path: '', component: AccountHeadEditComponent, resolve: {
+      accountTypeDDL: AccountHeadResolverService
+    }
+  }],
+  AccountTransactionEntryRoutePath: [{ path: '', component: TransactionEntryComponent }],
+  AccountTransactionEntryCreateRoutePath: [{
+    path: '', component: TransactionEntryCreateComponent,
+    resolve: {
+      journalEntries: TransactionEntryResolverService
+    }
+  }],
 
-  DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent,
-                      children: [RoleRoutePath,
-                        PermissionRoutePath,
-                        UserRoutePath,
-                        AccountRoutePath,
-                        VehicleRoutePath,
-                        ConfigRoutePath,
-                        SettingsRoutePath
-                      ],
-                      canActivate: [AuthGuard] }],
-  AuthCallbackRoutePath:[{path: '', component: AuthCallbackComponent}],
-  RoleRoutePath:[{path: '', component: RoleComponent, resolve: {
-    roleTypeDDL: RoleTypeResolverService
-  }}],
-  PermissionRoutePath:[{path: '', component: PermissionComponent}],
-  UserRoutePath: [{path: '', component: UserComponent}],
-  UserCreateRoutePath: [{path: '', component: CreateComponent,resolve: {
-    roleData: RoleResolverService
-  }}],
-  UserKycRoutePath: [{path: '', component: KycComponent,resolve: {
-    kycDDLData: KycResolverService
-  }}],
-  VehicleInventoryRoutePath: [{path: '', component: VehicleRegisterComponent}],
-  VehicleInventoryCreateRoutePath: [{path: '', component: VehicleCreateComponent}],
-  VehicleInventoryUpdateRoutePath: [{path: '', component: VehicleUpdateComponent}],
-  VehicleMaintenanceRoutePath: [{path: '', component: MaintenanceComponent}],
-  VehicleMaintenanceCreateRoutePath: [{path: '', component: CreatemaintenanceComponent, resolve: {
-    vehicleData: VehicleResolverService
-  }}],
-  AccountTypeRoutePath: [{path: '', component: AccountTypeComponent}],
-  AccountTypeCreateRoutePath: [{path: '', component: AccountTypeCreateComponent, resolve: {
-    accountTypeDDL: AccountTypeResolverService
-  }}],
-  AccountTypeEditRoutePath: [{path: '', component: AccountTypeEditComponent, resolve: {
-    accountTypeDDL: AccountTypeResolverService
-  }}],
-  AccountHeadRoutePath: [{path: '', component: AccountHeadComponent}],
-  AccountHeadCreateRoutePath: [{path: '', component: AccountHeadCreateComponent, resolve: {
-    accountTypeDDL: AccountHeadResolverService
-  }}],
-  AccountHeadEditRoutePath: [{path: '', component: AccountHeadEditComponent, resolve: {
-    accountTypeDDL: AccountHeadResolverService
-  }}],
-  AccountTransactionEntryRoutePath: [{path: '', component: TransactionEntryComponent}],
-  AccountTransactionEntryCreateRoutePath: [{path: '', component: TransactionEntryCreateComponent}],
+  PackageRoutePath: [{ path: '', component: PackageComponent }],
+  PackageCreateRoutePath: [{
+    path: '', component: PackageCreateComponent, resolve: {
+      courseDDL: PackageResolverService
+    }
+  }],
+  PackageUpdateRoutePath: [{
+    path: '', component: PackageUpdateComponent, resolve: {
+      courseDDL: PackageResolverService
+    }
+  }],
 
-  PackageRoutePath: [{path: '', component: PackageComponent}],
-  PackageCreateRoutePath: [{path: '', component: PackageCreateComponent, resolve: {
-    courseDDL: PackageResolverService
-  }}],
-  PackageUpdateRoutePath: [{path: '', component: PackageUpdateComponent, resolve: {
-    courseDDL: PackageResolverService
-  }}],
-
-  PromoRoutePath: [{path: '', component: PromoComponent}],
-  PromoCreateRoutePath: [{path: '', component: PromoCreateComponent, resolve: {
-    packageDDL: PromoResolverService
-  }}],
-  PromoUpdateRoutePath: [{path: '', component: PromoUpdateComponent, resolve: {
-    packageDDL: PromoResolverService
-  }}],
-  CourseRoutePath: [{path: '', component: CourseComponent}],
-  CourseCreateRoutePath: [{path: '', component: CourseCreateComponent}],
-  CourseUpdateRoutePath: [{path: '', component: CourseUpdateComponent}],
-  CourseTypeRoutePath:[{path:'',component:CourseTypeComponent}],
-  CourseTypeCreateRoutePath: [{path: '', component: CourseTypeCreateComponent}],
-  CourseTypeUpdateRoutePath: [{path: '', component: CourseTypeUpdateComponent}],
-  LogoRoutePath : [{path: '', component:LogoComponent}],
-  DescriptiveImageRoutePath : [{path: '', component:DescriptiveImageComponent}],
+  PromoRoutePath: [{ path: '', component: PromoComponent }],
+  PromoCreateRoutePath: [{
+    path: '', component: PromoCreateComponent, resolve: {
+      packageDDL: PromoResolverService
+    }
+  }],
+  PromoUpdateRoutePath: [{
+    path: '', component: PromoUpdateComponent, resolve: {
+      packageDDL: PromoResolverService
+    }
+  }],
+  CourseRoutePath: [{ path: '', component: CourseComponent }],
+  CourseCreateRoutePath: [{ path: '', component: CourseCreateComponent }],
+  CourseUpdateRoutePath: [{ path: '', component: CourseUpdateComponent }],
+  CourseTypeRoutePath: [{ path: '', component: CourseTypeComponent }],
+  CourseTypeCreateRoutePath: [{ path: '', component: CourseTypeCreateComponent }],
+  CourseTypeUpdateRoutePath: [{ path: '', component: CourseTypeUpdateComponent }],
+  LogoRoutePath: [{ path: '', component: LogoComponent }],
+  DescriptiveImageRoutePath: [{ path: '', component: DescriptiveImageComponent }],
 };
