@@ -1,7 +1,8 @@
 <div *appCheckclaim="roleCreateClaim" class="card mb-2">
   <div class="card-body">
-    <h5 class="card-title pl-3"><a class="btn disabled btn-outline-info btn-sm">{{isEdit?"Update":"Create"}}</a></h5>
-
+    <h5 class="card-title pl-3">
+      <a class="mb-2">{{isEdit?"Update":"Create"}} Role Form</a>
+    </h5>
     <div class="container-fluid bordered  h-100">
       <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
@@ -49,30 +50,35 @@
     </div>
   </div>
 </div>
-<table class="table table-hover">
-  <tr>
-    <th>S.N</th>
-    <th>Title</th>
-    <th>Level</th>
-    <th>Role Type</th>
-    <th>Action</th>
-  </tr>
-  <tr *ngFor="let item of roleData; let i=index">
-    <td>{{i+1}}</td>
-    <td>{{item.name}}</td>
-    <td>{{item.rank}}</td>
-    <td>{{item.typeName}}</td>
-    <td *ngIf="!item.isDefault">
-      <button *appCheckclaim="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"
-        (click)="getData(item.id, item.name, item.isPublic, item.rank, item.type)"><em class="fa fa-edit"></em></button>
-      <button *appCheckclaim="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1"
-        (click)="deleteData(item.id)"><em class="fa fa-trash"></em></button>
-      <a class="btn pt-0 pb-0 btn-xs btn-info ml-1" *appCheckclaim="roleViewClaim"
-        [routerLink]="['/dashboard/permission', item.id]"><em class="fa fa-eye"></em> Manage Permission</a>
-    </td>
-    <td *ngIf="item.isDefault"></td>
-  </tr>
-  <tr *ngIf="!roleData?.length">
-    <td colspan="5" class="text-center border text-dark">No data available in table</td>
-  </tr>
-</table>
+<div *appCheckclaim="roleCreateClaim" class="card mb-2">
+  <div class="card-body">
+    <table class="table table-hover">
+      <tr>
+        <th>S.N</th>
+        <th>Title</th>
+        <th>Level</th>
+        <th>Role Type</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let item of roleData; let i=index">
+        <td>{{i+1}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.rank}}</td>
+        <td>{{item.typeName}}</td>
+        <td *ngIf="!item.isDefault">
+          <button *appCheckclaim="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"
+            (click)="getData(item.id, item.name, item.isPublic, item.rank, item.type)"><em
+              class="fa fa-edit"></em></button>
+          <button *appCheckclaim="roleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1"
+            (click)="deleteData(item.id)"><em class="fa fa-trash"></em></button>
+          <a class="btn pt-0 pb-0 btn-xs btn-info ml-1" *appCheckclaim="roleViewClaim"
+            [routerLink]="['/dashboard/permission', item.id]"><em class="fa fa-eye"></em> Manage Permission</a>
+        </td>
+        <td *ngIf="item.isDefault"></td>
+      </tr>
+      <tr *ngIf="!roleData?.length">
+        <td colspan="5" class="text-center border text-dark">No data available in table</td>
+      </tr>
+    </table>
+  </div>
+</div>

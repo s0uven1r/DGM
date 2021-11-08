@@ -43,14 +43,14 @@
         <div class="form-group col-md-4">
           <label>Duration</label><span class="text-danger">*</span>
           <select class="form-control dropdown-toggle" formControlName="shiftFrequencyId"
-            [ngClass]="{'is-invalid': createPackageForm.get('duration').errors && (createPackageForm.get('duration').touched || createPackageForm.get('duration').dirty)}">
+            [ngClass]="{'is-invalid': createPackageForm.get('shiftFrequencyId').errors && (createPackageForm.get('shiftFrequencyId').touched || createPackageForm.get('shiftFrequencyId').dirty)}">
             <option value=null selected>--Select Shift Duration--</option>
             <option *ngFor="let ddls of shiftFrequency" [value]="ddls.id">{{ddls.name}}({{ddls.duration}} mins)
             </option>
           </select>
           <span class="text-danger">
             <small
-              *ngIf="createPackageForm.get('duration').errors?.required && (createPackageForm.get('duration').touched || createPackageForm.get('duration').dirty)">Duration
+              *ngIf="createPackageForm.get('shiftFrequencyId').errors?.required && (createPackageForm.get('shiftFrequencyId').touched || createPackageForm.get('shiftFrequencyId').dirty)">Duration
               is Required!</small>
           </span>
         </div>
