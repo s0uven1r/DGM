@@ -10,84 +10,6 @@ export const ApiGateway = {
       deleteRole: "/DeleteRole",
       getRoleTypeDDL: "/Get/GetRoleTypeEnumDDL",
     },
-<<<<<<< HEAD
-    resource: {
-        vehicle: {
-            inventory: {
-                base: 'VehicleInventory',
-                getAll: '/Get/GetAllVehicle',
-                getSingleById: '/Get/GetVehicleDetailById',
-                create: '/Create',
-                update: '/Update',
-                delete: '/Delete',
-                getAccountNumberDetails:'/GetAccountDetails',
-            },
-            maintenance:{
-                base: 'VehicleMaintenance',
-                create: '/Create',
-            }
-        },
-        account: {
-            accounttype: {
-                base: 'AccountType',
-                getAll: '/Get/GetAll',
-                getSingleById: '/Get/GetById',
-                getAccountTypeDDL: '/Get/GetAccountTypeEnumDDL',
-                create: '/Create',
-                update: '/Update',
-            },
-            accounthead:{
-                base: 'AccountHead',
-                getAll: '/Get/GetAll',
-                getAccountNumberDetails:'/GetAccountDetails',
-                getSingleById: '/Get/GetById',
-                create: '/Create',
-                update: '/Update',
-            },
-            transactionentry:{
-                base:'AccountEntry',
-                getAll:'/Get/GetAll',
-                getSingle:'/Get/GetSingleAccountEntry',
-                create:'/Create'
-            }
-        },
-        course: {
-            course: {
-                base: 'Course',
-                getAll: '/Get/GetAll',
-                getSingleById: '/Get/GetById',
-                create: '/Create',
-                update: '/Update',
-                delete: '/Delete',
-            },
-            courseType:{
-              base: 'Course/Type',
-              getAll:'/Get/GetAll',
-              getSingleById:'/Get/GetById',
-              create:'/Create',
-              update: '/Update',
-              delete:'/Delete'
-            }
-        },
-        package: {
-            package: {
-                base: 'Package',
-                getAll: '/Get/GetAll',
-                getSingleById: '/Get/GetById',
-                create: '/Create',
-                update: '/Update',
-                delete: '/Delete',
-            },
-        promo:{
-                base: 'Package/Promo',
-                getAll: '/Get/GetAll',
-                getSingleById: '/Get/GetById',
-                create: '/Create',
-                update: '/Update',
-                delete: '/Delete',
-            }
-        }
-=======
     menu: {
       base: "Menu",
       getMenu: "/GetMenu",
@@ -116,46 +38,47 @@ export const ApiGateway = {
       uploadLogo: "/LogoUpload",
       getLogo: "/GetLogo",
       uploadDescriptiveImage: "/DescriptiveImageUpload",
-    },
+    }
   },
   resource: {
     vehicle: {
       inventory: {
-        base: "VehicleInventory",
-        getAll: "/Get/GetAllVehicle",
-        getSingleById: "/Get/GetVehicleDetailById",
-        create: "/Create",
-        update: "/Update",
-        delete: "/Delete",
-        getAccountNumberDetails: "/GetAccountDetails",
+        base: 'VehicleInventory',
+        getAll: '/Get/GetAllVehicle',
+        getSingleById: '/Get/GetVehicleDetailById',
+        create: '/Create',
+        update: '/Update',
+        delete: '/Delete',
+        getAccountNumberDetails: '/GetAccountDetails',
       },
       maintenance: {
-        base: "VehicleMaintenance",
-        create: "/Create",
-      },
+        base: 'VehicleMaintenance',
+        create: '/Create',
+      }
     },
     account: {
       accounttype: {
-        base: "AccountType",
-        getAll: "/Get/GetAll",
-        getSingleById: "/Get/GetById",
-        getAccountTypeDDL: "/Get/GetAccountTypeEnumDDL",
-        create: "/Create",
-        update: "/Update",
+        base: 'AccountType',
+        getAll: '/Get/GetAll',
+        getSingleById: '/Get/GetById',
+        getAccountTypeDDL: '/Get/GetAccountTypeEnumDDL',
+        create: '/Create',
+        update: '/Update',
       },
       accounthead: {
-        base: "AccountHead",
-        getAll: "/Get/GetAll",
-        getAccountNumberDetails: "/GetAccountDetails",
-        getSingleById: "/Get/GetById",
-        create: "/Create",
-        update: "/Update",
+        base: 'AccountHead',
+        getAll: '/Get/GetAll',
+        getAccountNumberDetails: '/GetAccountDetails',
+        getSingleById: '/Get/GetById',
+        create: '/Create',
+        update: '/Update',
       },
       transactionentry: {
-        base: "AccountEntry",
-        getSingle: "Get/GetSingleAccountEntry",
-        create: "/Create",
-      },
+        base: 'AccountEntry',
+        getAll: '/Get/GetAll',
+        getSingle: '/Get/GetSingleAccountEntry',
+        create: '/Create'
+      }
     },
     course: {
       course: {
@@ -177,12 +100,12 @@ export const ApiGateway = {
     },
     package: {
       package: {
-        base: "Package",
-        getAll: "/Get/GetAll",
-        getSingleById: "/Get/GetById",
-        create: "/Create",
-        update: "/Update",
-        delete: "/Delete",
+        base: 'Package',
+        getAll: '/Get/GetAll',
+        getSingleById: '/Get/GetById',
+        create: '/Create',
+        update: '/Update',
+        delete: '/Delete',
       },
       promo: {
         base: "Package/Promo",
@@ -192,7 +115,7 @@ export const ApiGateway = {
         update: "/Update",
         delete: "/Delete",
         getSingleByPromoCode: "/Get/GetByPromoCode"
-      },
+      }
     },
     shiftFrequency: {
       base: "ShiftFrequency",
@@ -205,7 +128,6 @@ export const ApiGateway = {
     shift: {
       base: "Shift",
       getAll: "/Get/GetAll",
->>>>>>> dgm
     }
-  },
+  }
 };

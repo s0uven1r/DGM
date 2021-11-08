@@ -45,7 +45,6 @@
       </div>
       <div class="form-group col-md-4">
         <label>Duration</label><span class="text-danger">*</span>
-<<<<<<< HEAD
         <input type="number" formControlName="duration" placeholder="Duration" class="form-control"
           [ngClass]="{'is-invalid': updatePackageForm.get('duration').errors && (updatePackageForm.get('duration').touched || updatePackageForm.get('duration').dirty)}">
         <span class="text-danger">
@@ -53,12 +52,10 @@
             *ngIf="updatePackageForm.get('duration').errors?.required && (updatePackageForm.get('duration').touched || updatePackageForm.get('duration').dirty)">Duration
             is Required!</small>
         </span>
-=======
         <select class="form-control dropdown-toggle" formControlName="shiftFrequencyId">
           <option value=null selected>--Select Shift Duration--</option>
           <option *ngFor="let ddls of shiftFrequency" [value]="ddls.id">{{ddls.name}} ({{ddls.duration}} mins)</option>
         </select>
->>>>>>> dgm
       </div>
       <div class="form-group col-md-4">
         <label>Price</label><span class="text-danger">*</span>

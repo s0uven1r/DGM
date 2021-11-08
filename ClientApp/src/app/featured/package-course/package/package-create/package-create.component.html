@@ -9,7 +9,8 @@
             [ngClass]="{'is-invalid': createPackageForm.get('packageName').errors && (createPackageForm.get('packageName').touched || createPackageForm.get('packageName').dirty)}">
           <span class="text-danger">
             <small
-              *ngIf="createPackageForm.get('packageName').errors?.required && (createPackageForm.get('packageName').touched || createPackageForm.get('packageName').dirty)">Package Name
+              *ngIf="createPackageForm.get('packageName').errors?.required && (createPackageForm.get('packageName').touched || createPackageForm.get('packageName').dirty)">Package
+              Name
               is Required!</small>
           </span>
         </div>
@@ -34,14 +35,19 @@
             [ngClass]="{'is-invalid': createPackageForm.get('totalDay').errors && (createPackageForm.get('totalDay').touched || createPackageForm.get('totalDay').dirty)}">
           <span class="text-danger">
             <small
-              *ngIf="createPackageForm.get('totalDay').errors?.required && (createPackageForm.get('totalDay').touched || createPackageForm.get('totalDay').dirty)">Total Day
+              *ngIf="createPackageForm.get('totalDay').errors?.required && (createPackageForm.get('totalDay').touched || createPackageForm.get('totalDay').dirty)">Total
+              Day
               is Required!</small>
           </span>
         </div>
         <div class="form-group col-md-4">
           <label>Duration</label><span class="text-danger">*</span>
-          <input type="number" formControlName="duration" placeholder="Duration" class="form-control"
+          <select class="form-control dropdown-toggle" formControlName="shiftFrequencyId"
             [ngClass]="{'is-invalid': createPackageForm.get('duration').errors && (createPackageForm.get('duration').touched || createPackageForm.get('duration').dirty)}">
+            <option value=null selected>--Select Shift Duration--</option>
+            <option *ngFor="let ddls of shiftFrequency" [value]="ddls.id">{{ddls.name}}({{ddls.duration}} mins)
+            </option>
+          </select>
           <span class="text-danger">
             <small
               *ngIf="createPackageForm.get('duration').errors?.required && (createPackageForm.get('duration').touched || createPackageForm.get('duration').dirty)">Duration
@@ -52,30 +58,16 @@
           <label>Price</label><span class="text-danger">*</span>
           <input type="number" formControlName="price" placeholder="Price" class="form-control"
             [ngClass]="{'is-invalid': createPackageForm.get('price').errors && (createPackageForm.get('price').touched || createPackageForm.get('price').dirty)}">
-            <span class="text-danger" >
-              <small *ngIf="createPackageForm.get('price').errors?.required && (createPackageForm.get('price').touched || createPackageForm.get('price').dirty)">Price is Required!</small>
-            </span>
-          </div>
+          <span class="text-danger">
+            <small
+              *ngIf="createPackageForm.get('price').errors?.required && (createPackageForm.get('price').touched || createPackageForm.get('price').dirty)">Price
+              is Required!</small>
+          </span>
+        </div>
+        <div class="form-row">
+          <button type="submit" class="btn btn-primary" [disabled]="(!createPackageForm.valid)">Submit</button>
+        </div>
       </div>
-      <div class="form-row">
-        <button type="submit" class="btn btn-primary" [disabled]="(!createPackageForm.valid)">Submit</button>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label>Duration</label><span class="text-danger">*</span>
-        <select class="form-control dropdown-toggle" formControlName="shiftFrequencyId">
-          <option value=null selected>--Select Shift Duration--</option>
-          <option *ngFor="let ddls of shiftFrequency" [value]="ddls.id">{{ddls.name}}({{ddls.duration}} mins)</option>
-        </select>
-      </div>
-      <div class="form-group col-md-4">
-        <label>Price</label><span class="text-danger">*</span>
-        <input type="number" formControlName="price" placeholder="Price" class="form-control">
-      </div>
-    </div>
-    <div class="form-row">
-      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
 </div>

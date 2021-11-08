@@ -18,23 +18,10 @@
                     </span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Promo Code</label> 
+                    <label>Promo Code</label>
                     <input type="text" formControlName="promoCode" placeholder="Promo Code" class="form-control">
                 </div>
             </div>
-<<<<<<< HEAD
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <div class="form-check mt-3">
-                        <input type="checkbox" formControlName="hasDiscountPercent" class="form-check-input">
-                        <label class="form-check-label">Has Discount Percent</label>
-                    </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Discount</label>
-                    <input type="number" formControlName="discount" placeholder="Discount" class="form-control">
-                </div>
-=======
             <div class="form-group col-md-4">
                 <label>Discount</label>
                 <input type="number" formControlName="discount" placeholder="discount" class="form-control">
@@ -43,12 +30,9 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Start Date (Np)</label><span class="text-danger">*</span>
-               
-                <np-datepicker [ngbTooltip]="'Start Date' "class="form-group"
-                inputClass="form-control" formControlName="startDateNp" #dateValStart
+                <np-datepicker [ngbTooltip]="'Start Date' " class="form-group" inputClass="form-control"
+                    formControlName="startDateNp" #dateValStart
                     (ngModelChange)="changeNepaliToEnglishStartDate(dateValStart)"></np-datepicker>
-                
->>>>>>> dgm
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4 datePickerDiv">
@@ -61,7 +45,6 @@
                     <input readonly class="form-control" id="startDateEn" formControlName="startDate">
                 </div>
             </div>
-<<<<<<< HEAD
             <div class="form-row">
                 <div class="form-group col-md-4 datePickerDiv">
                     <label>End Date (Np)</label><span class="text-danger">*</span>
@@ -72,18 +55,18 @@
                     <label>End Date (En)</label><span class="text-danger">*</span>
                     <input readonly class="form-control" id="endDateEn" formControlName="endDate">
                 </div>
-=======
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label>End Date (Np)</label><span class="text-danger">*</span>
-                <np-datepicker class="form-group"  inputClass="form-control" [ngbTooltip]="'End Date' " formControlName="endDateNp" #dateValEnd
-                    (ngModelChange)="changeNepaliToEnglishEndDate(dateValEnd)"></np-datepicker>
->>>>>>> dgm
             </div>
             <div class="form-row">
-                <button type="submit" class="btn btn-primary" [disabled]="(!updatePromoForm.valid)">Submit</button>
+                <div class="form-group col-md-4">
+                    <label>End Date (Np)</label><span class="text-danger">*</span>
+                    <np-datepicker class="form-group" inputClass="form-control" [ngbTooltip]="'End Date' "
+                        formControlName="endDateNp" #dateValEnd
+                        (ngModelChange)="changeNepaliToEnglishEndDate(dateValEnd)"></np-datepicker>
+                </div>
             </div>
-        </div>
+                <div class="form-row">
+                    <button type="submit" class="btn btn-primary" [disabled]="(!updatePromoForm.valid)">Submit</button>
+                </div>
+            </div>
     </form>
 </div>
