@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -16,7 +17,7 @@ import { formatDate } from '@angular/common';
 import { VehicleInventoryModel } from 'src/app/infrastructure/model/UserManagement/resource/vehicle/vehicle-inventory-model';
 import { UserService } from '../../../identity/user/service/user.service';
 import { ShiftService } from '../../service/shift.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -25,7 +26,7 @@ import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from '
   styleUrls: ['./edit-individual-shift.component.css']
 })
 export class EditIndividualShiftComponent implements OnInit {
-
+  @ViewChild("dateVal", { static: true }) dateVal: ElementRef;
   UpdateIndividualShiftForm: FormGroup;
   packages: PackageModel[] = [];
   shifts: ShiftModel[] = [];
@@ -43,15 +44,29 @@ export class EditIndividualShiftComponent implements OnInit {
     this.packages = this.route.snapshot.data.packageDDL;
     this.shifts = this.route.snapshot.data.shifts;
     this.vehicles = this.route.snapshot.data.vehicleData;
-    // this.courseTypes = this.route.snapshot.data.courseDDL;
     this.route.params.subscribe((params) => {
       if (params["id"]) {
-        // this.CourseTypeService.getSingleCourseType(params["id"]).subscribe((x) => {
-        //   this.UpdateCourseTypeForm.patchValue({
-        //     id: x.id,
-        //     Title: x.title,
-        //   });
-        // });
+        this.shiftService.getSingleIndividualShift(params["id"]).subscribe((x) => {
+          this.UpdateIndividualShiftForm.patchValue({
+            id: x.id,
+            packageName: x.packageName,
+            shiftId: x.shiftId,
+            trainingDateEN: x.trainingDate,
+            vehicleId: x.vehicleId,
+            accountNumber: x.trainerId,
+            trainerName: x.trainerDetail,
+          });
+          if (x.trainingDateNp) {
+            var date = x.trainingDateNp.split("/", 3);
+            var y: number = +Number(date[2]);
+            var m: number = +date[1];
+            var d: number = +date[0];
+            var actualStartDate = new NepaliDate(y, m, d);
+            var npStartDate = actualStartDate.format("DD/MM/YYYY", "np").toString();
+            require("nepali-date-converter");
+            this.dateVal["formattedDate"] = npStartDate;
+          }
+        });
       }
     });
   }
@@ -63,8 +78,8 @@ export class EditIndividualShiftComponent implements OnInit {
       trainingDateNP: [null, Validators.required],
       trainingDateEN: [null, Validators.required],
       vehicleId: [null, Validators.required],
-      trainerId: [null, Validators.required],
       trainerName: [null, Validators.required],
+      accountNumber: [null, Validators.required]
     }));
   }
   UpdateIndividualShift() {
@@ -77,19 +92,19 @@ export class EditIndividualShiftComponent implements OnInit {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.value) {
-        // this.CourseTypeService
-        //   .UpdateCourseType(this.UpdateCourseTypeForm.value)
-        //   .pipe(
-        //     catchError((err) => {
-        //       return throwError(err);
-        //     })
-        //   )
-        //   .subscribe(
-        //     () => {
-        //       Swal.fire("Updated!", "User Action", "success");
-        //     },
-        //     () => console.log("HTTP request completed.")
-        //   );
+        this.shiftService
+          .UpdateIndividualShift(this.UpdateIndividualShiftForm.value)
+          .pipe(
+            catchError((err) => {
+              return throwError(err);
+            })
+          )
+          .subscribe(
+            () => {
+              Swal.fire("Updated!", "User Action", "success");
+            },
+            () => console.log("HTTP request completed.")
+          );
       }
     });
   }
@@ -152,5 +167,6 @@ searchGetCall(term: string, _index?: number) {
   formatter = (result: string) => result.toUpperCase();
   selectedItem(item: { item: string; }){
       var accNo = item.item.split('-')[1].trim();
+      this.UpdateIndividualShiftForm.controls['accountNumber'].setValue(accNo);
     }
 }

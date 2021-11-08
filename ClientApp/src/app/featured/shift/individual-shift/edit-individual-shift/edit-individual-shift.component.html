@@ -44,9 +44,10 @@
                 <input readonly class="form-control" id="NpToENDate"   formControlName="trainingDateEN">
               </div>
               <div class="form-group col-md-7">
-                <input type="text" [ngbTooltip]="'Search User Assigned Shift'" [ngbTypeahead]="search" typeahead-editable='false' [resultFormatter]="formatter"
+                <input type="text" formControlName="trainerName" [ngbTooltip]="'Search User Assigned Shift'" [ngbTypeahead]="search" typeahead-editable='false' [resultFormatter]="formatter"
                   (selectItem)="selectedItem($event)" placeholder="Search user for shift management"
                   class="form-control">
+                  <input type="hidden" formControlName="accountNumber">
               </div>
         </div>
         <div class="form-row">

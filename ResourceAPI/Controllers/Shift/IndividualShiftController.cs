@@ -22,7 +22,7 @@ namespace ResourceAPI.Controllers.Shift
         [HttpGet("Get/GetById/{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            return Ok(await Mediator.Send(request: new GetAllIndividualShiftByAccountNumber.GetAllIndividualShiftByAccountNumberQuery { UserAccountNumber = id }));
+            return Ok(await Mediator.Send(request: new GetIndividualShiftById.GetGetIndividualShiftByIdQuery { Id = id }));
         }
         //[HttpPost("Create")]
         //public async Task<IActionResult> Create(AddIndividualShiftDetail.AddIndividualShiftDetailCommand command)

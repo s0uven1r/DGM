@@ -51,7 +51,7 @@ namespace Resource.Application.Query.Shift.IndividualShift
                                               UserAccountNumber = individualShift.UserAccountNumber,
                                               PackageName = package.PackageName,
                                               ShiftName = string.Join(", ", shift.Name, " (" + shift.StartTime.ToString("hh:mm tt") + "-" + shift.EndTime.ToString("hh:mm tt") + ") "),
-                                              TrainerName = individualShift.TrainerId,
+                                              TrainerDetail = individualShift.TrainerId,
                                               VehicleNumber = vehicle != null ? vehicle.RegistrationNumber : "-",
                                           }).ToListAsync();
 
