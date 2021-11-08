@@ -1,34 +1,65 @@
-<div class="container-fluid  h-100">
+<div class="container-fluid card h-100">
   <form [formGroup]="createPackageForm" (ngSubmit)="createPackage()">
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label>Package Name</label><span class="text-danger">*</span>
-        <input type="text" formControlName="packageName" placeholder="Package Number" class="form-control">
+    <div class="card-body">
+      <h5 class="card-title mb-4">Package Details Form</h5>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Package Name</label><span class="text-danger">*</span>
+          <input type="text" formControlName="packageName" placeholder="Package Name" class="form-control"
+            [ngClass]="{'is-invalid': createPackageForm.get('packageName').errors && (createPackageForm.get('packageName').touched || createPackageForm.get('packageName').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="createPackageForm.get('packageName').errors?.required && (createPackageForm.get('packageName').touched || createPackageForm.get('packageName').dirty)">Package Name
+              is Required!</small>
+          </span>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Course</label><span class="text-danger">*</span>
+          <select class="form-control dropdown-toggle" formControlName="courseId"
+            [ngClass]="{'is-invalid': createPackageForm.get('courseId').errors && (createPackageForm.get('courseId').touched || createPackageForm.get('courseId').dirty)}">
+            <option value=null selected>--Select Course--</option>
+            <option *ngFor="let ddl of courses" [value]="ddl.id">{{ddl.courseName}}</option>
+          </select>
+          <span class="text-danger">
+            <small
+              *ngIf="createPackageForm.get('courseId').errors?.required && (createPackageForm.get('courseId').touched || createPackageForm.get('courseId').dirty)">Course
+              is Required!</small>
+          </span>
+        </div>
       </div>
-      <div class="form-group col-md-4">
-        <label>Total Days</label><span class="text-danger">*</span>
-        <input type="number" formControlName="totalDay" placeholder="Total Day" class="form-control">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Total Days</label><span class="text-danger">*</span>
+          <input type="number" formControlName="totalDay" placeholder="Total Day" class="form-control"
+            [ngClass]="{'is-invalid': createPackageForm.get('totalDay').errors && (createPackageForm.get('totalDay').touched || createPackageForm.get('totalDay').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="createPackageForm.get('totalDay').errors?.required && (createPackageForm.get('totalDay').touched || createPackageForm.get('totalDay').dirty)">Total Day
+              is Required!</small>
+          </span>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Duration</label><span class="text-danger">*</span>
+          <input type="number" formControlName="duration" placeholder="Duration" class="form-control"
+            [ngClass]="{'is-invalid': createPackageForm.get('duration').errors && (createPackageForm.get('duration').touched || createPackageForm.get('duration').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="createPackageForm.get('duration').errors?.required && (createPackageForm.get('duration').touched || createPackageForm.get('duration').dirty)">Duration
+              is Required!</small>
+          </span>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Price</label><span class="text-danger">*</span>
+          <input type="number" formControlName="price" placeholder="Price" class="form-control"
+            [ngClass]="{'is-invalid': createPackageForm.get('price').errors && (createPackageForm.get('price').touched || createPackageForm.get('price').dirty)}">
+            <span class="text-danger" >
+              <small *ngIf="createPackageForm.get('price').errors?.required && (createPackageForm.get('price').touched || createPackageForm.get('price').dirty)">Price is Required!</small>
+            </span>
+          </div>
       </div>
-      <div class="form-group col-md-4">
-        <label>Course</label><span class="text-danger">*</span>
-        <select class="form-control dropdown-toggle" formControlName="courseId">
-          <option value=null selected>--Select Course--</option>
-          <option *ngFor="let ddl of courses" [value]="ddl.id">{{ddl.courseName}}</option>
-        </select>
+      <div class="form-row">
+        <button type="submit" class="btn btn-primary" [disabled]="(!createPackageForm.valid)">Submit</button>
       </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label>Duration</label><span class="text-danger">*</span>
-        <input type="number" formControlName="duration" placeholder="Duration" class="form-control">
-      </div>
-      <div class="form-group col-md-4">
-        <label>Price</label><span class="text-danger">*</span>
-        <input type="number" formControlName="price" placeholder="Price" class="form-control">
-      </div>
-    </div>
-    <div class="form-row">
-      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
 </div>

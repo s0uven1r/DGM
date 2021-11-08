@@ -1,6 +1,11 @@
-<div class="form-group">
-    <input type="file" id="file" #inputFile multiple (change)="handleFileInput($event.target.files)">
-</div>
-<div class="form-row">
-    <input type="button" class="btn btn-primary" (click)="uploadImage()" value="Upload">
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Slider Images</h5>
+        <div class="form-group">
+            <input type="file" id="file" #inputFile multiple (change)="handleFileInput($event.target.files)">
+        </div>
+        <div class="form-row">
+            <input type="button" class="btn btn-primary" (click)="uploadImage()" value="Upload">
+        </div>
+    </div>
 </div>

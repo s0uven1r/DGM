@@ -1,34 +1,58 @@
-<div class="container-fluid  h-100">
+<div class="container-fluid card h-100">
   <form [formGroup]="createCourseForm" (ngSubmit)="createCourse()">
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label>Course Name</label><span class="text-danger">*</span>
-        <input type="text" formControlName="CourseName" placeholder="Course Name" class="form-control">
-      </div>
-      <div class="form-group col-md-4">
-        <label>Course Type</label><span class="text-danger">*</span>
-        <select class="form-control dropdown-toggle" formControlName="courseTypeId">
-          <option value=null selected>--Select Course Type--</option>
-          <option *ngFor="let ddl of courses" [value]="ddl.id">{{ddl.courseName}}</option>
-        </select>
-      </div>
-      <div class="form-group col-md-4">
-        <label>Required Documents</label><span class="text-danger">*</span>
-        <input type="text" formControlName="requiredDocuments" placeholder="Required Documents" class="form-control">
-      </div>
-      <div class="form-group col-md-4">
-        <label>Description</label><span class="text-danger">*</span>
-        <input type="text" formControlName="courseInfo" placeholder="Course Description" class="form-control">
-      </div>
-      <div class="col-md-4">
-        <div class="mt-4 ml-3 pt-1 custom-control form-control-lg custom-checkbox">
-          <input type="checkbox" formControlName="isAdvanceCourse" class="custom-control-input" id="advance">
-          <label class="custom-control-label" [for]="'advance'">Advance</label>
+    <div class="card-body">
+      <h5 class="card-CourseName mb-4">Course Details Form</h5>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Course Name</label><span class="text-danger">*</span>
+          <input type="text" formControlName="CourseName" placeholder="Course Name" class="form-control"
+            [ngClass]="{'is-invalid': createCourseForm.get('CourseName').errors && (createCourseForm.get('CourseName').touched || createCourseForm.get('CourseName').dirty)}">
+          <span class="text-danger">
+            <small *ngIf="createCourseForm.get('CourseName').errors?.required && (createCourseForm.get('CourseName').touched || createCourseForm.get('CourseName').dirty)">Course Name
+              is Required!</small>
+          </span>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Course Type</label><span class="text-danger">*</span>
+          <select class="form-control dropdown-toggle" formControlName="courseTypeId"
+            [ngClass]="{'is-invalid': createCourseForm.get('courseTypeId').errors && (createCourseForm.get('courseTypeId').touched || createCourseForm.get('courseTypeId').dirty)}">
+            <option value=null selected>--Select Course Type--</option>
+            <option *ngFor="let ddl of courses" [value]="ddl.id">{{ddl.courseName}}</option>
+          </select>
+          <span class="text-danger">
+            <small *ngIf="createCourseForm.get('courseTypeId').errors?.required && (createCourseForm.get('courseTypeId').touched || createCourseForm.get('courseTypeId').dirty)">Course Type
+              is Required!</small>
+          </span>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Required Documents</label><span class="text-danger">*</span>
+          <input type="text" formControlName="requiredDocuments" placeholder="Required Documents" class="form-control"
+            [ngClass]="{'is-invalid': createCourseForm.get('requiredDocuments').errors && (createCourseForm.get('requiredDocuments').touched || createCourseForm.get('requiredDocuments').dirty)}">
+          <span class="text-danger">
+            <small  *ngIf="createCourseForm.get('requiredDocuments').errors?.required && (createCourseForm.get('requiredDocuments').touched || createCourseForm.get('requiredDocuments').dirty)">Required Documents
+              is Required!</small>
+          </span>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Description</label><span class="text-danger">*</span>
+          <input type="text" formControlName="courseInfo" placeholder="Course Description" class="form-control"
+            [ngClass]="{'is-invalid': createCourseForm.get('courseInfo').errors && (createCourseForm.get('courseInfo').touched || createCourseForm.get('courseInfo').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="createCourseForm.get('courseInfo').errors?.required && (createCourseForm.get('courseInfo').touched || createCourseForm.get('courseInfo').dirty)">Description
+              is Required!</small>
+          </span>
+        </div>
+        <div class="col-md-4">
+          <div class="mt-4 ml-3 pt-1 custom-control form-control-lg custom-checkbox">
+            <label class="custom-control-label" [for]="'advance'">Advance</label>
+            <input type="checkbox" formControlName="isAdvanceCourse" class="custom-control-input" id="advance">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="form-row">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="form-row">
+        <button type="submit" class="btn btn-primary" [disabled]="(!createCourseForm.valid)">Submit</button>
+      </div>
     </div>
   </form>
 </div>

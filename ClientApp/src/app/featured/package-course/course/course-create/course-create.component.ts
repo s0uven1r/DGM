@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { CourseService } from '../../service/Course.service';
+import { CourseService } from '../../service/course.service';
 
 @Component({
   selector: 'app-Course-create',
