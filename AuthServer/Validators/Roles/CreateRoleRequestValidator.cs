@@ -11,7 +11,7 @@ namespace AuthServer.Validators.Roles
     {
         public CreateRoleRequestValidator()
         {
-            RuleFor(x => x.Name)
+            RuleFor(x => x.Name).Cascade(CascadeMode.Stop).NotNull()
                 .NotEmpty()
                 .Length(2, 20)
                 .Matches(@"^(?!.*<[^>]+>).*");

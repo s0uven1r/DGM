@@ -1,12 +1,13 @@
 import { formatDate } from "@angular/common";
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
   ViewChild,
 } from "@angular/core";
-import NepaliDate from "nepali-date-converter";
+import {  DateFormatter } from 'angular-nepali-datepicker';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { throwError } from "rxjs";
@@ -14,17 +15,21 @@ import { catchError } from "rxjs/operators";
 import { PackageModel } from "src/app/infrastructure/model/UserManagement/resource/package/packagemodel";
 import Swal from "sweetalert2";
 import { PackageService } from "../../service/package.service";
+import NepaliDate from "nepali-date-converter";
 
 @Component({
   selector: "app-promo-update",
   templateUrl: "./promo-update.component.html",
   styleUrls: ["./promo-update.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PromoUpdateComponent implements OnInit {
   @ViewChild("dateValStart", { static: true }) dateValStart: ElementRef;
   @ViewChild("dateValEnd", { static: true }) dateValEnd: ElementRef;
   updatePromoForm: FormGroup;
   packages: PackageModel[] = [];
+  endDateNP: string;
+  startDateNP: string;
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private route: ActivatedRoute,
@@ -50,13 +55,14 @@ export class PromoUpdateComponent implements OnInit {
           });
           if (x.startDateNp) {
             var date = x.startDateNp.split("/", 3);
-            var y: number = +date[2];
+            var y: number = +Number(date[2]);
             var m: number = +date[1];
             var d: number = +date[0];
             var actualStartDate = new NepaliDate(y, m, d);
             var npStartDate = actualStartDate.format("DD/MM/YYYY", "np").toString();
             require("nepali-date-converter");
             this.dateValStart["formattedDate"] = npStartDate;
+            this.startDateNP = npStartDate;
           }
           if (x.endDateNp) {
             var date = x.endDateNp.split("/", 3);
@@ -66,19 +72,15 @@ export class PromoUpdateComponent implements OnInit {
             var actualEndDate = new NepaliDate(y, m, d);
             var npEndDate = actualEndDate.format("DD/MM/YYYY", "np").toString();
             this.dateValEnd["formattedDate"] = npEndDate;
+            this.endDateNP = npEndDate;
           }
-          this.changeDetectorRef.markForCheck();
+          
+          this.changeDetectorRef.detectChanges();
         });
       }
     });
   }
 
-  // ngAfterViewInit(){
-  //   var div = (document.getElementsByClassName('datePickerDiv'));
-  //   debugger;
-  //   div[0].children[0].children[0].className = "";
-  //   div[0].children[0].children[0].className = "form-control";
-  //  }
 
   FormDesign() {
     return (this.updatePromoForm = this.form.group({
@@ -105,7 +107,7 @@ export class PromoUpdateComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.packageService
-          .updatePromo(this.updatePromoForm.value)
+          .updatePromo(this.updatePromoForm.value, this.startDateNP, this.endDateNP)
           .pipe(
             catchError((err) => {
               return throwError(err);
@@ -122,7 +124,6 @@ export class PromoUpdateComponent implements OnInit {
   }
 
   changeNepaliToEnglishStartDate(val: { formattedDate: string }) {
-    debugger;
     var date = this.dateConverter(val);
     this.updatePromoForm.patchValue({
       startDate: date,
@@ -137,7 +138,6 @@ export class PromoUpdateComponent implements OnInit {
   }
 
   dateConverter(val: { formattedDate: string }) {
-    debugger;
     var dateValue = val.formattedDate;
     if (dateValue) {
       var date = dateValue.split("/", 3);
@@ -151,4 +151,5 @@ export class PromoUpdateComponent implements OnInit {
       return formatDate(actualDate.toJsDate(), "dd/MM/yyyy", "en-US");
     }
   }
+  
 }

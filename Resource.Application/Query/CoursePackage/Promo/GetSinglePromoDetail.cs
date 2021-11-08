@@ -53,4 +53,48 @@ namespace Resource.Application.Query.CoursePackage.Promo
             }
         }
     }
+
+    public class GetSinglePromoDetailByPromoCode
+    {
+        public class GetSinglePromoQuery : IRequest<PromoResponseViewModel>
+        {
+            public string PromoCode { get; set; }
+        }
+
+        public class Handler : IRequestHandler<GetSinglePromoQuery, PromoResponseViewModel>
+        {
+            private readonly IAppDbContext _context;
+            public Handler(IAppDbContext context)
+            {
+                _context = context;
+            }
+
+            public async Task<PromoResponseViewModel> Handle(GetSinglePromoQuery request, CancellationToken cancellationToken)
+            {
+                try
+                {
+                    var getSingleAccTypes = await _context.PackagePromoOffers.Include(x => x.Package).Where(q => !q.IsDeleted && q.PromoCode == request.PromoCode && q.StartDate <= DateTime.Now && q.EndDate >= DateTime.Now)
+                                        .Select(x => new PromoResponseViewModel
+                                        {
+                                            Id = x.Id,
+                                            Discount = x.Discount,
+                                            EndDate = x.EndDate.ToString("dd/MM/yyyy"),
+                                            EndDateNp = x.EndDateNp,
+                                            HasDiscountPercent = x.HasDiscountPercent,
+                                            PackageId = x.PackageId,
+                                            PromoCode = x.PromoCode,
+                                            StartDate = x.StartDate.ToString("dd/MM/yyyy"),
+                                            StartDateNp = x.StartDateNp,
+                                            PackageName = x.Package.PackageName ?? ""
+                                        }).SingleOrDefaultAsync(cancellationToken: cancellationToken);
+                    if (getSingleAccTypes == null) throw new Exception("Not valid promocode");
+                    return getSingleAccTypes;
+                }
+                catch(Exception ex)
+                {
+                    throw new AppException(ex.Message);
+                }
+            }
+        }
+    }
 }

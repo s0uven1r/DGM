@@ -18,4 +18,13 @@ namespace Resource.Infrastructure.Persistence.Configurations
         .HasForeignKey(a => a.TransactionId);
         }
     }
+    public class CustomerPaymentDetailConfiguration : IEntityTypeConfiguration<CustomerPayment>
+    {
+        public void Configure(EntityTypeBuilder<CustomerPayment> builder)
+        {
+            builder.HasOne(x => x.CustomerPackage)
+        .WithMany(y => y.CustomerPayments)
+        .HasForeignKey(a => a.CustomerPackageId);
+        }
+    }
 }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Resource.Application;
+using Resource.Application.Command.Customer;
 using Resource.Application.Common.Interfaces;
 using Resource.Infrastructure;
 using Resource.Infrastructure.Service;

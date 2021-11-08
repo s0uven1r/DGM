@@ -4,6 +4,7 @@ using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Helpers;
 using AuthServer.Models.EmailSender;
 using AuthServer.Models.Users;
+using AuthServer.Models.Users.Customer;
 using AuthServer.Models.Users.Employee.Request;
 using AuthServer.Persistence;
 using AuthServer.Services.EmailSender;
@@ -12,6 +13,7 @@ using AutoMapper;
 using Dgm.Common.Authorization.Claim.Identity;
 using Dgm.Common.Constants.KYC;
 using Dgm.Common.Enums;
+using Dgm.Common.Error;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -340,16 +342,11 @@ namespace AuthServer.Controllers
         [Route("GetAccountDetails")]
         public async Task<IActionResult> GetAccountDetails(string value)
         {
-            var data = await (from user in _appIdentityDbContext.Users
-                              select new
-                              {
-                                  user
-                              }
-                           ).ToListAsync();
+            var data = await _appIdentityDbContext.Users.Where(x => !string.IsNullOrEmpty(x.AccountNumber)).ToListAsync();
 
             if (data.Count == 0) return NotFound(); ;
-            var accountDetails = data.Where(x => x.user.Email.Contains(value))
-                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.user.FirstName, x.user.MiddleName, x.user.LastName, "-", x.user.AccountNumber), x.user.AccountNumber));
+            var accountDetails = data.Where(x => x.Email.Contains(value))
+                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.FirstName, x.MiddleName, x.LastName, "-", x.AccountNumber), x.AccountNumber));
 
             return Ok(accountDetails.ToList());
         }
@@ -416,6 +413,63 @@ namespace AuthServer.Controllers
             return Ok(obj);
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("RegisterCustomerPackage")]
+        public async Task<IActionResult> RegisterCustomerPackage([FromBody] RegisterCustomerPackageViewModel model)
+        {
+            var userDetails = await _userManager.FindByEmailAsync(model.CustomerDetail.Email);
+            var accNo = string.Empty;
+            if (userDetails != null)
+                accNo = userDetails.AccountNumber;
+            var roleType = (int)RoleTypeEnum.Customer;
+            var accTypeName = Enum.GetName(typeof(RoleTypeEnum), roleType);
+            var alias = RoleTypeEnumConversion.GetDescriptionByValue(roleType);
+            if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
+            try
+            {
+                accNo = await _accountService.RegisterCustomerPackage(accTypeName,
+                 alias,
+                 accNo,
+                 model.StartDate,
+                 model.StartDateNP,
+                 model.EndDate,
+                 model.EndDateNP,
+                 model.PackageId,
+                 model.ShiftId,
+                 model.PaymentGateway,
+                 model.PaidAmount,
+                 model.PromoCode
+                 );
+            }
+            catch (Exception ex)
+            {
+                throw new AppException(ex.Message);
+            }
+
+            if (userDetails == null)
+            {
+                var user = new AppUser
+                {
+                    UserName = model.CustomerDetail.UserName,
+                    FirstName = model.CustomerDetail.FirstName,
+                    MiddleName = model.CustomerDetail.MiddleName,
+                    LastName = model.CustomerDetail.LastName,
+                    Email = model.CustomerDetail.Email,
+                    AccountNumber = accNo
+                };
+                if (model.IsAdmin)
+                    model.CustomerDetail.Password = PasswordGenerator.GenerateRandomPassword();
+
+                var userResult = await _userManager.CreateAsync(user, model.CustomerDetail.Password);
+
+                if (!userResult.Succeeded) return BadRequest(userResult.Errors);
+
+                var roleResult = await _userManager.AddToRoleAsync(user, SystemRoles.Consumer);
+                if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
+            }
+            return Ok();
+        }
         #region helpers
         private async Task SendEmployeeRegistrationEmail(CreateEmployeeRequest model, string password)
         {

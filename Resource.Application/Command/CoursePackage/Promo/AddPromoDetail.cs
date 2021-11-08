@@ -23,8 +23,8 @@ namespace Resource.Application.Command.CoursePackage.Promo
         {
             public AddPromoDetailCommandValidator()
             {
-                RuleFor(x => x.PromoCode).NotEmpty();
-                RuleFor(x => x.PackageId).NotEmpty();
+                RuleFor(x => x.PromoCode).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.PackageId).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
             }
         }
 

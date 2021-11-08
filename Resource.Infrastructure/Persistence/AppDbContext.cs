@@ -1,15 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Resource.Application.Common.Interfaces;
 using Resource.Domain.Entities;
 using Resource.Domain.Entities.Account;
 using Resource.Domain.Entities.PackageCourse;
+using Resource.Domain.Entities.Shift;
 using Resource.Domain.Entities.VehicleInventory;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -85,6 +82,10 @@ namespace Resource.Infrastructure.Persistence
         public DbSet<Course> Courses { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<PackagePromoOffer> PackagePromoOffers { get; set; }
+        public DbSet<ShiftFrequency> ShiftFrequencies { get; set; }
+        public DbSet<Shift> Shifts { get; set; }
+        public DbSet<IndividualShift> IndividualShifts { get; set; }
         public DbSet<CustomerPayment> CustomerPayments { get; set; }
+        public DbSet<CustomerPackage> CustomerPackages { get; set; }
     }
 }

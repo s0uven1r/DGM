@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Resource.Domain.Entities.Shift;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Resource.Domain.Entities.PackageCourse
 {
@@ -13,8 +11,11 @@ namespace Resource.Domain.Entities.PackageCourse
         public int TotalDay { get; set; }
         public decimal Duration { get; set; }
         public decimal Price { get; set; }
+        public string ShiftFrequencyId { get; set; }
         public virtual ICollection<PackagePromoOffer> PackagePromoOffers { get; set; }
+        public virtual ICollection<CustomerPackage> CustomerPackages { get; set; }
         public virtual Course Course { get; set; }
+        public virtual ShiftFrequency ShiftFrequency { get; set; }
     }
     public class PackagePromoOffer : BaseEntity
     {

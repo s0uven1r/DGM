@@ -35,7 +35,12 @@ import { CourseTypeCreateComponent } from 'src/app/featured/package-course/cours
 import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/course-type/course-type-update/course-type-update.component';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
+<<<<<<< HEAD
 import { TransactionEntryCreateComponent } from 'src/app/featured/account/transaction-entry/transaction-entry-create/transaction-entry-create.component';
+=======
+import { IndividualShiftComponent } from 'src/app/featured/shift/individual-shift/individual-shift.component';
+import { CustomerPackageComponent } from 'src/app/featured/package-course/customer-package/customer-package.component';
+>>>>>>> dgm
 
 export const RouteComponent = {
     AppRouteComponent: [
@@ -81,4 +86,6 @@ export const RouteComponent = {
       CourseTypeUpdateRouteComponent: [CourseTypeUpdateComponent],
       LogoRouteComponent: [LogoComponent],
       DescriptiveImageRouteComponent: [DescriptiveImageComponent],
+      IndividualShiftRouteComponent: [IndividualShiftComponent],
+      CustomerPackageRouteComponent: [CustomerPackageComponent],
 }

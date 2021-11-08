@@ -35,7 +35,7 @@ import { KycComponent } from 'src/app/featured/identity/user/kyc/kyc.component';
 import { KycResolverService } from 'src/app/featured/identity/user/service/Resolver/kyc-resolver.service';
 import { PackageComponent } from 'src/app/featured/package-course/package/package.component';
 import { PackageUpdateComponent } from 'src/app/featured/package-course/package/package-update/package-update.component';
-import { PackageResolverService, PromoResolverService } from 'src/app/featured/package-course/service/package-resolver.service';
+import { PackageResolverService, PackageShiftFrequencyResolverService, PromoResolverService } from 'src/app/featured/package-course/service/package-resolver.service';
 import { PackageCreateComponent } from 'src/app/featured/package-course/package/package-create/package-create.component';
 import { ConfigRoutePath } from './route-path/config-route-path';
 import { PromoComponent } from 'src/app/featured/package-course/promo/promo.component';
@@ -49,8 +49,15 @@ import { CourseTypeUpdateComponent } from 'src/app/featured/package-course/cours
 import { SettingsRoutePath } from './route-path/settings-route-path';
 import { LogoComponent } from 'src/app/featured/settings/logo/logo.component';
 import { DescriptiveImageComponent } from 'src/app/featured/settings/descriptive-image/descriptive-image.component';
+<<<<<<< HEAD
 import { TransactionEntryCreateComponent } from 'src/app/featured/account/transaction-entry/transaction-entry-create/transaction-entry-create.component';
 import { TransactionEntryResolverService } from 'src/app/featured/account/service/transactionentry-resolver.service';
+=======
+import { IndividualShiftComponent } from 'src/app/featured/shift/individual-shift/individual-shift.component';
+import { ShiftRoutePath } from './route-path/shift-route-path';
+import { CustomerPackageComponent } from '../../featured/package-course/customer-package/customer-package.component';
+import { PackageShiftResolverService } from '../../featured/package-course/service/package-resolver.service';
+>>>>>>> dgm
 
 export const RoutePath = {
   AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -69,6 +76,7 @@ export const RoutePath = {
   { path: '**', component: UndefinedPageComponent, pathMatch: 'full' }
   ],
 
+<<<<<<< HEAD
   DashboardRoutePath: [{
     path: 'dashboard', component: DashboardComponent,
     children: [RoleRoutePath,
@@ -169,4 +177,80 @@ export const RoutePath = {
   CourseTypeUpdateRoutePath: [{ path: '', component: CourseTypeUpdateComponent }],
   LogoRoutePath: [{ path: '', component: LogoComponent }],
   DescriptiveImageRoutePath: [{ path: '', component: DescriptiveImageComponent }],
+=======
+  DashboardRoutePath: [{path: 'dashboard', component: DashboardComponent,
+                      children: [RoleRoutePath,
+                        PermissionRoutePath,
+                        UserRoutePath,
+                        AccountRoutePath,
+                        VehicleRoutePath,
+                        ConfigRoutePath,
+                        SettingsRoutePath,
+                        ShiftRoutePath
+                      ],
+                      canActivate: [AuthGuard] }],
+  AuthCallbackRoutePath:[{path: '', component: AuthCallbackComponent}],
+  RoleRoutePath:[{path: '', component: RoleComponent, resolve: {
+    roleTypeDDL: RoleTypeResolverService
+  }}],
+  PermissionRoutePath:[{path: '', component: PermissionComponent}],
+  UserRoutePath: [{path: '', component: UserComponent}],
+  UserCreateRoutePath: [{path: '', component: CreateComponent,resolve: {
+    roleData: RoleResolverService
+  }}],
+  UserKycRoutePath: [{path: '', component: KycComponent,resolve: {
+    kycDDLData: KycResolverService
+  }}],
+  VehicleInventoryRoutePath: [{path: '', component: VehicleRegisterComponent}],
+  VehicleInventoryCreateRoutePath: [{path: '', component: VehicleCreateComponent}],
+  VehicleInventoryUpdateRoutePath: [{path: '', component: VehicleUpdateComponent}],
+  VehicleMaintenanceRoutePath: [{path: '', component: MaintenanceComponent}],
+  VehicleMaintenanceCreateRoutePath: [{path: '', component: CreatemaintenanceComponent, resolve: {
+    vehicleData: VehicleResolverService
+  }}],
+  AccountTypeRoutePath: [{path: '', component: AccountTypeComponent}],
+  AccountTypeCreateRoutePath: [{path: '', component: AccountTypeCreateComponent, resolve: {
+    accountTypeDDL: AccountTypeResolverService
+  }}],
+  AccountTypeEditRoutePath: [{path: '', component: AccountTypeEditComponent, resolve: {
+    accountTypeDDL: AccountTypeResolverService
+  }}],
+  AccountHeadRoutePath: [{path: '', component: AccountHeadComponent}],
+  AccountHeadCreateRoutePath: [{path: '', component: AccountHeadCreateComponent, resolve: {
+    accountTypeDDL: AccountHeadResolverService
+  }}],
+  AccountHeadEditRoutePath: [{path: '', component: AccountHeadEditComponent, resolve: {
+    accountTypeDDL: AccountHeadResolverService
+  }}],
+  AccountTransactionEntryRoutePath: [{path: '', component: TransactionEntryComponent}],
+
+  PackageRoutePath: [{path: '', component: PackageComponent}],
+  PackageCreateRoutePath: [{path: '', component: PackageCreateComponent, resolve: {
+    courseDDL: PackageResolverService, shiftFrequency: PackageShiftFrequencyResolverService
+  }}],
+  PackageUpdateRoutePath: [{path: '', component: PackageUpdateComponent, resolve: {
+    courseDDL: PackageResolverService, shiftFrequency: PackageShiftFrequencyResolverService
+  }}],
+
+  PromoRoutePath: [{path: '', component: PromoComponent}],
+  PromoCreateRoutePath: [{path: '', component: PromoCreateComponent, resolve: {
+    packageDDL: PromoResolverService
+  }}],
+  PromoUpdateRoutePath: [{path: '', component: PromoUpdateComponent, resolve: {
+    packageDDL: PromoResolverService
+  }}],
+  CourseRoutePath: [{path: '', component: CourseComponent}],
+  CourseCreateRoutePath: [{path: '', component: CourseCreateComponent}],
+  CourseUpdateRoutePath: [{path: '', component: CourseUpdateComponent}],
+  CourseTypeRoutePath:[{path:'',component:CourseTypeComponent}],
+  CourseTypeCreateRoutePath: [{path: '', component: CourseTypeCreateComponent}],
+  CourseTypeUpdateRoutePath: [{path: '', component: CourseTypeUpdateComponent}],
+  LogoRoutePath : [{path: '', component:LogoComponent}],
+  DescriptiveImageRoutePath : [{path: '', component:DescriptiveImageComponent}],
+  IndividualShiftRoutePath : [{path: '', component:IndividualShiftComponent}],
+  CustomerPackageRouthPath: [{path:'', component: CustomerPackageComponent, resolve: {
+    packageDDL: PromoResolverService,
+    shifts: PackageShiftResolverService
+  }}]
+>>>>>>> dgm
 };

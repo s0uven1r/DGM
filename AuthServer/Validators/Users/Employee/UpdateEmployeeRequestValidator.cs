@@ -12,24 +12,24 @@ namespace AuthServer.Validators.Users.Employee
     {
         public UpdateEmployeeRequestValidator()
         {
-            RuleFor(x => x.Id)
+            RuleFor(x => x.Id).Cascade(CascadeMode.Stop).NotNull()
                 .NotEmpty();
             
-            RuleFor(x => x.FirstName)
+            RuleFor(x => x.FirstName).Cascade(CascadeMode.Stop).NotNull()
                 .NotEmpty()
                 .Length(2, 20);
 
-            RuleFor(x => x.MiddleName)
+            RuleFor(x => x.MiddleName).Cascade(CascadeMode.Stop)
                 .MaximumLength(20);
 
-            RuleFor(x => x.LastName)
+            RuleFor(x => x.LastName).Cascade(CascadeMode.Stop).NotNull()
                 .NotEmpty()
                 .Length(2, 20);
          
-            RuleFor(x => x.Phone)
+            RuleFor(x => x.Phone).Cascade(CascadeMode.Stop).NotNull()
                             .NotEmpty();
 
-            RuleFor(x => x.RoleId)
+            RuleFor(x => x.RoleId).Cascade(CascadeMode.Stop).NotNull()
                           .NotEmpty();
 
         }

@@ -21,8 +21,9 @@ namespace Resource.Application.Command.CoursePackage.Package
         {
             public AddVehicleDetailCommandValidator()
             {
-                RuleFor(x => x.PackageName).NotEmpty();
-                RuleFor(x => x.CourseId).NotEmpty();
+                RuleFor(x => x.PackageName).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.CourseId).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.ShiftFrequencyId).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
             }
         }
 
@@ -47,10 +48,15 @@ namespace Resource.Application.Command.CoursePackage.Package
                     var checkExisting = _context.Packages.Where(q => q.Id != request.Id && q.PackageName.ToLower() == request.PackageName.ToLower() && !q.IsDeleted).FirstOrDefault();
                     if (checkExisting != null) throw new AppException("Package with same name already exists!");
 
+
+                    var shiftFrequencyValidity = _context.ShiftFrequencies.Where(q => q.Id == request.ShiftFrequencyId && !q.IsDeleted).FirstOrDefault();
+                    if (shiftFrequencyValidity == null) throw new AppException("Invalid Shift Frequency!");
+
                     existing.PackageName = request.PackageName;
                     existing.Price = request.Price;
                     existing.TotalDay = request.TotalDay;
-                    existing.Duration= request.Duration;
+                    existing.ShiftFrequencyId = request.ShiftFrequencyId;
+                    existing.Duration = shiftFrequencyValidity.Duration * request.TotalDay;
                     existing.CourseId = request.CourseId;
                     existing.UpdatedBy = userId;
                     existing.UpdatedDate = DateTime.UtcNow;

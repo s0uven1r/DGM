@@ -29,11 +29,17 @@ namespace Resource.Application.Command.Account.AccountEntry
                 RuleFor(x => x.Type).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
                 RuleFor(x => x.AccountNumber).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
                 RuleFor(x => x.EntryDateNP).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+<<<<<<< HEAD
                 RuleFor(x => x.EntryDateEN).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
                 RuleFor(x => x.Remarks).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
                 RuleFor(x => x.JournalEntries).NotNull();
                 RuleFor(x => x.MarketPrice).Cascade(CascadeMode.Stop).GreaterThan(0);
                 RuleFor(x => x.NetAmount).Cascade(CascadeMode.Stop).GreaterThan(0);
+=======
+                RuleFor(x => x.EntryDateEN).Cascade(CascadeMode.Stop).NotNull().NotNull();
+                RuleFor(x => x.Remarks).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.JournalEntries).Cascade(CascadeMode.Stop).NotNull();
+>>>>>>> dgm
             }
         }
 
