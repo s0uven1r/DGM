@@ -40,7 +40,7 @@ namespace ResourceAPI
             }
             else
             {
-                IdentityAuthority = Environment.GetEnvironmentVariable("URL_AUTHSERVER_HTTP");
+                IdentityAuthority = Environment.GetEnvironmentVariable("URL_AUTHSERVER");
                 services.Configure<ClientBaseUrls>(x => ClientBaseUrlsHelper.Configure(x));
             }
             Console.WriteLine(IdentityAuthority);
