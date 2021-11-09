@@ -79,7 +79,7 @@ namespace AuthServer.Configurations
                 RequireClientSecret = false,
                 AllowAccessTokensViaBrowser = true,
                 AccessTokenLifetime = 3600,
-                RedirectUris = { $"{clientUrls.Value.AuthServer}/swagger/oauth2-redirect.html", $"{clientUrls.Value.ResourceAPI}swagger/oauth2-redirect.html" },
+                RedirectUris = { $"{clientUrls.Value.AuthServer}/swagger/oauth2-redirect.html", $"{clientUrls.Value.ResourceAPI}/swagger/oauth2-redirect.html" },
                 AllowedCorsOrigins = { clientUrls.Value.AuthServer, clientUrls.Value.ResourceAPI },
                 AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,

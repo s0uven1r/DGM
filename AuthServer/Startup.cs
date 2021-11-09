@@ -42,7 +42,7 @@ namespace AuthServer
                 identityUrl = Environment.GetEnvironmentVariable("URL_AUTHSERVER");
                 services.Configure<ClientBaseUrls>(x => ClientBaseUrlsHelper.Configure(x));
             }
-
+           
             services.AddControllersWithViews(options =>
               options.Filters.Add<ValidationFilter>()).AddNewtonsoftJson(options => 
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
