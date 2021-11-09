@@ -1,4 +1,5 @@
 using Dgm.Common.Error;
+using Dgm.Common.Models;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -20,18 +21,29 @@ namespace ResourceAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        private IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //string IdentityAuthority = "https://localhost:5004"; 
-            string IdentityAuthority = "https://localhost:44316";
-            
+            var IdentityAuthority = Configuration.GetSection("ClientBaseUrls:AuthServer").Value;
+
+            if (_env.IsDevelopment())
+            {
+                services.Configure<ClientBaseUrls>(Configuration.GetSection("ClientBaseUrls"));
+            }
+            else
+            {
+                IdentityAuthority = Environment.GetEnvironmentVariable("URL_AUTHSERVER");
+                services.Configure<ClientBaseUrls>(x => ClientBaseUrlsHelper.Configure(x));
+            }
+
             services.AddApplication();
             services.AddInfrastructure(Configuration);
 
