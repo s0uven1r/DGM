@@ -27,7 +27,7 @@ namespace AuthServer
             Config = config;
             _env = env;
         }
-       
+
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -42,25 +42,23 @@ namespace AuthServer
                 identityUrl = Environment.GetEnvironmentVariable("URL_AUTHSERVER");
                 services.Configure<ClientBaseUrls>(x => ClientBaseUrlsHelper.Configure(x));
             }
-           
+
             services.AddControllersWithViews(options =>
-              options.Filters.Add<ValidationFilter>()).AddNewtonsoftJson(options => 
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-               )
+              options.Filters.Add<ValidationFilter>()).AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
               .AddFluentValidation(s =>
               {
                   s.RegisterValidatorsFromAssemblyContaining<Startup>();
-                  //s.RunDefaultMvcValidationAfterFluentValidationExecutes = false; //only support Fluent Validation
               });
 
-            services.AddServices(Config);
-           
+            services.AddServices(Config, _env.IsDevelopment());
+
             services.AddCors(options => options.AddPolicy("AllowAll", p =>
               p.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader()));
 
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
@@ -95,7 +93,7 @@ namespace AuthServer
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-               
+
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth Server v1");
                 c.OAuthClientId("demo_api_swagger");
                 c.OAuthAppName("Demo API - Swagger");

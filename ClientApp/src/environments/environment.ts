@@ -8,9 +8,9 @@ export const environment = {
   // resourceUrl: 'https://localhost:44337/api/',
   // issuer: 'https://localhost:44316',
   // redirectUri: 'http://localhost:4200/auth-callback'
-  apiIdentityUrl: 'http://65.1.244.168:5050/Authorization/',
-  resourceUrl: 'http://65.1.244.168:6060/api/',
-  issuer: 'http://65.1.244.168:5050',
+  apiIdentityUrl: 'https://65.1.244.168:5051/Authorization/',
+  resourceUrl: 'https://65.1.244.168:6061/api/',
+  issuer: 'https://65.1.244.168:5051',
   redirectUri: 'http://65.1.244.168:4200/auth-callback'
 };
 

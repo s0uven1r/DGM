@@ -16,7 +16,7 @@ namespace AuthServer.Extensions
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration, bool isDev)
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             var connectionstring = configuration.GetConnectionString("DefaultConnection");
@@ -38,7 +38,7 @@ namespace AuthServer.Extensions
             services.Configure<DataProtectionTokenProviderOptions>(options =>
             options.TokenLifespan = TimeSpan.FromHours(1));
 
-            services.AddIdentityServer()
+            var identityServer = services.AddIdentityServer()
                 .AddAspNetIdentity<AppUser>()
                 .AddConfigurationStore(options =>
                 {
@@ -53,9 +53,9 @@ namespace AuthServer.Extensions
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 60; // interval in seconds
-                })
-                .AddDeveloperSigningCredential()
-                .AddProfileService<IdentityClaimsProfileService>();
+                }).AddProfileService<IdentityClaimsProfileService>();
+
+            if (isDev) identityServer.AddDeveloperSigningCredential();
 
             services.AddAuthentication().AddLocalApi();
             services.AddAutoMapper(typeof(Startup));

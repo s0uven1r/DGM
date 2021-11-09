@@ -24,6 +24,4 @@ export const oidcAuthConfig: AuthConfig = {
   useSilentRefresh: true,
 
   oidc: true,
-
-  requireHttps:false 
 }
