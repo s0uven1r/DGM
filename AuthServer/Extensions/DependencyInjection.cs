@@ -55,7 +55,8 @@ namespace AuthServer.Extensions
                     options.TokenCleanupInterval = 60; // interval in seconds
                 }).AddProfileService<IdentityClaimsProfileService>();
 
-            if (isDev) identityServer.AddDeveloperSigningCredential();
+            //if (isDev)
+                identityServer.AddDeveloperSigningCredential();
 
             services.AddAuthentication().AddLocalApi();
             services.AddAutoMapper(typeof(Startup));
