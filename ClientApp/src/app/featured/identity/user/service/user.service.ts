@@ -20,6 +20,8 @@ export class UserService {
   private getAccountDetailsUrl =
     ApiGateway.identity.user.base +
     ApiGateway.identity.user.getAccountNumberDetails;
+    private getAccountTrainerDetailsUrl = ApiGateway.identity.user.base +
+    ApiGateway.identity.user.getAccountTrainerDetails;
   private userUpdateUrl =
     ApiGateway.identity.user.base + ApiGateway.identity.user.updateEmployee;
   private updateKycUrl =
@@ -68,6 +70,11 @@ export class UserService {
   getAllAccountDetails(name: string): Observable<any> {
     return this.http.get<any>(
       `${this.baseUrl + this.getAccountDetailsUrl}?value=${name}`
+    );
+  }
+  getAllAccountTrainerDetails(name: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl + this.getAccountTrainerDetailsUrl}?value=${name}`
     );
   }
   updateKyc(value: any) {

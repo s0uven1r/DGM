@@ -5,7 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+<<<<<<< HEAD
 import { CourseService } from 'src/app/featured/package-course/service/course.service';
+=======
+import { CourseService } from '../../service/course.service';
+>>>>>>> dgm
 
 @Component({
   selector: 'app-course-create',

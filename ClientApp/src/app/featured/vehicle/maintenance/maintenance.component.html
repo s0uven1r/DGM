@@ -1,12 +1,12 @@
-<div *appCheckclaim ="maintainCreateClaim" class="row m-2">
-    <div class="col-12 text-right">
-        <a href="#" [routerLink]='"create"' class="btn btn-primary btn-sm">Create</a>
+<div class="card">
+  <div class="card-body">
+    <div *appCheckclaim="maintainCreateClaim" class="row m-2">
+      <div class="col-12 text-right">
+        <a href="#" [routerLink]='"create"' class="btn btn-primary btn-md mb-2">Create</a>
+      </div>
     </div>
-
-</div>
-
-<div class="col-12">
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <div class="col-12">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
         <thead>
           <tr>
             <th>S.N</th>
@@ -20,12 +20,15 @@
             <td>{{i+1}}</td>
             <td>{{item.registrationNumber}}</td>
             <td>{{item.remark}}</td>
-            <td> 
-              <button *appCheckclaim ="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="updateVehicleDetail(item.id)" ><em class="fa fa-edit"></em></button>
-              <button *appCheckclaim ="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1" (click)="deleteVehicleDetail(item.id)"><em class="fa fa-trash"></em></button>
+            <td>
+              <button *appCheckclaim="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"
+                (click)="updateVehicleDetail(item.id)"><em class="fa fa-edit"></em></button>
+              <button *appCheckclaim="maintainCreateClaim" class="btn pt-0 pb-0 btn-xs btn-danger ml-1"
+                (click)="deleteVehicleDetail(item.id)"><em class="fa fa-trash"></em></button>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
 </div>
-

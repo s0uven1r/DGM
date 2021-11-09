@@ -11,13 +11,25 @@ namespace ResourceAPI.Controllers.Account
 {
     public class AccountEntryController : BaseController
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("Get/GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await Mediator.Send(request: new GetAllAccountEntryDetail.GetAllAccountEntryQuery()));
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("Get/GetSingleAccountEntry")]
-        public async Task<IActionResult> GetSingleVehicleById([FromBody] GetSingleAccountEntryDetail.GetSingleAccountEntryQuery query)
+        public async Task<IActionResult> GetSingleAccountEntry([FromQuery] GetSingleAccountEntryDetail.GetSingleAccountEntryQuery query)
         {
             return Ok(await Mediator.Send(query));
         }

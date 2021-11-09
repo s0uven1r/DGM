@@ -5,6 +5,7 @@ using MediatR;
 using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.CoursePackage.Promo.Request;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,8 +23,8 @@ namespace Resource.Application.Command.CoursePackage.Promo
         {
             public AddVehicleDetailCommandValidator()
             {
-                RuleFor(x => x.PromoCode).NotEmpty();
-                RuleFor(x => x.PackageId).NotEmpty();
+                RuleFor(x => x.PromoCode).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.PackageId).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
             }
         }
 
@@ -50,9 +51,9 @@ namespace Resource.Application.Command.CoursePackage.Promo
                     if (checkExisting != null) throw new AppException("Promo code with same name already exists!");
 
                     existing.PromoCode = request.PromoCode;
-                    existing.StartDate = request.StartDate;
+                    existing.StartDate = DateTime.ParseExact(request.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
                     existing.StartDateNp = request.StartDateNp;
-                    existing.EndDate = request.EndDate;
+                    existing.EndDate = DateTime.ParseExact(request.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
                     existing.EndDateNp = request.EndDateNp;
                     existing.Discount = request.Discount;
                     existing.PackageId = request.PackageId;

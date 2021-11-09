@@ -1,0 +1,4 @@
+<img [src]="imageToShow" alt="DGM" *ngIf="!isImageLoading; else noImageFound" [class]="IsFront?'logo':'logo ml-3'">
+<ng-template #noImageFound>
+    <img src="../../../assets/Image/defaultLogo.jpg" [class]="IsFront?'logo':'logo ml-3'" alt="Fallbackimage"> 
+</ng-template>

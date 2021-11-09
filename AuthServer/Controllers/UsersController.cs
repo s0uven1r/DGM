@@ -4,6 +4,7 @@ using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Helpers;
 using AuthServer.Models.EmailSender;
 using AuthServer.Models.Users;
+using AuthServer.Models.Users.Customer;
 using AuthServer.Models.Users.Employee.Request;
 using AuthServer.Persistence;
 using AuthServer.Services.EmailSender;
@@ -12,6 +13,7 @@ using AutoMapper;
 using Dgm.Common.Authorization.Claim.Identity;
 using Dgm.Common.Constants.KYC;
 using Dgm.Common.Enums;
+using Dgm.Common.Error;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -161,12 +163,6 @@ namespace AuthServer.Controllers
 
                 var password = PasswordGenerator.GenerateRandomPassword();
 
-                var accTypeName = Enum.GetName(typeof(RoleTypeEnum), role.Type);
-                var alias = RoleTypeEnumConversion.GetDescriptionByValue(role.Type);
-                if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
-                var accNo = await _accountService.GetAccountNumber(accTypeName, alias);
-                applicationUser.AccountNumber = accNo;
-
                 var identityResult = await _userManager.CreateAsync(applicationUser, password);
 
                 if (!identityResult.Succeeded)
@@ -174,9 +170,15 @@ namespace AuthServer.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError, identityResult.Errors);
                 }
 
-
-
                 var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
+               
+                var accTypeName = Enum.GetName(typeof(RoleTypeEnum), role.Type);
+                var alias = RoleTypeEnumConversion.GetDescriptionByValue(role.Type);
+                if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
+                var accNo = await _accountService.GetAccountNumber(accTypeName, alias);
+                applicationUser.AccountNumber = accNo;
+                await _userManager.UpdateAsync(applicationUser);
+
                 await _appIdentityDbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
 
@@ -341,33 +343,72 @@ namespace AuthServer.Controllers
         public async Task<IActionResult> GetAccountDetails(string value)
         {
             var data = await (from user in _appIdentityDbContext.Users
+                              join userRole in _appIdentityDbContext.UserRoles
+                              on user.Id equals userRole.UserId
+                              join role in _appIdentityDbContext.Roles
+                              on userRole.RoleId equals role.Id
+                              where role.Type == (int)RoleTypeEnum.Customer && !string.IsNullOrEmpty(user.AccountNumber)
                               select new
                               {
-                                  user
-                              }
-                           ).ToListAsync();
-
+                                  user.Email,
+                                  user.FirstName,
+                                  user.MiddleName,
+                                  user.LastName,
+                                  user.AccountNumber
+                              }).ToListAsync();
             if (data.Count == 0) return NotFound(); ;
-            var accountDetails = data.Where(x => x.user.Email.Contains(value))
-                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.user.FirstName, x.user.MiddleName, x.user.LastName, "-", x.user.AccountNumber), x.user.AccountNumber));
+            var accountDetails = data.Where(x => x.Email.Contains(value))
+                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.FirstName, x.MiddleName, x.LastName, "-", x.AccountNumber), x.AccountNumber));
 
             return Ok(accountDetails.ToList());
         }
+        [HttpGet]
+        [Route("GetAccountTrainerDetails")]
+        public async Task<IActionResult> GetAccountTrainerDetails(string value)
+        {
+            var data = await (from user in _appIdentityDbContext.Users
+                              join userRole in _appIdentityDbContext.UserRoles
+                              on user.Id equals userRole.UserId
+                              join role in _appIdentityDbContext.Roles
+                              on userRole.RoleId equals role.Id
+                              where role.Type == (int)RoleTypeEnum.Employee && !string.IsNullOrEmpty(user.AccountNumber)
+                              select new
+                              {
+                                  user.Email,
+                                  user.FirstName,
+                                  user.MiddleName,
+                                  user.LastName,
+                                  user.AccountNumber
+                              }).ToListAsync();
 
+            if (data.Count == 0) return NotFound(); ;
+            var accountDetails = data.Where(x => x.Email.Contains(value))
+                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.FirstName, x.MiddleName, x.LastName, "-", x.AccountNumber), x.AccountNumber));
+
+            return Ok(accountDetails.ToList());
+        }
         [HttpPost]
         [Route("UpdateKYC")]
         public async Task<IActionResult> UpdateKYC([FromBody] UserKYCRequestModel kycModel)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();
+            var user = await _userManager.Users.Where(u => u.Id == requestedBy).FirstOrDefaultAsync();
+            if (user == null) return BadRequest("User not found");
+
             UserKYC kyc = _mapper.Map<UserKYC>(kycModel);
             kyc.UserId = requestedBy;
             kyc.CreatedBy = requestedBy;
             kyc.CreatedDate = DateTime.UtcNow;
 
+            user.IsKYCUpdated = true;
+            user.LastUpdatedBy = requestedBy;
+            user.LastUpdatedDate = DateTime.UtcNow;
+
             var transaction = await _appIdentityDbContext.Database.BeginTransactionAsync();
             try
             {
                 await _appIdentityDbContext.UserKYC.AddAsync(kyc);
+                _appIdentityDbContext.Users.Update(user);
                 await _appIdentityDbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
                 return Ok();
@@ -393,7 +434,7 @@ namespace AuthServer.Controllers
             var kycResponse = _mapper.Map<UserKYCResponseModel>(kyc);
             return Ok(kycResponse);
         }
-        
+
         [HttpGet]
         [AllowAnonymous]
         [Route("GetKYCDDL")]
@@ -408,6 +449,64 @@ namespace AuthServer.Controllers
             return Ok(obj);
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("RegisterCustomerPackage")]
+        public async Task<IActionResult> RegisterCustomerPackage([FromBody] RegisterCustomerPackageViewModel model)
+        {
+            var userDetails = await _userManager.FindByEmailAsync(model.CustomerDetail.Email);
+            var accNo = string.Empty;
+            if (userDetails != null)
+                accNo = userDetails.AccountNumber;
+            var roleType = (int)RoleTypeEnum.Customer;
+            var accTypeName = Enum.GetName(typeof(RoleTypeEnum), roleType);
+            var alias = RoleTypeEnumConversion.GetDescriptionByValue(roleType);
+            if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
+            try
+            {
+                accNo = await _accountService.RegisterCustomerPackage(accTypeName,
+                 alias,
+                 accNo,
+                 model.StartDate,
+                 model.StartDateNP,
+                 model.EndDate,
+                 model.EndDateNP,
+                 model.PackageId,
+                 model.ShiftId,
+                 model.PaymentGateway,
+                 model.PaidAmount,
+                 model.PromoCode
+                 );
+            }
+            catch (Exception ex)
+            {
+                throw new AppException(ex.Message);
+            }
+
+            if (userDetails == null)
+            {
+                var user = new AppUser
+                {
+                    UserName = model.CustomerDetail.UserName,
+                    FirstName = model.CustomerDetail.FirstName,
+                    MiddleName = model.CustomerDetail.MiddleName,
+                    LastName = model.CustomerDetail.LastName,
+                    Email = model.CustomerDetail.Email,
+                    AccountNumber = accNo
+                };
+                if (model.IsAdmin)
+                    model.CustomerDetail.Password = PasswordGenerator.GenerateRandomPassword();
+
+                var userResult = await _userManager.CreateAsync(user, model.CustomerDetail.Password);
+
+                if (!userResult.Succeeded) return BadRequest(userResult.Errors);
+
+                var roleResult = await _userManager.AddToRoleAsync(user, SystemRoles.Consumer);
+                if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
+            }
+            return Ok();
+        }
+        
         #region helpers
         private async Task SendEmployeeRegistrationEmail(CreateEmployeeRequest model, string password)
         {

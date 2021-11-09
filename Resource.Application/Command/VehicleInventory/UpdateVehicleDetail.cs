@@ -20,9 +20,9 @@ namespace Resource.Application.Command.VehicleInventory
         {
             public AddVehicleDetailCommandValidator()
             {
-                RuleFor(x => x.RegistrationNumber).NotEmpty();
-                RuleFor(x => x.EngineNumber).NotEmpty();
-                RuleFor(x => x.ChasisNumber).NotEmpty();
+                RuleFor(x => x.RegistrationNumber).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.EngineNumber).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.ChasisNumber).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
             }
         }
 

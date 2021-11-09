@@ -7,17 +7,17 @@ namespace AuthServer.Validators.Users.Employee
     {
         public UpdateEmployeePasswordRequestValidator()
         {
-            RuleFor(x => x.Id)
+            RuleFor(x => x.Id).Cascade(CascadeMode.Stop).NotNull()
               .NotEmpty();
 
-            RuleFor(x => x.Password)
+            RuleFor(x => x.Password).Cascade(CascadeMode.Stop).NotNull()
                 .NotEmpty();
 
 
-            RuleFor(x => x.NewPassword)
+            RuleFor(x => x.NewPassword).Cascade(CascadeMode.Stop).NotNull()
                 .NotEmpty();
 
-            RuleFor(x => x.NewConfirmPassword)
+            RuleFor(x => x.NewConfirmPassword).Cascade(CascadeMode.Stop).NotNull()
                 .NotEmpty();
 
         }

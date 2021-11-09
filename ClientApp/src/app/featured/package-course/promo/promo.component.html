@@ -1,13 +1,12 @@
-<div *appCheckclaim ="promoCreateClaim" class="row m-2">
-    <div class="col-12 text-right">
-        <a href="#" [routerLink]='"create"' class="btn btn-primary btn-sm">Create</a>
+<div class="card">
+  <div class="card-body">
+    <div *appCheckclaim="promoCreateClaim" class="row m-2">
+      <div class="col-12 text-right">
+        <a href="#" [routerLink]='"create"' class="btn btn-primary btn-md mb-2">Create</a>
+      </div>
     </div>
-
-</div>
-
-
-<div class="col-12">
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <div class="col-12">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
         <thead>
           <tr>
             <th>S.N</th>
@@ -22,11 +21,14 @@
             <td>{{ pro.packageName }}</td>
             <td>{{ pro.promoCode }}</td>
             <td>
-              <button *appCheckclaim ="promoCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success" (click)="updatePromoDetail(pack.id)" ><em class="fa fa-edit"></em></button>
-              <button *appCheckclaim ="promoCreateClaim" class="btn pt-0 pb-0 ml-2 btn-xs btn-danger" (click)="deleteParomoDetail(pack.id)" ><em class="fa fa-trash"></em></button>
+              <button *appCheckclaim="promoCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"
+                (click)="updatePromoDetail(pro.id)"><em class="fa fa-edit"></em></button>
+              <button *appCheckclaim="promoCreateClaim" class="btn pt-0 pb-0 ml-2 btn-xs btn-danger"
+                (click)="deletePromoDetail(pro.id)"><em class="fa fa-trash"></em></button>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
 </div>
-

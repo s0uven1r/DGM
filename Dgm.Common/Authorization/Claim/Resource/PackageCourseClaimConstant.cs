@@ -26,5 +26,9 @@ namespace Dgm.Common.Authorization.Claim.Resource
         // promo
         public const string ViewPromo = "Claim.Promo.Read";
         public const string Writepromo = "Claim.Promo.Write";
+
+        // customer package
+        public const string ViewCustomerPackage = "Claim.Customer.Package.Read";
+        public const string WriteCustomerPackage = "Claim.Customer.Package.Write";
     }
 }

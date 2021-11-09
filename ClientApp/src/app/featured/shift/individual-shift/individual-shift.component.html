@@ -1,0 +1,40 @@
+<div  class="row mt-2">
+    <div class="col-12">
+        <div class="form-group col-md-7">
+            <input type="text" [ngbTooltip]="'Search User Assigned Shift'" [ngbTypeahead]="search" typeahead-editable='false' [resultFormatter]="formatter"
+              (selectItem)="selectedItem($event)" placeholder="Search user for shift management"
+              class="form-control">
+          </div>
+    </div>
+  
+  </div>
+ <div class="col-12"  >
+    <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead *ngIf="hasDataLoaded" >
+          <tr>
+            <th>S.N</th>
+            <th>Shift</th>
+            <th>Package</th>
+            <th>Trainer</th>
+            <th>Training Date</th>
+            <th>Vehicle Number</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let shift of shifts; let i = index;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ shift.shiftName }}</td>
+            <td>{{ shift.packageName }}</td>
+            <td>{{ shift.trainerName }}</td>
+            <td>{{ shift.trainingDateNp }}</td>
+            <td>{{ shift.vehicleNumber }}</td>
+            <td >
+              <button *appCheckclaim ="individualShiftWriteClaim" (click)="updateShiftDetail(shift.id)" class="btn pt-0 pb-0 btn-xs btn-success" ><em class="fa fa-edit"></em></button>
+              <!-- <button class="btn pt-0 pb-0 ml-1 btn-xs btn-success" ><em class="fa fa-user"> Assign Trainer</em></button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  

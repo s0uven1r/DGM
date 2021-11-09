@@ -209,18 +209,26 @@ namespace AuthServer.Controllers
                 return BadRequest(ModelState);
             }
             ViewBag.LogoImage = GetLogoImage();
+           
             var role = _roleManager.Roles.Where(x => x.IsPublic == true).FirstOrDefault();
             if (role == null)
             {
                 ModelState.AddModelError(string.Empty, "Public user cannot be registered in this system.");
-                // something went wrong, show form with error
                 var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
                 return View(vm);
             }
-            var accTypeName = Enum.GetName(typeof(RoleTypeEnum), role.Type);
-            var alias = RoleTypeEnumConversion.GetDescriptionByValue(role.Type);
-            if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
-            var accNo = await _accountService.GetAccountNumber(accTypeName, alias);
+            if (await _userManager.FindByEmailAsync(model.Username) != null)
+            {
+                ModelState.AddModelError(string.Empty, "Use already registered with same username.");
+                var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
+                return View(vm);
+            }
+            if (await _userManager.FindByEmailAsync(model.Email) != null)
+            {
+                ModelState.AddModelError(string.Empty, "Use already registered with same email.");
+                var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
+                return View(vm);
+            }
 
             var user = new AppUser
             {
@@ -228,21 +236,35 @@ namespace AuthServer.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                AccountNumber = accNo
+                LockoutEnabled = true,
+                NormalizedEmail = model.Email.ToUpper(),
+                NormalizedUserName = model.Email.ToUpper()
             };
+            
             var userResult = await _userManager.CreateAsync(user, model.Password);
 
-            if (!userResult.Succeeded) return BadRequest(userResult.Errors);
-
-            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("username", user.UserName));
-            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("firstname", user.FirstName));
-            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("middlename", user.MiddleName));
-            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("lastname", user.LastName));
-            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("email", user.Email));
-            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", role.Name));
+            if (!userResult.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, userResult.Errors.FirstOrDefault().Description);
+                var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
+                return View(vm);
+            }
 
             var roleResult = await _userManager.AddToRoleAsync(user, role.Name);
-            if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
+            if (!roleResult.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, userResult.Errors.FirstOrDefault().Description);
+                var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
+                return View(vm);
+            }
+
+            var accTypeName = Enum.GetName(typeof(RoleTypeEnum), role.Type);
+            var alias = RoleTypeEnumConversion.GetDescriptionByValue(role.Type);
+            if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
+            var accNo = await _accountService.GetAccountNumber(accTypeName, alias);
+            var userCreated = await _userManager.FindByEmailAsync(model.Email);
+            userCreated.AccountNumber = accNo;
+            await _userManager.UpdateAsync(userCreated);
 
             return Redirect(model.ReturnUrl);
         }
@@ -335,6 +357,7 @@ namespace AuthServer.Controllers
         /*****************************************/
         /* helper APIs for the AccountController */
         /*****************************************/
+
         private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
         {
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);

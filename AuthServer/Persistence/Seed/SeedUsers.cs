@@ -19,7 +19,8 @@ namespace AuthServer.Persistence.Seed
                     Email = "superadmin@dgm.com",
                     UserName = "superadmin",
                     LockoutEnabled = false,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    IsKYCUpdated = true
                },
                     new AppUser{
                     FirstName = "admin",
@@ -27,7 +28,8 @@ namespace AuthServer.Persistence.Seed
                     Email = "admin@dgm.com",
                     UserName = "admin",
                     LockoutEnabled = true,
-                    EmailConfirmed = false
+                    EmailConfirmed = false,
+                    IsKYCUpdated = true
                },
               new AppUser{
                     FirstName = "consumer",
@@ -35,7 +37,8 @@ namespace AuthServer.Persistence.Seed
                     Email = "consumer@dgm.com",
                     UserName = "consumer",
                     LockoutEnabled = true,
-                    EmailConfirmed = false
+                    EmailConfirmed = false,
+                    IsKYCUpdated = true
             }
         };
             foreach (var user in userList)

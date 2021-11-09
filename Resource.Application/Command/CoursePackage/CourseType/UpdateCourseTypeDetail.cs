@@ -22,7 +22,7 @@ namespace Resource.Application.Command.CoursePackage.CourseType
         {
             public AddVehicleDetailCommandValidator()
             {
-                RuleFor(x => x.Title).NotEmpty();
+                RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
             }
         }
 

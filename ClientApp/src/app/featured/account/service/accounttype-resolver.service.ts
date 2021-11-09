@@ -14,7 +14,7 @@ import { AccountService } from "./account.service";
 export class AccountTypeResolverService
   implements Resolve<Observable<AccountTypeDDL[]>>
 {
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService) { }
   resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) {
     var x = this.accountService.getAccountTypeDDL();
     return x;

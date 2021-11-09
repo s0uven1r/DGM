@@ -11,6 +11,7 @@ import { UserService } from './service/user.service';
   styleUrls: ['./user.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class UserComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   persons: UserModel[] = [];
@@ -22,9 +23,11 @@ export class UserComponent implements OnInit, OnDestroy {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 5,
-      lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]]
+      lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+      responsive: true
     };
-    this.userService.getUser().subscribe(x => {this.persons = x;
+    this.userService.getUser().subscribe(x => {
+      this.persons = x;
       this.changeDetectorRef.markForCheck();
       this.dtTrigger.next();
     });
@@ -33,14 +36,14 @@ export class UserComponent implements OnInit, OnDestroy {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
-  hasEnable(id: string, val: any){
-      this.userService.enableDisableLogin(id, val.checked ).subscribe(() => {
-        this.changeDetectorRef.markForCheck();
-      }, () => {
-        val.checked = !val.checked
-      });;
+  hasEnable(id: string, val: any) {
+    this.userService.enableDisableLogin(id, val.checked).subscribe(() => {
+      this.changeDetectorRef.markForCheck();
+    }, () => {
+      val.checked = !val.checked
+    });;
   }
-  getEdit(id: string){
+  getEdit(id: string) {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/dashboard/user/edit/${id}`])
     );

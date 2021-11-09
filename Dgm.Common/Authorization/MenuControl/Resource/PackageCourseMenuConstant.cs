@@ -13,6 +13,7 @@ namespace Dgm.Common.Authorization.MenuControl.Resource
         public static readonly KeyValuePair<string, string> Course = new("Course", "course");
         public static readonly KeyValuePair<string, string> Package = new("Package", "package");
         public static readonly KeyValuePair<string, string> Promo = new("Promo Offer", "promo");
+        public static readonly KeyValuePair<string, string> CustomerPackage = new("Customer Package", "custpack");
 
     }
 }

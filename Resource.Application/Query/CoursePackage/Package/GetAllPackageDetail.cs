@@ -39,7 +39,8 @@ namespace Resource.Application.Query.CoursePackage.Package
                                             Duration = x.Duration,
                                             Price = x.Price,
                                             TotalDay = x.TotalDay,
-                                            CourseTitle = x.Course.CourseName??""
+                                            CourseTitle = x.Course.CourseName ?? "",
+                                            ShiftFrequencyId = x.ShiftFrequencyId
                                         }).ToListAsync(cancellationToken: cancellationToken);
 
                     return getAll;

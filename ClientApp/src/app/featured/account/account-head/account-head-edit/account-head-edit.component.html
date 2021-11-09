@@ -1,21 +1,29 @@
-<div class="container-fluid  h-100">
-    <form [formGroup]="editForm" (ngSubmit)="editAccountHead()">
+<div class="container-fluid card h-100">
+  <form [formGroup]="editForm" (ngSubmit)="editAccountHead()">
+    <div class="card-body">
+      <h5 class="card-title mb-5">Update Account Head</h5>
       <div class="form-row">
         <div class="form-group col-md-4">
-            <input type="text" formControlName="title" placeholder="Title" class="form-control">
-            <input type="hidden" formControlName="id">
+          <input type="text" formControlName="title" placeholder="Title" class="form-control" [ngClass]="{'is-invalid': editForm.get('title').errors
+            && (editForm.get('title').touched || editForm.get('title').dirty)}">
+          <span class="text-danger">
+            <small *ngIf="editForm.get('title').errors?.required
+                  && (editForm.get('title').touched || editForm.get('title').dirty)">Title is Required!</small>
+          </span>
+          <input type="hidden" formControlName="id">
         </div>
         <div class="form-group col-md-4">
           <input type="text" formControlName="accountNumber" placeholder="AccountNumber" class="form-control" disabled>
         </div>
         <div class="form-group col-md-4">
-            <select class="form-control dropdown-toggle" formControlName="accountTypeId" disabled>
-                <option *ngFor="let ddl of accountTypeDDL" [value]="ddl.id">{{ddl.title}}</option>
-            </select>
+          <select class="form-control dropdown-toggle" formControlName="accountTypeId" disabled>
+            <option *ngFor="let ddl of accountTypeDDL" [value]="ddl.id">{{ddl.title}}</option>
+          </select>
         </div>
       </div>
       <div class="form-row">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="(!editForm.valid)">Submit</button>
       </div>
-    </form>
+    </div>
+  </form>
 </div>

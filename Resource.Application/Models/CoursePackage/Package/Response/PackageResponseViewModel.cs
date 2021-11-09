@@ -9,5 +9,6 @@
         public int TotalDay { get; set; }
         public decimal Duration { get; set; }
         public decimal Price { get; set; }
+        public string ShiftFrequencyId { get; set; }
     }
 }

@@ -36,12 +36,12 @@ namespace Resource.Application.Query.CoursePackage.Promo
                                         {
                                             Id = x.Id,
                                             Discount = x.Discount,
-                                            EndDate = x.EndDate,
+                                            EndDate = x.EndDate.ToString("dd/MM/yyyy"),
                                             EndDateNp = x.EndDateNp,
                                             HasDiscountPercent = x.HasDiscountPercent,
                                             PackageId = x.PackageId,
                                             PromoCode = x.PromoCode,
-                                            StartDate = x.StartDate,
+                                            StartDate = x.StartDate.ToString("dd/MM/yyyy"),
                                             StartDateNp = x.StartDateNp,
                                             PackageName = x.Package.PackageName ?? ""
                                         }).ToListAsync(cancellationToken: cancellationToken);

@@ -21,8 +21,8 @@ namespace Resource.Application.Command.Account.AccountHead
         {
             public AddVehicleDetailCommandValidator()
             {
-                RuleFor(x => x.Title).NotEmpty();
-                RuleFor(x => x.AccountTypeId).NotEmpty();
+                RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.AccountTypeId).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
             }
         }
 
