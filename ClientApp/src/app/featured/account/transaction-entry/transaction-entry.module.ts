@@ -4,33 +4,23 @@ import { CommonModule } from '@angular/common';
 import { RoutingComponent, TransactionEntryRoutingModule } from './transaction-entry-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../service/account.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UserService } from '../../identity/user/service/user.service';
-import { VehicleService } from '../../vehicle/service/vehicle.service';
-import { NpDatepickerModule } from 'angular-nepali-datepicker';
-import { NgNepaliDateDirectiveModule } from 'src/app/shared/directives/attributes/ngNepaliDateDirective.module';
+
+import { DataTablesModule } from 'angular-datatables';
+import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
 
 @NgModule({
   declarations: RoutingComponent,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     TransactionEntryRoutingModule,
-    NgbModule,
-    NpDatepickerModule,
-    NgNepaliDateDirectiveModule
+    CheckDirectiveModule,
+    DataTablesModule
   ],
   providers: [
     {
       provide: AccountService,
       useClass: AccountService,
-    },{
-      provide: UserService,
-      useClass: UserService,
-    },{
-      provide: VehicleService,
-      useClass: VehicleService,
-    },
+    }
   ]
 })
 export class TransactionEntryModule { }

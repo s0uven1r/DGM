@@ -163,12 +163,6 @@ namespace AuthServer.Controllers
 
                 var password = PasswordGenerator.GenerateRandomPassword();
 
-                var accTypeName = Enum.GetName(typeof(RoleTypeEnum), role.Type);
-                var alias = RoleTypeEnumConversion.GetDescriptionByValue(role.Type);
-                if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
-                var accNo = await _accountService.GetAccountNumber(accTypeName, alias);
-                applicationUser.AccountNumber = accNo;
-
                 var identityResult = await _userManager.CreateAsync(applicationUser, password);
 
                 if (!identityResult.Succeeded)
@@ -176,9 +170,15 @@ namespace AuthServer.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError, identityResult.Errors);
                 }
 
-
-
                 var roleResult = await _userManager.AddToRoleAsync(applicationUser, roleName);
+               
+                var accTypeName = Enum.GetName(typeof(RoleTypeEnum), role.Type);
+                var alias = RoleTypeEnumConversion.GetDescriptionByValue(role.Type);
+                if (string.IsNullOrEmpty(alias)) throw new Exception("Cannot get alias for Account Number");
+                var accNo = await _accountService.GetAccountNumber(accTypeName, alias);
+                applicationUser.AccountNumber = accNo;
+                await _userManager.UpdateAsync(applicationUser);
+
                 await _appIdentityDbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
 
@@ -506,6 +506,7 @@ namespace AuthServer.Controllers
             }
             return Ok();
         }
+        
         #region helpers
         private async Task SendEmployeeRegistrationEmail(CreateEmployeeRequest model, string password)
         {

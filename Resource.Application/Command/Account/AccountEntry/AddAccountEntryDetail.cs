@@ -29,6 +29,11 @@ namespace Resource.Application.Command.Account.AccountEntry
                 RuleFor(x => x.Type).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
                 RuleFor(x => x.AccountNumber).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
                 RuleFor(x => x.EntryDateNP).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.EntryDateEN).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.Remarks).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
+                RuleFor(x => x.JournalEntries).NotNull();
+                RuleFor(x => x.MarketPrice).Cascade(CascadeMode.Stop).GreaterThan(0);
+                RuleFor(x => x.NetAmount).Cascade(CascadeMode.Stop).GreaterThan(0);
                 RuleFor(x => x.EntryDateEN).Cascade(CascadeMode.Stop).NotNull().NotNull();
                 RuleFor(x => x.Remarks).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
                 RuleFor(x => x.JournalEntries).Cascade(CascadeMode.Stop).NotNull();
@@ -50,11 +55,9 @@ namespace Resource.Application.Command.Account.AccountEntry
 
                 try
                 {
-                    var dateEN = DateTime.ParseExact(request.EntryDateEN, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
+                    var accountEntry = await _context.Transactions.Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
 
-                    var accountEntry = await _context.Transactions.Where(x => x.Type == request.Type && x.AccountNumber == request.AccountNumber && x.TransactionDate == dateEN).FirstOrDefaultAsync(cancellationToken);
-
-                    if (accountEntry == null)
+                    if (string.IsNullOrEmpty(request.Id) && accountEntry == null)
                         await AddAccountEntry(request, cancellationToken);
                     else
                         await UpdateAccountEntry(accountEntry, request, cancellationToken);
@@ -74,8 +77,9 @@ namespace Resource.Application.Command.Account.AccountEntry
                 var transactionEntity = new Transaction
                 {
                     AccountNumber = request.AccountNumber,
+                    Title = request.Title,
                     TotalAmount = request.MarketPrice,
-                    Discount = request.DiscountedAmount,
+                    Discount = request.DiscountAmount,
                     NetAmount = request.NetAmount,
                     DueAmount = request.DueAmount,
                     Remarks = request.Remarks,
@@ -86,10 +90,9 @@ namespace Resource.Application.Command.Account.AccountEntry
                 var transactionDetails = request.JournalEntries.Select(x => new TransactionDetail
                 {
                     AccountNumber = x.AccountNumber,
+                    Title = x.Title,
                     AmountCredit = x.CreditAmount,
                     AmountDebit = x.DebitAmount,
-                    TransactionDate = DateTime.ParseExact(x.EntryDateEN, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                    TransactionDateNP = x.EntryDateNP,
                     Remarks = x.Remarks,
                     Type = x.Type,
                     TransactionId = transactionEntity.Id,
@@ -104,8 +107,9 @@ namespace Resource.Application.Command.Account.AccountEntry
             private async Task UpdateAccountEntry(Transaction accountEntry, AddAccountEntryDetailCommand request, CancellationToken cancellationToken)
             {
                 accountEntry.AccountNumber = request.AccountNumber;
+                accountEntry.Title = request.Title;
                 accountEntry.TotalAmount = request.MarketPrice;
-                accountEntry.Discount = request.DiscountedAmount;
+                accountEntry.Discount = request.DiscountAmount;
                 accountEntry.NetAmount = request.NetAmount;
                 accountEntry.DueAmount = request.DueAmount;
                 accountEntry.Remarks = request.Remarks;
@@ -123,10 +127,9 @@ namespace Resource.Application.Command.Account.AccountEntry
                     AccountNumber = x.AccountNumber,
                     AmountCredit = x.CreditAmount,
                     AmountDebit = x.DebitAmount,
-                    TransactionDate = DateTime.ParseExact(x.EntryDateEN, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                    TransactionDateNP = x.EntryDateNP,
                     Remarks = x.Remarks,
                     Type = x.Type,
+                    Title = x.Title,
                     TransactionId = accountEntry.Id,
                 }).ToList();
 

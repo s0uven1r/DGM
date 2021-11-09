@@ -31,6 +31,7 @@ namespace AuthServer.Extensions
                 config.Password.RequireDigit = true;
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = true;
+                config.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<AppIdentityDbContext>()
               .AddDefaultTokenProviders();
 

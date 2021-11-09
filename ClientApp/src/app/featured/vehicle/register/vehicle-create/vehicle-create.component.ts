@@ -23,21 +23,21 @@ export class VehicleCreateComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
   }
-  ngAfterViewInit(){
-   var div = (document.getElementsByClassName('datePickerDiv'));
-   div[0].children[0].children[0].className = "";
-   div[0].children[0].children[0].className = "form-control";
+  ngAfterViewInit() {
+    var div = (document.getElementsByClassName('datePickerDiv'));
+    div[0].children[0].children[0].className = "";
+    div[0].children[0].children[0].className = "form-control";
   }
   FormDesign() {
     return (this.createInventoryForm = this.form.group({
       registrationNumber: [null, Validators.required],
       engineNumber: [null, Validators.required],
       chasisNumber: [null, Validators.required],
-      model: [null],
-      subModel: [null],
-      capacity: [null],
-      manufacturedYear: [null],
-      manufacturer: [null],
+      model: [null, Validators.required],
+      subModel: [null, Validators.required],
+      capacity: [null, Validators.required],
+      manufacturedYear: [null, Validators.required],
+      manufacturer: [null, Validators.required],
       registerDateNP: [null],
       registerDateEN: [null]
     }));
@@ -71,22 +71,22 @@ export class VehicleCreateComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  changeNepaliToEnglish(val: { formattedDate: string; }){
+  changeNepaliToEnglish(val: { formattedDate: string; }) {
     var dateValue = val.formattedDate;
-    if(dateValue){
+    if (dateValue) {
       var date = dateValue.split("/", 3);
       var y: number = +date[2];
-      var m: number = +date[1] ;
+      var m: number = +date[1];
       var d: number = +date[0];
-      var actualDate = new NepaliDate(y,m,d) ;
+      var actualDate = new NepaliDate(y, m, d);
       var npDate = actualDate.format('DD/MM/YYYY', 'np').toString();
       val.formattedDate = npDate;
 
-        require('nepali-date-converter');
-        var dateAd = formatDate(actualDate.toJsDate(),"dd/MM/yyyy","en-US");
-        this.createInventoryForm.patchValue({
-          registerDateEN: dateAd
-        });
+      require('nepali-date-converter');
+      var dateAd = formatDate(actualDate.toJsDate(), "dd/MM/yyyy", "en-US");
+      this.createInventoryForm.patchValue({
+        registerDateEN: dateAd
+      });
 
 
     }

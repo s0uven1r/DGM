@@ -86,12 +86,12 @@ export class PromoUpdateComponent implements OnInit {
     return (this.updatePromoForm = this.form.group({
       id: [null, Validators.required],
       packageId: [null, Validators.required],
-      promoCode: [null, Validators.required],
+      promoCode: [null],
       startDateNp: [null, Validators.required],
       endDateNp: [null, Validators.required],
       startDate: [null, Validators.required],
       endDate: [null, Validators.required],
-      hasDiscountPercent: [false, Validators.required],
+      hasDiscountPercent: [false],
       discount: [null],
     }));
   }

@@ -1,24 +1,25 @@
-<div class="container-fluid  h-100">
+<div class="container-fluid card h-100">
     <form [formGroup]="updatePromoForm" (ngSubmit)="updatePromo()">
-        <input type="hidden" formControlName="id">
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label>Package</label><span class="text-danger">*</span>
-                <select class="form-control dropdown-toggle" formControlName="packageId">
-                    <option value=null selected>--Select Package--</option>
-                    <option *ngFor="let ddl of packages" [value]="ddl.id">{{ddl.packageName}}</option>
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label>Promo Code</label><span class="text-danger">*</span>
-                <input type="text" formControlName="promoCode" placeholder="Promo Code" class="form-control">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <div class="form-check mt-3">
-                    <input type="checkbox" formControlName="hasDiscountPercent" class="form-check-input">
-                    <label class="form-check-label">Has Discount Percent</label>
+        <div class="card-body">
+            <h5 class="card-title mb-5">Promo Details Form</h5>
+            <input type="hidden" formControlName="id">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Package</label><span class="text-danger">*</span>
+                    <select class="form-control dropdown-toggle" formControlName="packageId"
+                        [ngClass]="{'is-invalid': updatePromoForm.get('packageId').errors && (updatePromoForm.get('packageId').touched || updatePromoForm.get('packageId').dirty)}">
+                        <option value=null selected>--Select Package--</option>
+                        <option *ngFor="let ddl of packages" [value]="ddl.id">{{ddl.packageName}}</option>
+                    </select>
+                    <span class="text-danger">
+                        <small
+                            *ngIf="updatePromoForm.get('packageId').errors?.required && (updatePromoForm.get('packageId').touched || updatePromoForm.get('packageId').dirty)">Package
+                            is Required!</small>
+                    </span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Promo Code</label>
+                    <input type="text" formControlName="promoCode" placeholder="Promo Code" class="form-control">
                 </div>
             </div>
             <div class="form-group col-md-4">
@@ -29,30 +30,43 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Start Date (Np)</label><span class="text-danger">*</span>
-               
-                <np-datepicker [ngbTooltip]="'Start Date' "class="form-group"
-                inputClass="form-control" formControlName="startDateNp" #dateValStart
+                <np-datepicker [ngbTooltip]="'Start Date' " class="form-group" inputClass="form-control"
+                    formControlName="startDateNp" #dateValStart
                     (ngModelChange)="changeNepaliToEnglishStartDate(dateValStart)"></np-datepicker>
-                
             </div>
-            <div class="form-group col-md-4">
-                <label>Start Date (En)</label><span class="text-danger">*</span>
-                <input readonly class="form-control" id="startDateEn" formControlName="startDate">
+            <div class="form-row">
+                <div class="form-group col-md-4 datePickerDiv">
+                    <label>Start Date (Np)</label><span class="text-danger">*</span>
+                    <np-datepicker [ngbTooltip]="'Start Date'" formControlName="startDateNp" #dateValStart
+                        (ngModelChange)="changeNepaliToEnglishStartDate(dateValStart)"></np-datepicker>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Start Date (En)</label><span class="text-danger">*</span>
+                    <input readonly class="form-control" id="startDateEn" formControlName="startDate">
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label>End Date (Np)</label><span class="text-danger">*</span>
-                <np-datepicker class="form-group"  inputClass="form-control" [ngbTooltip]="'End Date' " formControlName="endDateNp" #dateValEnd
-                    (ngModelChange)="changeNepaliToEnglishEndDate(dateValEnd)"></np-datepicker>
+            <div class="form-row">
+                <div class="form-group col-md-4 datePickerDiv">
+                    <label>End Date (Np)</label><span class="text-danger">*</span>
+                    <np-datepicker [ngbTooltip]="'End Date'" formControlName="endDateNp" #dateValEnd
+                        (ngModelChange)="changeNepaliToEnglishEndDate(dateValEnd)"></np-datepicker>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>End Date (En)</label><span class="text-danger">*</span>
+                    <input readonly class="form-control" id="endDateEn" formControlName="endDate">
+                </div>
             </div>
-            <div class="form-group col-md-4">
-                <label>End Date (En)</label><span class="text-danger">*</span>
-                <input readonly class="form-control" id="endDateEn" formControlName="endDate">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>End Date (Np)</label><span class="text-danger">*</span>
+                    <np-datepicker class="form-group" inputClass="form-control" [ngbTooltip]="'End Date' "
+                        formControlName="endDateNp" #dateValEnd
+                        (ngModelChange)="changeNepaliToEnglishEndDate(dateValEnd)"></np-datepicker>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+                <div class="form-row">
+                    <button type="submit" class="btn btn-primary" [disabled]="(!updatePromoForm.valid)">Submit</button>
+                </div>
+            </div>
     </form>
 </div>

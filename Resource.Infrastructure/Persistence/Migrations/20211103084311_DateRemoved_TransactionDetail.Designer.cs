@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Resource.Infrastructure.Persistence;
 
 namespace Resource.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211103084311_DateRemoved_TransactionDetail")]
+    partial class DateRemoved_TransactionDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,9 +169,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CustomerPackageId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<decimal>("DiscountAmount")
                         .HasColumnType("decimal(15,4)");
 
@@ -191,11 +190,11 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<decimal>("NetAmount")
                         .HasColumnType("decimal(15,4)");
 
-                    b.Property<decimal>("PaidAmount")
+                    b.Property<decimal>("PackageAmount")
                         .HasColumnType("decimal(15,4)");
 
-                    b.Property<int>("PaymentGateway")
-                        .HasColumnType("int");
+                    b.Property<decimal>("PaidAmount")
+                        .HasColumnType("decimal(15,4)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -204,8 +203,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerPackageId");
 
                     b.ToTable("CustomerPayments");
                 });
@@ -386,54 +383,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.ToTable("CourseTypes");
                 });
 
-            modelBuilder.Entity("Resource.Domain.Entities.PackageCourse.CustomerPackage", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CustomerAccountNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("PackageEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PackageEndDateNp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PackageId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("PackageStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PackageStartDateNp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PromoCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PackageId");
-
-                    b.ToTable("CustomerPackages");
-                });
-
             modelBuilder.Entity("Resource.Domain.Entities.PackageCourse.Package", b =>
                 {
                     b.Property<string>("Id")
@@ -460,9 +409,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(15,4)");
 
-                    b.Property<string>("ShiftFrequencyId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("TotalDay")
                         .HasColumnType("int");
 
@@ -475,8 +421,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("ShiftFrequencyId");
 
                     b.ToTable("Packages");
                 });
@@ -534,138 +478,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                         .HasFilter("[PromoCode] IS NOT NULL");
 
                     b.ToTable("PackagePromoOffers");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Shift.IndividualShift", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PackageId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ShiftId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("TrainerDetail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrainerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("TrainingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TrainingDateNp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserAccountNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PackageId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.ToTable("IndividualShifts");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Shift.Shift", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShiftFrequencyId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ShiftFrequencyId");
-
-                    b.ToTable("Shifts");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Shift.ShiftFrequency", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShiftFrequencies");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.VehicleInventory.VehicleDetail", b =>
@@ -777,15 +589,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Navigation("AccountType");
                 });
 
-            modelBuilder.Entity("Resource.Domain.Entities.Account.CustomerPayment", b =>
-                {
-                    b.HasOne("Resource.Domain.Entities.PackageCourse.CustomerPackage", "CustomerPackage")
-                        .WithMany("CustomerPayments")
-                        .HasForeignKey("CustomerPackageId");
-
-                    b.Navigation("CustomerPackage");
-                });
-
             modelBuilder.Entity("Resource.Domain.Entities.Account.TransactionDetail", b =>
                 {
                     b.HasOne("Resource.Domain.Entities.Account.Transaction", "Transaction")
@@ -804,28 +607,13 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Navigation("CourseType");
                 });
 
-            modelBuilder.Entity("Resource.Domain.Entities.PackageCourse.CustomerPackage", b =>
-                {
-                    b.HasOne("Resource.Domain.Entities.PackageCourse.Package", "Package")
-                        .WithMany("CustomerPackages")
-                        .HasForeignKey("PackageId");
-
-                    b.Navigation("Package");
-                });
-
             modelBuilder.Entity("Resource.Domain.Entities.PackageCourse.Package", b =>
                 {
                     b.HasOne("Resource.Domain.Entities.PackageCourse.Course", "Course")
                         .WithMany("Packages")
                         .HasForeignKey("CourseId");
 
-                    b.HasOne("Resource.Domain.Entities.Shift.ShiftFrequency", "ShiftFrequency")
-                        .WithMany("Packages")
-                        .HasForeignKey("ShiftFrequencyId");
-
                     b.Navigation("Course");
-
-                    b.Navigation("ShiftFrequency");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.PackageCourse.PackagePromoOffer", b =>
@@ -835,30 +623,6 @@ namespace Resource.Infrastructure.Persistence.Migrations
                         .HasForeignKey("PackageId");
 
                     b.Navigation("Package");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Shift.IndividualShift", b =>
-                {
-                    b.HasOne("Resource.Domain.Entities.PackageCourse.Package", "Package")
-                        .WithMany()
-                        .HasForeignKey("PackageId");
-
-                    b.HasOne("Resource.Domain.Entities.Shift.Shift", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftId");
-
-                    b.Navigation("Package");
-
-                    b.Navigation("Shift");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Shift.Shift", b =>
-                {
-                    b.HasOne("Resource.Domain.Entities.Shift.ShiftFrequency", "ShiftFrequency")
-                        .WithMany("Shifts")
-                        .HasForeignKey("ShiftFrequencyId");
-
-                    b.Navigation("ShiftFrequency");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.VehicleInventory.VehicleMaintenanceDetail", b =>
@@ -890,23 +654,9 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("Resource.Domain.Entities.PackageCourse.CustomerPackage", b =>
-                {
-                    b.Navigation("CustomerPayments");
-                });
-
             modelBuilder.Entity("Resource.Domain.Entities.PackageCourse.Package", b =>
                 {
-                    b.Navigation("CustomerPackages");
-
                     b.Navigation("PackagePromoOffers");
-                });
-
-            modelBuilder.Entity("Resource.Domain.Entities.Shift.ShiftFrequency", b =>
-                {
-                    b.Navigation("Packages");
-
-                    b.Navigation("Shifts");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.VehicleInventory.VehicleDetail", b =>

@@ -10,7 +10,7 @@ import { oidcAuthConfig } from './infrastructure/datum/configure-oidc';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent{
-  title = 'DSC-APP';
+  title = 'DGM-APP';
   constructor(private oauthService: OAuthService, private changeDetectorRef: ChangeDetectorRef) {
     this.configureOAuth();
   }

@@ -13,7 +13,7 @@ namespace Dgm.Common.Error
             ErrorResponse = new();
         }
 
-        public AppException(string message ,ErrorResponse errorResponse)
+        public AppException(string message, ErrorResponse errorResponse)
            : this(message)
         {
             ErrorResponse = errorResponse;

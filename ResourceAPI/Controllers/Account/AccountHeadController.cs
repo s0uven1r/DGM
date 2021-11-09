@@ -66,7 +66,7 @@ namespace ResourceAPI.Controllers.Account
 
         public async Task<IActionResult> GetAccountDetails(string type, string alias)
         {
-            var data = await _accountHeadCountService.GenerateAccountNumber(type,alias);
+            var data = await _accountHeadCountService.GenerateAccountNumber(type, alias);
             return Ok(data);
         }
 

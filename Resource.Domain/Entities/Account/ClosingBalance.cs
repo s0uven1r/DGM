@@ -8,7 +8,7 @@ namespace Resource.Domain.Entities.Account
 {
     public class ClosingBalance : BaseEntity
     {
-        public decimal AccountNumber { get; set; }
-        public decimal Balance { get; set; }
+        public decimal AccountNumber { get; set; } //salary (employee salary) // vahicle ()
+        public decimal Balance { get; set; } //60000 // 70000
     }
 }

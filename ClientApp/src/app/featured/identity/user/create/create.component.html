@@ -1,43 +1,45 @@
-<div class="container-fluid  h-100">
-    <form [formGroup]="InternalUserForm" (ngSubmit)="registerUser()">
+<div class="container-fluid card h-100">
+  <form [formGroup]="InternalUserForm" (ngSubmit)="registerUser()">
+    <div class="card-body">
+      <h5 class="card-title mb-3">User Registration</h5>
       <div class="form-row">
         <div class="form-group col-md-6">
           <input formControlName='id' type="hidden">
-          <select formControlName="appliedRole" id="role" class="custom-select" aria-label="Example select with button addon">
+          <select formControlName="appliedRole" id="role" class="custom-select"
+            aria-label="Example select with button addon">
             <option value="">Select Role</option>
             <option *ngFor="let item of roleData" [value]="item.id">
               {{item.name}}
             </option>
           </select>
-  
         </div>
-    </div>
+      </div>
       <div class="form-row">
         <div class="form-group col-md-4">
-            <input type="text" formControlName="firstName" placeholder="First Name" class="form-control">
+          <input type="text" formControlName="firstName" placeholder="First Name" class="form-control">
         </div>
         <div class="form-group col-md-4">
-            <input type="text" formControlName="middleName" placeholder="Middle Name" class="form-control">
+          <input type="text" formControlName="middleName" placeholder="Middle Name" class="form-control">
         </div>
         <div class="form-group col-md-4">
           <input type="text" formControlName="lastName" placeholder="Last Name" class="form-control">
-      </div>
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4">
-            <input type="text" formControlName="phone" placeholder="Phone Number" class="form-control">
+          <input type="text" formControlName="phone" placeholder="Phone Number" class="form-control">
         </div>
         <div class="form-group col-md-4">
-            <input type="text"  formControlName="email" placeholder="Email Address" class="form-control">
+          <input type="text" formControlName="email" placeholder="Email Address" class="form-control">
         </div>
         <div class="form-group col-md-4">
           <input type="text" formControlName="confirmEmail" placeholder="Confirm Email Address" class="form-control">
-      </div>
+        </div>
       </div>
 
       <div class="form-row">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="(!InternalUserForm.valid)">Submit</button>
+      </div>
     </div>
-    </form>
-    </div>
-  
+  </form>
+</div>
