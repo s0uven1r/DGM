@@ -23,5 +23,7 @@ export const oidcAuthConfig: AuthConfig = {
   // postLogoutRedirectUri: 'http://localhost:4200',
   useSilentRefresh: true,
 
-  oidc: true
+  oidc: true,
+
+  requireHttps:false 
 }
