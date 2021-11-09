@@ -1,9 +1,14 @@
 export interface IndividualShiftModel {
     id: string;
-    courseName: string;
-    courseTypeId: string;
-    courseInfo: string;
-    requiredDocuments: string;
-    courseType: string;
-    isAdvanceCourse: boolean;
+    shiftId: string;
+    shiftName: string;
+    packageId: string;
+    packageName: string;
+    vehicleId: string;
+    vehicleNumber: string;
+    trainerId: string;
+    trainerName: string;
+    trainingDate: string;
+    trainingDateNp: string;
+    userAccountNumber: string;
 }

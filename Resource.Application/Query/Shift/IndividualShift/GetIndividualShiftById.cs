@@ -3,21 +3,23 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Resource.Application.Common.Interfaces;
 using Resource.Application.Models.Shift.IndividualShift.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Resource.Application.Query.Shift.IndividualShift
 {
-    public class GetAllIndividualShiftByAccountNumber
+    public class GetIndividualShiftById
     {
-        public class GetAllIndividualShiftByAccountNumberQuery : IRequest<List<IndividualShiftDetailResponseViewModel>>
+        public class GetGetIndividualShiftByIdQuery : IRequest<IndividualShiftDetailResponseViewModel>
         {
-            public string UserAccountNumber { get; set; }
+            public string Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetAllIndividualShiftByAccountNumberQuery, List<IndividualShiftDetailResponseViewModel>>
+        public class Handler : IRequestHandler<GetGetIndividualShiftByIdQuery, IndividualShiftDetailResponseViewModel>
         {
             private readonly IAppDbContext _context;
             public Handler(IAppDbContext context)
@@ -25,7 +27,7 @@ namespace Resource.Application.Query.Shift.IndividualShift
                 _context = context;
             }
 
-            public async Task<List<IndividualShiftDetailResponseViewModel>> Handle(GetAllIndividualShiftByAccountNumberQuery request, CancellationToken cancellationToken)
+            public async Task<IndividualShiftDetailResponseViewModel> Handle(GetGetIndividualShiftByIdQuery request, CancellationToken cancellationToken)
             {
                 try
                 {
@@ -37,7 +39,7 @@ namespace Resource.Application.Query.Shift.IndividualShift
                                           join vehicleDetails in _context.VehicleDetails
                                           on individualShift.VehicleId equals vehicleDetails.Id into vehicleTemp
                                           from vehicle in vehicleTemp.DefaultIfEmpty()
-                                          where !individualShift.IsDeleted && individualShift.UserAccountNumber == request.UserAccountNumber
+                                          where !individualShift.IsDeleted && individualShift.Id == request.Id
                                           orderby individualShift.TrainingDate
                                           select new IndividualShiftDetailResponseViewModel
                                           {
@@ -51,9 +53,9 @@ namespace Resource.Application.Query.Shift.IndividualShift
                                               UserAccountNumber = individualShift.UserAccountNumber,
                                               PackageName = package.PackageName,
                                               ShiftName = string.Join(", ", shift.Name, " (" + shift.StartTime.ToString("hh:mm tt") + "-" + shift.EndTime.ToString("hh:mm tt") + ") "),
-                                              TrainerDetail = individualShift.TrainerId,
+                                              TrainerDetail = individualShift.TrainerDetail,
                                               VehicleNumber = vehicle != null ? vehicle.RegistrationNumber : "-",
-                                          }).ToListAsync();
+                                          }).FirstOrDefaultAsync();
 
                     return response;
                 }

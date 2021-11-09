@@ -49,6 +49,7 @@ namespace Resource.Application.Command.Shift.IndividualShift
 
                     individualShift.ShiftId = request.ShiftId;
                     individualShift.TrainerId = request.TrainerId;
+                    individualShift.TrainerDetail = request.TrainerDetail;
                     individualShift.TrainingDate = string.IsNullOrEmpty(request.TrainingDate) ? null
                                                    : DateTime.ParseExact(request.TrainingDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
                     individualShift.TrainingDateNp = string.IsNullOrEmpty(request.TrainingDate) ? null : request.TrainingDateNp;

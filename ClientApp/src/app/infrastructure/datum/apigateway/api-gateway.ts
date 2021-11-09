@@ -28,6 +28,7 @@ export const ApiGateway = {
       createEmployee: "/CreateEmployee",
       updateEmployee: "/UpdateEmployee",
       getAccountNumberDetails: "/GetAccountDetails",
+      getAccountTrainerDetails: "/GetAccountTrainerDetails",
       updateKyc: "/UpdateKYC",
       getKyc: "/GetKYC",
       getKycDDL: "/GetKYCDDL",
@@ -128,6 +129,12 @@ export const ApiGateway = {
     shift: {
       base: "Shift",
       getAll: "/Get/GetAll",
+      individualShift: {
+        base: "IndividualShift",
+        getAllByAccountNumber: "/Get/GetAllByUserAccountNumber",
+        getSingleById: "/Get/GetById",
+        update: "/Update"
+      }
     }
   }
 };

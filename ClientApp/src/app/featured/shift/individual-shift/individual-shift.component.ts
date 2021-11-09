@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
-import Swal from 'sweetalert2';
 import { ShiftManagementClaim } from '../../../infrastructure/datum/claim/shift-management';
 import { IndividualShiftModel } from '../../../infrastructure/model/UserManagement/resource/shift/individual-shift-model';
 import { UserService } from '../../identity/user/service/user.service';
+import { ShiftService } from '../service/shift.service';
 
 @Component({
   selector: 'app-individual-shift',
@@ -25,15 +25,17 @@ export class IndividualShiftComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   isDtInitialized:boolean = false;
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  hasDataLoaded = false;
   individualShiftWriteClaim = [ShiftManagementClaim.IndividualShift.Write];
   shifts: IndividualShiftModel[] = [];
   result = [];
   resultPair = [];
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
-
   constructor(
+    private router: Router,
     private userService: UserService,
+    private shiftService: ShiftService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
@@ -46,7 +48,23 @@ export class IndividualShiftComponent implements OnInit, OnDestroy {
         [5, 10, 25, 50, 100, "All"],
       ],
     };
-   this.getInitData();
+  }
+  
+  getInitData(accountNo: string){
+    this.shiftService.getAllByAccountNumber(accountNo).subscribe(x=>
+      {
+        this.shifts = x;
+        if(this.isDtInitialized){
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+            this.dtTrigger.next();
+          });
+        } else{this.isDtInitialized = true
+        this.dtTrigger.next();
+        this.hasDataLoaded = true;
+      }
+      this.changeDetectorRef.markForCheck();
+    });
   }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
@@ -93,19 +111,12 @@ searchGetCall(term: string, _index?: number) {
   formatter = (result: string) => result.toUpperCase();
   selectedItem(item: { item: string; }){
       var accNo = item.item.split('-')[1].trim();
+      this.getInitData(accNo);
     }
-  getInitData(){
-    this.shifts.push();
-      if (this.isDtInitialized) {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-          this.dtTrigger.next();
-        });
-      } else {
-        this.isDtInitialized = true
-        this.dtTrigger.next();
-      }
-      this.changeDetectorRef.markForCheck();
-  }
-
+    updateShiftDetail(id: string){
+        const url = this.router.serializeUrl(
+          this.router.createUrlTree([`/dashboard/shift-config/individual-shift/edit/${id}`])
+        );
+        window.open(url, "_self");
+    }
 }

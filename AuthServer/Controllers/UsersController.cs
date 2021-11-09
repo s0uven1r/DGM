@@ -342,7 +342,44 @@ namespace AuthServer.Controllers
         [Route("GetAccountDetails")]
         public async Task<IActionResult> GetAccountDetails(string value)
         {
-            var data = await _appIdentityDbContext.Users.Where(x => !string.IsNullOrEmpty(x.AccountNumber)).ToListAsync();
+            var data = await (from user in _appIdentityDbContext.Users
+                              join userRole in _appIdentityDbContext.UserRoles
+                              on user.Id equals userRole.UserId
+                              join role in _appIdentityDbContext.Roles
+                              on userRole.RoleId equals role.Id
+                              where role.Type == (int)RoleTypeEnum.Customer && !string.IsNullOrEmpty(user.AccountNumber)
+                              select new
+                              {
+                                  user.Email,
+                                  user.FirstName,
+                                  user.MiddleName,
+                                  user.LastName,
+                                  user.AccountNumber
+                              }).ToListAsync();
+            if (data.Count == 0) return NotFound(); ;
+            var accountDetails = data.Where(x => x.Email.Contains(value))
+                .Select(x => new KeyValuePair<string, string>(string.Join(" ", x.FirstName, x.MiddleName, x.LastName, "-", x.AccountNumber), x.AccountNumber));
+
+            return Ok(accountDetails.ToList());
+        }
+        [HttpGet]
+        [Route("GetAccountTrainerDetails")]
+        public async Task<IActionResult> GetAccountTrainerDetails(string value)
+        {
+            var data = await (from user in _appIdentityDbContext.Users
+                              join userRole in _appIdentityDbContext.UserRoles
+                              on user.Id equals userRole.UserId
+                              join role in _appIdentityDbContext.Roles
+                              on userRole.RoleId equals role.Id
+                              where role.Type == (int)RoleTypeEnum.Employee && !string.IsNullOrEmpty(user.AccountNumber)
+                              select new
+                              {
+                                  user.Email,
+                                  user.FirstName,
+                                  user.MiddleName,
+                                  user.LastName,
+                                  user.AccountNumber
+                              }).ToListAsync();
 
             if (data.Count == 0) return NotFound(); ;
             var accountDetails = data.Where(x => x.Email.Contains(value))
@@ -350,7 +387,6 @@ namespace AuthServer.Controllers
 
             return Ok(accountDetails.ToList());
         }
-
         [HttpPost]
         [Route("UpdateKYC")]
         public async Task<IActionResult> UpdateKYC([FromBody] UserKYCRequestModel kycModel)

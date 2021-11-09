@@ -55,6 +55,7 @@ import { IndividualShiftComponent } from 'src/app/featured/shift/individual-shif
 import { ShiftRoutePath } from './route-path/shift-route-path';
 import { CustomerPackageComponent } from '../../featured/package-course/customer-package/customer-package.component';
 import { PackageShiftResolverService } from '../../featured/package-course/service/package-resolver.service';
+import { EditIndividualShiftComponent } from '../../featured/shift/individual-shift/edit-individual-shift/edit-individual-shift.component';
 
 export const RoutePath = {
   AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -212,6 +213,11 @@ export const RoutePath = {
       packageDDL: PromoResolverService,
       shifts: PackageShiftResolverService
     }
-  }]
+  }],
+
+  IndividualShiftEditRoutePath : [{path: '', component:EditIndividualShiftComponent, resolve: {
+    shifts: PackageShiftResolverService,
+    vehicleData: VehicleResolverService
+  }}],
 
 };
