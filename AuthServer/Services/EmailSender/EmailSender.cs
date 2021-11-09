@@ -55,7 +55,7 @@ namespace AuthServer.Services.EmailSender
 
             using var smtp = new SmtpClient();
             
-            smtp.Connect(_emailConfig.Host, _emailConfig.Port, SecureSocketOptions.StartTls);
+            smtp.Connect(_emailConfig.Host, _emailConfig.Port, SecureSocketOptions.Auto);
             smtp.Authenticate(_emailConfig.Mail, _emailConfig.Password);
            
             await smtp.SendAsync(email);
