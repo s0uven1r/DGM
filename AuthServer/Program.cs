@@ -22,7 +22,7 @@ namespace AuthServer
         {
             //Read Configuration from appSettings
             var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
             //Initialize Logger
             Log.Logger = new LoggerConfiguration()
