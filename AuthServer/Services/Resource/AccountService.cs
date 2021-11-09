@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,16 +19,19 @@ namespace AuthServer.Services.Resource
         private readonly HttpClient httpClient;
         private readonly IConfiguration config;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IOptions<ClientBaseUrls> _baseUrls;
         public AccountService(HttpClient httpClient, IConfiguration config,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor, IOptions<ClientBaseUrls> baseUrls)
         {
             this.httpClient = httpClient;
             this.config = config;
             this._httpContextAccessor = httpContextAccessor;
+            _baseUrls = baseUrls;
         }
+
         public async Task<string> GetAccountNumber(string type, string alias)
         {
-            var resourceBaseUrl = this.config.GetSection("ModuleUrl:Resource").Value;
+            var resourceBaseUrl = _baseUrls.Value.ResourceAPI;
             var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
             var request = new HttpRequestMessage(HttpMethod.Get,
                $"{resourceBaseUrl}api/AccountHead/GetAccountNumber?type={type}&alias={alias}");
@@ -62,7 +66,7 @@ namespace AuthServer.Services.Resource
                 ShiftId = shiftId,
                 PromoCode = promoCode
             };
-            var resourceBaseUrl = this.config.GetSection("ModuleUrl:Resource").Value;
+            var resourceBaseUrl = _baseUrls.Value.ResourceAPI; 
             var json = JsonConvert.SerializeObject(model);
 
             //construct content to send
