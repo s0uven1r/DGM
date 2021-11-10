@@ -1,13 +1,12 @@
-﻿using Dgm.Common.Models;
+﻿using Dgm.Common.Attributes;
+using Dgm.Common.Authorization.Claim.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.CoursePackage.Package;
 using Resource.Application.Command.CoursePackage.Promo;
 using Resource.Application.Command.Customer;
-using Resource.Application.Common.Interfaces;
 using Resource.Application.Query.CoursePackage.Package;
 using Resource.Application.Query.CoursePackage.Promo;
-using System;
 using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.CoursePackage
@@ -18,6 +17,7 @@ namespace ResourceAPI.Controllers.CoursePackage
        
         #region begin package
         [HttpGet("Get/GetAll")]
+        [Permission(PackageCourseClaimConstant.ViewPackage)]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await Mediator.Send(request: new GetAllPackageDetail.GetAllPackageQuery()));
@@ -27,8 +27,8 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpGet("Get/GetById/{id}")]
+        [Permission(PackageCourseClaimConstant.ViewPackage)]
         public async Task<IActionResult> GetSingleById(string id)
         {
             return Ok(await Mediator.Send(request: new GetSinglePackageDetail.GetSinglePackageQuery { Id = id }));
@@ -38,8 +38,8 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="title"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPost("Create")]
+        [Permission(PackageCourseClaimConstant.WritePackage)]
         public async Task<IActionResult> Create(AddPackageDetail.AddPackageDetailCommand command)
         {
             return Ok(await Mediator.Send(command));
@@ -50,8 +50,8 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="title"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPut("Update/{id}")]
+        [Permission(PackageCourseClaimConstant.WritePackage)]
         public async Task<IActionResult> Update(string id, UpdatePackageDetail.UpdatePackageDetailCommand command)
         {
             command.Id = id;
@@ -61,8 +61,8 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpDelete("Delete/{id}")]
+        [Permission(PackageCourseClaimConstant.WritePackage)]
         public async Task<IActionResult> Delete(string id)
         {
             return Ok(await Mediator.Send(request: new DeletePackageDetail.DeletePackageDetailCommand { Id = id }));
@@ -71,6 +71,7 @@ namespace ResourceAPI.Controllers.CoursePackage
 
         #region begin promo type
         [HttpGet("Promo/Get/GetAll")]
+        [Permission(PackageCourseClaimConstant.ViewPromo)]
         public async Task<IActionResult> GetPromoAll()
         {
             return Ok(await Mediator.Send(request: new GetAllPromoDetail.GetAllPromoQuery()));
@@ -137,7 +138,6 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="title"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPost("RegisterCustomerPackage")]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterCustomerPackage(AddCustomerPackageDetail.AddCustomerPackageDetailCommand command)

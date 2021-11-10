@@ -1,4 +1,6 @@
-﻿using Dgm.Common.Enums;
+﻿using Dgm.Common.Attributes;
+using Dgm.Common.Authorization.Claim.Resource;
+using Dgm.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.Account.AccountType;
 using Resource.Application.Query.Account.AccountType;
@@ -8,8 +10,8 @@ namespace ResourceAPI.Controllers.Account
 {
     public class AccountTypeController : BaseController
     {
-        //[Permission(Permission.)]
         [HttpGet("Get/GetAll")]
+        [Permission(AccountingClaimConstant.ViewAccountingType)]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await Mediator.Send(request: new GetAllAccountTypeDetail.GetAllAccountTypeQuery()));
@@ -19,8 +21,8 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpGet("Get/GetById/{id}")]
+        [Permission(AccountingClaimConstant.ViewAccountingType)]
         public async Task<IActionResult> GetSingleById(string id)
         {
             return Ok(await Mediator.Send(request: new GetSingleAccountTypeDetail.GetSingleAccountTypeQuery { Id = id }));
@@ -30,8 +32,8 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="title"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPost("Create")]
+        [Permission(AccountingClaimConstant.WriteAccountingType)]
         public async Task<IActionResult> Create(AddAccountTypeDetail.AddAccountTypeDetailCommand command)
         {
             return Ok(await Mediator.Send(command));
@@ -42,8 +44,8 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="title"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPut("Update/{id}")]
+        [Permission(AccountingClaimConstant.WriteAccountingType)]
         public async Task<IActionResult> Update(string id, UpdateAccountTypeDetail.UpdateAccountTypeDetailCommand command)
         {
             command.Id = id;

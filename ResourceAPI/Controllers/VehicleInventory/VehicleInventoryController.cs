@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dgm.Common.Attributes;
+using Dgm.Common.Authorization.Claim.Resource;
+using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.VehicleInventory;
 using Resource.Application.Query.VehicleInventory;
 using System.Collections.Generic;
@@ -9,8 +11,8 @@ namespace ResourceAPI.Controllers.VehicleInventory
 {
     public class VehicleInventoryController : BaseController
     {
-        //[Permission(Permission.)]
         [HttpGet("Get/GetAllVehicle")]
+        [Permission(VehicleClaimConstant.ViewVehicle)]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await Mediator.Send(request: new GetAllVehicleDetail.GetAllVehicleDetailQuery()));
@@ -20,8 +22,8 @@ namespace ResourceAPI.Controllers.VehicleInventory
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpGet("Get/GetVehicleDetailById/{id}")]
+        [Permission(VehicleClaimConstant.ViewVehicle)]
         public async Task<IActionResult> GetSingleVehicleById(string id)
         {
             return Ok(await Mediator.Send(request: new GetSingleVehicleDetail.GetSingleVehicleDetailQuery { Id = id }));
@@ -38,8 +40,8 @@ namespace ResourceAPI.Controllers.VehicleInventory
         /// <param name="Price"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPost("Create")]
+        [Permission(VehicleClaimConstant.ViewVehicle)]
         public async Task<IActionResult> CreateVehicle([FromBody] AddVehicleDetail.AddVehicleDetailCommand command)
         {
             return Ok(await Mediator.Send(command));
@@ -57,8 +59,8 @@ namespace ResourceAPI.Controllers.VehicleInventory
         /// <param name="Price"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPut("Update/{id}")]
+        [Permission(VehicleClaimConstant.ViewVehicle)]
         public async Task<IActionResult> UpdateVehicle(string id, UpdateVehicleDetail.UpdateVehicleDetailCommand command)
         {
             command.Id = id;
@@ -69,8 +71,8 @@ namespace ResourceAPI.Controllers.VehicleInventory
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpDelete("Delete/{id}")]
+        [Permission(VehicleClaimConstant.ViewVehicle)]
         public async Task<IActionResult> DeleteVehicle(string id)
         {
             return Ok(await Mediator.Send(request: new DeleteVehicleDetail.DeleteVehicleDetailCommand { Id = id }));

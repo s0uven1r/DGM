@@ -44,7 +44,7 @@ namespace AuthServer.Services
             var userClaims = new List<Claim>();
             userClaims.AddRange(new List<Claim>
             {
-
+                new Claim(ClaimTypes.Role, roleDetail.Name),
                 new Claim("FullName", fullName),
                 new Claim("PhoneNo", user.PhoneNumber??"-"),
                 new Claim("UserId", user.Id),

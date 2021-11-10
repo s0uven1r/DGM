@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dgm.Common.Attributes;
+using Dgm.Common.Authorization.Claim.Resource;
+using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.Shift.IndividualShift;
 using Resource.Application.Query.Shift.IndividualShift;
 using System.Threading.Tasks;
@@ -15,11 +17,13 @@ namespace ResourceAPI.Controllers.Shift
         //}
 
         [HttpGet("Get/GetAllByUserAccountNumber/{accountNumber}")]
+        [Permission(ShiftClaimConstant.ViewIndividualShift)]
         public async Task<IActionResult> GetAllByAccountNumber(string accountNumber)
         {
             return Ok(await Mediator.Send(request: new GetAllIndividualShiftByAccountNumber.GetAllIndividualShiftByAccountNumberQuery { UserAccountNumber = accountNumber }));
         }
         [HttpGet("Get/GetById/{id}")]
+        [Permission(ShiftClaimConstant.ViewIndividualShift)]
         public async Task<IActionResult> GetById(string id)
         {
             return Ok(await Mediator.Send(request: new GetIndividualShiftById.GetGetIndividualShiftByIdQuery { Id = id }));
@@ -31,6 +35,7 @@ namespace ResourceAPI.Controllers.Shift
         //}
 
         [HttpPut("Update/{id}")]
+        [Permission(ShiftClaimConstant.WriteIndividualShift)]
         public async Task<IActionResult> Update(string id, UpdateIndividualShiftDetail.UpdateIndividualShiftDetailCommand command)
         {
             command.Id = id;
@@ -38,6 +43,7 @@ namespace ResourceAPI.Controllers.Shift
         }
 
         [HttpPut("UpdateShiftTrainer/{id}")]
+        [Permission(ShiftClaimConstant.WriteIndividualShift)]
         public async Task<IActionResult> Update(string id, UpdateIndividualShiftTrainerDetail.UpdateIndividualShiftTrainerDetailCommand command)
         {
             command.Id = id;

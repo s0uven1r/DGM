@@ -1,70 +1,44 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Auth.Infrastructure.Constants;
+using Dgm.Common.Authorization.Claim;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using System;
+using System.Linq;
 
 namespace Dgm.Common.Attributes
 {
-    public class PermissionAttribute : TypeFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+
+    public class PermissionAttribute : AuthorizeAttribute, IAuthorizationFilter
     {
-        private string actionName = string.Empty;
-        public PermissionAttribute(string claimValue) : base(typeof(ClaimRequirementFilter))
+        private readonly string[] permissions = null;
+        public PermissionAttribute(params string[] permissions)
         {
-            Arguments = new object[] { new Claim(actionName, claimValue) };
+            this.permissions = permissions;
         }
-        public class ClaimRequirementFilter : IAsyncActionFilter
+
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
-            private readonly Claim _claim;
-
-            public ClaimRequirementFilter(Claim claim)
+            var userClaims = context.HttpContext.User.Claims
+                .Where(x => x.Type == ClaimType.Permission)
+                .Select(a => a.Value).ToList();
+            if (permissions.Length == 0)
             {
-                _claim = claim;
+                return;
+            }
+            if (context.HttpContext.User.IsInRole(SystemRoles.SuperAdmin))
+            {
+                return;
+            }
+            if (userClaims.Count > 0)
+            {
+                bool isAuth = userClaims.Any(x => permissions.Contains(x));
+                if (isAuth) return;
             }
 
-            public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-            {
-                Claim permissionClaim = context.HttpContext.User.FindFirst("permission");
-                if (permissionClaim != null && !string.IsNullOrEmpty(permissionClaim.Value))
-                {
-                    try
-                    {
-                        var userPermissions = JsonConvert.DeserializeObject<List<string>>(permissionClaim.Value);
-                        if (userPermissions.Contains(_claim.Value))
-                        {
-                            await next();
-                            return;
-                        }
-                    }
-                    catch
-                    { }
-                }
-
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-            }
-        }
-    }
-    public static class CheckPermissionExtension
-    {
-        public static bool CheckPermission(this ClaimsPrincipal user, string claimPermission)
-        {
-            Claim permissionClaim = user.FindFirst("permission");
-            if (permissionClaim != null && !string.IsNullOrEmpty(permissionClaim.Value))
-            {
-                try
-                {
-                    var userPermissions = JsonConvert.DeserializeObject<List<string>>(permissionClaim.Value);
-                    if (userPermissions.Contains(claimPermission))
-                    {
-                        return true;
-                    }
-                }
-                catch
-                { }
-            }
-            return false;
+            context.Result = new StatusCodeResult((int)System.Net.HttpStatusCode.Forbidden);
+            return;
         }
     }
 }
