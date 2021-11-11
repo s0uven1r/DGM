@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PackageModel } from "src/app/infrastructure/model/UserManagement/resource/package/packagemodel";
 import { ShiftModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-frequency-model';
@@ -33,7 +33,7 @@ export class EditIndividualShiftComponent implements OnInit {
   vehicles: VehicleInventoryModel[] = [];
   result = [];
   resultPair = [];
-  constructor( private route: ActivatedRoute,
+  constructor( private route: ActivatedRoute, private router: Router,
     private form: FormBuilder,private userService: UserService,
     private shiftService: ShiftService,
     private changeDetectorRef: ChangeDetectorRef) {
@@ -102,6 +102,7 @@ export class EditIndividualShiftComponent implements OnInit {
           .subscribe(
             () => {
               Swal.fire("Updated!", "User Action", "success");
+              this.router.navigateByUrl("/dashboard/shift-config/individual-shift");
             },
             () => console.log("HTTP request completed.")
           );
