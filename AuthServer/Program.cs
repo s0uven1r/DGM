@@ -37,23 +37,23 @@ namespace AuthServer
                 var clientUrls = services.GetRequiredService<IOptions<ClientBaseUrls>>();
                 try
                 {
-                    var identityContext = services.GetRequiredService<AppIdentityDbContext>();
-                    await identityContext.Database.MigrateAsync();
+                    //var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+                    //await identityContext.Database.MigrateAsync();
 
-                    await services.GetRequiredService<PersistedGrantDbContext>().Database.MigrateAsync();
+                    //await services.GetRequiredService<PersistedGrantDbContext>().Database.MigrateAsync();
 
-                    var configContext = services.GetRequiredService<ConfigurationDbContext>();
-                    await configContext.Database.MigrateAsync();
+                    //var configContext = services.GetRequiredService<ConfigurationDbContext>();
+                    //await configContext.Database.MigrateAsync();
 
-                    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
-                    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                    //var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+                    //var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
-                    await RoleData.SeedDefaultRolesAsync(roleManager);
-                    await ConfigurationDbContextSeed.SeedDefaultConfiguration(configContext, clientUrls);
+                    //await RoleData.SeedDefaultRolesAsync(roleManager);
+                    //await ConfigurationDbContextSeed.SeedDefaultConfiguration(configContext, clientUrls);
 
-                    await AppIdentityDbContextSeed.SeedDefaultConfiguration(identityContext);
-                    await SeedRolePermission.SeedRolewisePermission(roleManager, identityContext);
-                    await SeedUsers.SeedDefaultUsersAsync(userManager);
+                    //await AppIdentityDbContextSeed.SeedDefaultConfiguration(identityContext);
+                    //await SeedRolePermission.SeedRolewisePermission(roleManager, identityContext);
+                    //await SeedUsers.SeedDefaultUsersAsync(userManager);
 
                 }
                 catch (Exception ex)

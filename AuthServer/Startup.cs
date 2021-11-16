@@ -7,6 +7,7 @@ using FluentValidation.AspNetCore;
 using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -115,6 +116,11 @@ namespace AuthServer
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/debug-config", ctx =>
+                {
+                    var config = (Config as IConfigurationRoot).GetDebugView();
+                    return ctx.Response.WriteAsync(config);
+                });
                 endpoints.MapDefaultControllerRoute();
             });
         }
