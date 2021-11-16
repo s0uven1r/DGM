@@ -80,11 +80,14 @@ namespace AuthServer
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(configurationBuilder => configurationBuilder.AddEnvironmentVariables())
                 .UseSerilog()
                 //Uses Serilog instead of default .NET Logger
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        
     }
 }

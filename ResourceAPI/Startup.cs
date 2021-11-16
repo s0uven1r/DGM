@@ -54,7 +54,7 @@ namespace ResourceAPI
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
             {
-                o.Authority = "http://65.1.244.168:5050";
+                o.Authority = IdentityAuthority;
                 o.Audience = "resourceapi";
                 o.RequireHttpsMetadata = false; //research
             });
