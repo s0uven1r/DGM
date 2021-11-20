@@ -116,11 +116,6 @@ namespace AuthServer
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/debug-config", ctx =>
-                {
-                    var config = (Config as IConfigurationRoot).GetDebugView();
-                    return ctx.Response.WriteAsync(config);
-                });
                 endpoints.MapDefaultControllerRoute();
             });
         }
