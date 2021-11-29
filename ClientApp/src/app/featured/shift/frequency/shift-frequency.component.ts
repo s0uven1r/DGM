@@ -9,23 +9,22 @@ import { ShiftModel } from 'src/app/infrastructure/model/UserManagement/resource
 @Component({
   selector: 'app-shift-frequency',
   templateUrl: './shift-frequency.component.html',
-  styleUrls: ['./shift-frequency.component.css']
+  styleUrls: ['./shift-frequency.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ShiftFrequencyComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  isDtInitialized: boolean = false;
+  isDtInitialized:boolean = false;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   hasDataLoaded = false;
-
   shiftViewClaim = [ShiftManagementClaim.Shift.View];
   shiftWriteClaim = [ShiftManagementClaim.Shift.Write];
   shifts: ShiftModel[] = [];
   
   constructor(
-    private router: Router,
     private shiftService: ShiftService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }

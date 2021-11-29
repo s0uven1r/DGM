@@ -10,8 +10,8 @@ export const ShiftRoutePath = {
             path: "",
             loadChildren: () =>
               import(
-                "src/app/featured/shift/frequency/shift-frequency-routing.module"
-              ).then((m) => m.ShiftFrequencyRoutingModule),
+                "src/app/featured/shift/frequency/shift-frequency.module"
+              ).then((m) => m.ShiftFrequencyModule),
           }
         ]
       },
