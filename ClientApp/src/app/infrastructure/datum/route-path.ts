@@ -59,6 +59,8 @@ import { EditIndividualShiftComponent } from '../../featured/shift/individual-sh
 import { ShiftComponent } from 'src/app/featured/shift/shift/shift.component';
 import { ShiftCreateComponent } from 'src/app/featured/shift/shift/shift-create/shift-create.component';
 import { ShiftUpdateComponent } from 'src/app/featured/shift/shift/shift-update/shift-update.component';
+import { CourseTypeResolverService } from 'src/app/featured/package-course/service/course-type-resolver.service';
+import { ShiftFrequencyComponent } from 'src/app/featured/shift/frequency/shift-frequency.component';
 
 export const RoutePath = {
   AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -195,9 +197,19 @@ export const RoutePath = {
 
   CourseRoutePath: [{ path: '', component: CourseComponent }],
 
-  CourseCreateRoutePath: [{ path: '', component: CourseCreateComponent }],
+  CourseCreateRoutePath: [{
+    path: '', component: CourseCreateComponent,
+    resolve: {
+      courseTypeDDL: CourseTypeResolverService
+    }
+  }],
 
-  CourseUpdateRoutePath: [{ path: '', component: CourseUpdateComponent }],
+  CourseUpdateRoutePath: [{
+    path: '', component: CourseUpdateComponent,
+    resolve: {
+      courseTypeDDL: CourseTypeResolverService
+    }
+  }],
 
   CourseTypeRoutePath: [{ path: '', component: CourseTypeComponent }],
 
@@ -208,6 +220,8 @@ export const RoutePath = {
   LogoRoutePath: [{ path: '', component: LogoComponent }],
 
   DescriptiveImageRoutePath: [{ path: '', component: DescriptiveImageComponent }],
+
+  ShiftFrequencyRoutePath: [{ path: '', component: ShiftFrequencyComponent }],
 
   ShiftRoutePath: [{ path: '', component: ShiftComponent }],
 

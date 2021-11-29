@@ -3,6 +3,19 @@ export const ShiftRoutePath = {
     data: { breadcrumb: "Shift Configuration" },
     children: [
       {
+        path:"frequency",
+        data:{breadcrumb: "frequency"},
+        children:[
+          {
+            path: "",
+            loadChildren: () =>
+              import(
+                "src/app/featured/shift/frequency/shift-frequency-routing.module"
+              ).then((m) => m.ShiftFrequencyRoutingModule),
+          }
+        ]
+      },
+      {
         path:"shift",
         data:{breadcrumb: "shift"},
         children:[
@@ -15,15 +28,22 @@ export const ShiftRoutePath = {
           },
           {
             path: "create",
-            data: { breadcrumb: "Edit" },
+            data: { breadcrumb: "Create" },
             loadChildren: () =>
               import(
                 "src/app/featured/shift/shift/shift-create/shift-create.module"
               ).then((m) => m.ShiftCreateModule),
           },
+          {
+            path: "update",
+            data: { breadcrumb: "Update" },
+            loadChildren: () =>
+              import(
+                "src/app/featured/shift/shift/shift-update/shift-update.module"
+              ).then((m) => m.ShiftUpdateModule),
+          }
         ]
       },
-      
       {
         path: "individual-shift",
         data: { breadcrumb: "Individual Shift" },
@@ -44,8 +64,7 @@ export const ShiftRoutePath = {
               ).then((m) => m.EditIndividualShiftModule),
           },
         ]
-      },
-      
+      }
     ]
   };
   

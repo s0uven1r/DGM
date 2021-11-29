@@ -34,7 +34,7 @@ export class ShiftCreateComponent implements OnInit {
       ShiftName: [null, Validators.required],
       IsActive: [false, Validators.required],
       ShiftFrequencyId: [null, Validators.required],
-      StartTime: [null, Validators.required],
+      StartTime: [null, Validators.required]
     }));
   }
 

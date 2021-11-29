@@ -42,6 +42,7 @@ import { EditIndividualShiftComponent } from '../../featured/shift/individual-sh
 import { ShiftComponent } from 'src/app/featured/shift/shift/shift.component';
 import { ShiftCreateComponent } from 'src/app/featured/shift/shift/shift-create/shift-create.component';
 import { ShiftUpdateComponent } from 'src/app/featured/shift/shift/shift-update/shift-update.component';
+import { ShiftFrequencyComponent } from 'src/app/featured/shift/frequency/shift-frequency.component';
 
 export const RouteComponent = {
   AppRouteComponent: [
@@ -93,5 +94,6 @@ export const RouteComponent = {
   ShiftRouteComponent: [ShiftComponent],
   ShiftCreateRouteComponent: [ShiftCreateComponent],
   ShiftUpdateRouteComponent: [ShiftUpdateComponent],
+  ShiftFrequencyRouteComponent: [ShiftFrequencyComponent]
 
 }

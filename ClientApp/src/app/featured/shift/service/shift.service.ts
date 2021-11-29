@@ -17,6 +17,12 @@ export class ShiftService {
   private UpdateShiftUrl =  this.shiftUrl + ApiGateway.resource.shift.update;
   private deleteShiftUrl =  this.shiftUrl + ApiGateway.resource.shift.delete;
 
+  private shiftFrequencyUrl = ApiGateway.resource.shiftFrequency.base;
+  private getAllShiftFrequencyUrl = this.shiftFrequencyUrl + ApiGateway.resource.shiftFrequency.getAll;
+  private getShiftFrequencyByIdUrl = this.shiftFrequencyUrl+ ApiGateway.resource.shiftFrequency.getSingleById; 
+  private createShiftFrequencyUrl = this.shiftFrequencyUrl + ApiGateway.resource.shiftFrequency.create;
+  private UpdateShiftFrequencyUrl =  this.shiftFrequencyUrl + ApiGateway.resource.shiftFrequency.update;
+  private deleteShiftFrequencyUrl =  this.shiftFrequencyUrl + ApiGateway.resource.shiftFrequency.delete;
 
 
   private individualShiftUrl = ApiGateway.resource.individualShift.base;
@@ -24,6 +30,29 @@ export class ShiftService {
   private getIndividualShiftByIdUrl = this.individualShiftUrl + ApiGateway.resource.individualShift.getSingleById;
   private UpdateIndividualShiftUrl = this.individualShiftUrl + ApiGateway.resource.individualShift.update;
   constructor(private http: HttpClient) { }
+
+  getAllShiftFrequency(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getAllShiftFrequencyUrl}`);
+  }
+
+  getSingleShiftFrequency(id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl + this.getShiftFrequencyByIdUrl}/${id}`);
+  }
+  
+  createShiftFrequency(value: any) {
+    return this.http.post<any>(`${this.baseUrl + this.createShiftFrequencyUrl}`, value);
+  }
+  
+  UpdateShiftFrequency(value: any) {
+    return this.http.put<any>(`${this.baseUrl + this.UpdateShiftFrequencyUrl}/${value.id}`, value);
+  }
+
+  deleteShiftFrequencyById(id: string): Observable<any> {
+    return this.http.delete<any>(
+      `${this.baseUrl + this.deleteShiftFrequencyUrl}/${id}`
+    );
+  }
+
 
   getAllShift(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl + this.getAllShiftUrl}`);

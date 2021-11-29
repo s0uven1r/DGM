@@ -1,16 +1,18 @@
-<div  class="row mt-2">
-    <div class="col-12">
+<div class="container-fluid card h-100">
+  <div class="card-body">
+    <div class="row mt-2">
+      <div class="col-12">
         <div class="form-group col-md-7">
-            <input type="text" [ngbTooltip]="'Search User Assigned Shift'" [ngbTypeahead]="search" typeahead-editable='false' [resultFormatter]="formatter"
-              (selectItem)="selectedItem($event)" placeholder="Search user for shift management"
-              class="form-control">
-          </div>
+          <label> Search user for shift management</label>
+          <input type="text" [ngbTooltip]="'Search User Assigned Shift'" [ngbTypeahead]="search"
+            typeahead-editable='false' [resultFormatter]="formatter" (selectItem)="selectedItem($event)"
+            placeholder="Search user for shift management" class="form-control">
+        </div>
+      </div>
     </div>
-  
-  </div>
- <div class="col-12"  >
-    <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-        <thead *ngIf="hasDataLoaded" >
+    <div class="col-12">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead *ngIf="hasDataLoaded">
           <tr>
             <th>S.N</th>
             <th>Shift</th>
@@ -29,12 +31,14 @@
             <td>{{ shift.trainerName }}</td>
             <td>{{ shift.trainingDateNp }}</td>
             <td>{{ shift.vehicleNumber }}</td>
-            <td >
-              <button *appCheckclaim ="individualShiftWriteClaim" (click)="updateShiftDetail(shift.id)" class="btn pt-0 pb-0 btn-xs btn-success" ><em class="fa fa-edit"></em></button>
+            <td>
+              <button *appCheckclaim="individualShiftWriteClaim" (click)="updateShiftDetail(shift.id)"
+                class="btn pt-0 pb-0 btn-xs btn-success"><em class="fa fa-edit"></em></button>
               <!-- <button class="btn pt-0 pb-0 ml-1 btn-xs btn-success" ><em class="fa fa-user"> Assign Trainer</em></button> -->
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
   </div>
-  
+</div>

@@ -6,6 +6,7 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { CourseService } from '../../service/course.service';
+import { CourseTypeModel } from 'src/app/infrastructure/model/UserManagement/resource/course/coursetypemodel';
 
 @Component({
   selector: 'app-Course-create',
@@ -14,7 +15,7 @@ import { CourseService } from '../../service/course.service';
 })
 export class CourseCreateComponent implements OnInit {
   createCourseForm: FormGroup;
-  courses: CourseModel[] = [];
+  coursesTypes: CourseTypeModel[] = [];
   constructor(
     private route: ActivatedRoute,
     private CourseService: CourseService,
@@ -24,7 +25,7 @@ export class CourseCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.courses = this.route.snapshot.data.courseDDL;
+    this.coursesTypes = this.route.snapshot.data.courseTypeDDL;
   }
 
   FormDesign() {

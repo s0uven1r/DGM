@@ -2,34 +2,34 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { ShiftService } from '../service/shift.service';
 import { ShiftManagementClaim } from 'src/app/infrastructure/datum/claim/shift-management';
 import { ShiftModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-model';
-import { ShiftService } from '../service/shift.service';
 
 @Component({
-  selector: 'app-shift',
-  templateUrl: './shift.component.html',
-  styleUrls: ['./shift.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-shift-frequency',
+  templateUrl: './shift-frequency.component.html',
+  styleUrls: ['./shift-frequency.component.css']
 })
-export class ShiftComponent implements OnInit, OnDestroy {
+
+export class ShiftFrequencyComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   isDtInitialized: boolean = false;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   hasDataLoaded = false;
+
   shiftViewClaim = [ShiftManagementClaim.Shift.View];
   shiftWriteClaim = [ShiftManagementClaim.Shift.Write];
-
   shifts: ShiftModel[] = [];
-
+  
   constructor(
     private router: Router,
     private shiftService: ShiftService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
-
+ 
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -63,4 +63,5 @@ export class ShiftComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
+
 }

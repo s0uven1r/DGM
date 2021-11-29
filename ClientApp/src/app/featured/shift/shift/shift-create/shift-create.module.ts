@@ -21,7 +21,7 @@ import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.modul
     {
       provide: ShiftService,
       useClass: ShiftService
-    },
-  ],
+    }
+  ]
 })
 export class ShiftCreateModule { }
