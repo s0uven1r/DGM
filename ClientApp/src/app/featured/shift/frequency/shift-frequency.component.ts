@@ -4,12 +4,13 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ShiftService } from '../service/shift.service';
 import { ShiftManagementClaim } from 'src/app/infrastructure/datum/claim/shift-management';
-import { ShiftModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-model';
+import { ShiftFrequencyModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-frequency-model';
 
 @Component({
   selector: 'app-shift-frequency',
   templateUrl: './shift-frequency.component.html',
-  styleUrls: ['./shift-frequency.component.css']
+  styleUrls: ['./shift-frequency.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ShiftFrequencyComponent implements OnInit, OnDestroy {
@@ -20,9 +21,9 @@ export class ShiftFrequencyComponent implements OnInit, OnDestroy {
   dtElement: DataTableDirective;
   hasDataLoaded = false;
 
-  shiftViewClaim = [ShiftManagementClaim.Shift.View];
-  shiftWriteClaim = [ShiftManagementClaim.Shift.Write];
-  shifts: ShiftModel[] = [];
+  shiftViewClaim = [ShiftManagementClaim.ShiftFrequency.View];
+  shiftWriteClaim = [ShiftManagementClaim.ShiftFrequency.Write];
+  frequencies: ShiftFrequencyModel[] = [];
   
   constructor(
     private router: Router,
@@ -46,7 +47,7 @@ export class ShiftFrequencyComponent implements OnInit, OnDestroy {
   getInitData(){
     this.shiftService.getAllShift().subscribe(x=>
       {
-        this.shifts = x;
+        this.frequencies = x;
         if(this.isDtInitialized){
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.destroy();
