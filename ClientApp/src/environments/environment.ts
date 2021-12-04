@@ -12,7 +12,7 @@ export const environment = {
   resourceUrl: 'https://api.dgmtech.tk/api/',
   issuer: 'http://auth.dgmtech.tk',
   redirectUri: 'https://demo.dgmtech.tk/auth-callback'
-};s
+};
 
 /*
  * In development mode, to ignore zone related error stack frames such as
