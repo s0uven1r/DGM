@@ -44,7 +44,7 @@ export class ShiftFrequencyComponent implements OnInit, OnDestroy {
   }
   
   getInitData(){
-    this.shiftService.getAllShift().subscribe(x=>
+    this.shiftService.getAllShiftFrequency().subscribe(x=>
       {
         this.frequencies = x;
         if(this.isDtInitialized){
