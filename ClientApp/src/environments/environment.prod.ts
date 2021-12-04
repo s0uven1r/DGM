@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiIdentityUrl: 'http://65.1.244.168:5050/Authorization/',
-  resourceUrl: 'http://65.1.244.168:6060/api/',
-  issuer: 'http://65.1.244.168:5050',
-  redirectUri: 'http://65.1.244.168:4200/auth-callback'
+  apiIdentityUrl: 'https://auth.dgmtech.tk/Authorization/',
+  resourceUrl: 'https://api.dgmtech.tk/api/',
+  issuer: 'https://auth.dgmtech.tk',
+  redirectUri: 'https://demo.dgmtech.tk/auth-callback'
 };
