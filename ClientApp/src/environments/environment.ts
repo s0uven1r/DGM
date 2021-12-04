@@ -10,9 +10,9 @@ export const environment = {
   // redirectUri: 'http://localhost:4200/auth-callback'
   apiIdentityUrl: 'https://auth.dgmtech.tk/Authorization/',
   resourceUrl: 'https://api.dgmtech.tk/api/',
-  issuer: 'https://auth.dgmtech.tk',
+  issuer: 'http://auth.dgmtech.tk',
   redirectUri: 'https://demo.dgmtech.tk/auth-callback'
-};
+};s
 
 /*
  * In development mode, to ignore zone related error stack frames such as
