@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Dgm.Common.Attributes;
+using Dgm.Common.Authorization.Claim.Resource;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.Account.AccountHead;
 using Resource.Application.Common.Interfaces;
@@ -16,8 +18,10 @@ namespace ResourceAPI.Controllers.Account
         {
             _accountHeadCountService = accountHeadCountService;
         }
-        //[Permission(Permission.)]
+
         [HttpGet("Get/GetAll")]
+        [Permission(AccountingClaimConstant.ViewAccountingHead)]
+
         public async Task<IActionResult> GetAll()
         {
             return Ok(await Mediator.Send(request: new GetAllAccountHeadDetail.GetAllAccountHeadQuery()));
@@ -27,8 +31,8 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpGet("Get/GetById/{id}")]
+        [Permission(AccountingClaimConstant.ViewAccountingHead)]
         public async Task<IActionResult> GetSingleById(string id)
         {
             return Ok(await Mediator.Send(request: new GetSingleAccountHeadDetail.GetSingleAccountHeadQuery { Id = id }));
@@ -39,8 +43,8 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="accountTypeId"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPost("Create")]
+        [Permission(AccountingClaimConstant.WriteAccountingHead)]
         public async Task<IActionResult> Create(AddAccountHeadDetail.AddAccountHeadDetailCommand command)
         {
             return Ok(await Mediator.Send(command));
@@ -52,8 +56,8 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="accountTypeId"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPut("Update/{id}")]
+        [Permission(AccountingClaimConstant.WriteAccountingHead)]
         public async Task<IActionResult> Update(string id, UpdateAccountHeadDetail.UpdateAccountHeadDetailCommand command)
         {
             command.Id = id;

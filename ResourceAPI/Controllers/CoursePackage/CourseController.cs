@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dgm.Common.Attributes;
+using Dgm.Common.Authorization.Claim.Resource;
 using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.CoursePackage.Course;
 using Resource.Application.Command.CoursePackage.CourseType;
 using Resource.Application.Query.CoursePackage.Course;
 using Resource.Application.Query.CoursePackage.CourseType;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ResourceAPI.Controllers.CoursePackage
@@ -15,6 +13,7 @@ namespace ResourceAPI.Controllers.CoursePackage
     {
         #region begin course type
         [HttpGet("Type/Get/GetAll")]
+        [Permission(PackageCourseClaimConstant.ViewCourseType)]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await Mediator.Send(request: new GetAllCourseTypeDetail.GetAllCourseTypeQuery()));
@@ -24,7 +23,7 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
+        [Permission(PackageCourseClaimConstant.ViewCourseType)]
         [HttpGet("Type/Get/GetById/{id}")]
         public async Task<IActionResult> GetSingleById(string id)
         {
@@ -35,7 +34,7 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="title"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
+        [Permission(PackageCourseClaimConstant.WriteCourseType)]
         [HttpPost("Type/Create")]
         public async Task<IActionResult> Create(AddCourseTypeDetail.AddCourseTypeDetailCommand command)
         {
@@ -47,7 +46,7 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="title"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
+        [Permission(PackageCourseClaimConstant.WriteCourseType)]
         [HttpPut("Type/Update/{id}")]
         public async Task<IActionResult> Update(string id, UpdateCourseTypeDetail.UpdateCourseTypeDetailCommand command)
         {
@@ -58,8 +57,8 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpDelete("Type/Delete/{id}")]
+        [Permission(PackageCourseClaimConstant.WriteCourseType)]
         public async Task<IActionResult> Delete(string id)
         {
             return Ok(await Mediator.Send(request: new DeleteCourseTypeDetail.DeleteCourseTypeDetailCommand { Id = id }));
@@ -68,6 +67,7 @@ namespace ResourceAPI.Controllers.CoursePackage
 
         #region begin course
         [HttpGet("Get/GetAll")]
+        [Permission(PackageCourseClaimConstant.ViewCourse)]
         public async Task<IActionResult> GetCourseAll()
         {
             return Ok(await Mediator.Send(request: new GetAllCourseDetail.GetAllCourseQuery()));
@@ -77,7 +77,7 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
+        [Permission(PackageCourseClaimConstant.ViewCourse)]
         [HttpGet("Get/GetById/{id}")]
         public async Task<IActionResult> GetSingleCourseById(string id)
         {
@@ -89,7 +89,7 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="accountTypeId"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
+        [Permission(PackageCourseClaimConstant.WriteCourse)]
         [HttpPost("Create")]
         public async Task<IActionResult> CreateCourse(AddCourseDetail.AddCourseDetailCommand command)
         {
@@ -102,8 +102,8 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="accountTypeId"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpPut("Update/{id}")]
+        [Permission(PackageCourseClaimConstant.WriteCourse)]
         public async Task<IActionResult> UpdateCourse(string id, UpdatePackageDetail.UpdateCourseDetailCommand command)
         {
             command.Id = id;
@@ -114,8 +114,8 @@ namespace ResourceAPI.Controllers.CoursePackage
         /// <param name="Id"></param>
         /// </summary>
         /// <returns></returns>
-        //[Permission(Permission.)]
         [HttpDelete("Delete/{id}")]
+        [Permission(PackageCourseClaimConstant.WriteCourse)]
         public async Task<IActionResult> DeleteCourse(string id)
         {
             return Ok(await Mediator.Send(request: new DeleteCourseDetail.DeleteCourseDetailCommand { Id = id }));

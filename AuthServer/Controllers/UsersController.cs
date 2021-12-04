@@ -1,6 +1,5 @@
 ﻿using Auth.Infrastructure.Constants;
 using AuthServer.Entities;
-using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Helpers;
 using AuthServer.Models.EmailSender;
 using AuthServer.Models.Users;
@@ -10,6 +9,7 @@ using AuthServer.Persistence;
 using AuthServer.Services.EmailSender;
 using AuthServer.Services.Resource;
 using AutoMapper;
+using Dgm.Common.Attributes;
 using Dgm.Common.Authorization.Claim.Identity;
 using Dgm.Common.Constants.KYC;
 using Dgm.Common.Enums;
@@ -51,7 +51,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("GetUser")]
-        [ApiAuthorize(IdentityClaimConstant.ViewUser)]
+        [Permission(IdentityClaimConstant.ViewUser)]
         public async Task<IActionResult> GetUser()
         {
             int rank = Convert.ToInt32(User.Claims.Where(x => x.Type == "RoleRank").FirstOrDefault().Value);
@@ -92,7 +92,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("GetUser/{userId}")]
-        [ApiAuthorize(IdentityClaimConstant.ViewUser)]
+        [Permission(IdentityClaimConstant.ViewUser)]
         public async Task<IActionResult> GetUser(string userId)
         {
             var user = await _userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
@@ -121,7 +121,7 @@ namespace AuthServer.Controllers
 
         [HttpPost]
         [Route("CreateEmployee")]
-        [ApiAuthorize(IdentityClaimConstant.WriteUser)]
+        [Permission(IdentityClaimConstant.WriteUser)]
         public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest createEmployeeRequest)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();
@@ -204,7 +204,7 @@ namespace AuthServer.Controllers
 
         [HttpPut]
         [Route("UpdateEmployee")]
-        [ApiAuthorize(IdentityClaimConstant.WriteUser)]
+        [Permission(IdentityClaimConstant.WriteUser)]
         public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeRequest updateEmployeeRequest)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();
@@ -273,7 +273,7 @@ namespace AuthServer.Controllers
 
         [HttpPost]
         [Route("UpdateEmployeePassword")]
-        [ApiAuthorize(IdentityClaimConstant.WriteUser)]
+        [Permission(IdentityClaimConstant.WriteUser)]
         public async Task<IActionResult> UpdateEmployeePassword([FromBody] UpdateEmployeePasswordRequest updateEmployeeRequest)
         {
             if (updateEmployeeRequest.NewPassword != updateEmployeeRequest.NewConfirmPassword)
@@ -292,7 +292,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("DisableLogin/{userId}")]
-        [ApiAuthorize(IdentityClaimConstant.WriteUser)]
+        [Permission(IdentityClaimConstant.WriteUser)]
         public async Task<IActionResult> DisableLogin(string userId)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();
@@ -316,7 +316,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("EnableLogin/{userId}")]
-        [ApiAuthorize(IdentityClaimConstant.WriteUser)]
+        [Permission(IdentityClaimConstant.WriteUser)]
         public async Task<IActionResult> EnableLogin(string userId)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();

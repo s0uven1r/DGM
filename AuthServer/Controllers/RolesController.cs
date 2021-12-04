@@ -1,7 +1,7 @@
 ﻿using AuthServer.Entities;
-using AuthServer.Filters.AuthorizationFilter;
 using AuthServer.Models.Roles.Request;
 using AuthServer.Models.Roles.Response;
+using Dgm.Common.Attributes;
 using Dgm.Common.Authorization.Claim.Identity;
 using Dgm.Common.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +34,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("GetRoles")]
-        [ApiAuthorize(IdentityClaimConstant.ViewRole)]
+        [Permission(IdentityClaimConstant.ViewRole)]
         public IActionResult GetRoles()
         {
             int rank = Convert.ToInt32(User.Claims.Where(x => x.Type == "RoleRank").FirstOrDefault().Value);
@@ -53,7 +53,7 @@ namespace AuthServer.Controllers
 
         [HttpPost]
         [Route("AddRole")]
-        [ApiAuthorize(IdentityClaimConstant.WriteRole)]
+        [Permission(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> AddRole([FromBody] CreateRoleRequest createRoleRequest)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();
@@ -80,7 +80,7 @@ namespace AuthServer.Controllers
 
         [HttpPut]
         [Route("UpdateRole")]
-        [ApiAuthorize(IdentityClaimConstant.WriteRole)]
+        [Permission(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleRequest createRoleRequest)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();
@@ -102,7 +102,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("SetPublic/{roleId}")]
-        [ApiAuthorize(IdentityClaimConstant.WriteRole)]
+        [Permission(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> SetPublic(string roleId)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();
@@ -124,7 +124,7 @@ namespace AuthServer.Controllers
 
         [HttpGet]
         [Route("RemovePublic/{roleId}")]
-        [ApiAuthorize(IdentityClaimConstant.WriteRole)]
+        [Permission(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> RemovePublic(string roleId)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();
@@ -144,7 +144,7 @@ namespace AuthServer.Controllers
 
         [HttpDelete]
         [Route("DeleteRole/{id}")]
-        [ApiAuthorize(IdentityClaimConstant.WriteRole)]
+        [Permission(IdentityClaimConstant.WriteRole)]
         public async Task<IActionResult> DeleteRole(string id)
         {
             var requestedBy = User.FindFirst("UserId").Value.ToString();

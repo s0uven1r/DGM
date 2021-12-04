@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dgm.Common.Attributes;
+using Dgm.Common.Authorization.Claim.Resource;
+using Microsoft.AspNetCore.Mvc;
 using Resource.Application.Command.Account.AccountEntry;
 using Resource.Application.Query.Account.AccountEntry;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using static Resource.Application.Query.Account.AccountHead.GetSingleAccountHeadDetail;
 
 namespace ResourceAPI.Controllers.Account
 {
@@ -18,6 +16,7 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("Get/GetAll")]
+        [Permission(AccountingClaimConstant.ViewAccountingTransactionEntry)]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await Mediator.Send(request: new GetAllAccountEntryDetail.GetAllAccountEntryQuery()));
@@ -29,6 +28,7 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("Get/GetSingleAccountEntry")]
+        [Permission(AccountingClaimConstant.ViewAccountingTransactionEntry)]
         public async Task<IActionResult> GetSingleAccountEntry([FromQuery] GetSingleAccountEntryDetail.GetSingleAccountEntryQuery query)
         {
             return Ok(await Mediator.Send(query));
@@ -40,6 +40,7 @@ namespace ResourceAPI.Controllers.Account
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost("Create")]
+        [Permission(AccountingClaimConstant.WriteAccountingTransactionEntry)]
         public async Task<IActionResult> CreateAccountEntry([FromBody] AddAccountEntryDetail.AddAccountEntryDetailCommand command)
         {
             return Ok(await Mediator.Send(command));
