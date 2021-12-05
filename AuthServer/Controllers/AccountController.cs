@@ -280,7 +280,7 @@ namespace AuthServer.Controllers
         {
             await _signInManager.SignOutAsync();
             var context = await _interaction.GetLogoutContextAsync(logoutId);
-            return Redirect(context.PostLogoutRedirectUri ?? $"{_clientUrls.Value.AuthServer}auth-callback");
+            return Redirect(context.PostLogoutRedirectUri ?? $"{_clientUrls.Value.ClientApp}/auth-callback");
         }
 
         [HttpGet]
