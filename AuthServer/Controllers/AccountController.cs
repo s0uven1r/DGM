@@ -6,6 +6,7 @@ using AuthServer.Persistence;
 using AuthServer.Services.EmailSender;
 using AuthServer.Services.Resource;
 using Dgm.Common.Enums;
+using Dgm.Common.Models;
 using IdentityServer4;
 using IdentityServer4.Events;
 using IdentityServer4.Models;
@@ -15,7 +16,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +38,7 @@ namespace AuthServer.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IAccountService _accountService;
         private readonly AppIdentityDbContext _appIdentityDbContext;
+        private readonly IOptions<ClientBaseUrls> _clientUrls;
 
 
         public AccountController(SignInManager<AppUser> signInManager,
@@ -45,7 +49,8 @@ namespace AuthServer.Controllers
             ILogger<AccountController> logger,
             IEmailSender emailSender,
             IAccountService accountService,
-            AppIdentityDbContext appIdentityDbContext
+            AppIdentityDbContext appIdentityDbContext,
+           IOptions<ClientBaseUrls> clientUrls
             )
         {
             _userManager = userManager;
@@ -59,6 +64,7 @@ namespace AuthServer.Controllers
             _emailSender = emailSender;
             _accountService = accountService;
             _appIdentityDbContext = appIdentityDbContext;
+            _clientUrls = clientUrls;
         }
 
         /// <summary>
@@ -209,7 +215,7 @@ namespace AuthServer.Controllers
                 return BadRequest(ModelState);
             }
             ViewBag.LogoImage = GetLogoImage();
-           
+
             var role = _roleManager.Roles.Where(x => x.IsPublic == true).FirstOrDefault();
             if (role == null)
             {
@@ -240,7 +246,7 @@ namespace AuthServer.Controllers
                 NormalizedEmail = model.Email.ToUpper(),
                 NormalizedUserName = model.Email.ToUpper()
             };
-            
+
             var userResult = await _userManager.CreateAsync(user, model.Password);
 
             if (!userResult.Succeeded)
@@ -274,7 +280,7 @@ namespace AuthServer.Controllers
         {
             await _signInManager.SignOutAsync();
             var context = await _interaction.GetLogoutContextAsync(logoutId);
-            return Redirect(context.PostLogoutRedirectUri ?? "http://localhost:4200/auth-callback");
+            return Redirect(context.PostLogoutRedirectUri ?? $"{_clientUrls.Value.AuthServer}auth-callback");
         }
 
         [HttpGet]

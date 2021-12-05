@@ -17,14 +17,13 @@ namespace AuthServer.Services.Resource
     public class AccountService : IAccountService
     {
         private readonly HttpClient httpClient;
-        private readonly IConfiguration config;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IOptions<ClientBaseUrls> _baseUrls;
-        public AccountService(HttpClient httpClient, IConfiguration config,
-            IHttpContextAccessor httpContextAccessor, IOptions<ClientBaseUrls> baseUrls)
+        public AccountService(HttpClient httpClient,
+            IHttpContextAccessor httpContextAccessor,
+            IOptions<ClientBaseUrls> baseUrls)
         {
             this.httpClient = httpClient;
-            this.config = config;
             this._httpContextAccessor = httpContextAccessor;
             _baseUrls = baseUrls;
         }
@@ -66,7 +65,7 @@ namespace AuthServer.Services.Resource
                 ShiftId = shiftId,
                 PromoCode = promoCode
             };
-            var resourceBaseUrl = _baseUrls.Value.ResourceAPI; 
+            var resourceBaseUrl = _baseUrls.Value.ResourceAPI;
             var json = JsonConvert.SerializeObject(model);
 
             //construct content to send
