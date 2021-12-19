@@ -38,7 +38,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/dashboard/vehicle/maintain/edit/${id}`])
     );
-    window.open(url, "_blank");
+    window.open(url, "_self");
   }
 
   deleteVehicleDetail(id: string) {
