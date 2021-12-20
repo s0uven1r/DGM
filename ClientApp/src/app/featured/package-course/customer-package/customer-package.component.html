@@ -21,11 +21,15 @@
             <div class="form-group col-md-4">
               <label>Email</label><span class="text-danger">*</span>
                 <input type="text"  formControlName="email" placeholder="Email Address" class="form-control">
-            </div>
+                <small class="text-danger" *ngIf="registerPackageForm.get('email').errors?.pattern">Email address is invalid</small>   
+              </div>
             <div class="form-group col-md-4">
               <label>Confirm Email</label><span class="text-danger">*</span>
-              <input type="text" formControlName="confirmEmail" placeholder="Confirm Email Address" class="form-control">
-          </div>
+              <input type="text" formControlName="confirmEmail" placeholder="Confirm Email Address" class="form-control" appBlockCopyPaste>
+              <span class="text-danger" *ngIf="registerPackageForm.get('confirmEmail').errors?.confirmedValidator
+              && (registerPackageForm.get('confirmEmail').touched || registerPackageForm.get('confirmEmail').dirty)" >
+              <small>Email and Confirm Email must be match.!</small></span>
+            </div>
           </div>
           <h5 class="card-title bg-light pt-2 pb-2">Package Details</h5>
           <div class="form-row">
