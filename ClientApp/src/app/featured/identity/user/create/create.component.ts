@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { RoleModel } from 'src/app/infrastructure/model/UserManagement/role-model';
+import { ConfirmedValidator } from 'src/app/shared/validation/confirm-validator';
 import Swal from 'sweetalert2';
 import { UserService } from '../service/user.service';
 
@@ -53,12 +54,14 @@ export class CreateComponent implements OnInit {
       appliedRole: [""],
       id: [null],
       phone: [null, Validators.required],
-      email: [null, Validators.required],
+      email: [null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
       confirmEmail: [null, Validators.required],
       firstName: [null, Validators.required],
       middleName: [null],
       lastName: [null, Validators.required]
-    });
+    },
+    { validators: [ConfirmedValidator('email', 'confirmEmail')]}
+    );
   }
   registerUser() {
     Swal.fire({

@@ -7,6 +7,7 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { PackageModel } from "src/app/infrastructure/model/UserManagement/resource/package/packagemodel";
 import { ShiftModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-frequency-model';
+import { ConfirmedValidator } from 'src/app/shared/validation/confirm-validator';
 import Swal from 'sweetalert2';
 import { PackageService } from '../service/package.service';
 
@@ -45,7 +46,7 @@ export class CustomerPackageComponent implements OnInit, AfterViewInit {
       startDateEN: [null, Validators.required],
       endDateNP: [null, Validators.required],
       endDateEN: [null, Validators.required],
-      email: [null,Validators.required],
+      email: [null,[Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
       confirmEmail: [null],
       firstName: [null,Validators.required],
       middleName: [null],
@@ -55,7 +56,9 @@ export class CustomerPackageComponent implements OnInit, AfterViewInit {
       packageTotalDays: [0],
       packageAmount: [0],
       discountAmount: [0]
-    }));
+    },
+    { validators: [ConfirmedValidator('email', 'confirmEmail')]}
+    ));
   }
   changeNepaliToEnglish(val: { formattedDate: string; }){
     var dateValue = val.formattedDate;
