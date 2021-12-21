@@ -1,0 +1,59 @@
+<div class="container-fluid card h-100">
+    <form [formGroup]="createShiftForm" (ngSubmit)="createShift()">
+        <div class="card-body">
+            <div class="card-title">
+                <h5 class="card-ShiftName">Shift Details Form</h5>
+                <div class="text-right">
+                    <a href="#" [routerLink]='"/dashboard/shift-config/shift"' class="btn btn-primary btn-sm">Cancel</a>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Shift Name</label><span class="text-danger">*</span>
+                    <input type="text" formControlName="ShiftName" placeholder="Shift Name" class="form-control"
+                        [ngClass]="{'is-invalid': createShiftForm.get('ShiftName').errors && (createShiftForm.get('ShiftName').touched || createShiftForm.get('ShiftName').dirty)}">
+                    <span class="text-danger">
+                        <small
+                            *ngIf="createShiftForm.get('ShiftName').errors?.required && (createShiftForm.get('ShiftName').touched || createShiftForm.get('ShiftName').dirty)">Shift
+                            Name is Required!</small>
+                    </span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Shift Frequency</label><span class="text-danger">*</span>
+                    <select class="form-control dropdown-toggle" formControlName="ShiftFrequencyId"
+                        [ngClass]="{'is-invalid': createShiftForm.get('ShiftFrequencyId').errors && (createShiftForm.get('ShiftFrequencyId').touched || createShiftForm.get('ShiftFrequencyId').dirty)}">
+                        <option value=null selected>--Select Shift Frequency--</option>
+                        <option *ngFor="let ddl of shiftFrequencies" [value]="ddl.id">{{ddl.ShiftFrequencyName}}
+                        </option>
+                    </select>
+                    <span class="text-danger">
+                        <small
+                            *ngIf="createShiftForm.get('ShiftFrequencyId').errors?.required && (createShiftForm.get('ShiftFrequencyId').touched || createShiftForm.get('ShiftFrequencyId').dirty)">Shift
+                            Frequency is Required!</small>
+                    </span>
+                </div>
+                <div class="form-group col-md-4">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Start Time</label><span class="text-danger">*</span>
+                    <input type="text" formControlName="StartTime" placeholder="Start Name" class="form-control"
+                        [ngClass]="{'is-invalid': createShiftForm.get('StartTime').errors && (createShiftForm.get('StartTime').touched || createShiftForm.get('StartTime').dirty)}">
+                    <span class="text-danger">
+                        <small
+                            *ngIf="createShiftForm.get('StartTime').errors?.required && (createShiftForm.get('StartTime').touched || createShiftForm.get('StartTime').dirty)">Start Time
+                            is Required!</small>
+                    </span>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="form-check m-4">
+                        <input type="checkbox" formControlName="IsActive" class="form-check-input">
+                        <label class="form-check-label">IsActive</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" [disabled]="(!createShiftForm.valid)">Submit</button>
+              </div>
+        </div>
+    </form>
+</div>

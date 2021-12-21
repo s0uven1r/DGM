@@ -129,12 +129,16 @@ export const ApiGateway = {
     shift: {
       base: "Shift",
       getAll: "/Get/GetAll",
-      individualShift: {
-        base: "IndividualShift",
-        getAllByAccountNumber: "/Get/GetAllByUserAccountNumber",
-        getSingleById: "/Get/GetById",
-        update: "/Update"
-      }
+      getSingleById: "/Get/GetById",
+      create:"/Create",
+      update: "/Update",
+      delete: "/Delete",
+    },
+    individualShift: {
+      base: "IndividualShift",
+      getAllByAccountNumber: "/Get/GetAllByUserAccountNumber",
+      getSingleById: "/Get/GetById",
+      update: "/Update"
     }
   }
 };
