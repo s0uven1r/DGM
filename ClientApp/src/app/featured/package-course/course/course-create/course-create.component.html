@@ -17,7 +17,7 @@
           <select class="form-control dropdown-toggle" formControlName="courseTypeId"
             [ngClass]="{'is-invalid': createCourseForm.get('courseTypeId').errors && (createCourseForm.get('courseTypeId').touched || createCourseForm.get('courseTypeId').dirty)}">
             <option value=null selected>--Select Course Type--</option>
-            <option *ngFor="let ddl of courses" [value]="ddl.id">{{ddl.courseName}}</option>
+            <option *ngFor="let ddl of coursesTypes" [value]="ddl.id">{{ddl.title}}</option>
           </select>
           <span class="text-danger">
             <small *ngIf="createCourseForm.get('courseTypeId').errors?.required && (createCourseForm.get('courseTypeId').touched || createCourseForm.get('courseTypeId').dirty)">Course Type

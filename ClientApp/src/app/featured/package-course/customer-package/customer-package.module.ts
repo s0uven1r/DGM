@@ -8,12 +8,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NpDatepickerModule } from 'angular-nepali-datepicker';
 import { NgNepaliDateDirectiveModule } from 'src/app/shared/directives/attributes/ngNepaliDateDirective.module';
 import { PackageService } from '../service/package.service';
+import { BlockCopyPasteModule } from 'src/app/shared/directives/blockcopypaste.module';
 @NgModule({
   declarations: RoutingComponent,
   imports: [
     CommonModule,
     CustomerPackageRoutingModule,
     CheckDirectiveModule,
+    BlockCopyPasteModule,
     DataTablesModule,
     ReactiveFormsModule,
     NpDatepickerModule,

@@ -1,0 +1,40 @@
+<div class="container card">
+    <div class="card-body">
+      <div *appCheckclaim="shiftViewClaim" class="row m-2">
+        <div class="col-12 text-right">
+          <a href="#" [routerLink]='"create"' class="btn btn-primary btn-md mb-2">Create</a>
+        </div>
+      </div>
+      <div class="col-12">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+          <thead>
+            <tr>
+              <th>S.N</th>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Documents</th>
+              <th>Is Advance</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let shift of shifts; let i = index;">
+              <td>{{ i + 1 }}</td>
+              <td>{{ shift.shiftName }}</td>
+              <td>{{ shift.shiftType }}</td>
+              <td>{{ shift.requiredDocuments }}</td>
+              <td>{{ shift.isAdvanceshift }}</td>
+              <td>{{ shift.shiftInfo }}</td>
+              <td>
+                <button *appCheckclaim="shiftWriteClaim" class="btn pt-0 pb-0 btn-xs btn-success"
+                  (click)="updateshiftDetail(shift.id)"><em class="fa fa-edit"></em></button>
+                <button *appCheckclaim="shiftWriteClaim" class="btn pt-0 pb-0 ml-2 btn-xs btn-danger"
+                  (click)="deleteshiftDetail(shift.id)"><em class="fa fa-trash"></em></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

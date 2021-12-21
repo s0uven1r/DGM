@@ -6,6 +6,8 @@ import {
   CourseCreateRoutingModule,
 } from "./course-create-routing.module";
 import { CheckDirectiveModule } from "src/app/shared/directives/checkclaim.module";
+
+import { CourseTypeResolverService } from "../../service/course-type-resolver.service";
 import { CourseService } from 'src/app/featured/package-course/service/course.service';
 
 @NgModule({
@@ -21,6 +23,10 @@ import { CourseService } from 'src/app/featured/package-course/service/course.se
       provide: CourseService,
       useClass: CourseService,
     },
+    {
+      provide: CourseTypeResolverService,
+      useClass: CourseTypeResolverService
+    }
   ],
 })
-export class CourseCreateModule {}
+export class CourseCreateModule { }

@@ -28,6 +28,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   courses: CourseModel[] = [];
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  
   constructor(private courseService: CourseService,
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef

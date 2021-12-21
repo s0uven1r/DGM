@@ -56,6 +56,11 @@ import { ShiftRoutePath } from './route-path/shift-route-path';
 import { CustomerPackageComponent } from '../../featured/package-course/customer-package/customer-package.component';
 import { PackageShiftResolverService } from '../../featured/package-course/service/package-resolver.service';
 import { EditIndividualShiftComponent } from '../../featured/shift/individual-shift/edit-individual-shift/edit-individual-shift.component';
+import { ShiftComponent } from 'src/app/featured/shift/shift/shift.component';
+import { ShiftCreateComponent } from 'src/app/featured/shift/shift/shift-create/shift-create.component';
+import { ShiftUpdateComponent } from 'src/app/featured/shift/shift/shift-update/shift-update.component';
+import { CourseTypeResolverService } from 'src/app/featured/package-course/service/course-type-resolver.service';
+import { ShiftFrequencyComponent } from 'src/app/featured/shift/frequency/shift-frequency.component';
 
 export const RoutePath = {
   AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -192,9 +197,19 @@ export const RoutePath = {
 
   CourseRoutePath: [{ path: '', component: CourseComponent }],
 
-  CourseCreateRoutePath: [{ path: '', component: CourseCreateComponent }],
+  CourseCreateRoutePath: [{
+    path: '', component: CourseCreateComponent,
+    resolve: {
+      courseTypeDDL: CourseTypeResolverService
+    }
+  }],
 
-  CourseUpdateRoutePath: [{ path: '', component: CourseUpdateComponent }],
+  CourseUpdateRoutePath: [{
+    path: '', component: CourseUpdateComponent,
+    resolve: {
+      courseTypeDDL: CourseTypeResolverService
+    }
+  }],
 
   CourseTypeRoutePath: [{ path: '', component: CourseTypeComponent }],
 
@@ -206,7 +221,30 @@ export const RoutePath = {
 
   DescriptiveImageRoutePath: [{ path: '', component: DescriptiveImageComponent }],
 
+  ShiftFrequencyRoutePath: [{ path: '', component: ShiftFrequencyComponent }],
+
+  ShiftRoutePath: [{ path: '', component: ShiftComponent }],
+
+  ShiftCreateRoutePath: [{
+    path: '', component: ShiftCreateComponent, resolve: {
+      shiftFrequenciesDDL: PackageShiftFrequencyResolverService
+    }
+  }],
+
+  ShiftUpdateRoutePath: [{
+    path: '', component: ShiftUpdateComponent, resolve: {
+      shiftFrequenciesDDL: PackageShiftFrequencyResolverService
+    }
+  }],
+
   IndividualShiftRoutePath: [{ path: '', component: IndividualShiftComponent }],
+
+  IndividualShiftEditRoutePath: [{
+    path: '', component: EditIndividualShiftComponent, resolve: {
+      shifts: PackageShiftResolverService,
+      vehicleData: VehicleResolverService
+    }
+  }],
 
   CustomerPackageRouthPath: [{
     path: '', component: CustomerPackageComponent, resolve: {
@@ -214,10 +252,5 @@ export const RoutePath = {
       shifts: PackageShiftResolverService
     }
   }],
-
-  IndividualShiftEditRoutePath : [{path: '', component:EditIndividualShiftComponent, resolve: {
-    shifts: PackageShiftResolverService,
-    vehicleData: VehicleResolverService
-  }}],
 
 };
