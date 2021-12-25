@@ -39,52 +39,61 @@ import { TransactionEntryCreateComponent } from 'src/app/featured/account/transa
 import { IndividualShiftComponent } from 'src/app/featured/shift/individual-shift/individual-shift.component';
 import { CustomerPackageComponent } from 'src/app/featured/package-course/customer-package/customer-package.component';
 import { EditIndividualShiftComponent } from '../../featured/shift/individual-shift/edit-individual-shift/edit-individual-shift.component';
+import { ShiftComponent } from 'src/app/featured/shift/shift/shift.component';
+import { ShiftCreateComponent } from 'src/app/featured/shift/shift/shift-create/shift-create.component';
+import { ShiftUpdateComponent } from 'src/app/featured/shift/shift/shift-update/shift-update.component';
+import { ShiftFrequencyComponent } from 'src/app/featured/shift/frequency/shift-frequency.component';
 
 export const RouteComponent = {
-    AppRouteComponent: [
-        AppComponent,
-        HomeComponent,
-        DashboardComponent,
-        ForbiddenComponent,
-        InternalServerErrorComponent
-      ],
-      AuthCallbackRouteComponent: [
-        AuthCallbackComponent
-      ],
-      DashBoardRouteComponent: [],
-      RoleRouteComponent: [RoleComponent],
-      PermissionRouteComponent: [PermissionComponent],
-      UserRouteComponent: [UserComponent],
-      UserCreateRouteComponent: [CreateComponent],
-      KYCRouteComponent: [KycComponent],
-      VehicleInventoryRouteComponent: [VehicleRegisterComponent],
-      VehicleInventoryCreateRouteComponent: [VehicleCreateComponent],
-      VehicleInventoryUpdateRouteComponent: [VehicleUpdateComponent],
-      VehicleMaintenanceRouteComponent: [MaintenanceComponent],
-      VehicleMaintenanceCreateRouteComponent: [CreatemaintenanceComponent],
-      AccountTypeRouteComponent: [AccountTypeComponent],
-      AccountTypeCreateRouteComponent: [AccountTypeCreateComponent],
-      AccountTypeEditRouteComponent: [AccountTypeEditComponent],
-      AccountHeadRouteComponent: [AccountHeadComponent],
-      AccountHeadCreateRouteComponent: [AccountHeadCreateComponent],
-      AccountHeadEditRouteComponent: [AccountHeadEditComponent],
-      AccountTransactionEntryRouteComponent: [TransactionEntryComponent],
-      AccountTransactionEntryCreateRouteComponent: [TransactionEntryCreateComponent],
-      PackageRouteComponent: [PackageComponent],
-      PackageCreateRouteComponent: [PackageCreateComponent],
-      PackageUpdateRouteComponent: [PackageUpdateComponent],
-      PromoRouteComponent: [PromoComponent],
-      PromoCreateRouteComponent: [PromoCreateComponent],
-      PromoUpdateRouteComponent: [PromoUpdateComponent],
-      CourseRouteComponent: [CourseComponent],
-      CourseCreateRouteComponent: [CourseCreateComponent],
-      CourseUpdateRouteComponent: [CourseUpdateComponent],
-      CourseTypeRouteComponent:[CourseTypeComponent],
-      CourseTypeCreateRouteComponent: [CourseTypeCreateComponent],
-      CourseTypeUpdateRouteComponent: [CourseTypeUpdateComponent],
-      LogoRouteComponent: [LogoComponent],
-      DescriptiveImageRouteComponent: [DescriptiveImageComponent],
-      IndividualShiftRouteComponent: [IndividualShiftComponent],
-      CustomerPackageRouteComponent: [CustomerPackageComponent],
-      IndividualShiftEditRouteComponent: [EditIndividualShiftComponent],
+  AppRouteComponent: [
+    AppComponent,
+    HomeComponent,
+    DashboardComponent,
+    ForbiddenComponent,
+    InternalServerErrorComponent
+  ],
+  AuthCallbackRouteComponent: [
+    AuthCallbackComponent
+  ],
+  DashBoardRouteComponent: [],
+  RoleRouteComponent: [RoleComponent],
+  PermissionRouteComponent: [PermissionComponent],
+  UserRouteComponent: [UserComponent],
+  UserCreateRouteComponent: [CreateComponent],
+  KYCRouteComponent: [KycComponent],
+  VehicleInventoryRouteComponent: [VehicleRegisterComponent],
+  VehicleInventoryCreateRouteComponent: [VehicleCreateComponent],
+  VehicleInventoryUpdateRouteComponent: [VehicleUpdateComponent],
+  VehicleMaintenanceRouteComponent: [MaintenanceComponent],
+  VehicleMaintenanceCreateRouteComponent: [CreatemaintenanceComponent],
+  AccountTypeRouteComponent: [AccountTypeComponent],
+  AccountTypeCreateRouteComponent: [AccountTypeCreateComponent],
+  AccountTypeEditRouteComponent: [AccountTypeEditComponent],
+  AccountHeadRouteComponent: [AccountHeadComponent],
+  AccountHeadCreateRouteComponent: [AccountHeadCreateComponent],
+  AccountHeadEditRouteComponent: [AccountHeadEditComponent],
+  AccountTransactionEntryRouteComponent: [TransactionEntryComponent],
+  AccountTransactionEntryCreateRouteComponent: [TransactionEntryCreateComponent],
+  PackageRouteComponent: [PackageComponent],
+  PackageCreateRouteComponent: [PackageCreateComponent],
+  PackageUpdateRouteComponent: [PackageUpdateComponent],
+  PromoRouteComponent: [PromoComponent],
+  PromoCreateRouteComponent: [PromoCreateComponent],
+  PromoUpdateRouteComponent: [PromoUpdateComponent],
+  CourseRouteComponent: [CourseComponent],
+  CourseCreateRouteComponent: [CourseCreateComponent],
+  CourseUpdateRouteComponent: [CourseUpdateComponent],
+  CourseTypeRouteComponent: [CourseTypeComponent],
+  CourseTypeCreateRouteComponent: [CourseTypeCreateComponent],
+  CourseTypeUpdateRouteComponent: [CourseTypeUpdateComponent],
+  LogoRouteComponent: [LogoComponent],
+  DescriptiveImageRouteComponent: [DescriptiveImageComponent],
+  IndividualShiftRouteComponent: [IndividualShiftComponent],
+  CustomerPackageRouteComponent: [CustomerPackageComponent],
+  IndividualShiftEditRouteComponent: [EditIndividualShiftComponent],
+  ShiftRouteComponent: [ShiftComponent],
+  ShiftCreateRouteComponent: [ShiftCreateComponent],
+  ShiftUpdateRouteComponent: [ShiftUpdateComponent],
+  ShiftFrequencyRouteComponent: [ShiftFrequencyComponent]
+
 }
