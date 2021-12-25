@@ -46,7 +46,7 @@
                         </ng-container>
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
+                <div class="sb-sidenav-footer" *ngIf="!expanded">
                     <div class="small">Logged in as:</div>
                     <span>{{user.FullName}}</span>
                 </div>
@@ -58,7 +58,7 @@
                     <ol class="breadcrumb">
                         <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs" let-i="index">
                             <li *ngIf="i != (parent.breadcrumbs.length-1)" class="breadcrumb-item">
-                                <a href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
+                                <a href="" [routerLink]="[route.url]">{{ route.displayName}}</a>
                             </li>
                             <li *ngIf="i === (parent.breadcrumbs.length-1)" class="breadcrumb-item active"
                                 aria-current="page">{{ route.displayName }}</li>
@@ -86,9 +86,9 @@
         <a class="nav-link text-truncate" *ngIf="!sideNavItem.children" href="#" [routerLink]="sideNavItem.routeUrl">
             <i [ngClass]="sideNavItem.class"></i>
             <span class="d-none d-sm-inline ml-2">{{sideNavItem.title}}</span></a>
-        <a class="nav-link collapsed text-truncate" *ngIf="sideNavItem.children" href="#submenu{{sideNavItem.id}}"
-            data-toggle="collapse" data-target="#submenu{{sideNavItem.id}}">
-            <i [ngClass]="sideNavItem.class"></i> <span class="ml-2 d-none d-sm-inline">{{sideNavItem.title}}</span></a>
+        <a  class="nav-link collapsed text-truncate" *ngIf="sideNavItem.children" href="#submenu{{sideNavItem.id}}"
+            data-toggle="collapse"  data-target="#submenu{{sideNavItem.id}}">
+            <i class="fas {{sideNavItem.faClass}}"></i> <span  class="ml-2 d-none d-sm-inline">{{sideNavItem.title}}</span></a>
         <div *ngIf="sideNavItem.children" class="collapse" id="submenu{{sideNavItem.id}}" aria-expanded="false">
             <nav class="sb-sidenav-menu-nested">
                 <ng-container *ngTemplateOutlet="recursiveMenu; context:{ menuListItem: sideNavItem.children }">
