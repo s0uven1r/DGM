@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   // apiIdentityUrl: 'https://localhost:44316/Authorization/',
   // resourceUrl: 'https://localhost:44337/api/',
   // issuer: 'https://localhost:44316',
