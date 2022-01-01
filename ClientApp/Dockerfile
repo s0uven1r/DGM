@@ -7,7 +7,7 @@ WORKDIR /app
 COPY ClientApp . 
 RUN npm install --silent
 
-RUN npm run build --prod --configuration production
+RUN npm run build --prod --configuration=production
 
 # Stage 2, use the compiled app, ready for production with Nginx
 
