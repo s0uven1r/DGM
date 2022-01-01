@@ -138,6 +138,7 @@
             "production": {
               "devServerTarget": "sample:serve:production"
             }
+          }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
