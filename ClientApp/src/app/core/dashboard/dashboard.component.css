@@ -10075,10 +10075,12 @@ body {
     margin-left: 0;
     transition: margin 0.15s ease-in-out;
   }
-
-  
+  .layoutExpandWidth {
+    width: 60px !important;
+    margin-right: 1%;
+  }
   .layoutMarginLeft {
-    margin-left: -225px !important;
+    margin-left: -170px !important;
   }
   .layoutMarginLeftPlus {
     margin-left: 225px !important;
@@ -10086,6 +10088,19 @@ body {
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
     display: none;
   }
+}
+.layoutExpandWidth {
+  width: 60px !important;
+  margin-right: 1%;
+}
+#userDropdown{
+  margin-right: 66px;
+}
+.layoutMarginLeft {
+  margin-left: -170px !important;
+}
+.layoutMarginLeftPlus {
+  margin-left: 225px !important;
 }
 .sb-nav-fixed .sb-topnav {
   z-index: 1039;

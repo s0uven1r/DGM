@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   sidenavStyle = "sb-sidenav-dark";
   expandNavStyle = "";
   expandContentStyle = "";
+  expandContentCollapse = "";
   expanded = false;
   menuList: MenuResultModel[];
   imageToShow: any;
@@ -70,13 +71,20 @@ export class DashboardComponent implements OnInit {
   toggleSideNav() {
     if (this.expanded == false) {
       this.expanded = true;
-      this.expandNavStyle = "collapse";
+      this.expandNavStyle = "layoutExpandWidth";
       this.expandContentStyle = "layoutMarginLeft";
     } else {
       this.expanded = false;
       this.expandNavStyle = "";
       this.expandContentStyle = "";
     }
+    this.expandContentCollapse = "collapsed";
+    this.changeDetectorRef.markForCheck();
+  }
+  toggleIconSideNav() {
+      this.expanded = false;
+      this.expandNavStyle = "";
+      this.expandContentStyle = "";
   }
   getLogout() {
     this.authService.revokeTokenAndLogout();
