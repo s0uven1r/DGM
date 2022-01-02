@@ -5,7 +5,6 @@ namespace Resource.Application.Models.CoursePackage.Promo.Request
     public class PromoCreateViewModel
     {
         public string PromoCode { get; set; }
-        public string PackageId { get; set; }
         public bool HasDiscountPercent { get; set; }
         public decimal Discount { get; set; }
         public string StartDate { get; set; }

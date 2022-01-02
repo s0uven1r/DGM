@@ -30,7 +30,7 @@ namespace Resource.Application.Query.CoursePackage.Promo
             {
                 try
                 {
-                    var getSingleAccTypes = await _context.PackagePromoOffers.Include(x => x.Package).Where(q => !q.IsDeleted && q.Id == request.Id)
+                    var getSingleAccTypes = await _context.PackagePromoOffers.Where(q => !q.IsDeleted && q.Id == request.Id)
                                         .Select(x => new PromoResponseViewModel
                                         {
                                             Id = x.Id,
@@ -38,11 +38,9 @@ namespace Resource.Application.Query.CoursePackage.Promo
                                             EndDate = x.EndDate.ToString("dd/MM/yyyy"),
                                             EndDateNp = x.EndDateNp,
                                             HasDiscountPercent = x.HasDiscountPercent,
-                                            PackageId = x.PackageId,
                                             PromoCode = x.PromoCode,
                                             StartDate = x.StartDate.ToString("dd/MM/yyyy"),
-                                            StartDateNp = x.StartDateNp,
-                                            PackageName = x.Package.PackageName ?? ""
+                                            StartDateNp = x.StartDateNp
                                         }).SingleOrDefaultAsync(cancellationToken: cancellationToken);
                     return getSingleAccTypes;
                 }
@@ -73,7 +71,7 @@ namespace Resource.Application.Query.CoursePackage.Promo
             {
                 try
                 {
-                    var getSingleAccTypes = await _context.PackagePromoOffers.Include(x => x.Package).Where(q => !q.IsDeleted && q.PromoCode == request.PromoCode && q.StartDate <= DateTime.Now && q.EndDate >= DateTime.Now)
+                    var getSingleAccTypes = await _context.PackagePromoOffers.Where(q => !q.IsDeleted && q.PromoCode == request.PromoCode && q.StartDate <= DateTime.Now && q.EndDate >= DateTime.Now)
                                         .Select(x => new PromoResponseViewModel
                                         {
                                             Id = x.Id,
@@ -81,11 +79,9 @@ namespace Resource.Application.Query.CoursePackage.Promo
                                             EndDate = x.EndDate.ToString("dd/MM/yyyy"),
                                             EndDateNp = x.EndDateNp,
                                             HasDiscountPercent = x.HasDiscountPercent,
-                                            PackageId = x.PackageId,
                                             PromoCode = x.PromoCode,
                                             StartDate = x.StartDate.ToString("dd/MM/yyyy"),
-                                            StartDateNp = x.StartDateNp,
-                                            PackageName = x.Package.PackageName ?? ""
+                                            StartDateNp = x.StartDateNp
                                         }).SingleOrDefaultAsync(cancellationToken: cancellationToken);
                     if (getSingleAccTypes == null) throw new Exception("Not valid promocode");
                     return getSingleAccTypes;

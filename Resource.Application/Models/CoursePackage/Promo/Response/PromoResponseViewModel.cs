@@ -5,7 +5,6 @@
         public string Id { get; set; }
         public string PromoCode { get; set; }
         public string PackageName { get; set; }
-        public string PackageId { get; set; }
         public bool HasDiscountPercent { get; set; }
         public decimal Discount { get; set; }
         public string StartDate { get; set; }

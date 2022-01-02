@@ -4,7 +4,7 @@
             <h5 class="card-title mb-5">Promo Details Form</h5>
             <input type="hidden" formControlName="id">
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <!-- <div class="form-group col-md-4">
                     <label>Package</label><span class="text-danger">*</span>
                     <select class="form-control dropdown-toggle" formControlName="packageId"
                         [ngClass]="{'is-invalid': updatePromoForm.get('packageId').errors && (updatePromoForm.get('packageId').touched || updatePromoForm.get('packageId').dirty)}">
@@ -16,23 +16,17 @@
                             *ngIf="updatePromoForm.get('packageId').errors?.required && (updatePromoForm.get('packageId').touched || updatePromoForm.get('packageId').dirty)">Package
                             is Required!</small>
                     </span>
-                </div>
+                </div> -->
                 <div class="form-group col-md-4">
                     <label>Promo Code</label>
                     <input type="text" formControlName="promoCode" placeholder="Promo Code" class="form-control">
                 </div>
-            </div>
-            <div class="form-group col-md-4">
-                <label>Discount</label>
-                <input type="number" formControlName="discount" placeholder="discount" class="form-control">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label>Start Date (Np)</label><span class="text-danger">*</span>
-                <np-datepicker [ngbTooltip]="'Start Date' " class="form-group" inputClass="form-control"
-                    formControlName="startDateNp" #dateValStart
-                    (ngModelChange)="changeNepaliToEnglishStartDate(dateValStart)"></np-datepicker>
+                <div class="form-group col-md-4">
+                    <label>Discount</label>
+                    <input type="number" formControlName="discount" placeholder="discount" class="form-control">
+                </div>
+                <div class="form-group col-md-4">
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4 datePickerDiv">
@@ -57,16 +51,9 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label>End Date (Np)</label><span class="text-danger">*</span>
-                    <np-datepicker class="form-group" inputClass="form-control" [ngbTooltip]="'End Date' "
-                        formControlName="endDateNp" #dateValEnd
-                        (ngModelChange)="changeNepaliToEnglishEndDate(dateValEnd)"></np-datepicker>
-                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="(!updatePromoForm.valid)">Submit</button>
             </div>
-                <div class="form-row">
-                    <button type="submit" class="btn btn-primary" [disabled]="(!updatePromoForm.valid)">Submit</button>
-                </div>
-            </div>
+
+        </div>
     </form>
 </div>

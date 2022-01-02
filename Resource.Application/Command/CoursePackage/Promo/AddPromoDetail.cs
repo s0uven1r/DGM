@@ -24,7 +24,6 @@ namespace Resource.Application.Command.CoursePackage.Promo
             public AddPromoDetailCommandValidator()
             {
                 RuleFor(x => x.PromoCode).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
-                RuleFor(x => x.PackageId).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
             }
         }
 
@@ -49,7 +48,6 @@ namespace Resource.Application.Command.CoursePackage.Promo
                     Domain.Entities.PackageCourse.PackagePromoOffer Promos = new()
                     {
                         PromoCode = request.PromoCode,
-                        PackageId = request.PackageId,
                         HasDiscountPercent = request.HasDiscountPercent,
                         StartDate = DateTime.ParseExact(request.StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date,
                         StartDateNp = request.StartDateNp,

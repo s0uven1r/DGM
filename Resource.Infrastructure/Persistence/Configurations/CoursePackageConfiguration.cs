@@ -31,12 +31,8 @@ namespace Resource.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<PackagePromoOffer> builder)
         {
-            builder.HasOne(x => x.Package)
-            .WithMany(y => y.PackagePromoOffers)
-            .HasForeignKey(a => a.PackageId);
-
             builder.HasIndex(b => b.PromoCode)
-           .IsUnique();
+            .IsUnique();
         }
     }
 }

@@ -24,7 +24,6 @@ namespace Resource.Application.Command.CoursePackage.Promo
             public AddVehicleDetailCommandValidator()
             {
                 RuleFor(x => x.PromoCode).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
-                RuleFor(x => x.PackageId).Cascade(CascadeMode.Stop).NotNull().NotEmpty();
             }
         }
 
@@ -56,7 +55,6 @@ namespace Resource.Application.Command.CoursePackage.Promo
                     existing.EndDate = DateTime.ParseExact(request.EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).Date;
                     existing.EndDateNp = request.EndDateNp;
                     existing.Discount = request.Discount;
-                    existing.PackageId = request.PackageId;
                     existing.HasDiscountPercent = request.HasDiscountPercent;
                     existing.UpdatedBy = userId;
                     existing.UpdatedDate = DateTime.UtcNow;
