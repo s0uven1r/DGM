@@ -4,7 +4,7 @@
             <div class="card-title">
                 <h5 class="card-ShiftName">Shift Details Form</h5>
                 <div class="text-right">
-                    <a href="#" [routerLink]='"/dashboard/shift-config/shift"' class="btn btn-primary btn-sm">Cancel</a>
+                    <a href="#" [routerLink]='"/dashboard/shift-config/shift"' class="btn btn-secondary btn-sm">Cancel</a>
                 </div>
             </div>
             <div class="form-row">
@@ -51,9 +51,8 @@
                     </div>
                 </div>
             </div>
-            <div class="form-row">
-                <button type="submit" class="btn btn-primary" [disabled]="(!createShiftForm.valid)">Submit</button>
-              </div>
+          
+                <button type="submit" class="btn btn-primary float-right mb-3" [disabled]="(!createShiftForm.valid)" style="width:10%">SAVE</button>
         </div>
     </form>
 </div>

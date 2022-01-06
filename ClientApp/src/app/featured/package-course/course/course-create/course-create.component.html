@@ -1,14 +1,21 @@
 <div class="container-fluid card h-100">
   <form [formGroup]="createCourseForm" (ngSubmit)="createCourse()">
     <div class="card-body">
-      <h5 class="card-CourseName mb-4">Course Details Form</h5>
+      <div class="card-title">
+        <h5>Course Create Form</h5>
+        <div class="text-right">
+          <a href="#" [routerLink]='"/dashboard/config/course"' class="btn btn-secondary btn-sm">Cancel</a>
+        </div>
+      </div>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label>Course Name</label><span class="text-danger">*</span>
           <input type="text" formControlName="CourseName" placeholder="Course Name" class="form-control"
             [ngClass]="{'is-invalid': createCourseForm.get('CourseName').errors && (createCourseForm.get('CourseName').touched || createCourseForm.get('CourseName').dirty)}">
           <span class="text-danger">
-            <small *ngIf="createCourseForm.get('CourseName').errors?.required && (createCourseForm.get('CourseName').touched || createCourseForm.get('CourseName').dirty)">Course Name
+            <small
+              *ngIf="createCourseForm.get('CourseName').errors?.required && (createCourseForm.get('CourseName').touched || createCourseForm.get('CourseName').dirty)">Course
+              Name
               is Required!</small>
           </span>
         </div>
@@ -20,7 +27,9 @@
             <option *ngFor="let ddl of coursesTypes" [value]="ddl.id">{{ddl.title}}</option>
           </select>
           <span class="text-danger">
-            <small *ngIf="createCourseForm.get('courseTypeId').errors?.required && (createCourseForm.get('courseTypeId').touched || createCourseForm.get('courseTypeId').dirty)">Course Type
+            <small
+              *ngIf="createCourseForm.get('courseTypeId').errors?.required && (createCourseForm.get('courseTypeId').touched || createCourseForm.get('courseTypeId').dirty)">Course
+              Type
               is Required!</small>
           </span>
         </div>
@@ -29,7 +38,9 @@
           <input type="text" formControlName="requiredDocuments" placeholder="Required Documents" class="form-control"
             [ngClass]="{'is-invalid': createCourseForm.get('requiredDocuments').errors && (createCourseForm.get('requiredDocuments').touched || createCourseForm.get('requiredDocuments').dirty)}">
           <span class="text-danger">
-            <small  *ngIf="createCourseForm.get('requiredDocuments').errors?.required && (createCourseForm.get('requiredDocuments').touched || createCourseForm.get('requiredDocuments').dirty)">Required Documents
+            <small
+              *ngIf="createCourseForm.get('requiredDocuments').errors?.required && (createCourseForm.get('requiredDocuments').touched || createCourseForm.get('requiredDocuments').dirty)">Required
+              Documents
               is Required!</small>
           </span>
         </div>
@@ -50,9 +61,8 @@
           </div>
         </div>
       </div>
-      <div class="form-row">
-        <button type="submit" class="btn btn-primary" [disabled]="(!createCourseForm.valid)">Submit</button>
-      </div>
+      <button type="submit" class="btn btn-primary float-right mb-2" [disabled]="(!createCourseForm.valid)"
+        style="width: 10%;">Submit</button>
     </div>
   </form>
 </div>

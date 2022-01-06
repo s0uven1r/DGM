@@ -1,7 +1,7 @@
 <div class="container-fluid">
+  <h5 class="card-title">Role: {{permissionData['roleName']|titlecase}}</h5>
   <div class="card" >
     <div class="card-body" *ngIf="permissionData">
-      <h3 class="card-title">{{permissionData['roleName']|titlecase}}</h3>
       <form [formGroup]="permissionForm" (ngSubmit)="onSubmit()">
           <input type="hidden" formControlName="roleId" >
           <div formArrayName="modules">
@@ -21,8 +21,8 @@
                </div>
             </div>
           </div>
-          <button *appCheckclaim ="permissionCreateClaim" [disabled]="(!permissionForm.valid)" type="submit" value="save" class="btn mt-5 ml-4 btn-primary">
-            Save
+          <button *appCheckclaim ="permissionCreateClaim" [disabled]="(!permissionForm.valid)" type="submit" value="save" class="btn btn-primary mt-5 ml-4 float-right" style="width:10%;">
+            SAVE
         </button>
       </form>
     </div>

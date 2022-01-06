@@ -1,7 +1,12 @@
 <div class="container-fluid card h-100">
   <form [formGroup]="updatePackageForm" (ngSubmit)="updatePackage()">
     <div class="card-body">
-      <h5 class="card-title mb-5">Update Package Details</h5>
+      <div class="card-title mb-4">
+        <h5>Package Update Form</h5>
+        <div class="text-right">
+          <a href="#" [routerLink]='"/dashboard/config/package"' class="btn btn-secondary btn-sm">Cancel</a>
+        </div>
+      </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <input formControlName="id" type="hidden">
@@ -66,9 +71,7 @@
           </span>
         </div>
     </div>
-    <div class="form-row">
-      <button type="submit" class="btn btn-primary" [disabled]="(!updatePackageForm.valid)">Submit</button>
-    </div>
+      <button type="submit" class="btn btn-primary float-right mb-2" [disabled]="(!updatePackageForm.valid)">SAVE</button>
   </div>
   </form>
 </div>

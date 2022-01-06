@@ -13,6 +13,7 @@ import { VehicleService } from '../service/vehicle.service';
   styleUrls: ['./maintenance.component.css'], 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class MaintenanceComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
