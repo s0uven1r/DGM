@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ShiftFrequencyModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-frequency-model';
-import { ShiftModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-model';
 import Swal from 'sweetalert2';
 import { ShiftService } from '../../service/shift.service';
 
@@ -32,8 +31,8 @@ export class ShiftCreateComponent implements OnInit {
   FormDesign() {
     return (this.createShiftForm = this.form.group({
       ShiftName: [null, Validators.required],
-      IsActive: [false, Validators.required],
       ShiftFrequencyId: [null, Validators.required],
+      IsActive: [false, Validators.required],
       StartTime: [null, Validators.required]
     }));
   }

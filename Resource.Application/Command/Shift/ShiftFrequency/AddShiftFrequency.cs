@@ -38,7 +38,7 @@ namespace Resource.Application.Command.Shift.ShiftFrequency
                 var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
-                    var frequency = await _context.ShiftFrequencies.Where(x => x.Name == request.Name).FirstOrDefaultAsync();
+                    var frequency = await _context.ShiftFrequencies.Where(x => x.Name == request.Name).FirstOrDefaultAsync(cancellationToken: cancellationToken);
                     if (frequency != null) throw new AppException("Frequency with same name already exists!");
 
                     Domain.Entities.Shift.ShiftFrequency shiftFrequency = new()
@@ -47,7 +47,7 @@ namespace Resource.Application.Command.Shift.ShiftFrequency
                         IsActive = request.IsActive,
                         Duration = request.Duration
                     };
-                    await _context.ShiftFrequencies.AddAsync(shiftFrequency);
+                    await _context.ShiftFrequencies.AddAsync(shiftFrequency, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
                     await transaction.CommitAsync(cancellationToken);
                     return Unit.Value;

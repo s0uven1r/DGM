@@ -12,6 +12,14 @@ export const ShiftRoutePath = {
               import(
                 "src/app/featured/shift/frequency/shift-frequency.module"
               ).then((m) => m.ShiftFrequencyModule),
+          },
+          {
+            path: "create",
+            data: { breadcrumb: "Create" },
+            loadChildren: () =>
+              import(
+                "src/app/featured/shift/frequency/frequency-create/shift-frequency-create.module"
+              ).then((m) => m.ShiftFrequencyCreateModule),
           }
         ]
       },
