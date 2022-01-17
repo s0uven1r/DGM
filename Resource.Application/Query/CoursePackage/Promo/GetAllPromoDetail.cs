@@ -31,7 +31,7 @@ namespace Resource.Application.Query.CoursePackage.Promo
             {
                 try
                 {
-                    var getAllAccTypes = await _context.PackagePromoOffers.Include(a => a.Package).Where(q => !q.IsDeleted)
+                    var getAllAccTypes = await _context.PackagePromoOffers.Where(q => !q.IsDeleted)
                                         .Select(x => new PromoResponseViewModel
                                         {
                                             Id = x.Id,
@@ -39,11 +39,9 @@ namespace Resource.Application.Query.CoursePackage.Promo
                                             EndDate = x.EndDate.ToString("dd/MM/yyyy"),
                                             EndDateNp = x.EndDateNp,
                                             HasDiscountPercent = x.HasDiscountPercent,
-                                            PackageId = x.PackageId,
                                             PromoCode = x.PromoCode,
                                             StartDate = x.StartDate.ToString("dd/MM/yyyy"),
-                                            StartDateNp = x.StartDateNp,
-                                            PackageName = x.Package.PackageName ?? ""
+                                            StartDateNp = x.StartDateNp
                                         }).ToListAsync(cancellationToken: cancellationToken);
 
                     return getAllAccTypes.ToList();

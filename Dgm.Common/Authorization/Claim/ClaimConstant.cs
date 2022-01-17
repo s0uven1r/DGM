@@ -415,7 +415,7 @@ namespace Dgm.Common.Authorization.Claim
                      Class= "text-primary",
                      FaClass= "",
                      ParentId = "a8fb9d05-3b2b-4fc6-a66c-396b56cee3e0",
-                     Rank = 1,
+                     Rank = 2,
                      RouteUrl = "shift-config/shift",
                      ClaimModule = PermissionModuleConstant.Shift,
                      ClaimTitle = "View Shift"
@@ -428,7 +428,7 @@ namespace Dgm.Common.Authorization.Claim
                      Class= "text-primary",
                      FaClass= "",
                      ParentId = "a8fb9d05-3b2b-4fc6-a66c-396b56cee3e0",
-                     Rank = 2,
+                     Rank = 1,
                      RouteUrl = "shift-config/frequency",
                      ClaimModule = PermissionModuleConstant.Shift,
                      ClaimTitle = "View Shift Frequency"

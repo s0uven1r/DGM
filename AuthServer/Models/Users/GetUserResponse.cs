@@ -20,5 +20,6 @@ namespace AuthServer.Models.Users
         public string RoleName { get; set; }
         public string AccountNumber { get; set; }
         public bool IsEnabled { get; set; }
+        public bool IsKYCUpdated { get; set; }
     }
 }

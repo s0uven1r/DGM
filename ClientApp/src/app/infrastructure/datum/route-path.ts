@@ -103,7 +103,9 @@ export const RoutePath = {
 
   PermissionRoutePath: [{ path: '', component: PermissionComponent }],
 
-  UserRoutePath: [{ path: '', component: UserComponent }],
+  UserRoutePath: [{ path: '', component: UserComponent, resolve: {
+    kycDDLData: KycResolverService
+  }}],
 
   UserCreateRoutePath: [{
     path: '', component: CreateComponent, resolve: {
@@ -184,16 +186,10 @@ export const RoutePath = {
   PromoRoutePath: [{ path: '', component: PromoComponent }],
 
   PromoCreateRoutePath: [{
-    path: '', component: PromoCreateComponent, resolve: {
-      packageDDL: PromoResolverService
-    }
-  }],
+    path: '', component: PromoCreateComponent }],
 
   PromoUpdateRoutePath: [{
-    path: '', component: PromoUpdateComponent, resolve: {
-      packageDDL: PromoResolverService
-    }
-  }],
+    path: '', component: PromoUpdateComponent }],
 
   CourseRoutePath: [{ path: '', component: CourseComponent }],
 
