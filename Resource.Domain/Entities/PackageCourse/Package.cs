@@ -7,6 +7,7 @@ namespace Resource.Domain.Entities.PackageCourse
     public class Package : BaseEntity
     {
         public string PackageName { get; set; }
+        public string Description { get; set; }
         public string CourseId { get; set; }
         public int TotalDay { get; set; }
         public decimal Duration { get; set; }

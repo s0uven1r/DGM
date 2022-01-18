@@ -3,6 +3,7 @@
     public class PackageCreateViewModel
     {
         public string PackageName { get; set; }
+        public string Description { get; set; }
         public string CourseId { get; set; }
         public int TotalDay { get; set; }
         public string ShiftFrequencyId { get; set; }

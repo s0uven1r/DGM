@@ -37,6 +37,7 @@ export class PackageCreateComponent implements OnInit {
       totalDay: [0, Validators.required],
       shiftFrequencyId: [null, Validators.required],
       price: [0, Validators.required],
+      description: [null, Validators.required],
     }));
   }
 

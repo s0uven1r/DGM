@@ -14,8 +14,15 @@ namespace ResourceAPI.Controllers.CoursePackage
 
     public class PackageController : BaseController
     {
-       
+
         #region begin package
+        [HttpGet("Get/PackageListForBooking")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PackageListForBooking()
+        {
+            return Ok(await Mediator.Send(request: new GetAllPackageListForBooking.GetAllPackageListForBookingQuery()));
+        }
+
         [HttpGet("Get/GetAll")]
         [Permission(PackageCourseClaimConstant.ViewPackage)]
         public async Task<IActionResult> GetAll()

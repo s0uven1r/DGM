@@ -53,6 +53,7 @@ namespace Resource.Application.Command.CoursePackage.Package
                     if (shiftFrequencyValidity == null) throw new AppException("Invalid Shift Frequency!");
 
                     existing.PackageName = request.PackageName;
+                    existing.Description = request.Description;
                     existing.Price = request.Price;
                     existing.TotalDay = request.TotalDay;
                     existing.ShiftFrequencyId = request.ShiftFrequencyId;
