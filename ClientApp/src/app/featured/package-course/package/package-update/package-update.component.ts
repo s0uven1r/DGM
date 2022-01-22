@@ -42,7 +42,8 @@ export class PackageUpdateComponent implements OnInit {
             courseId: x.courseId,
             totalDay: x.totalDay,
             shiftFrequencyId: x.shiftFrequencyId,
-            price: x.price
+            price: x.price,
+            description: x.description
           });
         });
       }
@@ -57,6 +58,7 @@ export class PackageUpdateComponent implements OnInit {
       totalDay: [0, Validators.required],
       shiftFrequencyId: [null, Validators.required],
       price: [0, Validators.required],
+      description: [null, Validators.required],
     }));
   }
 

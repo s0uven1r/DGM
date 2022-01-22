@@ -53,6 +53,7 @@ namespace Resource.Application.Command.CoursePackage.Package
                     Domain.Entities.PackageCourse.Package Packages = new()
                     {
                         PackageName = request.PackageName,
+                        Description = request.Description,
                         CourseId = request.CourseId,
                         ShiftFrequencyId = request.ShiftFrequencyId,
                         Duration = shiftFrequencyValidity.Duration * request.TotalDay,

@@ -35,6 +35,7 @@ namespace Resource.Application.Query.CoursePackage.Package
                                         {
                                             Id = x.Id,
                                             PackageName = x.PackageName,
+                                            Description = x.Description,
                                             CourseId = x.CourseId,
                                             Duration = x.Duration,
                                             Price = x.Price,

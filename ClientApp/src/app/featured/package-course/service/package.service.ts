@@ -57,6 +57,7 @@ export class PackageService {
       totalDay: value.totalDay,
       shiftFrequencyId: value.shiftFrequencyId,
       price: value.price,
+      description: value.description
     });
   }
   updatePackage(value: any) {
@@ -68,6 +69,7 @@ export class PackageService {
         totalDay: value.totalDay,
         shiftFrequencyId: value.shiftFrequencyId,
         price: value.price,
+        description: value.description
       }
     );
   }
