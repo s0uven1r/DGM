@@ -10,11 +10,11 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label>Shift Name</label><span class="text-danger">*</span>
-                    <input type="text" formControlName="ShiftName" placeholder="Shift Name" class="form-control"
-                        [ngClass]="{'is-invalid': updateShiftForm.get('ShiftName').errors && (updateShiftForm.get('ShiftName').touched || updateShiftForm.get('ShiftName').dirty)}">
+                    <input type="text" formControlName="Name" placeholder="Shift Name" class="form-control"
+                        [ngClass]="{'is-invalid': updateShiftForm.get('Name').errors && (updateShiftForm.get('Name').touched || updateShiftForm.get('Name').dirty)}">
                     <span class="text-danger">
                         <small
-                            *ngIf="updateShiftForm.get('ShiftName').errors?.required && (updateShiftForm.get('ShiftName').touched || updateShiftForm.get('ShiftName').dirty)">Shift
+                            *ngIf="updateShiftForm.get('Name').errors?.required && (updateShiftForm.get('Name').touched || updateShiftForm.get('Name').dirty)">Shift
                             Name is Required!</small>
                     </span>
                 </div>
@@ -23,7 +23,7 @@
                     <select class="form-control dropdown-toggle" formControlName="ShiftFrequencyId"
                         [ngClass]="{'is-invalid': updateShiftForm.get('ShiftFrequencyId').errors && (updateShiftForm.get('ShiftFrequencyId').touched || updateShiftForm.get('ShiftFrequencyId').dirty)}">
                         <option value=null selected>--Select Shift Frequency--</option>
-                        <option *ngFor="let ddl of shiftFrequencies" [value]="ddl.id">{{ddl.ShiftFrequencyName}}
+                        <option *ngFor="let ddl of shiftFrequencies" [value]="ddl.id">{{ddl.name}}
                         </option>
                     </select>
                     <span class="text-danger">

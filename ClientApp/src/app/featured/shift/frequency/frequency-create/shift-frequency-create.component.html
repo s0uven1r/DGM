@@ -1,1 +1,46 @@
-<p>shift-frequency-create works!</p>
+<div class="container-fluid card h-100">
+    <form [formGroup]="createShiftFrequencyForm" (ngSubmit)="createShiftFrequency()">
+        <div class="card-body">
+            <div class="card-title">
+                <h5 class="card-Name">Shift Frequency Form</h5>
+                <div class="text-right">
+                    <a href="#" [routerLink]='"/dashboard/shift-config/frequency"'
+                        class="btn btn-secondary btn-sm">Cancel</a>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Name</label><span class="text-danger">*</span>
+                    <input type="text" formControlName="Name" placeholder="Shift Frequency Name" class="form-control"
+                        [ngClass]="{'is-invalid': createShiftFrequencyForm.get('Name').errors && (createShiftFrequencyForm.get('Name').touched || createShiftFrequencyForm.get('Name').dirty)}">
+                    <span class="text-danger">
+                        <small
+                            *ngIf="createShiftFrequencyForm.get('Name').errors?.required && (createShiftFrequencyForm.get('Name').touched || createShiftFrequencyForm.get('Name').dirty)">Shift
+                           Frequency Name is Required!</small>
+                    </span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Duration</label><span class="text-danger">*</span>
+                    <input type="number" formControlName="Duration" placeholder="Shift Frequency Duration"
+                        class="form-control" min="1"
+                        [ngClass]="{'is-invalid': createShiftFrequencyForm.get('Duration').errors && (createShiftFrequencyForm.get('Duration').touched || createShiftFrequencyForm.get('Duration').dirty)}">
+                    <span class="text-danger">
+                        <small
+                            *ngIf="createShiftFrequencyForm.get('Duration').errors?.required && (createShiftFrequencyForm.get('Duration').touched || createShiftFrequencyForm.get('Duration').dirty)">Shift
+                            Duration is Required!</small>
+                    </span>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="form-check m-4">
+                        <input type="checkbox" formControlName="IsActive" class="form-check-input">
+                        <label class="form-check-label">IsActive</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary float-right mb-3"
+                [disabled]="(!createShiftFrequencyForm.valid)" style="width:10%">SAVE</button>
+        </div>
+    </form>
+</div>

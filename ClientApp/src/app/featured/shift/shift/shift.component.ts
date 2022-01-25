@@ -4,6 +4,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ShiftManagementClaim } from 'src/app/infrastructure/datum/claim/shift-management';
 import { ShiftModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-model';
+import Swal from 'sweetalert2';
 import { ShiftService } from '../service/shift.service';
 
 @Component({
@@ -42,23 +43,58 @@ export class ShiftComponent implements OnInit, OnDestroy {
     };
     this.getInitData();
   }
-  
-  getInitData(){
-    this.shiftService.getAllShift().subscribe(x=>
-      {
-        this.shifts = x;
-        if(this.isDtInitialized){
-          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            dtInstance.destroy();
-            this.dtTrigger.next();
-          });
-        } else{this.isDtInitialized = true
+
+  getInitData() {
+    this.shiftService.getAllShift().subscribe(x => {
+      this.shifts = x;
+      if (this.isDtInitialized) {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+          this.dtTrigger.next();
+        });
+      } else {
+        this.isDtInitialized = true
         this.dtTrigger.next();
         this.hasDataLoaded = true;
       }
       this.changeDetectorRef.markForCheck();
     });
   }
+
+  updateshift(id: string) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/dashboard/shift-config/shift/edit/${id}`])
+    );
+    window.open(url, "_self");
+  }
+
+  deleteshift(id: string) {
+    Swal.fire({
+      title: "Delete shift?",
+      text: "",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ok",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.value) {
+        this.shiftService.deleteShiftById(id).subscribe(
+          () => {
+            Swal.fire(
+              "Deleted!",
+              "Shift deleted successfully.",
+              "success"
+            );
+            this.getInitData();
+          },
+          (err) => {
+            Swal.fire("Error Deleted!", err, "error");
+          }
+        );
+      }
+    });
+  }
+
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();

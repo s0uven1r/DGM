@@ -391,6 +391,9 @@ namespace Resource.Infrastructure.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -416,6 +419,9 @@ namespace Resource.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PackageStartDateNp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PromoCode")
@@ -447,6 +453,9 @@ namespace Resource.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Duration")
                         .HasColumnType("decimal(15,4)");
@@ -830,11 +839,9 @@ namespace Resource.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Resource.Domain.Entities.PackageCourse.PackagePromoOffer", b =>
                 {
-                    b.HasOne("Resource.Domain.Entities.PackageCourse.Package", "Package")
+                    b.HasOne("Resource.Domain.Entities.PackageCourse.Package", null)
                         .WithMany("PackagePromoOffers")
                         .HasForeignKey("PackageId");
-
-                    b.Navigation("Package");
                 });
 
             modelBuilder.Entity("Resource.Domain.Entities.Shift.IndividualShift", b =>

@@ -57,6 +57,7 @@ export class PackageService {
       totalDay: value.totalDay,
       shiftFrequencyId: value.shiftFrequencyId,
       price: value.price,
+      description: value.description
     });
   }
   updatePackage(value: any) {
@@ -68,6 +69,7 @@ export class PackageService {
         totalDay: value.totalDay,
         shiftFrequencyId: value.shiftFrequencyId,
         price: value.price,
+        description: value.description
       }
     );
   }
@@ -91,7 +93,6 @@ export class PackageService {
   createPromo(value: any) {
     return this.http.post<any>(`${this.baseUrl + this.createPromoUrl}`, {
       promoCode: value.promoCode,
-      packageId: value.packageId,
       hasDiscountPercent: value.hasDiscountPercent,
       discount: value.discount,
       startDate: value.startDate,
@@ -123,7 +124,6 @@ export class PackageService {
       `${this.baseUrl + this.updatePromoUrl}/${value.id}`,
       {
         promoCode: value.promoCode,
-        packageId: value.packageId,
         hasDiscountPercent: value.hasDiscountPercent,
         discount: value.discount,
         startDate: value.startDate,
@@ -165,7 +165,9 @@ export class PackageService {
       "shiftId": value['shiftId'],
       "paidAmount": value['paidAmount'],
       "promoCode": value['promoCode'],
-      "isAdmin": true
+      "isAdmin": true,
+      "address": value['address'],
+      "phoneNumber": value['phoneNumber'],
     });
   }
   

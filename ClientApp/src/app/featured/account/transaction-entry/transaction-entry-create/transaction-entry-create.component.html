@@ -1,9 +1,15 @@
 <div class="container-fluid  h-100 card mb-2">
   <form [formGroup]="entryForm" (ngSubmit)="createTransactionEntry()">
     <div class="card-body">
-      <h5 class="card-title">Transaction Summary</h5>
+      <div class="card-title mb-4">
+        <h5>Transaction Summary</h5>
+        <div class="text-right">
+          <a href="#" [routerLink]='"/dashboard/account/transactionentry"' class="btn btn-secondary btn-sm">Cancel</a>
+        </div>
+      </div>
       <div class="form-row">
         <div class="form-group col-md-4">
+          <label>Type</label><span class="text-danger">*</span>
           <select class="form-control dropdown-toggle" formControlName="type">
             <option value=null selected>--Select Entry For--</option>
             <option value="1">User</option>
@@ -11,40 +17,58 @@
             <option value="3">Account</option>
           </select>
         </div>
-
         <div class="form-group col-md-4">
+          <label>Account Number</label><span class="text-danger">*</span>
           <input type="text" [ngbTypeahead]="search" typeahead-editable='false' [resultFormatter]="formatter"
-            (selectItem)="selectedItem($event)" formControlName="title" placeholder="Search particular"
+            (selectItem)="selectedItem($event)" formControlName="title" placeholder="Search account number"
             class="form-control">
           <input type="hidden" formControlName="accountNumber">
           <input type="hidden" formControlName="id">
         </div>
-        <div class="form-group col-md-2 datePickerDiv">
-          <np-datepicker [ngbTooltip]="'Transaction Date' " formControlName="entryDateNP" #dateVal
-            (ngModelChange)="changeNepaliToEnglish(dateVal)"></np-datepicker>
+        <div class="form-row col-12 pl-0">
+          <div class="col-4">
+            <label>Registration Date (NP)</label><span class="text-danger">*</span>
+          </div>
+          <div class="col-4">
+            <label>Registration Date (EN)</label><span class="text-danger">*</span>
+          </div>
         </div>
-        <div class="form-group col-md-2">
-          <input readonly class="form-control" id="NpToENDate" formControlName="entryDateEN">
+        <div class="form-row col-12 pl-0">
+          <div class="form-group col-md-4 datePickerDiv">
+            <np-datepicker [ngbTooltip]="'Transaction Date' " formControlName="entryDateNP" #dateVal
+              (ngModelChange)="changeNepaliToEnglish(dateVal)"></np-datepicker>
+          </div>
+          <div class="form-group col-md-4">
+            <input readonly class="form-control" id="NpToENDate" formControlName="entryDateEN">
+          </div>
         </div>
         <div class="form-group col-md-4">
+          <label>Total Price</label><span class="text-danger">*</span>
           <input type="number" [ngbTooltip]="'Market Price'" formControlName="marketPrice"
-            (ngModelChange)="calculateTotal()" placeholder="Market price" class="form-control">
+            (ngModelChange)="calculateTotal()" placeholder="Total price" class="form-control">
         </div>
         <div class="form-group col-md-4">
+          <label>Discount Amount</label><span class="text-danger">*</span>
           <input type="number" [ngbTooltip]="'Discount Amount'" formControlName="discountAmount"
             (ngModelChange)="calculateTotal()" placeholder="Discount Amount" class="form-control">
         </div>
         <div class="form-group col-md-4">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Net Amount</label><span class="text-danger">*</span>
           <input type="text" readonly formControlName="netAmountLabel" placeholder="Total Amount" class="form-control">
           <input type="text" readonly hidden formControlName="netAmount" placeholder="Total Amount"
             class="form-control">
         </div>
         <div class="form-group col-md-4">
+          <label>Due Amount</label><span class="text-danger">*</span>
           <input type="text" readonly formControlName="dueAmountLabel" placeholder="Due Amount" class="form-control">
           <input type="text" readonly hidden formControlName="dueAmount" placeholder="Due Amount" class="form-control">
         </div>
-        <div class="form-group col-md-4">
-          <input type="text" formControlName="remarks" placeholder="Entry Remarks" class="form-control">
+        <div class="form-group col-md-6">
+          <label>Remarks</label><span class="text-danger">*</span>
+          <textarea type="text" formControlName="remarks" placeholder="Entry Remarks" class="form-control">
+            </textarea>
         </div>
       </div>
       <h5 class="card-title">Journal Entry<span class="ml-4"><button type="button" class="btn btn-primary btn-sm"><i
@@ -121,14 +145,11 @@
               <td colspan="7"><strong class="text-danger">{{balanceErrorMsg}}</strong></td>
             </tr>
           </tfoot>
-
         </table>
-
       </div>
-      <div class="form-row">
-        <button type="submit" [disabled]="(!entryForm.valid || errorMsg || (balanceErrorMsg
-         || debitPaidAmount === 0 &&journalEntries().controls.length>0 ))" class="btn btn-primary">Submit</button>
-      </div>
+      <button type="submit" [disabled]="(!entryForm.valid || errorMsg || (balanceErrorMsg
+         || debitPaidAmount === 0 &&journalEntries().controls.length>0 ))"
+        class="btn btn-primary float-right mb-2">SAVE</button>
     </div>
   </form>
 

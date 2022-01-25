@@ -38,7 +38,7 @@ namespace Resource.Application.Query.Shift.Shift
                         StartTime = x.StartTime.ToString("hh:mm tt"),
                         EndTime = x.EndTime.ToString("hh:mm tt"),
                         ShiftFrequencyId = x.ShiftFrequencyId
-                    }).ToListAsync();
+                    }).ToListAsync(cancellationToken);
                     return response;
                 }
                 catch

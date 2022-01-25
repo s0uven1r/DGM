@@ -1,90 +1,123 @@
 <div class="container-fluid card h-100">
   <form [formGroup]="createInventoryForm" (ngSubmit)="createVehicleInventory()">
     <div class="card-body">
-      <h5 class="card-title mb-5">Vehicle Registration Form</h5>
+      <div class="card-title mb-4">
+        <h5>Vehicle Registration Form</h5>
+        <div class="text-right">
+          <a href="#" [routerLink]='"/dashboard/vehicle/register"' class="btn btn-secondary btn-sm">Cancel</a>
+        </div>
+      </div>
       <div class="form-row">
         <div class="form-group col-md-4">
+          <label>Registration Number</label><span class="text-danger">*</span>
           <input type="text" formControlName="registrationNumber" placeholder="Registration Number" class="form-control"
             [ngClass]="{'is-invalid': createInventoryForm.get('registrationNumber').errors && (createInventoryForm.get('registrationNumber').touched || createInventoryForm.get('registrationNumber').dirty)}">
           <span class="text-danger">
             <small
-              *ngIf="createInventoryForm.get('registrationNumber').errors?.required && (createInventoryForm.get('registrationNumber').touched || createInventoryForm.get('registrationNumber').dirty)">Registration Number is Required!</small>
+              *ngIf="createInventoryForm.get('registrationNumber').errors?.required && (createInventoryForm.get('registrationNumber').touched || createInventoryForm.get('registrationNumber').dirty)">Registration
+              Number is Required!</small>
           </span>
         </div>
         <div class="form-group col-md-4">
+          <label>Chasis Number</label><span class="text-danger">*</span>
           <input type="text" formControlName="chasisNumber" placeholder="Chasis Number" class="form-control"
             [ngClass]="{'is-invalid': createInventoryForm.get('chasisNumber').errors && (createInventoryForm.get('chasisNumber').touched || createInventoryForm.get('chasisNumber').dirty)}">
           <span class="text-danger">
-            <small *ngIf="createInventoryForm.get('chasisNumber').errors?.required && (createInventoryForm.get('chasisNumber').touched || createInventoryForm.get('chasisNumber').dirty)">Chasis Number is Required!</small>
+            <small
+              *ngIf="createInventoryForm.get('chasisNumber').errors?.required && (createInventoryForm.get('chasisNumber').touched || createInventoryForm.get('chasisNumber').dirty)">Chasis
+              Number is Required!</small>
           </span>
         </div>
         <div class="form-group col-md-4">
+          <label>Engine Number</label><span class="text-danger">*</span>
           <input type="text" formControlName="engineNumber" placeholder="Engine Number" class="form-control"
             [ngClass]="{'is-invalid': createInventoryForm.get('engineNumber').errors && (createInventoryForm.get('engineNumber').touched || createInventoryForm.get('engineNumber').dirty)}">
           <span class="text-danger">
             <small
-              *ngIf="createInventoryForm.get('engineNumber').errors?.required && (createInventoryForm.get('engineNumber').touched || createInventoryForm.get('engineNumber').dirty)">Engine Number is Required!</small>
+              *ngIf="createInventoryForm.get('engineNumber').errors?.required && (createInventoryForm.get('engineNumber').touched || createInventoryForm.get('engineNumber').dirty)">Engine
+              Number is Required!</small>
           </span>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4">
+          <label>Model</label><span class="text-danger">*</span>
           <input type="text" formControlName="model" placeholder="Model" class="form-control"
             [ngClass]="{'is-invalid': createInventoryForm.get('model').errors && (createInventoryForm.get('model').touched || createInventoryForm.get('model').dirty)}">
           <span class="text-danger">
             <small
-              *ngIf="createInventoryForm.get('model').errors?.required && (createInventoryForm.get('model').touched || createInventoryForm.get('model').dirty)">Model is Required!</small>
+              *ngIf="createInventoryForm.get('model').errors?.required && (createInventoryForm.get('model').touched || createInventoryForm.get('model').dirty)">Model
+              is Required!</small>
           </span>
         </div>
         <div class="form-group col-md-4">
+          <label>Sub Model</label><span class="text-danger">*</span>
           <input type="text" formControlName="subModel" placeholder="Sub Model" class="form-control"
             [ngClass]="{'is-invalid': createInventoryForm.get('subModel').errors && (createInventoryForm.get('subModel').touched || createInventoryForm.get('subModel').dirty)}">
           <span class="text-danger">
             <small
-              *ngIf="createInventoryForm.get('subModel').errors?.required && (createInventoryForm.get('subModel').touched || createInventoryForm.get('subModel').dirty)">Sub Model is Required!</small>
+              *ngIf="createInventoryForm.get('subModel').errors?.required && (createInventoryForm.get('subModel').touched || createInventoryForm.get('subModel').dirty)">Sub
+              Model is Required!</small>
           </span>
         </div>
         <div class="form-group col-md-4">
+          <label>Engine Capacity (CC)</label><span class="text-danger">*</span>
           <input type="text" formControlName="capacity" placeholder="Capacity" class="form-control"
             [ngClass]="{'is-invalid': createInventoryForm.get('capacity').errors && (createInventoryForm.get('capacity').touched || createInventoryForm.get('capacity').dirty)}">
           <span class="text-danger">
             <small
-              *ngIf="createInventoryForm.get('capacity').errors?.required && (createInventoryForm.get('capacity').touched || createInventoryForm.get('capacity').dirty)">Capacity is Required!</small>
+              *ngIf="createInventoryForm.get('capacity').errors?.required && (createInventoryForm.get('capacity').touched || createInventoryForm.get('capacity').dirty)">Capacity
+              is Required!</small>
           </span>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4">
+          <label>Manufactured Year</label><span class="text-danger">*</span>
           <input type="text" formControlName="manufacturedYear" placeholder="Manufactured Year" class="form-control"
             [ngClass]="{'is-invalid': createInventoryForm.get('manufacturedYear').errors && (createInventoryForm.get('manufacturedYear').touched || createInventoryForm.get('manufacturedYear').dirty)}">
           <span class="text-danger">
             <small
-              *ngIf="createInventoryForm.get('manufacturedYear').errors?.required && (createInventoryForm.get('manufacturedYear').touched || createInventoryForm.get('manufacturedYear').dirty)">Manufactured Year is Required!</small>
+              *ngIf="createInventoryForm.get('manufacturedYear').errors?.required && (createInventoryForm.get('manufacturedYear').touched || createInventoryForm.get('manufacturedYear').dirty)">Manufactured
+              Year is Required!</small>
           </span>
         </div>
         <div class="form-group col-md-4">
+          <label>Manufacturer Company</label><span class="text-danger">*</span>
           <input type="text" formControlName="manufacturer" placeholder="Manufacture Company" class="form-control"
             [ngClass]="{'is-invalid': createInventoryForm.get('manufacturer').errors && (createInventoryForm.get('manufacturer').touched || createInventoryForm.get('manufacturer').dirty)}">
           <span class="text-danger">
             <small
-              *ngIf="createInventoryForm.get('manufacturer').errors?.required && (createInventoryForm.get('manufacturer').touched || createInventoryForm.get('manufacturer').dirty)">Manufacturer is Required!</small>
+              *ngIf="createInventoryForm.get('manufacturer').errors?.required && (createInventoryForm.get('manufacturer').touched || createInventoryForm.get('manufacturer').dirty)">Manufacturer
+              is Required!</small>
           </span>
         </div>
-        <div class="form-group col-md-2 datePickerDiv">
+      </div>
+      <div class="form-row col-12 pl-0">
+        <div class="col-4">
+          <label>Registration Date (NP)</label><span class="text-danger">*</span>
+        </div>
+        <div class="col-4">
+          <label>Registration Date (EN)</label><span class="text-danger">*</span>
+        </div>
+      </div>
+      <div class="form-row col-12 pl-0">
+        <div class="form-group col-md-4 datePickerDiv">
           <np-datepicker formControlName="registerDateNP" #dateVal (ngModelChange)="changeNepaliToEnglish(dateVal)"
             [ngClass]="{'is-invalid': createInventoryForm.get('registerDateNP').errors && (createInventoryForm.get('registerDateNP').touched || createInventoryForm.get('registerDateNP').dirty)}">
           </np-datepicker>
           <span class="text-danger">
-            <small *ngIf="createInventoryForm.get('registerDateNP').errors?.required && (createInventoryForm.get('registerDateNP').touched || createInventoryForm.get('registerDateNP').dirty)">Register Date is Required!</small>
+            <small
+              *ngIf="createInventoryForm.get('registerDateNP').errors?.required && (createInventoryForm.get('registerDateNP').touched || createInventoryForm.get('registerDateNP').dirty)">Register
+              Date is Required!</small>
           </span>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-4">
           <input readonly class="form-control" id="NpToENDate" formControlName="registerDateEN">
         </div>
       </div>
-      <div class="form-row">
-        <button type="submit" class="btn btn-primary" [disabled]="(!createInventoryForm.valid)">Submit</button>
-      </div>
+      <button type="submit" class="btn btn-primary float-right mb-3" [disabled]="(!createInventoryForm.valid)"
+        style="width: 10%;">SAVE</button>
     </div>
   </form>
 </div>

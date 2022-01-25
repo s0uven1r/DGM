@@ -10,7 +10,6 @@
         <thead>
           <tr>
             <th>S.N</th>
-            <th>Package Name</th>
             <th>Promo Code</th>
             <th>Action</th>
           </tr>
@@ -18,7 +17,6 @@
         <tbody>
           <tr *ngFor="let pro of promos; let i = index;">
             <td>{{ i + 1 }}</td>
-            <td>{{ pro.packageName }}</td>
             <td>{{ pro.promoCode }}</td>
             <td>
               <button *appCheckclaim="promoCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"

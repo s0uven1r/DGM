@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { ShiftFrequencyCreateRoutingModule } from './shift-frequency-create-routing.module';
-import { ShiftFrequencyCreateComponent } from './shift-frequency-create.component';
-
+import { ShiftFrequencyCreateRoutingModule, RoutingComponent } from './shift-frequency-create-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ShiftService } from '../../service/shift.service';
+import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
 
 @NgModule({
-  declarations: [
-    ShiftFrequencyCreateComponent
-  ],
+  declarations: RoutingComponent,
   imports: [
     CommonModule,
-    ShiftFrequencyCreateRoutingModule
+    ReactiveFormsModule,
+    ShiftFrequencyCreateRoutingModule,
+    CheckDirectiveModule,
+  ],
+  providers: [
+    {
+      provide: ShiftService,
+      useClass: ShiftService
+    }
   ]
 })
 export class ShiftFrequencyCreateModule { }

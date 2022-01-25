@@ -27,7 +27,6 @@ export class PromoUpdateComponent implements OnInit {
   @ViewChild("dateValStart", { static: true }) dateValStart: ElementRef;
   @ViewChild("dateValEnd", { static: true }) dateValEnd: ElementRef;
   updatePromoForm: FormGroup;
-  packages: PackageModel[] = [];
   endDateNP: string;
   startDateNP: string;
   constructor(
@@ -40,13 +39,11 @@ export class PromoUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.packages = this.route.snapshot.data.packageDDL;
     this.route.params.subscribe((params) => {
       if (params["id"]) {
         this.packageService.getSinglePromo(params["id"]).subscribe((x) => {
           this.updatePromoForm.patchValue({
             id: x.id,
-            packageId: x.packageId,
             promoCode: x.promoCode,
             startDate: x.startDate,
             endDate: x.endDate,
@@ -85,7 +82,6 @@ export class PromoUpdateComponent implements OnInit {
   FormDesign() {
     return (this.updatePromoForm = this.form.group({
       id: [null, Validators.required],
-      packageId: [null, Validators.required],
       promoCode: [null],
       startDateNp: [null, Validators.required],
       endDateNp: [null, Validators.required],

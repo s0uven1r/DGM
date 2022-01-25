@@ -32,6 +32,7 @@ export const ApiGateway = {
       updateKyc: "/UpdateKYC",
       getKyc: "/GetKYC",
       getKycDDL: "/GetKYCDDL",
+      getKycDetail: "/GetKYC",
       registerCustomerPackage: '/RegisterCustomerPackage',
     },
     settings: {

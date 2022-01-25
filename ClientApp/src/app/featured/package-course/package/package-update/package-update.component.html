@@ -2,73 +2,96 @@
   <form [formGroup]="updatePackageForm" (ngSubmit)="updatePackage()">
     <div class="card-body">
       <h5 class="card-title mb-5">Update Package Details</h5>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <input formControlName="id" type="hidden">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <input formControlName="id" type="hidden">
+        </div>
       </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label>Package Name</label><span class="text-danger">*</span>
-        <input type="text" formControlName="packageName" placeholder="Package Number" class="form-control"
-          [ngClass]="{'is-invalid': updatePackageForm.get('packageName').errors && (updatePackageForm.get('packageName').touched || updatePackageForm.get('packageName').dirty)}">
-        <span class="text-danger">
-          <small
-            *ngIf="updatePackageForm.get('packageName').errors?.required && (updatePackageForm.get('packageName').touched || updatePackageForm.get('packageName').dirty)">Package Name
-            is Required!</small>
-        </span>
-      </div>
-      <div class="form-group col-md-4">
-        <label>Course</label><span class="text-danger">*</span>
-        <select class="form-control dropdown-toggle" formControlName="courseId"
-          [ngClass]="{'is-invalid': updatePackageForm.get('courseId').errors && (updatePackageForm.get('courseId').touched || updatePackageForm.get('courseId').dirty)}">
-          <option value=null selected>--Select Course--</option>
-          <option *ngFor="let ddl of courses" [value]="ddl.id">{{ddl.courseName}}</option>
-        </select>
-        <span class="text-danger">
-          <small
-            *ngIf="updatePackageForm.get('courseId').errors?.required && (updatePackageForm.get('courseId').touched || updatePackageForm.get('courseId').dirty)">Course Type
-            is Required!</small>
-        </span>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label>Total Days</label><span class="text-danger">*</span>
-        <input type="number" formControlName="totalDay" placeholder="Total Day" class="form-control"
-          [ngClass]="{'is-invalid': updatePackageForm.get('totalDay').errors && (updatePackageForm.get('totalDay').touched || updatePackageForm.get('totalDay').dirty)}">
-        <span class="text-danger">
-          <small
-            *ngIf="updatePackageForm.get('totalDay').errors?.required && (updatePackageForm.get('totalDay').touched || updatePackageForm.get('totalDay').dirty)">Total Day
-            is Required!</small>
-        </span>
-      </div>
-      <div class="form-group col-md-4">
-        <label>Duration</label><span class="text-danger">*</span>
-        <input type="number" formControlName="duration" placeholder="Duration" class="form-control"
-          [ngClass]="{'is-invalid': updatePackageForm.get('duration').errors && (updatePackageForm.get('duration').touched || updatePackageForm.get('duration').dirty)}">
-        <span class="text-danger">
-          <small
-            *ngIf="updatePackageForm.get('duration').errors?.required && (updatePackageForm.get('duration').touched || updatePackageForm.get('duration').dirty)">Duration
-            is Required!</small>
-        </span>
-        <select class="form-control dropdown-toggle" formControlName="shiftFrequencyId">
-          <option value=null selected>--Select Shift Duration--</option>
-          <option *ngFor="let ddls of shiftFrequency" [value]="ddls.id">{{ddls.name}} ({{ddls.duration}} mins)</option>
-        </select>
-      </div>
-      <div class="form-group col-md-4">
-        <label>Price</label><span class="text-danger">*</span>
-        <input type="number" formControlName="price" placeholder="Price" class="form-control"
-          [ngClass]="{'is-invalid': updatePackageForm.get('price').errors && (updatePackageForm.get('price').touched || updatePackageForm.get('price').dirty)}">
-          <span class="text-danger" >
-            <small *ngIf="updatePackageForm.get('price').errors?.required && (updatePackageForm.get('price').touched || updatePackageForm.get('price').dirty)">Price is Required!</small>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Package Name</label><span class="text-danger">*</span>
+          <input type="text" formControlName="packageName" placeholder="Package Number" class="form-control"
+            [ngClass]="{'is-invalid': updatePackageForm.get('packageName').errors && (updatePackageForm.get('packageName').touched || updatePackageForm.get('packageName').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="updatePackageForm.get('packageName').errors?.required && (updatePackageForm.get('packageName').touched || updatePackageForm.get('packageName').dirty)">Package
+              Name
+              is Required!</small>
           </span>
         </div>
+        <div class="form-group col-md-4">
+          <label>Course</label><span class="text-danger">*</span>
+          <select class="form-control dropdown-toggle" formControlName="courseId"
+            [ngClass]="{'is-invalid': updatePackageForm.get('courseId').errors && (updatePackageForm.get('courseId').touched || updatePackageForm.get('courseId').dirty)}">
+            <option value=null selected>--Select Course--</option>
+            <option *ngFor="let ddl of courses" [value]="ddl.id">{{ddl.courseName}}</option>
+          </select>
+          <span class="text-danger">
+            <small
+              *ngIf="updatePackageForm.get('courseId').errors?.required && (updatePackageForm.get('courseId').touched || updatePackageForm.get('courseId').dirty)">Course
+              Type
+              is Required!</small>
+          </span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Total Days</label><span class="text-danger">*</span>
+          <input type="number" formControlName="totalDay" placeholder="Total Day" class="form-control"
+            [ngClass]="{'is-invalid': updatePackageForm.get('totalDay').errors && (updatePackageForm.get('totalDay').touched || updatePackageForm.get('totalDay').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="updatePackageForm.get('totalDay').errors?.required && (updatePackageForm.get('totalDay').touched || updatePackageForm.get('totalDay').dirty)">Total
+              Day
+              is Required!</small>
+          </span>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Duration</label><span class="text-danger">*</span>
+          <!--<input type="number" formControlName="duration" placeholder="Duration" class="form-control"
+            [ngClass]="{'is-invalid': updatePackageForm.get('duration').errors && (updatePackageForm.get('duration').touched || updatePackageForm.get('duration').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="updatePackageForm.get('duration').errors?.required && (updatePackageForm.get('duration').touched || updatePackageForm.get('duration').dirty)">Duration
+              is Required!</small>
+          </span> -->
+          <select class="form-control dropdown-toggle" formControlName="shiftFrequencyId">
+            <option value=null selected>--Select Shift Duration--</option>
+            <option *ngFor="let ddls of shiftFrequency" [value]="ddls.id">{{ddls.name}} ({{ddls.duration}} mins)
+            </option>
+          </select>
+          <span class="text-danger">
+            <small
+              *ngIf="updatePackageForm.get('shiftFrequencyId').errors?.required && (updatePackageForm.get('shiftFrequencyId').touched || updatePackageForm.get('shiftFrequencyId').dirty)">Duration
+              is Required!</small>
+          </span>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Price</label><span class="text-danger">*</span>
+          <input type="number" formControlName="price" placeholder="Price" class="form-control"
+            [ngClass]="{'is-invalid': updatePackageForm.get('price').errors && (updatePackageForm.get('price').touched || updatePackageForm.get('price').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="updatePackageForm.get('price').errors?.required && (updatePackageForm.get('price').touched || updatePackageForm.get('price').dirty)">Price
+              is Required!</small>
+          </span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>Description</label><span class="text-danger">*</span>
+          <input type="text" formControlName="description" placeholder="Description" class="form-control"
+            [ngClass]="{'is-invalid': updatePackageForm.get('description').errors && (updatePackageForm.get('description').touched || updatePackageForm.get('description').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="updatePackageForm.get('description').errors?.required && (updatePackageForm.get('description').touched || updatePackageForm.get('description').dirty)">Description
+              is Required!</small>
+          </span>
+        </div>
+      </div>
+      <div class="form-row">
+        <button type="submit" class="btn btn-primary" [disabled]="(!updatePackageForm.valid)">Submit</button>
+      </div>
     </div>
-    <div class="form-row">
-      <button type="submit" class="btn btn-primary" [disabled]="(!updatePackageForm.valid)">Submit</button>
-    </div>
-  </div>
   </form>
 </div>

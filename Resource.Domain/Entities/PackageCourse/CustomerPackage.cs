@@ -13,6 +13,8 @@ namespace Resource.Domain.Entities.PackageCourse
         public string PackageStartDateNp { get; set; }
         public DateTime PackageEndDate { get; set; }
         public string PackageEndDateNp { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
         public virtual Package Package { get; set; }
         public virtual ICollection<CustomerPayment> CustomerPayments { get; set; }
     }

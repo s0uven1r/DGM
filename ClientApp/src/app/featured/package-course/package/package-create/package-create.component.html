@@ -1,7 +1,12 @@
 <div class="container-fluid card h-100">
   <form [formGroup]="createPackageForm" (ngSubmit)="createPackage()">
     <div class="card-body">
-      <h5 class="card-title mb-4">Package Details Form</h5>
+      <div class="card-title mb-4">
+        <h5>Package Create Form</h5>
+        <div class="text-right">
+          <a href="#" [routerLink]='"/dashboard/config/package"' class="btn btn-secondary btn-sm">Cancel</a>
+        </div>
+      </div>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label>Package Name</label><span class="text-danger">*</span>
@@ -64,9 +69,21 @@
               is Required!</small>
           </span>
         </div>
-        <div class="form-row">
-          <button type="submit" class="btn btn-primary" [disabled]="(!createPackageForm.valid)">Submit</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>Description</label><span class="text-danger">*</span>
+          <input type="text" formControlName="description" placeholder="Description" class="form-control"
+            [ngClass]="{'is-invalid': createPackageForm.get('description').errors && (createPackageForm.get('description').touched || createPackageForm.get('description').dirty)}">
+          <span class="text-danger">
+            <small
+              *ngIf="createPackageForm.get('description').errors?.required && (createPackageForm.get('description').touched || createPackageForm.get('description').dirty)">Description
+              is Required!</small>
+          </span>
         </div>
+      </div>
+      <div class="form-row">
+        <button type="submit" class="btn btn-primary" [disabled]="(!createPackageForm.valid)">Submit</button>
       </div>
     </div>
   </form>

@@ -1,49 +1,57 @@
-<div class="container-fluid card h-100">
-  <form [formGroup]="InternalUserForm" (ngSubmit)="registerUser()">
-    <div class="card-body">
-      <h5 class="card-title mb-3">User Registration</h5>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <input formControlName='id' type="hidden">
-          <select formControlName="appliedRole" id="role" class="custom-select"
-            aria-label="Example select with button addon">
-            <option value="">Select Role</option>
-            <option *ngFor="let item of roleData" [value]="item.id">
-              {{item.name}}
-            </option>
-          </select>
+<div class="container-fluid">
+  <div class="card">
+    <form [formGroup]="InternalUserForm" (ngSubmit)="registerUser()">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Create User</h5>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <input formControlName='id' type="hidden">
+            <label>Role</label><span class="text-danger">*</span>
+            <select formControlName="appliedRole" id="role" class="custom-select"
+              aria-label="Example select with button addon">
+              <option value="">Select Role</option>
+              <option *ngFor="let item of roleData" [value]="item.id">
+                {{item.name}}
+              </option>
+            </select>
+          </div>
         </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>First Name</label><span class="text-danger">*</span>
+            <input type="text" formControlName="firstName" placeholder="First Name" class="form-control">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Middle Name</label><span class="text-danger">*</span>
+            <input type="text" formControlName="middleName" placeholder="Middle Name" class="form-control">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Last Name</label><span class="text-danger">*</span>
+            <input type="text" formControlName="lastName" placeholder="Last Name" class="form-control">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Phone Number</label><span class="text-danger">*</span>
+            <input type="text" formControlName="phone" placeholder="Phone Number" class="form-control">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Email</label><span class="text-danger">*</span>
+            <input type="email" formControlName="email" placeholder="Email Address" class="form-control">
+            <small class="text-danger" *ngIf="InternalUserForm.get('email').errors?.pattern">Email address is
+              invalid</small>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Confirm Email</label><span class="text-danger">*</span>
+            <input type="email" formControlName="confirmEmail" placeholder="Confirm Email Address" class="form-control"
+              appBlockCopyPaste>
+            <span class="text-danger" *ngIf="InternalUserForm.get('confirmEmail').errors?.confirmedValidator
+          && (InternalUserForm.get('confirmEmail').touched || InternalUserForm.get('confirmEmail').dirty)">
+              <small>Email and Confirm Email must be match.!</small></span>
+          </div>
+        </div>
+          <button type="submit" class="btn btn-primary float-right mb-3" [disabled]="(!InternalUserForm.valid)" style="width:10%;">SAVE</button>
       </div>
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <input type="text" formControlName="firstName" placeholder="First Name" class="form-control">
-        </div>
-        <div class="form-group col-md-4">
-          <input type="text" formControlName="middleName" placeholder="Middle Name" class="form-control">
-        </div>
-        <div class="form-group col-md-4">
-          <input type="text" formControlName="lastName" placeholder="Last Name" class="form-control">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <input type="text" formControlName="phone" placeholder="Phone Number" class="form-control">
-        </div>
-        <div class="form-group col-md-4">
-          <input type="email" formControlName="email" placeholder="Email Address" class="form-control">
-          <small class="text-danger" *ngIf="InternalUserForm.get('email').errors?.pattern">Email address is invalid</small>   
-        </div>
-        <div class="form-group col-md-4">
-          <input type="email" formControlName="confirmEmail" placeholder="Confirm Email Address" class="form-control" appBlockCopyPaste>
-          <span class="text-danger" *ngIf="InternalUserForm.get('confirmEmail').errors?.confirmedValidator
-          && (InternalUserForm.get('confirmEmail').touched || InternalUserForm.get('confirmEmail').dirty)" >
-          <small>Email and Confirm Email must be match.!</small></span>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <button type="submit" class="btn btn-primary" [disabled]="(!InternalUserForm.valid)">Submit</button>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
