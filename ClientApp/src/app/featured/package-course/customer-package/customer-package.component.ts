@@ -55,7 +55,9 @@ export class CustomerPackageComponent implements OnInit, AfterViewInit {
       promoCode: [null],
       packageTotalDays: [0],
       packageAmount: [0],
-      discountAmount: [0]
+      discountAmount: [0],
+      address: [null],
+      phoneNumber: [null],
     },
     { validators: [ConfirmedValidator('email', 'confirmEmail')]}
     ));

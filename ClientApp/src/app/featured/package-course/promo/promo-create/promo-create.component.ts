@@ -5,7 +5,6 @@ import { ActivatedRoute } from "@angular/router";
 import NepaliDate from "nepali-date-converter";
 import { throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { PackageModel } from "src/app/infrastructure/model/UserManagement/resource/package/packagemodel";
 import Swal from "sweetalert2";
 import { PackageService } from "../../service/package.service";
 
@@ -16,7 +15,6 @@ import { PackageService } from "../../service/package.service";
 })
 export class PromoCreateComponent implements OnInit, AfterViewInit  {
   createPromoForm: FormGroup;
-  packages: PackageModel[] = [];
   constructor(
     private route: ActivatedRoute,
     private packageService: PackageService,
@@ -26,7 +24,7 @@ export class PromoCreateComponent implements OnInit, AfterViewInit  {
   }
 
   ngOnInit(): void {
-    this.packages = this.route.snapshot.data.packageDDL;
+
   }
   ngAfterViewInit(){
     var div = (document.getElementsByClassName('datePickerDiv'));
@@ -37,7 +35,6 @@ export class PromoCreateComponent implements OnInit, AfterViewInit  {
    }
   FormDesign() {
     return (this.createPromoForm = this.form.group({
-      packageId: [null, Validators.required],
       startDateNp: [null, Validators.required],
       endDateNp: [null, Validators.required],
       startDate: [null, Validators.required],
@@ -58,7 +55,6 @@ export class PromoCreateComponent implements OnInit, AfterViewInit  {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.value) {
-        debugger;
         this.packageService
           .createPromo(this.createPromoForm.value)
           .pipe(

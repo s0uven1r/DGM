@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiGateway } from "src/app/infrastructure/datum/apigateway/api-gateway";
+import { UserKycModel } from "src/app/infrastructure/model/UserManagement/user-kyc-model";
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -28,6 +29,8 @@ export class UserService {
     ApiGateway.identity.user.base + ApiGateway.identity.user.updateKyc;
     private getKycDDLUrl =
     ApiGateway.identity.user.base + ApiGateway.identity.user.getKycDDL;
+    private getKycDetailUrl =
+    ApiGateway.identity.user.base + ApiGateway.identity.user.getKycDetail;
   constructor(private http: HttpClient) {}
 
   getUser(): Observable<any> {
@@ -101,5 +104,9 @@ export class UserService {
   
   getKYCDDL(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl + this.getKycDDLUrl}`);
+  }
+
+  getKYCDetail(id :string): Observable<UserKycModel> {
+    return this.http.get<UserKycModel>(`${this.baseUrl + this.getKycDetailUrl}/${id}`);
   }
 }

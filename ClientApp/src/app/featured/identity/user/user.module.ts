@@ -4,6 +4,7 @@ import { DataTablesModule } from 'angular-datatables'
 import { UserRoutingModule, RoutingComponent } from './user-routing.module';
 import { UserService } from './service/user.service';
 import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { CheckDirectiveModule } from 'src/app/shared/directives/checkclaim.modul
     CommonModule,
     UserRoutingModule,
     DataTablesModule,
-    CheckDirectiveModule
+    CheckDirectiveModule,
+    NgbModule
   ],
   providers: [ {
     provide: UserService,

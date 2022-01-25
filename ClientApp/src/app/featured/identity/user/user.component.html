@@ -1,51 +1,179 @@
-<div class="container-fluid">
-  <h5 class="card-title"></h5>
-  <div class="card">
-    <div class="card-body">
-      <div *appCheckclaim="userCreateClaim" class="row mb-3">
-        <div class="col-12">
-          <a href="#" [routerLink]='"create"' class="btn btn-primary float-right" style="width:10%;">Create</a>
-        </div>
+<div class="container-fluid card h-100">
+  <div class="card-body">
+    <div *appCheckclaim="userCreateClaim" class="row m-2">
+      <div class="row col-12 text-right">
+        <a href="#" [routerLink]='"create"' class="btn btn-primary btn-sm">Create</a>
       </div>
-      <div class="row col-12">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-          <thead>
-            <tr>
-              <th>S.N</th>
-              <th>Email</th>
-              <th>UserName</th>
-              <th>FullName</th>
-              <th>PhoneNo</th>
-              <th>Role</th>
-              <th>Account No</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let person of persons; let i = index;">
-              <td>{{ i + 1 }}</td>
-              <td>{{ person.email }}</td>
-              <td>{{ person.userName }}</td>
-              <td>{{ person.firstName+ ' ' + (person.middleName?person.middleName: "") +' ' + person.lastName }}</td>
-              <td>{{person.phoneNumber}}</td>
-              <td>{{person.roleName}}</td>
-              <td>{{person.accountNumber}}</td>
-              <td>
-                <div class="custom-control form-control-lg custom-checkbox">
-                  <input type="checkbox" [checked]="person.isEnabled" [disabled]="person.isDefault"
-                    class="custom-control-input" [id]="'id'+person.id" #val (click)="hasEnable(person.id, val)">
-                  <label class="custom-control-label" [for]="'id'+person.id"></label>
-                </div>
-              </td>
-              <td>
-                <button *appCheckclaim="userCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"
-                  (click)="getEdit(person.id)"><em class="fa fa-edit"></em></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    </div>
+    <div class="row col-12">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead>
+          <tr>
+            <th>S.N</th>
+            <th>Email</th>
+            <th>UserName</th>
+            <th>FullName</th>
+            <th>PhoneNo</th>
+            <th>Role</th>
+            <th>Account No</th>
+            <th>Status</th>
+            <th>Action</th>
+            <th>KYC Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let person of persons; let i = index;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ person.email }}</td>
+            <td>{{ person.userName }}</td>
+            <td>{{ person.firstName+ ' ' + (person.middleName?person.middleName: "") +' ' + person.lastName }}</td>
+            <td>{{person.phoneNumber}}</td>
+            <td>{{person.roleName}}</td>
+            <td>{{person.accountNumber}}</td>
+            <td>
+              <div class="custom-control form-control-lg custom-checkbox">
+                <input type="checkbox" [checked]="person.isEnabled" [disabled]="person.isDefault"
+                  class="custom-control-input" [id]="'id'+person.id" #val (click)="hasEnable(person.id, val)">
+                <label class="custom-control-label" [for]="'id'+person.id"></label>
+              </div>
+            </td>
+            <td>
+              <button *appCheckclaim="userCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"
+                (click)="getEdit(person.id)"><em class="fa fa-edit"></em></button>
+            </td>
+            <td>
+              <button class="btn pt-0 pb-0 btn-xs" (click)="getKYC(person.id)"><em class="fas fa-eye"></em></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
+
+<ng-template #kycModal let-modal>
+  <div class="modal-dialog modal-lg col-md-6">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLongTitle">KYC Details</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid  h-100">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Full Name</label>
+                <input type="text" class="form-control" value="{{ kycDetail.fullName }}" readonly>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Permanent Address</label>
+                <input type="text" class="form-control" value=" {{ kycDetail.permanentAddress }}" readonly>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Temporary Address</label>
+                <input type="text" class="form-control" value=" {{ kycDetail.temporaryAddress }}" readonly>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Contact Number</label>
+                <input type="text" value=" {{ kycDetail.contactNumber }}" class="form-control" readonly>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Alternative Contact Number</label>
+                <input type="text" value=" {{ kycDetail.alternativeContactNumber }}" class="form-control" readonly>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Gender</label>
+                <select class="custom-select" value=" {{kycDetail.gender }}" disabled>
+                  <option *ngFor="let item of genderDDL" [value]="item.value">
+                    {{item.text}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Marital Status</label><span class="text-danger">*</span>
+                <select value="{{ kycDetail.maritalStatus }}" class="custom-select" disabled>
+                  <option *ngFor="let item of maritalStatusDDL" [value]="item.value">
+                    {{item.text}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Citizenship Number</label><span class="text-danger">*</span>
+                <input type="text" value="{{kycDetail.citizenshipNumber}}" placeholder="Citizenship Number"
+                  class="form-control" disabled>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Pan Number</label>
+                <input type="number" value=" {{ kycDetail.panNumber}}" placeholder="Pan Number" class="form-control"
+                  disabled>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Father's Name</label><span class="text-danger">*</span>
+                <input type="text" valjue="{{kycDetail.fathersName}}" placeholder="Father's Name" class="form-control"
+                  disabled>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Mother's Name</label><span class="text-danger">*</span>
+                <input type="text" value="{{kycDetail.mothersName}}" placeholder="Mother's Name" class="form-control"
+                  disabled>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Spouse's Name</label>
+                <input type="text" value="{{kycDetail.spouseName}}" placeholder="Spouse Name" class="form-control"
+                  disabled>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Child1's Name</label>
+                <input type="text" value="{{kycDetail.child1Name}}" placeholder="Child1 Name" class="form-control"
+                  disabled>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Child2's Name</label>
+                <input type="text" value="{{kycDetail.child2Name}}" placeholder="Child2 Name" class="form-control"
+                  disabled>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Blood Group</label><span class="text-danger">*</span>
+                <select value="{{kycDetail.bloodGroup}}" class="custom-select" disabled>
+                  <option *ngFor="let item of bloodGroupDDL" [value]="item.value">
+                    {{item.text}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <div class="form-check">
+                  <input type="checkbox" value="{{kycDetail.anyMedication}}" class="form-check-input" disabled>
+                  <label class="form-check-label">Any Medication </label>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="form-check">
+                  <input type="checkbox" value="{{kycDetail.anyMedicalCondition}}" class="form-check-input" disabled>
+                  <label class="form-check-label">Any Medical Condition</label>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

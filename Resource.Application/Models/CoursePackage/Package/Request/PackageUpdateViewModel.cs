@@ -7,6 +7,7 @@ namespace Resource.Application.Models.CoursePackage.Package.Request
         [JsonIgnore]
         public string Id { get; set; }
         public string PackageName { get; set; }
+        public string Description { get; set; }
         public string CourseId { get; set; }
         public int TotalDay { get; set; }
         public string ShiftFrequencyId { get; set; }

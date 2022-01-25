@@ -72,7 +72,7 @@ namespace Resource.Application.Command.Customer
                                      .FirstOrDefault(x => x.Id != x.VehicleId && x.ShiftId != model.ShiftId)?.Id;
 
                     var packageDetails = _appDbContext.Packages.FirstOrDefault(x => x.Id == model.PackageId);
-                    var promoDetails = _appDbContext.PackagePromoOffers.FirstOrDefault(x => x.PackageId == model.PackageId && x.PromoCode == model.PromoCode);
+                    var promoDetails = _appDbContext.PackagePromoOffers.FirstOrDefault(x => x.PromoCode == model.PromoCode);
                     if (promoDetails == null && !string.IsNullOrEmpty(model.PromoCode))
                         throw new Exception($"{model.PromoCode} promocode does not exist.");
                     CultureInfo provider = CultureInfo.InvariantCulture;
@@ -82,10 +82,11 @@ namespace Resource.Application.Command.Customer
                         CustomerAccountNumber = accountNo,
                         PackageStartDate = DateTime.ParseExact(model.StartDate, format, provider),
                         PackageEndDate = DateTime.ParseExact(model.EndDate, format, provider),
-                        PackageId = model.PackageId,
                         PackageEndDateNp = model.EndDateNP,
                         PackageStartDateNp = model.StartDateNP,
-                        PromoCode = model.PromoCode
+                        PromoCode = model.PromoCode,
+                        PhoneNumber = model.PhoneNumber,
+                        Address = model.Address
                     };
                     _appDbContext.CustomerPackages.Add(data);
                     // calculation

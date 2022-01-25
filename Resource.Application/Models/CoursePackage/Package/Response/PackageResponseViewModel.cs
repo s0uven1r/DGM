@@ -4,6 +4,7 @@
     {
         public string Id { get; set; }
         public string PackageName { get; set; }
+        public string Description { get; set; }
         public string CourseId { get; set; }
         public string CourseTitle { get; set; }
         public int TotalDay { get; set; }

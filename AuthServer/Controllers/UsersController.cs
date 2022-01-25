@@ -83,7 +83,8 @@ namespace AuthServer.Controllers
                 RoleName = x.role.Name,
                 IsDefault = x.role.IsDefault,
                 IsEnabled = !x.user.IsDisabled,
-                AccountNumber = x.user.AccountNumber
+                AccountNumber = x.user.AccountNumber,
+                IsKYCUpdated = x.user.IsKYCUpdated
             }).ToList();
 
 
@@ -114,7 +115,8 @@ namespace AuthServer.Controllers
                 RoleId = role.Id,
                 RoleName = roleName,
                 IsDefault = role.IsDefault,
-                AccountNumber = user.AccountNumber
+                AccountNumber = user.AccountNumber,
+                IsKYCUpdated = user.IsKYCUpdated
             };
             return Ok(userResult);
         }
@@ -428,7 +430,7 @@ namespace AuthServer.Controllers
 
             if (kyc == null)
             {
-                return BadRequest("Kyc not found!");
+                return Ok(new UserKYCResponseModel());
             }
 
             var kycResponse = _mapper.Map<UserKYCResponseModel>(kyc);
