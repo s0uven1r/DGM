@@ -57,8 +57,8 @@ export const ConfigRoutePath = {
             import(
               "src/app/featured/package-course/promo/promo-update/promo-update.module"
             ).then((m) => m.PromoUpdateModule),
-        },
-      ],
+        }
+      ]
     },
     {
       path: "course",

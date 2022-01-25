@@ -44,6 +44,7 @@ import { ShiftCreateComponent } from 'src/app/featured/shift/shift/shift-create/
 import { ShiftUpdateComponent } from 'src/app/featured/shift/shift/shift-update/shift-update.component';
 import { ShiftFrequencyComponent } from 'src/app/featured/shift/frequency/shift-frequency.component';
 import { ShiftFrequencyCreateComponent } from 'src/app/featured/shift/frequency/frequency-create/shift-frequency-create.component';
+import { ShiftFrequencyUpdateComponent } from 'src/app/featured/shift/frequency/frequency-update/shift-frequency-update.component';
 
 export const RouteComponent = {
   AppRouteComponent: [
@@ -96,7 +97,6 @@ export const RouteComponent = {
   ShiftCreateRouteComponent: [ShiftCreateComponent],
   ShiftUpdateRouteComponent: [ShiftUpdateComponent],
   ShiftFrequencyRouteComponent: [ShiftFrequencyComponent],
-  ShiftFrequencyCreateRouteComponent: [ShiftFrequencyCreateComponent]
-
-
+  ShiftFrequencyCreateRouteComponent: [ShiftFrequencyCreateComponent],
+  ShiftFrequencyUpdateRouteComponent: [ShiftFrequencyUpdateComponent]
 }

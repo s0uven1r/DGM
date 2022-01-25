@@ -22,7 +22,7 @@ namespace Resource.Application.Command.Shift.Shift
         {
             public AddShiftDetailCommandValidator()
             {
-                RuleFor(x => x.Name).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Name is required!");
+                RuleFor(x => x.ShiftName).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Name is required!");
                 RuleFor(x => x.ShiftFrequencyId).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Duration is invalid!");
                 RuleFor(x => x.StartTime).Cascade(CascadeMode.Stop).NotEmpty().NotNull().WithMessage("Start Time is required!");
             }
@@ -40,22 +40,22 @@ namespace Resource.Application.Command.Shift.Shift
                 var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
-                    var shiftFrequency = await _context.ShiftFrequencies.Where(x => x.Id == request.ShiftFrequencyId).FirstOrDefaultAsync();
+                    var shiftFrequency = await _context.ShiftFrequencies.Where(x => x.Id == request.ShiftFrequencyId).FirstOrDefaultAsync(cancellationToken);
                     if (shiftFrequency == null) throw new AppException("Invalid Shift Frequency");
 
                     var startTime = DateTime.Parse(request.StartTime, System.Globalization.CultureInfo.CurrentCulture);
                     var endTime = startTime.AddMinutes(shiftFrequency.Duration);
                     Domain.Entities.Shift.Shift newShift = new()
                     {
+                        Name = request.ShiftName,
                         ShiftFrequencyId = request.ShiftFrequencyId,
                         IsActive = request.IsActive,
                         Duration = shiftFrequency.Duration,
                         StartTime = startTime,
-                        EndTime = endTime,
-                        Name = request.Name,
+                        EndTime = endTime
                     };
 
-                    await _context.Shifts.AddAsync(newShift);
+                    await _context.Shifts.AddAsync(newShift, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
                     await transaction.CommitAsync(cancellationToken);
                     return Unit.Value;

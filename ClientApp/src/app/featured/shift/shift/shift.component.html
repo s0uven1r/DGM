@@ -10,27 +10,25 @@
           <thead>
             <tr>
               <th>S.N</th>
-              <th>Title</th>
-              <th>Type</th>
-              <th>Documents</th>
-              <th>Is Advance</th>
-              <th>Description</th>
+              <th>Name</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Duration</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let shift of shifts; let i = index;">
               <td>{{ i + 1 }}</td>
-              <td>{{ shift.shiftName }}</td>
-              <td>{{ shift.shiftType }}</td>
-              <td>{{ shift.requiredDocuments }}</td>
-              <td>{{ shift.isAdvanceshift }}</td>
-              <td>{{ shift.shiftInfo }}</td>
+              <td>{{ shift.name }}</td>
+              <td>{{ shift.startTime }}</td>
+              <td>{{ shift.endTime }}</td>
+              <td>{{ shift.Duration }}</td>
               <td>
                 <button *appCheckclaim="shiftWriteClaim" class="btn pt-0 pb-0 btn-xs btn-success"
-                  (click)="updateshiftDetail(shift.id)"><em class="fa fa-edit"></em></button>
+                  (click)="updateshift(shift.id)"><em class="fa fa-edit"></em></button>
                 <button *appCheckclaim="shiftWriteClaim" class="btn pt-0 pb-0 ml-2 btn-xs btn-danger"
-                  (click)="deleteshiftDetail(shift.id)"><em class="fa fa-trash"></em></button>
+                  (click)="deleteshift(shift.id)"><em class="fa fa-trash"></em></button>
               </td>
             </tr>
           </tbody>

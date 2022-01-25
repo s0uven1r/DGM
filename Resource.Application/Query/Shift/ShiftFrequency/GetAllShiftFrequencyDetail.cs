@@ -29,7 +29,7 @@ namespace Resource.Application.Query.Shift.ShiftFrequency
             {
                 try
                 {
-                    var response = await _context.ShiftFrequencies.Where(x => !x.IsDeleted && x.IsActive).Select(x => new ShiftFrequencyDetailResponseViewModel
+                    var response = await _context.ShiftFrequencies.Where(x => !x.IsDeleted).Select(x => new ShiftFrequencyDetailResponseViewModel
                     {
                         Id = x.Id,
                         Duration = x.Duration,

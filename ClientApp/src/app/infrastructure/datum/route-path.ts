@@ -62,6 +62,7 @@ import { ShiftUpdateComponent } from 'src/app/featured/shift/shift/shift-update/
 import { CourseTypeResolverService } from 'src/app/featured/package-course/service/course-type-resolver.service';
 import { ShiftFrequencyComponent } from 'src/app/featured/shift/frequency/shift-frequency.component';
 import { ShiftFrequencyCreateComponent } from 'src/app/featured/shift/frequency/frequency-create/shift-frequency-create.component';
+import { ShiftFrequencyUpdateComponent } from 'src/app/featured/shift/frequency/frequency-update/shift-frequency-update.component';
 
 export const RoutePath = {
   AppRoutePath: [{ path: '', component: HomeComponent, pathMatch: 'full' },
@@ -226,7 +227,7 @@ export const RoutePath = {
 
   ShiftFrequencyCreateRoutePath: [{ path: '', component: ShiftFrequencyCreateComponent }],
   
-  // ShiftFrequencyUpdateRoutePath: [{ path: '', component: ShiftFrequencyUpdateComponent }],
+  ShiftFrequencyUpdateRoutePath: [{ path: '', component: ShiftFrequencyUpdateComponent }],
 
   ShiftRoutePath: [{ path: '', component: ShiftComponent }],
 
