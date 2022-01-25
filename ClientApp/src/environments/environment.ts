@@ -8,10 +8,10 @@ export const environment = {
   // resourceUrl: 'https://localhost:44337/api/',
   // issuer: 'https://localhost:44316',
   // redirectUri: 'http://localhost:4200/auth-callback'
-  apiIdentityUrl: 'https://auth.dgmtech.tk/Authorization/',
-  resourceUrl: 'https://api.dgmtech.tk/api/',
-  issuer: 'https://auth.dgmtech.tk',
-  redirectUri: 'https://demo.dgmtech.tk/auth-callback'
+  apiIdentityUrl: 'https://auth.dgmtech.xyz/Authorization/',
+  resourceUrl: 'https://api.dgmtech.xyz/api/',
+  issuer: 'https://auth.dgmtech.xyz',
+  redirectUri: 'https://demo.dgmtech.xyz/auth-callback'
 };
 
 /*
