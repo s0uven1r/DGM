@@ -6,7 +6,6 @@ import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShiftService } from '../service/shift.service';
 
-
 @NgModule({
   declarations: RoutingComponent,
   imports: [

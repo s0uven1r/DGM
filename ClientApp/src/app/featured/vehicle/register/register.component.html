@@ -1,40 +1,42 @@
-<div class="card">
-  <div class="card-body">
-    <div *appCheckclaim="vehicleCreateClaim" class="row m-2">
-      <div class="col-12 text-right">
-        <a href="#" [routerLink]='"create"' class="btn btn-primary btn-md">Create</a>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div *appCheckclaim="vehicleCreateClaim" class="row m-2">
+        <div class="col-12 text-right">
+          <a href="#" [routerLink]='"create"' class="btn btn-primary mb-2" style="width: 10%;">Create</a>
+        </div>
       </div>
-    </div>
-    <div class="col-12">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-        <thead>
-          <tr>
-            <th>S.N</th>
-            <th>Registration Number</th>
-            <th>Engine Number</th>
-            <th>Model</th>
-            <th>Sub Model</th>
-            <th>Account No</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let vehicle of vehicles; let i = index;">
-            <td>{{ i + 1 }}</td>
-            <td>{{ vehicle.registrationNumber }}</td>
-            <td>{{ vehicle.engineNumber }}</td>
-            <td>{{ vehicle.model }}</td>
-            <td>{{ vehicle.subModel }}</td>
-            <td>{{ vehicle.accountNumber }}</td>
-            <td>
-              <button *appCheckclaim="vehicleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"
-                (click)="updateVehicleDetail(vehicle.id)"><em class="fa fa-edit"></em></button>
-              <button *appCheckclaim="vehicleCreateClaim" class="btn pt-0 pb-0 ml-2 btn-xs btn-danger"
-                (click)="deleteVehicleDetail(vehicle.id)"><em class="fa fa-trash"></em></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="col-12">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+          <thead>
+            <tr>
+              <th>S.N</th>
+              <th>Registration Number</th>
+              <th>Engine Number</th>
+              <th>Model</th>
+              <th>Sub Model</th>
+              <th>Account No</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vehicle of vehicles; let i = index;">
+              <td>{{ i + 1 }}</td>
+              <td>{{ vehicle.registrationNumber }}</td>
+              <td>{{ vehicle.engineNumber }}</td>
+              <td>{{ vehicle.model }}</td>
+              <td>{{ vehicle.subModel }}</td>
+              <td>{{ vehicle.accountNumber }}</td>
+              <td>
+                <button *appCheckclaim="vehicleCreateClaim" class="btn pt-0 pb-0 btn-xs btn-success"
+                  (click)="updateVehicleDetail(vehicle.id)"><em class="fa fa-edit"></em></button>
+                <button *appCheckclaim="vehicleCreateClaim" class="btn pt-0 pb-0 ml-2 btn-xs btn-danger"
+                  (click)="deleteVehicleDetail(vehicle.id)"><em class="fa fa-trash"></em></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

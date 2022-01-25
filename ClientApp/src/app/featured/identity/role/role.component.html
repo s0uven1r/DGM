@@ -1,51 +1,43 @@
 <div *appCheckclaim="roleCreateClaim" class="card mb-2">
   <div class="card-body">
     <h5 class="card-title pl-3">
-      <a class="mb-2">{{isEdit?"Update":"Create"}} Role Form</a>
+      <span class="mb-2">{{isEdit?"Update":"Create"}} Role Form</span>
     </h5>
     <div class="container-fluid bordered  h-100">
       <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="form-group col-md-4">
             <input type="hidden" formControlName="id" />
-            <input type="text" [ngClass]="{'is-invalid': roleForm.get('title').errors
-              && (roleForm.get('title').touched
-              || roleForm.get('title').dirty)
-              }" formControlName="title" placeholder="Role Title" class="form-control">
+            <label>Name</label><span class="text-danger">*</span>
+            <input type="text" [ngClass]="{'is-invalid': roleForm.get('title').errors && (roleForm.get('title').touched || roleForm.get('title').dirty)}" formControlName="title" placeholder="Role Title" class="form-control">
             <span class="text-danger">
-              &nbsp;
-              <small *ngIf="roleForm.get('title').errors?.required
-                  && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is Required!</small>
+              <small *ngIf="roleForm.get('title').errors?.required && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is Required!</small>
             </span>
             <span class="text-danger">
-              &nbsp;
-              <small *ngIf="roleForm.get('title').errors?.minlength
-                && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not less than 3
-                character!</small>
+              <small *ngIf="roleForm.get('title').errors?.minlength && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not less than 3 character!</small>
             </span>
             <span class="text-danger">
-              &nbsp;
-              <small *ngIf="roleForm.get('title').errors?.maxlength
-                && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not greater than 50
-                character!</small>
+              <small *ngIf="roleForm.get('title').errors?.maxlength && (roleForm.get('title').touched || roleForm.get('title').dirty)">Name is not greater than 50 character!</small>
             </span>
           </div>
           <div class="form-group col-md-4">
+            <label>Level</label><span class="text-danger">*</span>
             <input type="number" formControlName="rank" placeholder="Role Level" class="form-control">
           </div>
           <div class="form-group col-md-4">
+            <label>Type</label><span class="text-danger">*</span>
             <select class="form-control dropdown-toggle" formControlName="type">
               <option value=null selected>--Select Type--</option>
               <option *ngFor="let ddl of roleTypeDDL" [value]="ddl.value">{{ddl.key}}</option>
             </select>
           </div>
-          <div class="form-group col-md-4 pull-left">
-            <button [disabled]="(!roleForm.valid)" type="submit" value="save" class="btn btn-primary">
-              Save
-            </button>
-            <input class="ml-3 btn btn-danger" type="button" value="Reset" (click)="resetRoleForm()">
-          </div>
         </div>
+        <button  type="button" value="Reset" class="btn btn-danger float-right ml-3" (click)="resetRoleForm()" style="width:10%;">
+          RESET
+       </button>
+        <button [disabled]="(!roleForm.valid)" type="submit" value="save" class="btn btn-primary float-right" style="width:10%;">
+          SAVE
+        </button>
       </form>
     </div>
   </div>

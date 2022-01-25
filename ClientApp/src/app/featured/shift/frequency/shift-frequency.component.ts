@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { ShiftService } from '../service/shift.service';
 import { ShiftManagementClaim } from 'src/app/infrastructure/datum/claim/shift-management';
 import { ShiftFrequencyModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-frequency-model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-shift-frequency',
@@ -26,6 +27,7 @@ export class ShiftFrequencyComponent implements OnInit, OnDestroy {
   frequencies: ShiftFrequencyModel[] = [];
   
   constructor(
+    private router: Router,
     private shiftService: ShiftService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
@@ -57,6 +59,40 @@ export class ShiftFrequencyComponent implements OnInit, OnDestroy {
         this.hasDataLoaded = true;
       }
       this.changeDetectorRef.markForCheck();
+    });
+  }
+
+  updateshiftFrequency(id: string) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/dashboard/shift-config/frequency/edit/${id}`])
+    );
+    window.open(url, "_self");
+  }
+
+  deleteshiftFrequency(id: string) {
+    Swal.fire({
+      title: "Delete shift frequency?",
+      text: "",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ok",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.value) {
+        this.shiftService.deleteShiftFrequencyById(id).subscribe(
+          () => {
+            Swal.fire(
+              "Deleted!",
+              "Shift frequency deleted successfully.",
+              "success"
+            );
+            this.getInitData();
+          },
+          (err) => {
+            Swal.fire("Error Deleted!", err, "error");
+          }
+        );
+      }
     });
   }
 

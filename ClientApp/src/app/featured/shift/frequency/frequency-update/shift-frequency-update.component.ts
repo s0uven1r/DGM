@@ -3,18 +3,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ShiftFrequencyModel } from 'src/app/infrastructure/model/UserManagement/resource/shift/shift-frequency-model';
 import Swal from 'sweetalert2';
 import { ShiftService } from '../../service/shift.service';
 
 @Component({
-  selector: 'app-shift-create',
-  templateUrl: './shift-create.component.html',
-  styleUrls: ['./shift-create.component.css']
+  selector: 'app-shift-frequency-update',
+  templateUrl: './shift-frequency-update.component.html',
+  styleUrls: ['./shift-frequency-update.component.css']
 })
-export class ShiftCreateComponent implements OnInit {
-  createShiftForm: FormGroup;
-  shiftFrequencies: ShiftFrequencyModel[] = [];
+
+export class ShiftFrequencyUpdateComponent implements OnInit {
+
+  updateShiftFrequencyForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,22 +24,33 @@ export class ShiftCreateComponent implements OnInit {
     this.FormDesign();
   }
 
-  ngOnInit(): void {
-    this.shiftFrequencies = this.route.snapshot.data.shiftFrequenciesDDL;
-  }
-
   FormDesign() {
-    return (this.createShiftForm = this.form.group({
-      ShiftName: [null, Validators.required],
-      ShiftFrequencyId: [null, Validators.required],
+    return (this.updateShiftFrequencyForm = this.form.group({
+      id:[null, Validators.required],
+      Name: [null, Validators.required],
       IsActive: [false, Validators.required],
-      StartTime: [null, Validators.required]
+      Duration: [0, Validators.required]
     }));
   }
 
-  createShift() {
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      if (params["id"]) {
+        this.ShiftService.getSingleShiftFrequency(params["id"]).subscribe((x) => {
+          this.updateShiftFrequencyForm.patchValue({
+            id: x.id,
+            Name: x.name,
+            IsActive: x.isActive,
+            Duration: x.duration
+          });
+        });
+      }
+    });
+  }
+
+  updateShiftFrequency() {
     Swal.fire({
-      title: "Create Shift Detail",
+      title: "Update Course Detail",
       text: "User Action",
       icon: "warning",
       showCancelButton: true,
@@ -48,7 +59,7 @@ export class ShiftCreateComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.ShiftService
-          .createShift(this.createShiftForm.value)
+          .UpdateShiftFrequency(this.updateShiftFrequencyForm.value)
           .pipe(
             catchError((err) => {
               return throwError(err);
@@ -56,7 +67,7 @@ export class ShiftCreateComponent implements OnInit {
           )
           .subscribe(
             () => {
-              Swal.fire("Created!", "User Action", "success");
+              Swal.fire("Updated!", "User Action", "success");
             },
             () => console.log("HTTP request completed.")
           );

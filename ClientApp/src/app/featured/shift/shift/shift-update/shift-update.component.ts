@@ -32,10 +32,10 @@ export class ShiftUpdateComponent implements OnInit {
         this.ShiftService.getSingleShift(params["id"]).subscribe((x) => {
           this.updateShiftForm.patchValue({
             id: x.id,
-            ShiftName: x.ShiftName,
-            IsActive: x.IsActive,
-            ShiftFrequencyId: x.ShiftFrequencyId,
-            StartTime: x.StartTime
+            Name: x.name,
+            IsActive: x.isActive,
+            ShiftFrequencyId: x.shiftFrequencyId,
+            StartTime: x.startTime
           });
         });
       }
@@ -44,7 +44,8 @@ export class ShiftUpdateComponent implements OnInit {
 
   FormDesign() {
     return (this.updateShiftForm = this.form.group({
-      ShiftName: [null, Validators.required],
+      id: [null, Validators.required],
+      Name: [null, Validators.required],
       IsActive: [false, Validators.required],
       ShiftFrequencyId: [null, Validators.required],
       StartTime: [null, Validators.required]

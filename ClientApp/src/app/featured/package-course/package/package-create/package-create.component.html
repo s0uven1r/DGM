@@ -1,7 +1,12 @@
 <div class="container-fluid card h-100">
   <form [formGroup]="createPackageForm" (ngSubmit)="createPackage()">
     <div class="card-body">
-      <h5 class="card-title mb-4">Package Details Form</h5>
+      <div class="card-title mb-4">
+        <h5>Package Create Form</h5>
+        <div class="text-right">
+          <a href="#" [routerLink]='"/dashboard/config/package"' class="btn btn-secondary btn-sm">Cancel</a>
+        </div>
+      </div>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label>Package Name</label><span class="text-danger">*</span>

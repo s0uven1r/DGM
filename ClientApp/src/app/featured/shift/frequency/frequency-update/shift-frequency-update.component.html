@@ -1,5 +1,5 @@
 <div class="container-fluid card h-100">
-    <form [formGroup]="createShiftFrequencyForm" (ngSubmit)="createShiftFrequency()">
+    <form [formGroup]="updateShiftFrequencyForm" (ngSubmit)="updateShiftFrequency()">
         <div class="card-body">
             <div class="card-title">
                 <h5 class="card-Name">Shift Frequency Form</h5>
@@ -12,10 +12,10 @@
                 <div class="form-group col-md-4">
                     <label>Name</label><span class="text-danger">*</span>
                     <input type="text" formControlName="Name" placeholder="Shift Frequency Name" class="form-control"
-                        [ngClass]="{'is-invalid': createShiftFrequencyForm.get('Name').errors && (createShiftFrequencyForm.get('Name').touched || createShiftFrequencyForm.get('Name').dirty)}">
+                        [ngClass]="{'is-invalid': updateShiftFrequencyForm.get('Name').errors && (updateShiftFrequencyForm.get('Name').touched || updateShiftFrequencyForm.get('Name').dirty)}">
                     <span class="text-danger">
                         <small
-                            *ngIf="createShiftFrequencyForm.get('Name').errors?.required && (createShiftFrequencyForm.get('Name').touched || createShiftFrequencyForm.get('Name').dirty)">Shift
+                            *ngIf="updateShiftFrequencyForm.get('Name').errors?.required && (updateShiftFrequencyForm.get('Name').touched || updateShiftFrequencyForm.get('Name').dirty)">Shift
                            Frequency Name is Required!</small>
                     </span>
                 </div>
@@ -25,10 +25,10 @@
                     <label>Duration</label><span class="text-danger">*</span>
                     <input type="number" formControlName="Duration" placeholder="Shift Frequency Duration"
                         class="form-control" min="1"
-                        [ngClass]="{'is-invalid': createShiftFrequencyForm.get('Duration').errors && (createShiftFrequencyForm.get('Duration').touched || createShiftFrequencyForm.get('Duration').dirty)}">
+                        [ngClass]="{'is-invalid': updateShiftFrequencyForm.get('Duration').errors && (updateShiftFrequencyForm.get('Duration').touched || updateShiftFrequencyForm.get('Duration').dirty)}">
                     <span class="text-danger">
                         <small
-                            *ngIf="createShiftFrequencyForm.get('Duration').errors?.required && (createShiftFrequencyForm.get('Duration').touched || createShiftFrequencyForm.get('Duration').dirty)">Shift
+                            *ngIf="updateShiftFrequencyForm.get('Duration').errors?.required && (updateShiftFrequencyForm.get('Duration').touched || updateShiftFrequencyForm.get('Duration').dirty)">Shift
                             Duration is Required!</small>
                     </span>
                 </div>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary float-right mb-3"
-                [disabled]="(!createShiftFrequencyForm.valid)" style="width:10%">SAVE</button>
+                [disabled]="(!updateShiftFrequencyForm.valid)" style="width:10%">SAVE</button>
         </div>
     </form>
 </div>

@@ -36,8 +36,10 @@ namespace Resource.Application.Command.Shift.ShiftFrequency
                 var transaction = await _context.Instance.Database.BeginTransactionAsync(cancellationToken);
                 try
                 {
-                    var frequency = await _context.ShiftFrequencies.Where(x => x.Id == request.Id).FirstOrDefaultAsync();
+                    var frequency = await _context.ShiftFrequencies.Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
                     if (frequency == null) throw new AppException("Shift Frequency doesn't exists!");
+                    var shiftCount = await _context.Shifts.Where(x => x.ShiftFrequencyId == frequency.Id).CountAsync(cancellationToken);
+                    if (shiftCount > 0) throw new AppException("Shift Frequency has been used in Frequency!");
 
                     frequency.IsDeleted = true;
 

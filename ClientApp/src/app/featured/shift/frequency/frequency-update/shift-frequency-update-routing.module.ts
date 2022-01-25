@@ -3,13 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { RouteComponent } from 'src/app/infrastructure/datum/route-component';
 import { RoutePath } from 'src/app/infrastructure/datum/route-path';
 
-const routes: Routes = RoutePath.ShiftFrequencyCreateRoutePath;
+const routes: Routes = RoutePath.ShiftFrequencyUpdateRoutePath;
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 
-export class ShiftFrequencyCreateRoutingModule { }
-export const RoutingComponent = RouteComponent.ShiftFrequencyCreateRouteComponent;
+export class ShiftFrequencyUpdateRoutingModule { }
 
+export const RoutingComponent = RouteComponent.ShiftFrequencyUpdateRouteComponent;

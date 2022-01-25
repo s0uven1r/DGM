@@ -4,7 +4,7 @@ export const ShiftRoutePath = {
     children: [
       {
         path:"frequency",
-        data:{breadcrumb: "frequency"},
+        data:{breadcrumb: "Frequency"},
         children:[
           {
             path: "",
@@ -12,6 +12,22 @@ export const ShiftRoutePath = {
               import(
                 "src/app/featured/shift/frequency/shift-frequency.module"
               ).then((m) => m.ShiftFrequencyModule),
+          },
+          {
+            path: "create",
+            data: { breadcrumb: "Create" },
+            loadChildren: () =>
+              import(
+                "src/app/featured/shift/frequency/frequency-create/shift-frequency-create.module"
+              ).then((m) => m.ShiftFrequencyCreateModule),
+          },
+          {
+            path: "edit/:id",
+            data: { breadcrumb: "Edit" },
+            loadChildren: () =>
+              import(
+                "src/app/featured/shift/frequency/frequency-update/shift-frequency-update.module"
+              ).then((m) => m.ShiftFrequencyUpdateModule),
           }
         ]
       },
@@ -35,8 +51,8 @@ export const ShiftRoutePath = {
               ).then((m) => m.ShiftCreateModule),
           },
           {
-            path: "update",
-            data: { breadcrumb: "Update" },
+            path: "edit/:id",
+            data: { breadcrumb: "Edit" },
             loadChildren: () =>
               import(
                 "src/app/featured/shift/shift/shift-update/shift-update.module"
@@ -62,7 +78,7 @@ export const ShiftRoutePath = {
               import(
                 "src/app/featured/shift/individual-shift/edit-individual-shift/edit-individual-shift.module"
               ).then((m) => m.EditIndividualShiftModule),
-          },
+          }
         ]
       }
     ]

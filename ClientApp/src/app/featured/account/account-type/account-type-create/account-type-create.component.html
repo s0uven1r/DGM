@@ -1,9 +1,15 @@
 <div class="container-fluid card h-100">
   <form [formGroup]="createForm" (ngSubmit)="createAccountType()">
     <div class="card-body">
-      <h5 class="card-title mb-5">Create Account Type</h5>
+      <div class="card-title mb-4">
+        <h5>Create Account Type</h5>
+        <div class="text-right">
+          <a href="#" [routerLink]='"/dashboard/account/accounttype"' class="btn btn-secondary btn-sm">Cancel</a>
+        </div>
+      </div>
       <div class="form-row">
         <div class="form-group col-md-4">
+          <label>Title</label><span class="text-danger">*</span>
           <input type="text" formControlName="title" placeholder="Title" class="form-control" [ngClass]="{'is-invalid': createForm.get('title').errors
           && (createForm.get('title').touched || createForm.get('title').dirty)}">
           <span class="text-danger">
@@ -12,6 +18,7 @@
           </span>
         </div>
         <div class="form-group col-md-4">
+          <label>Type/Source</label><span class="text-danger">*</span>
           <select class="form-control dropdown-toggle" formControlName="type"
             [ngClass]="{'is-invalid': createForm.get('title').errors && (createForm.get('title').touched || createForm.get('title').dirty)}">
             <option value="" selected>--Select Type--</option>
@@ -23,9 +30,7 @@
           </span>
         </div>
       </div>
-      <div class="form-row">
-        <button type="submit" class="btn btn-primary" [disabled]="(!createForm.valid)">Submit</button>
-      </div>
+        <button type="submit" class="btn btn-primary float-right mb-2" [disabled]="(!createForm.valid)" style="width: 10%;">SAVE</button>
     </div>
   </form>
 </div>
